@@ -1257,11 +1257,11 @@ def set_split_tea_rules(world: "PokemonFRLGWorld"):
     player = world.player
 
     # Celadon City
-    set_rule(world.get_location("Celadon Condominiums 1F - Brock"),
+    set_rule(world.get_location("Celadon Condominiums 1F - Brock Gift"),
              lambda state: state.has("Defeat Brock", player))
-    set_rule(world.get_location("Celadon Condominiums 1F - Misty"),
+    set_rule(world.get_location("Celadon Condominiums 1F - Misty Gift"),
              lambda state: state.has("Defeat Misty", player))
-    set_rule(world.get_location("Celadon Condominiums 1F - Erika"),
+    set_rule(world.get_location("Celadon Condominiums 1F - Erika Gift"),
              lambda state: state.has("Defeat Erika", player))
 
 
@@ -1269,16 +1269,16 @@ def set_split_pass_rules(world: "PokemonFRLGWorld"):
     player = world.player
 
     # Cinnabar Island
-    set_rule(world.get_location("One Cinnabar Pokemon Center 1F - Bill"),
+    set_rule(world.get_location("One Cinnabar Pokemon Center 1F - Bill Gift"),
              lambda state: state.has("Defeat Blaine", player))
 
     # One Island Town
-    set_rule(world.get_location("One Island Pokemon Center 1F - Celio (Deliver Sapphire)"),
+    set_rule(world.get_location("One Island Pokemon Center 1F - Celio Gift (Deliver Sapphire)"),
              lambda state: state.has_all(["Deliver Meteorite", "Ruby", "Free Captured Pokemon", "Sapphire"],
                                          player))
 
     # Three Island Town
-    set_rule(world.get_location("Lostelle's House - Lostelle"),
+    set_rule(world.get_location("Lostelle's House - Lostelle Gift"),
              lambda state: state.has("Deliver Meteorite", player))
 
     # Dotted Hole
