@@ -343,15 +343,15 @@
   },
 
   "NPC_GIFT_GOT_RED_TEA": {
-    "name": "Celadon Condominiums 1F - Brock",
+    "name": "Celadon Condominiums 1F - Brock Gift",
     "tags": ["SplitTeas"]
   },
   "NPC_GIFT_GOT_BLUE_TEA": {
-    "name": "Celadon Condominiums 1F - Misty",
+    "name": "Celadon Condominiums 1F - Misty Gift",
     "tags": ["SplitTeas"]
   },
   "NPC_GIFT_GOT_PURPLE_TEA": {
-    "name": "Celadon Condominiums 1F - Erika",
+    "name": "Celadon Condominiums 1F - Erika Gift",
     "tags": ["SplitTeas"]
   },
 
