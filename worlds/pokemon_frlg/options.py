@@ -93,7 +93,7 @@ class Trainersanity(NamedRange):
     """
     display_name = "Trainersanity"
     default = 0
-    range_start = 1
+    range_start = 0
     range_end = 456
     special_range_names = {
         "none": 0,
@@ -116,7 +116,7 @@ class Dexsanity(NamedRange):
     """
     display_name = "Dexsanity"
     default = 0
-    range_start = 1
+    range_start = 0
     range_end = 386
     special_range_names = {
         "none": 0,
@@ -871,7 +871,7 @@ class NormalizeEncounterRates(Toggle):
 
 class AllPokemonSeen(Toggle):
     """
-    Start will all Pokemon seen in you Pokedex. This allows you to see where the Pokemon can be encountered in the wild.
+    Start will all Pokemon seen in your Pokedex. This allows you to see where the Pokemon can be encountered in the wild.
     """
     display_name = "All Pokemon Seen"
 
