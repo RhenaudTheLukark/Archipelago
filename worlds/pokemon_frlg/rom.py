@@ -56,7 +56,6 @@ _FANFARES: Dict[str, int] = {
     "MUS_OBTAIN_KEY_ITEM": 170,
     "MUS_DEX_RATING": 196
 }
-_EVOLUTION_FANFARE_INDEX = list(_FANFARES.keys()).index("MUS_EVOLVED")
 
 
 class PokemonFRLGPatchExtension(APPatchExtension):
@@ -703,15 +702,6 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
         world.random.shuffle(randomized_fanfares)
         sound_table_address = data.rom_addresses[game_version_revision]["gRandomizedSoundTable"]
         fanfares_address = data.rom_addresses[game_version_revision]["sFanfares"]
-
-        # Prevent the evolution fanfare from receiving the poke flute by swapping it with something else.
-        # The poke flute sound causes the evolution scene to get stuck for like 40 seconds
-        if randomized_fanfares[_EVOLUTION_FANFARE_INDEX] == "MUS_POKE_FLUTE":
-            swap_index = (_EVOLUTION_FANFARE_INDEX + 1) % len(_FANFARES)
-            temp = randomized_fanfares[_EVOLUTION_FANFARE_INDEX]
-            randomized_fanfares[_EVOLUTION_FANFARE_INDEX] = randomized_fanfares[swap_index]
-            randomized_fanfares[swap_index] = temp
-
         for i, fanfare_data in enumerate(zip(_FANFARES.keys(), randomized_fanfares)):
             tokens.write_token(
                 APTokenTypes.WRITE,
