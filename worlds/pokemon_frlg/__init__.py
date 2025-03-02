@@ -250,15 +250,17 @@ class PokemonFRLGWorld(World):
         self.options.start_inventory.value = {k: v for k, v in self.options.start_inventory.value.items()
                                               if k not in not_allowed_tea}
 
-        # Set badges as local items if not shuffled
+        # Remove badges from non-local items if they are shuffled among gyms
         if not self.options.shuffle_badges:
-            badge_items = [item for item in frlg_data.items.values() if "Badge" in item.tags]
-            for item in badge_items:
-                self.options.local_items.value.add(item.name)
+            self.options.local_items.value.update(self.item_name_groups["Badges"])
 
         # Add starting items from settings
         if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
             self.options.start_inventory.value["Running Shoes"] = 1
+
+        if (self.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
+                not self.options.random_starting_town):
+            self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
         create_scaling_data(self)
         randomize_types(self)
@@ -574,10 +576,6 @@ class PokemonFRLGWorld(World):
             else:
                 raise FillError(f"Failed to place badges for player {self.player}")
             self.verify_hm_accessibility()
-
-        if (self.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
-                not self.options.random_starting_town):
-            self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
     @classmethod
     def stage_post_fill(cls, multiworld):
