@@ -16,7 +16,8 @@ from worlds.AutoWorld import WebWorld, World
 from .client import PokemonFRLGClient
 from .data import (data as frlg_data, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID, EventData, MapData,
                    MiscPokemonData, SpeciesData, StarterData, TrainerData)
-from .items import (PokemonFRLGItem, ITEM_GROUPS, create_item_name_to_id_map, get_random_item, get_item_classification)
+from .groups import ITEM_GROUPS
+from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
 from .level_scaling import ScalingData, create_scaling_data, level_scaling
 from .locations import (LOCATION_GROUPS, create_location_name_to_id_map, create_locations_from_tags, set_free_fly,
                         PokemonFRLGLocation)
@@ -188,12 +189,12 @@ class PokemonFRLGWorld(World):
         # Modify options that are incompatible with each other
         if self.options.kanto_only:
             if self.options.goal == Goal.option_elite_four_rematch:
-                logging.warning("Pokemon FRLG: Goal for Player %s (%s) incompatible with Kanto Only. "
+                logging.warning("Pokemon FRLG: Goal for player %s (%s) incompatible with Kanto Only. "
                                 "Setting goal to Elite Four.", self.player, self.player_name)
                 self.options.goal.value = Goal.option_elite_four
             if (self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_vanilla or
                     self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_restore_network):
-                logging.warning("Pokemon FRLG: Cerulean Cave Requirement for Player %s (%s) "
+                logging.warning("Pokemon FRLG: Cerulean Cave Requirement for player %s (%s) "
                                 "incompatible with Kanto Only. Setting requirement to Defeat Champion.",
                                 self.player, self.player_name)
                 self.options.cerulean_cave_requirement.value = CeruleanCaveRequirement.option_champion
