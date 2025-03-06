@@ -223,7 +223,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Vermilion City Near Gym Surfing Spot"),
              lambda state: can_surf(state, player, world))
-    set_rule(world.get_entrance("Vermilion Harbor"),
+    set_rule(world.get_entrance("Vermilion City Checkpoint"),
              lambda state: state.has("S.S. Ticket", player))
 
     # S.S. Anne
@@ -632,7 +632,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
 
     set_rule(world.get_entrance("Seafoam Islands B3F South Water (Water Battle)"),
              lambda state: can_strength(state, player, world) and
-                    state.can_reach_region("Seafoam Islands 1F", player))
+                           state.can_reach_region("Seafoam Islands 1F", player))
 
     # Cinnabar Island
     set_rule(world.get_location("Pokemon Lab Lounge - Trade Raichu"),
@@ -654,6 +654,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_entrance("Pokemon Mansion"),
              lambda state: state.has("Letter", player) or
                            not options.extra_key_items)
+    set_rule(world.get_entrance("Follow Bill"),
+             lambda state: state.has("Defeat Blaine", player))
 
     # Route 23
     set_rule(world.get_entrance("Route 23 South Surfing Spot"),
@@ -790,10 +792,6 @@ def set_default_rules(world: "PokemonFRLGWorld"):
                  lambda state: can_sail_island(state, player, options, 6))
         set_rule(world.get_entrance("Seven Island Arrival"),
                  lambda state: can_sail_island(state, player, options, 7))
-
-        # Cinnabar Island
-        set_rule(world.get_entrance("Follow Bill"),
-                 lambda state: state.has("Defeat Blaine", player))
 
         # One Island Town
         set_rule(world.get_location("One Island Pokemon Center 1F - Celio Gift (Deliver Ruby)"),

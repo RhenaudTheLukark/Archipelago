@@ -122,6 +122,7 @@ class PokemonFRLGWorld(World):
     encounter_level_list: List[int]
     scaling_data: List[ScalingData]
     filler_items: List[PokemonFRLGItem]
+    fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -150,6 +151,7 @@ class PokemonFRLGWorld(World):
         self.encounter_level_list = list()
         self.scaling_data = list()
         self.filler_items = list()
+        self.fly_destination_data = dict()
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -251,15 +253,17 @@ class PokemonFRLGWorld(World):
         self.options.start_inventory.value = {k: v for k, v in self.options.start_inventory.value.items()
                                               if k not in not_allowed_tea}
 
-        # Set badges as local items if not shuffled
+        # Remove badges from non-local items if they are shuffled among gyms
         if not self.options.shuffle_badges:
-            badge_items = [item for item in frlg_data.items.values() if "Badge" in item.tags]
-            for item in badge_items:
-                self.options.local_items.value.add(item.name)
+            self.options.local_items.value.update(self.item_name_groups["Badges"])
 
         # Add starting items from settings
         if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
             self.options.start_inventory.value["Running Shoes"] = 1
+
+        if (self.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
+                not self.options.random_starting_town):
+            self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
         create_scaling_data(self)
         randomize_types(self)
@@ -576,10 +580,6 @@ class PokemonFRLGWorld(World):
                 raise FillError(f"Failed to place badges for player {self.player}")
             self.verify_hm_accessibility()
 
-        if (self.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
-                not self.options.random_starting_town):
-            self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
-
     @classmethod
     def stage_post_fill(cls, multiworld):
         # Change all but one instance of a Pokémon in each sphere to useful classification
@@ -650,11 +650,12 @@ class PokemonFRLGWorld(World):
         del self.encounter_name_list
         del self.encounter_level_list
         del self.scaling_data
+        del self.fly_destination_data
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.random_starting_town:
             starting_town = STARTING_TOWNS[self.starting_town]
-            if starting_town == "Viridian City South":
+            if starting_town == "Viridian City South" or starting_town == "Three Island Town South":
                 starting_town = starting_town[:-6]
             spoiler_handle.write(f"Starting Town:                   {starting_town}\n")
         if self.options.free_fly_location != FreeFlyLocation.option_off:
@@ -665,6 +666,12 @@ class PokemonFRLGWorld(World):
             spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name[4:]}\n")
 
     def write_spoiler(self, spoiler_handle: TextIO) -> None:
+        # Add fly destinations to the spoiler log if they are randomized
+        if self.options.randomize_fly_destinations:
+            spoiler_handle.write(f"\n\nFly Destinations ({self.multiworld.player_name[self.player]}):\n\n")
+            for exit in self.get_region("Sky").exits:
+                spoiler_handle.write(f"{exit.name}: {exit.connected_region}\n")
+
         # Add Pokémon locations to the spoiler log if they are not vanilla
         if (self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla or
                 self.options.misc_pokemon != RandomizeMiscPokemon.option_vanilla or
