@@ -1095,13 +1095,39 @@ def set_trainersanity_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_location("Route 22 - Late Rival Reward"),
              lambda state: state.has_all(["Defeat Route 22 Rival", "Defeat Giovanni"], player))
 
-    if not options.kanto_only:
-        # Mt. Ember
-        set_rule(world.get_location("Mt. Ember Exterior - Team Rocket Grunt Reward (Left)"),
-                 lambda state: state.has("Deliver Meteorite", player))
-        set_rule(world.get_location("Mt. Ember Exterior - Team Rocket Grunt Reward (Right)"),
-                 lambda state: state.has("Deliver Meteorite", player))
+    # Route 8
+    set_rule(world.get_location("Route 8 - Twins Eli & Anne Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
 
+    # Route 12
+    set_rule(world.get_location("Route 12 - Young Couple Gia & Jes Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Route 14
+    set_rule(world.get_location("Route 14 - Twins Kiri & Jan Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Route 15
+    set_rule(world.get_location("Route 15 - Crush Kin Ron & Mya Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Route 16
+    set_rule(world.get_location("Route 16 - Young Couple Lea & Jed Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Route 19
+    set_rule(world.get_location("Route 19 - Sis and Bro Lia & Luc Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Route 21
+    set_rule(world.get_location("Route 21 - Sis and Bro Lil & Ian Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    # Victory Road
+    set_rule(world.get_location("Victory Road 3F - Cool Couple Ray & Tyra Reward"),
+             lambda state: state.has_any(world.repeatable_pokemon, player))
+
+    if not options.kanto_only:
         # Indigo Plateau
         set_rule(world.get_location("Lorelei's Room - Elite Four Lorelei Rematch Reward"),
                  lambda state: can_challenge_elite_four_rematch(state, player, options))
@@ -1113,6 +1139,36 @@ def set_trainersanity_rules(world: "PokemonFRLGWorld"):
                  lambda state: can_challenge_elite_four_rematch(state, player, options))
         set_rule(world.get_location("Champion's Room - Champion Rematch Reward"),
                  lambda state: can_challenge_elite_four_rematch(state, player, options))
+
+        # Kindle Road
+        set_rule(world.get_location("Kindle Road - Crush Kin Mik & Kia Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
+
+        # Mt. Ember
+        set_rule(world.get_location("Mt. Ember Exterior - Team Rocket Grunt Reward (Left)"),
+                 lambda state: state.has("Deliver Meteorite", player))
+        set_rule(world.get_location("Mt. Ember Exterior - Team Rocket Grunt Reward (Right)"),
+                 lambda state: state.has("Deliver Meteorite", player))
+
+        # Bond Bridge
+        set_rule(world.get_location("Bond Bridge - Twins Joy & Meg Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
+
+        # Water Path
+        set_rule(world.get_location("Water Path - Twins Miu & Mia Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
+
+        # Outcast Island
+        set_rule(world.get_location("Outcast Island - Sis and Bro Ava & Geb Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
+
+        # Canyon Entrance
+        set_rule(world.get_location("Canyon Entrance - Young Couple Eve & Jon Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
+
+        # Sevault Canyon
+        set_rule(world.get_location("Sevault Canyon - Cool Couple Lex & Nya Reward"),
+                 lambda state: state.has_any(world.repeatable_pokemon, player))
 
 
 def set_dexsanity_rules(world: "PokemonFRLGWorld"):
