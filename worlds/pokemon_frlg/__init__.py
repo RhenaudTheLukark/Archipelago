@@ -30,7 +30,7 @@ from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, Fl
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_legendaries, randomize_misc_pokemon,
                       randomize_moves, randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves,
                       randomize_trainer_parties, randomize_types, randomize_wild_encounters)
-from .regions import STARTING_TOWNS, create_indirect_conditions, create_regions
+from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import set_rules
 from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
@@ -664,14 +664,14 @@ class PokemonFRLGWorld(World):
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.random_starting_town:
-            starting_town = STARTING_TOWNS[self.starting_town]
+            starting_town = starting_town_map[self.starting_town]
             if starting_town == "Viridian City South" or starting_town == "Three Island Town South":
                 starting_town = starting_town[:-6]
             spoiler_handle.write(f"Starting Town:                   {starting_town}\n")
-        if self.options.free_fly_location != FreeFlyLocation.option_off:
+        if self.options.free_fly_location:
             free_fly_location = self.multiworld.get_location("Free Fly Location", self.player)
             spoiler_handle.write(f"Free Fly Location:               {free_fly_location.item.name[4:]}\n")
-        if self.options.town_map_fly_location != TownMapFlyLocation.option_off:
+        if self.options.town_map_fly_location:
             town_map_fly_location = self.multiworld.get_location("Town Map Fly Location", self.player)
             spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name[4:]}\n")
 
