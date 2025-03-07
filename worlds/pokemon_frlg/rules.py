@@ -3,7 +3,7 @@ Logic rule definitions for Pokémon FireRed and LeafGreen
 """
 from typing import TYPE_CHECKING
 from worlds.generic.Rules import add_rule, set_rule
-from .data import data, NATIONAL_ID_TO_SPECIES_ID, NUM_REAL_SPECIES
+from .data import data, LocationCategory, NATIONAL_ID_TO_SPECIES_ID, NUM_REAL_SPECIES
 from .locations import PokemonFRLGLocation
 from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_cut, can_enter_cerulean_cave,
                     can_enter_silph, can_enter_viridian_gym, can_evolve, can_fly, can_leave_cerulean, can_leave_pewter,
@@ -755,7 +755,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     # Evolutions
     for location in world.multiworld.get_locations(player):
         assert isinstance(location, PokemonFRLGLocation)
-        if location.tags is not None and "Evolution" in location.tags:
+        if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             pokemon_name = location.name.split("-")[1].strip()
             set_rule(world.get_location(location.name),
                      lambda state, pokemon=pokemon_name: can_evolve(state, player, world, pokemon))
@@ -1072,7 +1072,7 @@ def set_hidden_item_rules(world: "PokemonFRLGWorld"):
     if world.options.itemfinder_required != ItemfinderRequired.option_off:
         for location in world.multiworld.get_locations(player):
             assert isinstance(location, PokemonFRLGLocation)
-            if location.tags is not None and "Hidden" in location.tags:
+            if location.category in [LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING]:
                 add_rule(location, lambda state: state.has("Itemfinder", player))
 
 
@@ -1163,7 +1163,7 @@ def set_famesanity_rules(world: "PokemonFRLGWorld"):
     # Fuchsia City
     set_rule(world.get_location("Fuchsia City - Koga's Daughter Info"),
              lambda state: post_game_gossipers(state, player, options))
-    set_rule(world.get_location("FuchSafari Zone Warden's House - Bookshelf Info"),
+    set_rule(world.get_location("Safari Zone Warden's House - Bookshelf Info"),
              lambda state: state.has("Defeat Koga", player))
 
     # Saffron City
@@ -1230,7 +1230,7 @@ def set_famesanity_rules(world: "PokemonFRLGWorld"):
     if world.options.fame_checker_required:
         for location in world.multiworld.get_locations(player):
             assert isinstance(location, PokemonFRLGLocation)
-            if location.tags is not None and ("FameChecker" in location.tags):
+            if location.category == LocationCategory.FAMESANITY:
                 add_rule(location, lambda state: state.has("Fame Checker", player))
 
 
@@ -1267,7 +1267,7 @@ def set_split_pass_rules(world: "PokemonFRLGWorld"):
     player = world.player
 
     # Cinnabar Island
-    set_rule(world.get_location("One Cinnabar Pokemon Center 1F - Bill Gift"),
+    set_rule(world.get_location("Cinnabar Pokemon Center 1F - Bill Gift"),
              lambda state: state.has("Defeat Blaine", player))
 
     # One Island Town

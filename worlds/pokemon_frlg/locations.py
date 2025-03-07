@@ -1,7 +1,7 @@
 import copy
-from typing import TYPE_CHECKING, Dict, FrozenSet, Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Dict, FrozenSet, List, Optional, Set, Union
 from BaseClasses import CollectionState, Location, Region, ItemClassification
-from .data import data
+from .data import data, LocationCategory
 from .items import PokemonFRLGItem, get_random_item
 from .options import FreeFlyLocation, TownMapFlyLocation, ViridianCityRoadblock
 
@@ -99,7 +99,7 @@ class PokemonFRLGLocation(Location):
     game: str = "Pokemon FireRed and LeafGreen"
     item_address = Optional[Dict[str, int]]
     default_item_id: Optional[int]
-    tags: FrozenSet[str]
+    category: LocationCategory
     data_ids: Optional[List[str]]
     spoiler_name: str
 
@@ -108,16 +108,16 @@ class PokemonFRLGLocation(Location):
             player: int,
             name: str,
             address: Optional[int],
+            category: LocationCategory,
             parent: Optional[Region] = None,
             item_address: Optional[Dict[str, Union[int, List[int]]]] = None,
             default_item_id: Optional[int] = None,
-            tags: FrozenSet[str] = frozenset(),
             data_ids: Optional[List[str]] = None,
             spoiler_name: Optional[str] = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address
-        self.tags = tags
+        self.category = category
         self.data_ids = data_ids
         self.spoiler_name = spoiler_name if spoiler_name is not None else name
 
@@ -135,23 +135,22 @@ def create_location_name_to_id_map() -> Dict[str, int]:
     return name_to_id_mapping
 
 
-def create_locations_from_tags(world: "PokemonFRLGWorld", regions: Dict[str, Region], tags: Iterable[str]) -> None:
+def create_locations_from_categories(world: "PokemonFRLGWorld",
+                                     regions: Dict[str, Region],
+                                     categories: Set[LocationCategory]) -> None:
     """
     Iterates through region data and adds locations to the multiworld if
-    those locations include any of the provided tags.
+    those locations are included in the given categories.
     """
-    tags = set(tags)
-
     for region_data in data.regions.values():
         if world.options.kanto_only and not region_data.kanto:
             continue
 
         region = regions[region_data.name]
-        included_locations = [loc for loc in region_data.locations
-                              if len(tags & data.locations[loc].tags) >= len(data.locations[loc].tags)]
+        included_locations = [loc for loc in region_data.locations if data.locations[loc].category in categories]
 
-        for location_flag in included_locations:
-            location_data = data.locations[location_flag]
+        for location_id in included_locations:
+            location_data = data.locations[location_id]
 
             if world.options.kanto_only and location_data.name in sevii_required_locations:
                 continue
@@ -165,10 +164,10 @@ def create_locations_from_tags(world: "PokemonFRLGWorld", regions: Dict[str, Reg
                 world.player,
                 location_data.name,
                 location_data.flag,
+                location_data.category,
                 region,
                 location_data.address,
-                default_item,
-                location_data.tags
+                default_item
             )
             region.locations.append(location)
 
@@ -260,10 +259,10 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
             world.player,
             "Free Fly Location",
             None,
+            LocationCategory.EVENT,
             menu_region,
             None,
-            None,
-            frozenset({"Event"})
+            None
         )
         item_id = data.constants[free_fly_location_id]
         free_fly_location.place_locked_item(PokemonFRLGItem(data.items[item_id].name,
@@ -282,10 +281,10 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
             world.player,
             "Town Map Fly Location",
             None,
+            LocationCategory.EVENT,
             menu_region,
             None,
-            None,
-            frozenset({"Event"})
+            None
         )
         item_id = data.constants[town_map_fly_location_id]
         town_map_fly_location.place_locked_item(PokemonFRLGItem(data.items[item_id].name,

@@ -8,15 +8,9 @@ if TYPE_CHECKING:
 
 class PokemonFRLGItem(Item):
     game: str = "Pokemon FireRed and LeafGreen"
-    tags: FrozenSet[str]
 
     def __init__(self, name: str, classification: ItemClassification, code: Optional[int], player: int) -> None:
         super().__init__(name, classification, code, player)
-
-        if code is None:
-            self.tags = frozenset(["Event"])
-        else:
-            self.tags = data.items[code].tags
 
 
 def create_item_name_to_id_map() -> Dict[str, int]:
@@ -24,8 +18,8 @@ def create_item_name_to_id_map() -> Dict[str, int]:
     Creates a map from item names to their AP item ID (code)
     """
     name_to_id_map: Dict[str, int] = {}
-    for item_value, attributes in data.items.items():
-        name_to_id_map[attributes.name] = item_value
+    for item_id, item_data in data.items.items():
+        name_to_id_map[item_data.name] = item_id
 
     return name_to_id_map
 
@@ -40,6 +34,5 @@ def get_item_classification(item_id: int) -> ItemClassification:
 def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassification = None) -> str:
     if item_classification is None:
         item_classification = ItemClassification.useful if world.random.random() < 0.20 else ItemClassification.filler
-    items = [item for item in data.items.values()
-             if item.classification == item_classification]
+    items = [item for item in data.items.values() if item.classification == item_classification]
     return world.random.choice(items).name

@@ -707,7 +707,7 @@ def randomize_legendaries(world: "PokemonFRLGWorld") -> None:
             world.modified_events[name].name,
             item,
             world.modified_events[name].parent_region_id,
-            world.modified_events[name].tags
+            world.modified_events[name].category
         )
 
         world.modified_events[name] = new_event
@@ -770,7 +770,7 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
             world.modified_events[name].name,
             item,
             world.modified_events[name].parent_region_id,
-            world.modified_events[name].tags
+            world.modified_events[name].category
         )
 
         world.modified_events[name] = new_event

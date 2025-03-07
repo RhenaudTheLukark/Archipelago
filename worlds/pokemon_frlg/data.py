@@ -76,6 +76,36 @@ class ItemData(NamedTuple):
     tags: FrozenSet[str]
 
 
+class LocationCategory(IntEnum):
+    BADGE = 0
+    HM = 1
+    KEY_ITEM = 2
+    RUNNING_SHOES = 3
+    EXTRA_KEY_ITEM = 4
+    FLY_UNLOCK = 5
+    SPLIT_CARD_KEY = 6
+    SPLIT_ISLAND_PASS = 7
+    SPLIT_TEA = 8
+    ITEM_BALL = 9
+    HIDDEN_ITEM = 10
+    HIDDEN_ITEM_RECURRING = 11
+    STARTING_ITEM = 12
+    NPC_GIFT = 13
+    POKEMON_REQUEST = 14
+    TRAINERSANITY = 15
+    FAMESANITY = 16
+    FAMESANITY_POKEMON_REQUEST = 17
+    DEXSANITY = 18
+    EVENT = 19
+    EVENT_WILD_POKEMON = 20
+    EVENT_STATIC_POKEMON = 21
+    EVENT_LEGENDARY_POKEMON = 22
+    EVENT_EVOLUTION_POKEMON = 23
+    EVENT_TRAINER_SCALING = 24
+    EVENT_WILD_POKEMON_SCALING = 25
+    EVENT_STATIC_POKEMON_SCALING = 26
+
+
 class LocationData(NamedTuple):
     id: str
     name: str
@@ -83,6 +113,7 @@ class LocationData(NamedTuple):
     default_item: int
     address: Dict[str, Union[int, List[int]]]
     flag: int
+    category: LocationCategory
     tags: FrozenSet[str]
 
 
@@ -113,7 +144,7 @@ class EventData(NamedTuple):
     name: Union[str, List[str]]
     item: Union[str, List[str]]
     parent_region_id: str
-    tags: FrozenSet[str]
+    category: LocationCategory
 
 
 class RegionData:
@@ -172,21 +203,6 @@ class EvolutionMethodEnum(IntEnum):
     ITEM = 8
     ITEM_HELD = 9
     FRIENDSHIP = 10
-
-
-EVOLUTION_METHOD_TYPE: Dict[str, EvolutionMethodEnum] = {
-    "LEVEL": EvolutionMethodEnum.LEVEL,
-    "LEVEL_ATK_LT_DEF": EvolutionMethodEnum.LEVEL_ATK_LT_DEF,
-    "LEVEL_ATK_EQ_DEF": EvolutionMethodEnum.LEVEL_ATK_EQ_DEF,
-    "LEVEL_ATK_GT_DEF": EvolutionMethodEnum.LEVEL_ATK_GT_DEF,
-    "LEVEL_SILCOON": EvolutionMethodEnum.LEVEL_SILCOON,
-    "LEVEL_CASCOON": EvolutionMethodEnum.LEVEL_CASCOON,
-    "LEVEL_NINJASK": EvolutionMethodEnum.LEVEL_NINJASK,
-    "LEVEL_SHEDINJA": EvolutionMethodEnum.LEVEL_SHEDINJA,
-    "ITEM": EvolutionMethodEnum.ITEM,
-    "ITEM_HELD": EvolutionMethodEnum.ITEM_HELD,
-    "FRIENDSHIP": EvolutionMethodEnum.FRIENDSHIP
-}
 
 
 class EvolutionData(NamedTuple):
@@ -845,6 +861,7 @@ def _init() -> None:
                     location_json["default_item"],
                     location_address,
                     location_json["flag"],
+                    LocationCategory[location_data[location_id]["category"]],
                     frozenset(location_data[location_id]["tags"])
                 )
             else:
@@ -855,6 +872,7 @@ def _init() -> None:
                     location_json["default_item"],
                     location_json["address"],
                     location_json["flag"],
+                    LocationCategory[location_data[location_id]["category"]],
                     frozenset(location_data[location_id]["tags"])
                 )
 
@@ -869,7 +887,7 @@ def _init() -> None:
                 event_data[event_id]["name"],
                 event_data[event_id]["item"],
                 region_id,
-                frozenset(event_data[event_id]["tags"])
+                LocationCategory[event_data[event_id]["category"]]
             )
             new_region.events.append(event_id)
             data.events[event_id] = new_event
@@ -944,7 +962,7 @@ def _init() -> None:
                 evolution_data["param"],
                 evolution_data["param2"],
                 evolution_data["species"],
-                EVOLUTION_METHOD_TYPE[evolution_data["method"]]
+                EvolutionMethodEnum[evolution_data["method"]]
             ) for evolution_data in species_data["evolutions"]],
             None,
             species_data["catch_rate"],
