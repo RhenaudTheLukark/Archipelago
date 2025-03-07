@@ -1028,7 +1028,10 @@ def level_scaling(multiworld: MultiWorld):
 
                         if location.game == "Pokemon FireRed and LeafGreen":
                             parent_region: PokemonFRLGRegion = location.parent_region
-                            distance = parent_region.distance
+                            if getattr(parent_region, "distance", None) is None:
+                                distance = 0
+                            else:
+                                distance = parent_region.distance
                         else:
                             distance = 0
 
