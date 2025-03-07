@@ -336,10 +336,7 @@ class PokemonFRLGWorld(World):
                 "Bruno's Room - Elite Four Bruno Rematch Reward",
                 "Agatha's Room - Elite Four Agatha Rematch Reward",
                 "Lance's Room - Elite Four Lance Rematch Reward",
-                "Champion's Room - Champion Reward",
                 "Champion's Room - Champion Rematch Reward",
-                "Hall of Fame - Oak Gift 1",
-                "Hall of Fame - Oak Gift 2",
                 "Two Island Town - Beauty Info"
             ])
 
