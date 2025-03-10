@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Set, Union
 from BaseClasses import CollectionState, Location, Region, ItemClassification
 from .data import data, LocationCategory, fly_blacklist_map
 from .items import PokemonFRLGItem, get_random_item
-from .options import ShuffleFlyDestinationUnlocks, ViridianCityRoadblock
+from .options import ShuffleFlyUnlocks, ViridianCityRoadblock
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -160,7 +160,7 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
                               "ITEM_FLY_SEVEN_ISLAND"]
 
     if (not world.options.randomize_fly_destinations and
-            world.options.shuffle_fly_destination_unlocks == ShuffleFlyDestinationUnlocks.option_off):
+            world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off):
         if (world.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
                 not world.options.random_starting_town):
             item = PokemonFRLGItem("Oak's Parcel", ItemClassification.progression, None, world.player)

@@ -11,8 +11,8 @@ from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (Dexsanity, FlashRequired, ForceFullyEvolved, ItemfinderRequired, HmCompatibility, LevelScaling,
                       RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeStarters, RandomizeTrainerParties,
-                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleHiddenItems, SilphCoCardKey, TmTutorCompatibility,
-                      ViridianCityRoadblock)
+                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems,
+                      SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -620,11 +620,11 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x35, struct.pack("<B", recurring_hidden_items))
 
     # Set trainersanity
-    trainersanity = 1 if world.options.trainersanity else 0
+    trainersanity = 1 if world.options.trainersanity.value != Trainersanity.special_range_names["none"] else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x36, struct.pack("<B", trainersanity))
 
     # Set dexsanity
-    dexsanity = 1 if world.options.dexsanity != Dexsanity.special_range_names["none"] else 0
+    dexsanity = 1 if world.options.dexsanity.value != Dexsanity.special_range_names["none"] else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x37, struct.pack("<B", dexsanity))
 
     # Set extra key items
@@ -636,7 +636,7 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x39, struct.pack("<B", kanto_only))
 
     # Set fly unlocks
-    fly_unlocks = 1 if world.options.shuffle_fly_destination_unlocks else 0
+    fly_unlocks = 1 if world.options.shuffle_fly_unlocks.value != ShuffleFlyUnlocks.option_off else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x3A, struct.pack("B", fly_unlocks))
 
     # Set famesanity

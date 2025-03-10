@@ -202,7 +202,7 @@
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_MAGIKARP": {
-    "name": "Route 4 Pokemon Center 1F - Salesman Purchase",
+    "name": "Route 4 Pokemon Center 1F - Purchase Pokemon",
     "item": "Static Magikarp",
     "category": "EVENT_STATIC_POKEMON"
   },
