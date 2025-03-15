@@ -754,7 +754,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "ITEM_DIGLETTS_CAVE_B1F_VERMILION_KEY"
+    ],
     "events": [],
     "exits": {},
     "warps": {
@@ -1569,7 +1571,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "ITEM_SAFARI_ZONE_EAST_RESTHOUSE_FUCHSIA_KEY"
+    ],
     "events": [],
     "exits": {},
     "warps": {

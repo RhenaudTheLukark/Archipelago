@@ -113,13 +113,17 @@ def can_leave_viridian(state: CollectionState, player: int, options: PokemonFRLG
     return True
 
 
-def can_enter_viridian_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+def can_challenge_giovanni(state: CollectionState, player: int, options: PokemonFRLGOptions):
     requirement = options.viridian_gym_requirement
     count = options.viridian_gym_count.value
     if requirement == ViridianGymRequirement.option_badges:
         return has_n_badges(state, player, count)
     elif requirement == ViridianGymRequirement.option_gyms:
         return has_n_gyms(state, player, count)
+
+
+def can_enter_viridian_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Viridian Key", player)
 
 
 def can_pass_route_22_gate(state: CollectionState, player: int, options: PokemonFRLGOptions):
@@ -129,6 +133,10 @@ def can_pass_route_22_gate(state: CollectionState, player: int, options: Pokemon
         return has_n_badges(state, player, count)
     elif requirement == Route22GateRequirement.option_gyms:
         return has_n_gyms(state, player, count)
+
+
+def can_enter_pewter_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Pewter Key", player)
 
 
 def can_leave_pewter(state: CollectionState, player: int, options: PokemonFRLGOptions):
@@ -142,6 +150,10 @@ def can_leave_pewter(state: CollectionState, player: int, options: PokemonFRLGOp
     elif requirement == PewterCityRoadblock.option_any_badge:
         return has_n_badges(state, player, 1)
     return True
+
+
+def can_enter_cerulean_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Cerulean Key", player)
 
 
 def can_leave_cerulean(state: CollectionState, player: int, options: PokemonFRLGOptions):
@@ -165,10 +177,22 @@ def can_enter_cerulean_cave(state: CollectionState, player: int, options: Pokemo
         return has_n_gyms(state, player, count)
 
 
+def can_enter_vermilion_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Vermilion Key", player)
+
+
 def can_navigate_dark_caves(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
     if world.options.flash_required != FlashRequired.option_off:
         return can_flash(state, player, world)
     return True
+
+
+def can_enter_celadon_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Celadon Key", player)
+
+
+def can_enter_fuchsia_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Fuchsia Key", player)
 
 
 def can_enter_silph(state: CollectionState, player: int, options: PokemonFRLGOptions):
@@ -186,6 +210,14 @@ def saffron_rockets_gone(state: CollectionState, player: int, options: PokemonFR
     if "Remove Saffron Rockets" in options.modify_world_state.value:
         return True
     return state.has("Liberate Silph Co.", player)
+
+
+def can_enter_saffron_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return not options.gym_keys or state.has("Saffron Key", player)
+
+
+def can_enter_cinnabar_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+    return state.has("Secret Key", player) or state.has("Cinnabar Key", player)
 
 
 def can_pass_route_23_guard(state: CollectionState, player: int, options: PokemonFRLGOptions):

@@ -151,10 +151,25 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Card Keys", "Unique Items"]
   },
+  "ITEM_CELADON_KEY": {
+    "name": "Celadon Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
+  },
+  "ITEM_CERULEAN_KEY": {
+    "name": "Cerulean Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
+  },
   "ITEM_COIN_CASE": {
     "name": "Coin Case",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
+  },
+  "ITEM_CINNABAR_KEY": {
+    "name": "Cinnabar Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
   },
   "ITEM_DOME_FOSSIL": {
     "name": "Dome Fossil",
@@ -180,6 +195,11 @@
     "name": "Four Pass",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Island Passes", "Unique Items"]
+  },
+  "ITEM_FUCHSIA_KEY": {
+    "name": "Fuchsia Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
   },
   "ITEM_GOOD_ROD": {
     "name": "Good Rod",
@@ -271,6 +291,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Island Passes", "Unique Items"]
   },
+  "ITEM_PEWTER_KEY": {
+    "name": "Pewter Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
+  },
   "ITEM_POKE_FLUTE": {
     "name": "Poke Flute",
     "classification": "PROGRESSION",
@@ -321,6 +346,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
+  "ITEM_SAFFRON_KEY": {
+    "name": "Saffron Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
+  },
   "ITEM_SAPPHIRE": {
     "name": "Sapphire",
     "classification": "PROGRESSION",
@@ -334,7 +364,7 @@
   "ITEM_SECRET_KEY": {
     "name": "Secret Key",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Unique Items"]
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
   },
   "ITEM_SEVEN_PASS": {
     "name": "Seven Pass",
@@ -400,6 +430,16 @@
     "name": "Two Pass",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Island Passes", "Unique Items"]
+  },
+  "ITEM_VERMILION_KEY": {
+    "name": "Vermilion Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
+  },
+  "ITEM_VIRIDIAN_KEY": {
+    "name": "Viridian Key",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Gym Keys", "Unique Items"]
   },
   "ITEM_VS_SEEKER": {
     "name": "Vs. Seeker",

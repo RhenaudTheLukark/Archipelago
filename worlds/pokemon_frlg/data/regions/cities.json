@@ -177,7 +177,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "NPC_GIFT_GOT_VIRIDIAN_KEY"
+    ],
     "events": [],
     "exits": {
       "REGION_VIRIDIAN_CITY/SOUTH": "Viridian City North Ledge Drop",
@@ -419,7 +421,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "ITEM_PEWTER_MUSEUM_2F_PEWTER_KEY"
+    ],
     "events": [],
     "exits": {},
     "warps": {
@@ -1774,7 +1778,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "ITEM_CELADON_CITY_HOTEL_CELADON_KEY"
+    ],
     "events": [],
     "exits": {},
     "warps": {
@@ -2130,7 +2136,8 @@
       "TRAINER_BLACK_BELT_HITOSHI_REWARD",
       "TRAINER_BLACK_BELT_MIKE_REWARD",
       "TRAINER_BLACK_BELT_AARON_REWARD",
-      "TRAINER_BLACK_BELT_KOICHI_REWARD"
+      "TRAINER_BLACK_BELT_KOICHI_REWARD",
+      "ITEM_SAFFRON_CITY_DOJO_SAFFRON_KEY"
     ],
     "events": [
       "GIFT_POKEMON_HITMONCHAN",

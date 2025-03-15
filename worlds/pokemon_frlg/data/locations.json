@@ -207,7 +207,7 @@
     "category": "KEY_ITEM"
   },
   "NPC_GIFT_GOT_TEACHY_TV": {
-    "name": "Viridian City - Old Man Gift",
+    "name": "Viridian City - Tutorial Man Gift",
     "tags": ["NPC Gifts", "Kanto", "Viridian City"],
     "category": "KEY_ITEM"
   },
@@ -441,6 +441,42 @@
     "name": "Celadon Condominiums 1F - Erika Gift",
     "tags": ["NPC Gifts", "Kanto", "Celadon City"],
     "category": "SPLIT_TEA"
+  },
+
+  "ITEM_PEWTER_MUSEUM_2F_PEWTER_KEY": {
+    "name": "Pewter Museum 2F - Item",
+    "tags": ["Overworld Items", "Kanto", "Pewter City"],
+    "category": "GYM_KEY"
+  },
+  "NPC_GIFT_GOT_CERULEAN_KEY": {
+    "name": "Route 25 - Man Gift",
+    "tags": ["NPC Gifts", "Kanto", "Rotue 25"],
+    "category": "GYM_KEY"
+  },
+  "ITEM_DIGLETTS_CAVE_B1F_VERMILION_KEY": {
+    "name": "Diglett's Cave B1F - Item",
+    "tags": ["Overworld Items", "Kanto", "Diglett's Cave"],
+    "category": "GYM_KEY"
+  },
+  "ITEM_CELADON_CITY_HOTEL_CELADON_KEY": {
+    "name": "Celadon Hotel - Item",
+    "tags": ["Overworld Items", "Kanto", "Celadon City"],
+    "category": "GYM_KEY"
+  },
+  "ITEM_SAFARI_ZONE_EAST_RESTHOUSE_FUCHSIA_KEY": {
+    "name": "Safari Zone East Rest House - Item",
+    "tags": ["Overworld Items", "Kanto", "Safari Zone"],
+    "category": "GYM_KEY"
+  },
+  "ITEM_SAFFRON_CITY_DOJO_SAFFRON_KEY": {
+    "name": "Saffron Dojo - Item (Center)",
+    "tags": ["Overworld Items", "Kanto", "Saffron City"],
+    "category": "GYM_KEY"
+  },
+  "NPC_GIFT_GOT_VIRIDIAN_KEY": {
+    "name": "Viridian City - Old Man Gift",
+    "tags": ["NPC Gifts", "Kanto", "Viridian City"],
+    "category": "GYM_KEY"
   },
 
   "ITEM_CELADON_CITY_ETHER": {

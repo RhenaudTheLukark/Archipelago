@@ -270,6 +270,23 @@ class SplitTeas(Toggle):
     display_name = "Split Teas"
 
 
+class GymKeys(Toggle):
+    """
+    Adds keys that are needed to enter each of the gyms similar to the Secret Key. Renames the Secret Key to the
+    Cinnabar Key.
+
+    Adds seven new locations:
+    - Item in the Pewter Museum 2F
+    - Item from Man on a Date at Route 25
+    - Item in Diglett's Cave B1F
+    - Item in the Celadon Hotel
+    - Item in the Safari Zone East Rest House
+    - Item in the Saffron Dojo
+    - Item from the Old Man near Viridian Gym
+    """
+    display_name = "Gym Keys"
+
+
 class ItemfinderRequired(Choice):
     """
     Sets whether the Itemfinder if required for Hidden Items. Some items cannot be picked up without using the
@@ -1079,6 +1096,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     card_key: SilphCoCardKey
     island_passes: SeviiIslandPasses
     split_teas: SplitTeas
+    gym_keys: GymKeys
 
     itemfinder_required: ItemfinderRequired
     flash_required: FlashRequired

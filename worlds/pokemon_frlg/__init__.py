@@ -313,6 +313,8 @@ class PokemonFRLGWorld(World):
             categories.add(LocationCategory.SPLIT_TEA)
         if self.options.shuffle_running_shoes != ShuffleRunningShoes.option_vanilla:
             categories.add(LocationCategory.RUNNING_SHOES)
+        if self.options.gym_keys:
+            categories.add(LocationCategory.GYM_KEY)
         create_locations_from_categories(self, regions, categories)
 
         self.multiworld.regions.extend(regions.values())
@@ -414,6 +416,10 @@ class PokemonFRLGWorld(World):
         if self.options.split_teas:
             itempool = [item for item in itempool if item.name != "Tea"]
             itempool.append(self.create_item("Green Tea"))
+
+        if self.options.gym_keys:
+            itempool = [item for item in itempool if item.name != "Secret Key"]
+            itempool.append(self.create_item("Cinnabar Key"))
 
         unique_items = set()
         for item in itempool.copy():
@@ -773,6 +779,7 @@ class PokemonFRLGWorld(World):
             "card_key",
             "island_passes",
             "split_teas",
+            "gym_keys",
             "itemfinder_required",
             "flash_required",
             "fame_checker_required",

@@ -5,11 +5,14 @@ from typing import TYPE_CHECKING
 from worlds.generic.Rules import add_rule, set_rule
 from .data import data, LocationCategory, NATIONAL_ID_TO_SPECIES_ID, NUM_REAL_SPECIES
 from .locations import PokemonFRLGLocation
-from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_cut, can_enter_cerulean_cave,
-                    can_enter_silph, can_enter_viridian_gym, can_evolve, can_fly, can_leave_cerulean, can_leave_pewter,
-                    can_leave_viridian, can_navigate_dark_caves, can_open_silph_door, can_pass_route_22_gate,
-                    can_pass_route_23_guard, can_rock_smash, can_sail_island, can_sail_vermilion, can_strength,
-                    can_surf, can_waterfall, has_n_pokemon, has_pokemon, post_game_gossipers, saffron_rockets_gone)
+from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_challenge_giovanni, can_cut,
+                    can_enter_celadon_gym, can_enter_cerulean_cave, can_enter_cerulean_gym, can_enter_cinnabar_gym,
+                    can_enter_fuchsia_gym, can_enter_pewter_gym, can_enter_saffron_gym, can_enter_silph,
+                    can_enter_vermilion_gym, can_enter_viridian_gym, can_evolve, can_fly, can_leave_cerulean,
+                    can_leave_pewter, can_leave_viridian, can_navigate_dark_caves, can_open_silph_door,
+                    can_pass_route_22_gate, can_pass_route_23_guard, can_rock_smash, can_sail_island,
+                    can_sail_vermilion, can_strength, can_surf, can_waterfall, has_n_pokemon, has_pokemon,
+                    post_game_gossipers, saffron_rockets_gone)
 from .options import (Dexsanity, GameVersion, Goal, ItemfinderRequired, LevelScaling, SeviiIslandPasses,
                       ShuffleHiddenItems, ShuffleRunningShoes, Trainersanity)
 
@@ -79,7 +82,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_surf(state, player, world))
 
     # Viridian City
-    set_rule(world.get_location("Viridian City - Old Man Gift"),
+    set_rule(world.get_location("Viridian City - Tutorial Man Gift"),
              lambda state: can_leave_viridian(state, player, options))
     set_rule(world.get_entrance("Viridian City South Roadblock"),
              lambda state: can_leave_viridian(state, player, options) or
@@ -87,7 +90,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_entrance("Viridian City South Surfing Spot"),
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Viridian Gym"),
-             lambda state: can_enter_viridian_gym(state, player, options))
+             lambda state: can_challenge_giovanni(state, player, options) and
+                           can_enter_viridian_gym(state, player, options))
 
     # Route 22
     set_rule(world.get_location("Route 22 - Early Rival Battle"),
@@ -131,6 +135,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Pewter City Exit (East)"),
              lambda state: can_leave_pewter(state, player, options))
+    set_rule(world.get_entrance("Pewter Gym"),
+             lambda state: can_enter_pewter_gym(state, player, options))
 
     # Mt. Moon
     if "Mt. Moon" in options.additional_dark_caves.value:
@@ -154,6 +160,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
                            can_cut(state, player, world))
     set_rule(world.get_entrance("Robbed House (Front)"),
              lambda state: can_leave_cerulean(state, player, options))
+    set_rule(world.get_entrance("Cerulean Gym"),
+             lambda state: can_enter_cerulean_gym(state, player, options))
     set_rule(world.get_entrance("Cerulean City Outskirts Exit (East)"),
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Cerulean City Near Cave Surfing Spot"),
@@ -219,12 +227,14 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Vermilion City Surfing Spot"),
              lambda state: can_surf(state, player, world))
+    set_rule(world.get_entrance("Vermilion City Checkpoint"),
+             lambda state: state.has("S.S. Ticket", player))
     set_rule(world.get_entrance("Vermilion City Near Gym Cuttable Tree"),
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Vermilion City Near Gym Surfing Spot"),
              lambda state: can_surf(state, player, world))
-    set_rule(world.get_entrance("Vermilion City Checkpoint"),
-             lambda state: state.has("S.S. Ticket", player))
+    set_rule(world.get_entrance("Vermilion Gym"),
+             lambda state: can_enter_vermilion_gym(state, player, options))
 
     # S.S. Anne
     set_rule(world.get_entrance("S.S. Anne Exterior Surfing Spot"),
@@ -357,6 +367,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Celadon City Near Gym Cuttable Tree"),
              lambda state: can_cut(state, player, world))
+    set_rule(world.get_entrance("Celadon Gym"),
+             lambda state: can_enter_celadon_gym(state, player, options))
     set_rule(world.get_entrance("Rocket Hideout"),
              lambda state: state.has("Hideout Key", player) or
                            not options.extra_key_items)
@@ -490,6 +502,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: state.has("Gold Teeth", player))
     set_rule(world.get_location("Safari Zone Warden's House - Item"),
              lambda state: can_strength(state, player, world))
+    set_rule(world.get_entrance("Fuchsia Gym"),
+             lambda state: can_enter_fuchsia_gym(state, player, options))
     set_rule(world.get_entrance("Fuchsia City Backyard Surfing Spot"),
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Safari Zone"),
@@ -519,7 +533,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_entrance("Copycat's House"),
              lambda state: saffron_rockets_gone(state, player, options))
     set_rule(world.get_entrance("Saffron Gym"),
-             lambda state: saffron_rockets_gone(state, player, options))
+             lambda state: saffron_rockets_gone(state, player, options) and
+                           can_enter_saffron_gym(state, player, options))
     set_rule(world.get_entrance("Saffron Pidgey House"),
              lambda state: saffron_rockets_gone(state, player, options))
 
@@ -650,7 +665,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_entrance("Cinnabar Island Surfing Spot"),
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Cinnabar Gym"),
-             lambda state: state.has("Secret Key", player))
+             lambda state: can_enter_cinnabar_gym(state, player, options))
     set_rule(world.get_entrance("Pokemon Mansion"),
              lambda state: state.has("Letter", player) or
                            not options.extra_key_items)
@@ -1307,18 +1322,6 @@ def set_pokemon_request_rules(world: "PokemonFRLGWorld"):
                  lambda state: state.has("Heracross", player))
 
 
-def set_split_tea_rules(world: "PokemonFRLGWorld"):
-    player = world.player
-
-    # Celadon City
-    set_rule(world.get_location("Celadon Condominiums 1F - Brock Gift"),
-             lambda state: state.has("Defeat Brock", player))
-    set_rule(world.get_location("Celadon Condominiums 1F - Misty Gift"),
-             lambda state: state.has("Defeat Misty", player))
-    set_rule(world.get_location("Celadon Condominiums 1F - Erika Gift"),
-             lambda state: state.has("Defeat Erika", player))
-
-
 def set_split_pass_rules(world: "PokemonFRLGWorld"):
     player = world.player
 
@@ -1338,6 +1341,27 @@ def set_split_pass_rules(world: "PokemonFRLGWorld"):
     # Dotted Hole
     set_rule(world.get_location("Dotted Hole 1F - Dropped Item"),
              lambda state: state.has("Learn Yes Nah Chansey", player))
+
+
+def set_split_tea_rules(world: "PokemonFRLGWorld"):
+    player = world.player
+
+    # Celadon City
+    set_rule(world.get_location("Celadon Condominiums 1F - Brock Gift"),
+             lambda state: state.has("Defeat Brock", player))
+    set_rule(world.get_location("Celadon Condominiums 1F - Misty Gift"),
+             lambda state: state.has("Defeat Misty", player))
+    set_rule(world.get_location("Celadon Condominiums 1F - Erika Gift"),
+             lambda state: state.has("Defeat Erika", player))
+
+
+def set_gym_key_rules(world: "PokemonFRLGWorld"):
+    player = world.player
+    options = world.options
+
+    # Viridian City
+    set_rule(world.get_location("Viridian City - Old Man Gift"),
+             lambda state: can_challenge_giovanni(state, player, options))
 
 
 def set_scaling_rules(world: "PokemonFRLGWorld"):
@@ -1415,11 +1439,13 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
         set_famesanity_rules(world)
     if options.pokemon_request_locations:
         set_pokemon_request_rules(world)
-    if options.split_teas:
-        set_split_tea_rules(world)
     if ((options.island_passes == SeviiIslandPasses.option_split or
          options.island_passes == SeviiIslandPasses.option_progressive_split) and
             not options.kanto_only):
         set_split_pass_rules(world)
+    if options.split_teas:
+        set_split_tea_rules(world)
+    if options.gym_keys:
+        set_gym_key_rules(world)
     if options.level_scaling != LevelScaling.option_off:
         set_scaling_rules(world)
