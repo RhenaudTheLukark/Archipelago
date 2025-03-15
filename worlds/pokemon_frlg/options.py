@@ -961,7 +961,7 @@ class FreeFlyBlacklist(OptionSet):
     """
     Prevents certain towns from being chosen as your free fly location.
     """
-    display_name = "Starting Town Blacklist"
+    display_name = "Free Fly Blacklist"
     valid_keys = list(fly_blacklist_map.keys())
 
 
@@ -977,7 +977,7 @@ class TownMapFlyBlacklist(OptionSet):
     """
     Prevents certain towns from being chosen as your town map fly location.
     """
-    display_name = "Starting Town Blacklist"
+    display_name = "Town Map Fly Blacklist"
     valid_keys = list(fly_blacklist_map.keys())
 
 
