@@ -715,6 +715,20 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
         flash_level_address = data.rom_addresses[game_version_revision]["sFlashLevelToRadius"]
         tokens.write_token(APTokenTypes.WRITE, flash_level_address + 8, struct.pack("<H", 0))
 
+    # Set skip elite four
+    if world.options.skip_elite_four:
+        indigo_address = data.maps["MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F"].warp_table_address[game_version_revision]
+        champion_address = data.maps["MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM"].warp_table_address[game_version_revision]
+        tokens.write_token(
+            APTokenTypes.WRITE,
+            indigo_address + 6,
+            struct.pack("<H", data.constants["MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM"]))
+        tokens.write_token(
+            APTokenTypes.WRITE,
+            champion_address + 6,
+            struct.pack("<H", data.constants["MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F"])
+        )
+
     # Randomize music
     if world.options.randomize_music:
         # The "randomized sound table" is a patchboard that redirects sounds just before they get played
@@ -809,6 +823,7 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenM
         elif fly_data[4] == 4:
             fly_map_address += fly_map_sevii_67_address
         tokens.write_token(APTokenTypes.WRITE, fly_map_address, struct.pack("<B", fly_map_value))
+
 
 def _set_species_info(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str) -> None:
     for species in world.modified_species.values():

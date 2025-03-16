@@ -383,7 +383,11 @@ def create_scaling_data(world: "PokemonFRLGWorld"):
                         "data_ids": ["TRAINER_ELITE_FOUR_LORELEI", "TRAINER_ELITE_FOUR_BRUNO",
                                      "TRAINER_ELITE_FOUR_AGATHA", "TRAINER_ELITE_FOUR_LANCE",
                                      "TRAINER_CHAMPION_FIRST_BULBASAUR", "TRAINER_CHAMPION_FIRST_CHARMANDER",
-                                     "TRAINER_CHAMPION_FIRST_SQUIRTLE"]}]
+                                     "TRAINER_CHAMPION_FIRST_SQUIRTLE"]}],
+        "Champion": [{"name": "Champion",
+                      "connections": ["Pokemon League Champion's Room"],
+                      "data_ids": ["TRAINER_CHAMPION_FIRST_BULBASAUR", "TRAINER_CHAMPION_FIRST_CHARMANDER",
+                                   "TRAINER_CHAMPION_FIRST_SQUIRTLE"]}]
     }
 
     sevii_trainer_data = {
@@ -494,7 +498,11 @@ def create_scaling_data(world: "PokemonFRLGWorld"):
                                              "TRAINER_ELITE_FOUR_AGATHA_2", "TRAINER_ELITE_FOUR_LANCE_2",
                                              "TRAINER_CHAMPION_REMATCH_BULBASAUR",
                                              "TRAINER_CHAMPION_REMATCH_CHARMANDER",
-                                             "TRAINER_CHAMPION_REMATCH_SQUIRTLE"]}]
+                                             "TRAINER_CHAMPION_REMATCH_SQUIRTLE"]}],
+        "Champion Rematch": [{"name": "Champion Rematch",
+                              "connections": ["Pokemon League Champion's Room"],
+                              "data_ids": ["TRAINER_CHAMPION_REMATCH_BULBASAUR", "TRAINER_CHAMPION_REMATCH_CHARMANDER",
+                                           "TRAINER_CHAMPION_REMATCH_SQUIRTLE"]}]
     }
 
     kanto_wild_encounter_data = {
@@ -888,6 +896,10 @@ def create_scaling_data(world: "PokemonFRLGWorld"):
         scaling_data.data_ids.extend(data_ids)
 
     for region, trainers in kanto_trainer_data.items():
+        if world.options.skip_elite_four and region == "Elite Four":
+            continue
+        elif not world.options.skip_elite_four and region == "Champion":
+            continue
         for trainer in trainers:
             scaling_data = create_scaling_data(region, trainer, LocationCategory.EVENT_TRAINER_SCALING)
             world.scaling_data.append(scaling_data)
@@ -904,6 +916,10 @@ def create_scaling_data(world: "PokemonFRLGWorld"):
 
     if not world.options.kanto_only:
         for region, trainers in sevii_trainer_data.items():
+            if world.options.skip_elite_four and region == "Elite Four Rematch":
+                continue
+            elif not world.options.skip_elite_four and region == "Champion Rematch":
+                continue
             for trainer in trainers:
                 scaling_data = next((data for data in world.scaling_data
                                      if data.name == trainer["name"]), None)
@@ -1081,8 +1097,13 @@ def level_scaling(multiworld: MultiWorld):
             continue
 
         game_version = world.options.game_version.current_key
-        e4_rematch_adjustment = 63 / 51
-        e4_base_level = 51
+
+        if world.options.skip_elite_four:
+            e4_rematch_adjustment = 72 / 57
+            e4_base_level = 57
+        else:
+            e4_rematch_adjustment = 63 / 51
+            e4_base_level = 51
 
         for sphere in spheres:
             scaling_locations = [loc for loc in sphere if loc.player == world.player
@@ -1100,9 +1121,9 @@ def level_scaling(multiworld: MultiWorld):
                 new_base_level = world.trainer_level_list.pop(0)
                 old_base_level = world.trainer_name_level_dict[trainer_location.name]
 
-                if trainer_location.name == "Elite Four":
+                if trainer_location.name == "Elite Four" or trainer_location.name == "Champion":
                     e4_base_level = new_base_level
-                elif trainer_location.name == "Elite Four Rematch":
+                elif trainer_location.name == "Elite Four Rematch" or trainer_location.name == "Champion Rematch":
                     new_base_level = max(new_base_level, round(e4_base_level * e4_rematch_adjustment))
 
                 for data_id in trainer_location.data_ids:

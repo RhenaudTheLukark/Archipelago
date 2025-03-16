@@ -25,6 +25,13 @@ SEVII_REQUIRED_EVENTS = [
     "Champion's Room - Champion Rematch Reward"
 ]
 
+ELITE_FOUR_REGIONS = [
+    "Pokemon League Lorelei's Room",
+    "Pokemon League Bruno's Room",
+    "Pokemon League Agatha's Room",
+    "Pokemon League Lance's Room"
+]
+
 STATIC_POKEMON_SPOILER_NAMES = {
     "STATIC_POKEMON_ELECTRODE_1": "Power Plant (Static)",
     "STATIC_POKEMON_ELECTRODE_2": "Power Plant (Static)",
@@ -127,7 +134,6 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
     }
 
     game_version = world.options.game_version.current_key
-    kanto_only = world.options.kanto_only
 
     def connect_to_map_encounters(regions: Dict[str, Region], region: Region, map_name: str, encounter_region_name: str,
                                   include_slots: Tuple[bool, bool, bool]):
@@ -205,10 +211,14 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
     regions: Dict[str, Region] = {}
     connections: List[Tuple[str, str, str]] = []
     for region_data in data.regions.values():
-        if kanto_only and not region_data.kanto:
+        if world.options.kanto_only and not region_data.kanto:
             continue
 
         region_name = region_data.name
+
+        if world.options.skip_elite_four and region_name in ELITE_FOUR_REGIONS:
+            continue
+
         new_region = PokemonFRLGRegion(region_name, world.player, world.multiworld)
 
         for event_id in region_data.events:
@@ -253,12 +263,12 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                 world.trade_pokemon.append([region_name, name])
 
         for region_id, exit_name in region_data.exits.items():
-            if kanto_only and not data.regions[region_id].kanto:
+            if world.options.kanto_only and not data.regions[region_id].kanto:
                 continue
-            region_exit = data.regions[region_id].name
-            if not kanto_only and region_exit == "Vermilion City" and exit_name == "Follow Bill":
+            exit_region_name = data.regions[region_id].name
+            if not world.options.kanto_only and exit_region_name == "Vermilion City" and exit_name == "Follow Bill":
                 continue
-            connections.append((exit_name, region_name, region_exit))
+            connections.append((exit_name, region_name, exit_region_name))
 
         for warp in region_data.warps:
             source_warp = data.warps[warp]
@@ -267,9 +277,14 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             dest_warp = data.warps[data.warp_map[warp]]
             if dest_warp.parent_region_id is None:
                 continue
-            if kanto_only and not data.regions[dest_warp.parent_region_id].kanto:
+            if world.options.kanto_only and not data.regions[dest_warp.parent_region_id].kanto:
                 continue
             dest_region_name = data.regions[dest_warp.parent_region_id].name
+            if world.options.skip_elite_four:
+                if source_warp.name == "Pokemon League":
+                    dest_region_name = "Pokemon League Champion's Room"
+                elif source_warp.name == "Pokemon League Champion's Room Exit (South)":
+                    dest_region_name = "Indigo Plateau Pokemon Center 1F"
             connections.append((source_warp.name, region_name, dest_region_name))
 
         regions[region_name] = new_region

@@ -216,9 +216,9 @@ class PokemonFRLGClient(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
-        if ctx.slot_data["goal"] == Goal.option_elite_four:
+        if ctx.slot_data["goal"] == Goal.option_champion:
             self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP"]
-        if ctx.slot_data["goal"] == Goal.option_elite_four_rematch:
+        if ctx.slot_data["goal"] == Goal.option_champion_rematch:
             self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP_REMATCH"]
 
         try:

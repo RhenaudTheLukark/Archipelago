@@ -24,9 +24,9 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     player = world.player
     options = world.options
 
-    if options.goal == Goal.option_elite_four:
+    if options.goal == Goal.option_champion:
         world.multiworld.completion_condition[player] = lambda state: state.has("Defeat Champion", player)
-    elif options.goal == Goal.option_elite_four_rematch:
+    elif options.goal == Goal.option_champion_rematch:
         world.multiworld.completion_condition[player] = lambda state: state.has("Defeat Champion (Rematch)", player)
 
     # Sky
@@ -1146,14 +1146,16 @@ def set_trainersanity_rules(world: "PokemonFRLGWorld"):
 
     if not options.kanto_only:
         # Indigo Plateau
-        set_rule(world.get_location("Lorelei's Room - Elite Four Lorelei Rematch Reward"),
-                 lambda state: can_challenge_elite_four_rematch(state, player, options))
-        set_rule(world.get_location("Bruno's Room - Elite Four Bruno Rematch Reward"),
-                 lambda state: can_challenge_elite_four_rematch(state, player, options))
-        set_rule(world.get_location("Agatha's Room - Elite Four Agatha Rematch Reward"),
-                 lambda state: can_challenge_elite_four_rematch(state, player, options))
-        set_rule(world.get_location("Lance's Room - Elite Four Lance Rematch Reward"),
-                 lambda state: can_challenge_elite_four_rematch(state, player, options))
+        if not options.skip_elite_four:
+            set_rule(world.get_location("Lorelei's Room - Elite Four Lorelei Rematch Reward"),
+                     lambda state: can_challenge_elite_four_rematch(state, player, options))
+            set_rule(world.get_location("Bruno's Room - Elite Four Bruno Rematch Reward"),
+                     lambda state: can_challenge_elite_four_rematch(state, player, options))
+            set_rule(world.get_location("Agatha's Room - Elite Four Agatha Rematch Reward"),
+                     lambda state: can_challenge_elite_four_rematch(state, player, options))
+            set_rule(world.get_location("Lance's Room - Elite Four Lance Rematch Reward"),
+                     lambda state: can_challenge_elite_four_rematch(state, player, options))
+
         set_rule(world.get_location("Champion's Room - Champion Rematch Reward"),
                  lambda state: can_challenge_elite_four_rematch(state, player, options))
 
@@ -1368,6 +1370,7 @@ def set_gym_key_rules(world: "PokemonFRLGWorld"):
 
 def set_scaling_rules(world: "PokemonFRLGWorld"):
     player = world.player
+    options = world.options
 
     # Route 22
     set_rule(world.get_location("Route 22 Early Rival"),
@@ -1395,7 +1398,7 @@ def set_scaling_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_location("Gift Aerodactyl"),
              lambda state: state.has("Old Amber", player))
 
-    if not world.options.kanto_only:
+    if not options.kanto_only:
         # Mt. Ember
         set_rule(world.get_location("Team Rocket Grunt 43"),
                  lambda state: state.has("Deliver Meteorite", player))
@@ -1405,8 +1408,9 @@ def set_scaling_rules(world: "PokemonFRLGWorld"):
                  lambda state: can_strength(state, player, world))
 
         # Indigo Plateau
-        set_rule(world.get_location("Elite Four Rematch"),
-                 lambda state: state.has_all(["Defeat Champion", "Restore Pokemon Network Machine"], player))
+        if not options.skip_elite_four:
+            set_rule(world.get_location("Elite Four Rematch"),
+                     lambda state: state.has_all(["Defeat Champion", "Restore Pokemon Network Machine"], player))
 
         # Tanoby Ruins
         set_rule(world.get_location("Monean Chamber Land Scaling 1"),

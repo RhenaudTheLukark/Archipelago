@@ -21,13 +21,21 @@ class Goal(Choice):
     """
     Sets what your goal is to consider the game beaten.
 
-    - Elite Four: Defeat the Elite Four
-    - Elite Four Rematch: Defeat the Elite Four Rematch
+    - Champion: Defeat the Champion
+    - Champion Rematch: Defeat the Champion Rematch
     """
     display_name = "Goal"
     default = 0
-    option_elite_four = 0
-    option_elite_four_rematch = 1
+    option_champion = 0
+    option_champion_rematch = 1
+
+
+class SkipEliteFour(Toggle):
+    """
+    Set whether to skip the Elite Four fights and go straight to the Champion fight when entering the
+    Pokemon League.
+    """
+    display_name = "Skip Elite Four"
 
 
 class KantoOnly(Toggle):
@@ -1092,6 +1100,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     game_version: GameVersion
 
     goal: Goal
+    skip_elite_four: SkipEliteFour
     kanto_only: KantoOnly
     random_starting_town: RandomStartingTown
     starting_town_blacklist: StartingTownBlacklist

@@ -114,6 +114,8 @@ def create_locations_from_categories(world: "PokemonFRLGWorld",
     for region_data in data.regions.values():
         if world.options.kanto_only and not region_data.kanto:
             continue
+        if region_data.name not in regions:
+            continue
 
         region = regions[region_data.name]
         included_locations = [loc for loc in region_data.locations if data.locations[loc].category in categories]

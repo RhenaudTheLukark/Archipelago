@@ -191,10 +191,10 @@ class PokemonFRLGWorld(World):
 
         # Modify options that are incompatible with each other
         if self.options.kanto_only:
-            if self.options.goal == Goal.option_elite_four_rematch:
+            if self.options.goal == Goal.option_champion_rematch:
                 logging.warning("Pokemon FRLG: Goal for player %s (%s) incompatible with Kanto Only. "
-                                "Setting goal to Elite Four.", self.player, self.player_name)
-                self.options.goal.value = Goal.option_elite_four
+                                "Setting goal to Champion.", self.player, self.player_name)
+                self.options.goal.value = Goal.option_champion
             if (self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_vanilla or
                     self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_restore_network):
                 logging.warning("Pokemon FRLG: Cerulean Cave Requirement for player %s (%s) "
@@ -333,7 +333,7 @@ class PokemonFRLGWorld(World):
                 except KeyError:
                     continue
 
-        if self.options.goal == Goal.option_elite_four:
+        if self.options.goal == Goal.option_champion:
             exclude_locations([
                 "Lorelei's Room - Elite Four Lorelei Rematch Reward",
                 "Bruno's Room - Elite Four Bruno Rematch Reward",
@@ -783,6 +783,7 @@ class PokemonFRLGWorld(World):
         slot_data = self.options.as_dict(
             "game_version",
             "goal",
+            "skip_elite_four",
             "kanto_only",
             "shuffle_badges",
             "shuffle_hidden",

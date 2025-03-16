@@ -134,6 +134,7 @@ class EncounterTableData(NamedTuple):
 class MapData:
     name: str
     header_address: Dict[str, int]
+    warp_table_address: Dict[str, int]
     land_encounters: Optional[EncounterTableData]
     water_encounters: Optional[EncounterTableData]
     fishing_encounters: Optional[EncounterTableData]
@@ -789,6 +790,7 @@ def init() -> None:
         data.maps[map_name] = MapData(
             map_name,
             map_json["header_address"],
+            map_json["warp_table_address"],
             land_encounters,
             water_encounters,
             fishing_encounters,
