@@ -151,6 +151,8 @@ def set_default_rules(world: "PokemonFRLGWorld"):
                 add_rule(location, lambda state: can_navigate_dark_caves(state, player, world))
 
     # Cerulean City
+    set_rule(world.get_location("Berry Powder Man's House - Berry Powder Man Gift"),
+             lambda state: state.has("Berry Pouch", player))
     set_rule(world.get_location("Bike Shop - Bicycle Purchase"),
              lambda state: state.has("Bike Voucher", player))
     set_rule(world.get_location("Cerulean Trade House - Trade Poliwhirl"),
@@ -665,7 +667,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_entrance("Cinnabar Island Surfing Spot"),
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Cinnabar Gym"),
-             lambda state: can_enter_cinnabar_gym(state, player, options))
+             lambda state: can_enter_cinnabar_gym(state, player))
     set_rule(world.get_entrance("Pokemon Mansion"),
              lambda state: state.has("Letter", player) or
                            not options.extra_key_items)

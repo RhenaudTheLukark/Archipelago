@@ -2216,8 +2216,18 @@
     "category": "HIDDEN_ITEM"
   },
 
+  "STARTING_ITEM_BERRY_POUCH": {
+    "name": "Title Screen - Starting Item 1",
+    "tags": ["Starting Items"],
+    "category": "STARTING_ITEM"
+  },
+  "STARTING_ITEM_TM_CASE": {
+    "name": "Title Screen - Starting Item 2",
+    "tags": ["Starting Items"],
+    "category": "STARTING_ITEM"
+  },
   "PC_ITEM_POTION": {
-    "name": "Player's PC - Starting Item",
+    "name": "Player's PC - PC Item",
     "tags": ["Starting Items"],
     "category": "STARTING_ITEM"
   },

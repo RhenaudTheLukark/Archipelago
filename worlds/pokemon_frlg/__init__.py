@@ -92,6 +92,7 @@ class PokemonFRLGWorld(World):
     location_name_groups = location_groups
 
     required_client_version = (0, 5, 1)
+    origin_region_name = "Title Screen"
 
     starting_town: str
     free_fly_location_id: int
@@ -386,6 +387,12 @@ class PokemonFRLGWorld(World):
         if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
             item_locations = [location for location in item_locations
                               if location.category != LocationCategory.FLY_UNLOCK]
+        if not self.options.shuffle_berry_pouch:
+            item_locations = [location for location in item_locations
+                              if location.name != "Title Screen - Starting Item 1"]
+        if not self.options.shuffle_tm_case:
+            item_locations = [location for location in item_locations
+                              if location.name != "Title Screen - Starting Item 2"]
 
         itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
 
@@ -468,11 +475,8 @@ class PokemonFRLGWorld(World):
 
         set_free_fly(self)
 
-        def create_events_for_unrandomized_items(category: LocationCategory) -> None:
-            for location in self.multiworld.get_locations(self.player):
-                assert isinstance(location, PokemonFRLGLocation)
-                if location.category != category:
-                    continue
+        def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
+            for location in locations:
                 location.place_locked_item(PokemonFRLGItem(self.item_id_to_name[location.default_item_id],
                                                            ItemClassification.progression,
                                                            None,
@@ -481,8 +485,12 @@ class PokemonFRLGWorld(World):
                 location.address = None
                 location.show_in_spoiler = False
 
+        unrandomized_progression_locations = set()
+
         if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
-            create_events_for_unrandomized_items(LocationCategory.FLY_UNLOCK)
+            fly_locations = [loc for loc in self.multiworld.get_locations(self.player)
+                             if loc.name in self.location_name_groups["Town Visits"]]
+            unrandomized_progression_locations.update(fly_locations)
         elif self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
             location = self.get_location("Indigo Plateau - Unlock Fly Destination")
             assert isinstance(location, PokemonFRLGLocation)
@@ -492,6 +500,13 @@ class PokemonFRLGWorld(World):
                                                        self.player))
             location.progress_type = LocationProgressType.DEFAULT
             self.multiworld.itempool.remove(self.create_item("Fly Indigo Plateau"))
+
+        if not self.options.shuffle_berry_pouch:
+            unrandomized_progression_locations.add(self.get_location("Title Screen - Starting Item 1"))
+        if not self.options.shuffle_tm_case:
+            unrandomized_progression_locations.add(self.get_location("Title Screen - Starting Item 2"))
+
+        create_events_for_unrandomized_items(unrandomized_progression_locations)
 
         self.verify_hm_accessibility()
 
@@ -776,6 +791,8 @@ class PokemonFRLGWorld(World):
             "shuffle_fly_unlocks",
             "pokemon_request_locations",
             "shuffle_running_shoes",
+            "shuffle_berry_pouch",
+            "shuffle_tm_case",
             "card_key",
             "island_passes",
             "split_teas",

@@ -471,12 +471,11 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             regions[region].entrances.append(exit)
             world.fly_destination_data[fly_destination_entrance_map[exit.name]] = warp
 
-    regions["Menu"] = PokemonFRLGRegion("Menu", world.player, world.multiworld)
-    regions["Menu"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
-    regions["Menu"].connect(regions["Player's PC"], "Use PC")
-    regions["Menu"].connect(regions["Pokedex"], "Pokedex")
-    regions["Menu"].connect(regions["Evolutions"], "Evolve")
-    regions["Menu"].connect(regions["Sky"], "Flying")
+    regions["Title Screen"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
+    regions["Title Screen"].connect(regions["Player's PC"], "Use PC")
+    regions["Title Screen"].connect(regions["Pokedex"], "Pokedex")
+    regions["Title Screen"].connect(regions["Evolutions"], "Evolve")
+    regions["Title Screen"].connect(regions["Sky"], "Flying")
 
     return regions
 

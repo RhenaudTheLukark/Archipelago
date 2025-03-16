@@ -208,13 +208,13 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         if free_fly_location_id in town_map_fly_list and len(town_map_fly_list) > 1:
             town_map_fly_list.remove(free_fly_location_id)
 
-        menu_region = world.multiworld.get_region("Menu", world.player)
+        start_region = world.multiworld.get_region("Title Screen", world.player)
         free_fly_location = PokemonFRLGLocation(
             world.player,
             "Free Fly Location",
             None,
             LocationCategory.EVENT,
-            menu_region,
+            start_region,
             None,
             None
         )
@@ -224,19 +224,19 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
                                                             None,
                                                             world.player))
         free_fly_location.show_in_spoiler = False
-        menu_region.locations.append(free_fly_location)
+        start_region.locations.append(free_fly_location)
 
     if world.options.town_map_fly_location:
         town_map_fly_location_id = world.random.choice(town_map_fly_list)
         world.town_map_fly_location_id = fly_item_id_map[town_map_fly_location_id]
 
-        menu_region = world.multiworld.get_region("Menu", world.player)
+        start_region = world.multiworld.get_region("Title Screen", world.player)
         town_map_fly_location = PokemonFRLGLocation(
             world.player,
             "Town Map Fly Location",
             None,
             LocationCategory.EVENT,
-            menu_region,
+            start_region,
             None,
             None
         )
@@ -247,4 +247,4 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
                                                                  world.player))
         town_map_fly_location.access_rule = lambda state: state.has("Town Map", world.player)
         town_map_fly_location.show_in_spoiler = False
-        menu_region.locations.append(town_map_fly_location)
+        start_region.locations.append(town_map_fly_location)

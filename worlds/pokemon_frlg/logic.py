@@ -40,43 +40,43 @@ def can_use_hm(state: CollectionState, player: int, world: "PokemonFRLGWorld", h
 
 
 def can_cut(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM01 Cut", player) and
+    return (state.has_all(["HM01 Cut", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Cut")
             and can_use_hm(state, player, world, "Cut"))
 
 
 def can_fly(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM02 Fly", player) and
+    return (state.has_all(["HM02 Fly", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Fly")
             and can_use_hm(state, player, world, "Fly"))
 
 
 def can_surf(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM03 Surf", player) and
+    return (state.has_all(["HM03 Surf", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Surf")
             and can_use_hm(state, player, world, "Surf"))
 
 
 def can_strength(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM04 Strength", player) and
+    return (state.has_all(["HM04 Strength", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Strength")
             and can_use_hm(state, player, world, "Strength"))
 
 
 def can_flash(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM05 Flash", player) and
+    return (state.has_all(["HM05 Flash", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Flash")
             and can_use_hm(state, player, world, "Flash"))
 
 
 def can_rock_smash(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM06 Rock Smash", player) and
+    return (state.has_all(["HM06 Rock Smash", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Rock Smash")
             and can_use_hm(state, player, world, "Rock Smash"))
 
 
 def can_waterfall(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
-    return (state.has("HM07 Waterfall", player) and
+    return (state.has_all(["HM07 Waterfall", "TM Case"], player) and
             has_badge_requirement(state, player, world.options, "Waterfall")
             and can_use_hm(state, player, world, "Waterfall"))
 
@@ -216,7 +216,7 @@ def can_enter_saffron_gym(state: CollectionState, player: int, options: PokemonF
     return not options.gym_keys or state.has("Saffron Key", player)
 
 
-def can_enter_cinnabar_gym(state: CollectionState, player: int, options: PokemonFRLGOptions):
+def can_enter_cinnabar_gym(state: CollectionState, player: int):
     return state.has("Secret Key", player) or state.has("Cinnabar Key", player)
 
 

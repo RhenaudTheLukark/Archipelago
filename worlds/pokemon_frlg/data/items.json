@@ -81,6 +81,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Event Tickets", "Unique Items"]
   },
+  "ITEM_BERRY_POUCH": {
+    "name": "Berry Pouch",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_BICYCLE": {
     "name": "Bicycle",
     "classification": "PROGRESSION",
@@ -415,6 +420,11 @@
     "name": "Thunder Stone",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Evolution Items","Unique Items"]
+  },
+  "ITEM_TM_CASE": {
+    "name": "TM Case",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
   },
   "ITEM_TOWN_MAP": {
     "name": "Town Map",

@@ -989,7 +989,7 @@ def level_scaling(multiworld: MultiWorld):
                 for world in multiworld.get_game_worlds("Pokemon FireRed and LeafGreen"):
                     if world.options.level_scaling != LevelScaling.option_spheres_and_distance:
                         continue
-                    regions = {multiworld.get_region("Menu", world.player)}
+                    regions = {multiworld.get_region("Title Screen", world.player)}
                     checked_regions = set()
                     distance = 0
                     while regions:

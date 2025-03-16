@@ -703,7 +703,7 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x47, struct.pack("<H", species_id))
 
     # Set PC item ID
-    pc_item_location = world.get_location("Player's PC - Starting Item")
+    pc_item_location = world.get_location("Player's PC - PC Item")
     if pc_item_location.item.player == world.player:
         item_id = pc_item_location.item.code
     else:

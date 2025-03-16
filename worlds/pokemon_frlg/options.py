@@ -220,6 +220,20 @@ class ShuffleRunningShoes(Choice):
     option_start_with = 2
 
 
+class ShuffleBerryPouch(Toggle):
+    """
+    Shuffles the berry pouch into the item pool. If not shuffled then you will start with it.
+    """
+    display_name = "Shuffle Berry Pouch"
+
+
+class ShuffleTMCase(Toggle):
+    """
+    Shuffles the TM case into the item pool. If not shuffled then you will start with it.
+    """
+    display_name = "Shuffle TM Case"
+
+
 class SilphCoCardKey(Choice):
     """
     Sets how the card key that unlocks the doors in Silph Co. is handled. If Split or Progressive, nine new locations
@@ -1093,6 +1107,8 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_fly_unlocks: ShuffleFlyUnlocks
     pokemon_request_locations: PokemonRequestLocations
     shuffle_running_shoes: ShuffleRunningShoes
+    shuffle_berry_pouch: ShuffleBerryPouch
+    shuffle_tm_case: ShuffleTMCase
     card_key: SilphCoCardKey
     island_passes: SeviiIslandPasses
     split_teas: SplitTeas
