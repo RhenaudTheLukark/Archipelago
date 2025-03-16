@@ -1585,7 +1585,7 @@ kanto_fly_destinations = {
             (3, 2, 9, 31, 1, 92)
         ],
         "Pewter City Near Museum": [
-            (3, 2, 9, 25, 1, 92)
+            (3, 2, 25, 5, 1, 92)
         ]
     },
     "Cerulean City": {
