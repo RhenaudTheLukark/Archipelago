@@ -65,6 +65,25 @@ class StartingTownBlacklist(OptionSet):
     valid_keys = list(starting_town_blacklist_map.keys())
 
 
+class DungeonEntranceShuffle(Choice):
+    """
+    Shuffles dungeon entrances.
+
+    Off: Dungeon entrances are not shuffled.
+    Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances
+            for multi entrance dungeons will lead to the same dungeon.
+    Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both
+                entrances for multi entrance dungeons do not need to lead to the same dungeon.
+    Full: All dungeon entrances are shuffled together.
+    """
+    display_name = "Dungeon Entrance Shuffle"
+    default = 0
+    option_off = 0
+    option_simple = 1
+    option_restricted = 2
+    option_full = 3
+
+
 class RandomizeFlyDestinations(Toggle):
     """
     Randomizes where each fly point takes you. The new fly destinations can be almost any outdoor warp point in the
@@ -1104,6 +1123,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     kanto_only: KantoOnly
     random_starting_town: RandomStartingTown
     starting_town_blacklist: StartingTownBlacklist
+    dungeon_entrance_shuffle: DungeonEntranceShuffle
     randomize_fly_destinations: RandomizeFlyDestinations
     fly_destination_plando: FlyDestinationPlando
 
