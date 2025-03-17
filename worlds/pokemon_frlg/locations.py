@@ -32,7 +32,7 @@ fly_item_id_map = {
 }
 
 sevii_required_locations = [
-    "One Cinnabar Pokemon Center 1F - Bill",
+    "One Cinnabar Pokemon Center 1F - Bill Gift",
     "Lorelei's Room - Elite Four Lorelei Rematch Reward",
     "Bruno's Room - Elite Four Bruno Rematch Reward",
     "Agatha's Room - Elite Four Agatha Rematch Reward",

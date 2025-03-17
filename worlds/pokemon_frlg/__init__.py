@@ -8,14 +8,16 @@ import threading
 import settings
 import pkgutil
 
-from typing import Any, ClassVar, Dict, List, Set, TextIO, Tuple
+from typing import Any, ClassVar, Dict, List, Optional, Set, TextIO, Tuple
 
 from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
 from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
+from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
 from .data import (data as frlg_data, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID, LocationCategory, EventData,
                    MapData, MiscPokemonData, SpeciesData, StarterData, TrainerData)
+from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
 from .level_scaling import ScalingData, create_scaling_data, level_scaling
@@ -23,9 +25,9 @@ from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, cre
                         set_free_fly)
 from .logic import (can_cut, can_flash, can_fly, can_rock_smash, can_strength, can_surf, can_waterfall,
                     has_badge_requirement)
-from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, FlashRequired, FreeFlyLocation,
-                      GameVersion, Goal, RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon,
-                      SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
+from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle, FlashRequired,
+                      FreeFlyLocation, GameVersion, Goal, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
+                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
                       ShuffleRunningShoes, SilphCoCardKey, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_legendaries, randomize_misc_pokemon,
                       randomize_moves, randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves,
@@ -91,7 +93,7 @@ class PokemonFRLGWorld(World):
     item_name_groups = item_groups
     location_name_groups = location_groups
 
-    required_client_version = (0, 5, 1)
+    required_client_version = (0, 6, 0)
     origin_region_name = "Title Screen"
 
     starting_town: str
@@ -125,6 +127,8 @@ class PokemonFRLGWorld(World):
     pre_fill_items: List[PokemonFRLGItem]
     filler_items: List[PokemonFRLGItem]
     fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
+    er_placement_state: Optional[ERPlacementState]
+    er_spoiler_names: List[str]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -155,6 +159,8 @@ class PokemonFRLGWorld(World):
         self.pre_fill_items = list()
         self.filler_items = list()
         self.fly_destination_data = dict()
+        self.er_placement_state = None
+        self.er_spoiler_names = list()
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -477,6 +483,9 @@ class PokemonFRLGWorld(World):
         set_free_fly(self)
         if not self.options.shuffle_badges:
             self.shuffle_badges()
+        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
+            shuffle_entrances(self)
+            self.verify_hm_accessibility()
 
     def fill_unrandomized_locations(self) -> None:
         def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
@@ -691,6 +700,13 @@ class PokemonFRLGWorld(World):
             spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name[4:]}\n")
 
     def write_spoiler(self, spoiler_handle: TextIO) -> None:
+        # Add dungeon entrances to the spoiler log if they are shuffled
+        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
+            spoiler_handle.write(f"\n\nDungeon Entrances ({self.multiworld.player_name[self.player]}):\n\n")
+            for entrance, exit in self.er_placement_state.pairings:
+                if entrance in self.er_spoiler_names:
+                    spoiler_handle.write(f"{entrance} <=> {exit}\n")
+
         # Add fly destinations to the spoiler log if they are randomized
         if self.options.randomize_fly_destinations:
             spoiler_handle.write(f"\n\nFly Destinations ({self.multiworld.player_name[self.player]}):\n\n")

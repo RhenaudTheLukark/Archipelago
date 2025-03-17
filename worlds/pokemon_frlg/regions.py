@@ -2,7 +2,8 @@
 Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/regions for region definitions)
 """
 from typing import TYPE_CHECKING, Dict, List, Tuple, Optional, Callable
-from BaseClasses import Region, CollectionState, ItemClassification
+from BaseClasses import Entrance, EntranceType, Region, CollectionState, ItemClassification
+from entrance_rando import ERPlacementState
 from .data import data, LocationCategory, kanto_fly_destinations, sevii_fly_destinations, starting_town_blacklist_map
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
@@ -107,8 +108,18 @@ fly_destination_entrance_map = {
 }
 
 
+class PokemonFRLGEntrance(Entrance):
+    connected_entrance_name: Optional[str] = None
+
+    def can_connect_to(self, other: Entrance, dead_end: bool, er_state: "ERPlacementState") -> bool:
+        return (self.randomization_type == other.randomization_type
+                and (not er_state.coupled or self.name != other.name)
+                and (self.connected_entrance_name is None or self.connected_entrance_name == other.name))
+
+
 class PokemonFRLGRegion(Region):
     distance: Optional[int]
+    entrance_type = PokemonFRLGEntrance
 
     def __init__(self, name, player, multiworld):
         super().__init__(name, player, multiworld)

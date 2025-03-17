@@ -70,8 +70,8 @@ class DungeonEntranceShuffle(Choice):
     Shuffles dungeon entrances.
 
     Off: Dungeon entrances are not shuffled.
-    Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances
-            for multi entrance dungeons will lead to the same dungeon.
+    Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both
+            entrances for multi entrance dungeons will connect to the same dungeon.
     Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both
                 entrances for multi entrance dungeons do not need to lead to the same dungeon.
     Full: All dungeon entrances are shuffled together.

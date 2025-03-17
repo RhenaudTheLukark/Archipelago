@@ -9,10 +9,10 @@ from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTok
 from settings import get_settings
 from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
-from .options import (Dexsanity, FlashRequired, ForceFullyEvolved, ItemfinderRequired, HmCompatibility, LevelScaling,
-                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeStarters, RandomizeTrainerParties,
-                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems,
-                      SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
+from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
+                      HmCompatibility, LevelScaling, RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeStarters,
+                      RandomizeTrainerParties, RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks,
+                      ShuffleHiddenItems, SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -313,6 +313,9 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
 
     # Set randomized fly destinations
     _set_randomized_fly_destinations(world, tokens, game_version_revision)
+
+    # Set shuffled entrances
+    _set_shuffled_entrances(world, tokens, game_version_revision)
 
     # Set species data
     _set_species_info(world, tokens, game_version_revision)
@@ -721,7 +724,7 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
         champion_address = data.maps["MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM"].warp_table_address[game_version_revision]
         tokens.write_token(
             APTokenTypes.WRITE,
-            indigo_address + 6,
+            indigo_address + 14,
             struct.pack("<H", data.constants["MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM"]))
         tokens.write_token(
             APTokenTypes.WRITE,
@@ -765,6 +768,40 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, data.rom_addresses[game_version_revision]["gArchipelagoInfo"], world.auth)
 
     return tokens
+
+
+def _set_shuffled_entrances(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):
+    if world.options.dungeon_entrance_shuffle == DungeonEntranceShuffle.option_off:
+        return
+
+    for source_name, dest_name in world.er_placement_state.pairings:
+        source_id = data.warp_name_map[source_name]
+        dest_id = data.warp_name_map[dest_name]
+        source_warp_data = data.warps[source_id]
+        dest_warp_data = data.warps[dest_id]
+        source_warp_table_address = data.maps[source_warp_data.source_map].warp_table_address[game_version_revision]
+        dest_map_id = data.constants[dest_warp_data.source_map]
+        if len(source_warp_data.source_ids) <= len(dest_warp_data.source_ids):
+            for i, source_warp_id in enumerate(source_warp_data.source_ids):
+                dest_warp_id = dest_warp_data.source_ids[i]
+                source_warp_address = source_warp_table_address + (source_warp_id * 8)
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 5, struct.pack("<B", dest_warp_id))
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 6, struct.pack("<H", dest_map_id))
+        elif len(dest_warp_data.source_ids) == 1:
+            dest_warp_id = dest_warp_data.source_ids[0]
+            for source_warp_id in source_warp_data.source_ids:
+                source_warp_address = source_warp_table_address + (source_warp_id * 8)
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 5, struct.pack("<B", dest_warp_id))
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 6, struct.pack("<H", dest_map_id))
+        elif len(source_warp_data.source_ids) > len(dest_warp_data.source_ids):
+            for i, source_warp_id in enumerate(source_warp_data.source_ids):
+                if i <= 1:
+                    dest_warp_id = dest_warp_data.source_ids[0]
+                else:
+                    dest_warp_id = dest_warp_data.source_ids[1]
+                source_warp_address = source_warp_table_address + (source_warp_id * 8)
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 5, struct.pack("<B", dest_warp_id))
+                tokens.write_token(APTokenTypes.WRITE, source_warp_address + 6, struct.pack("<H", dest_map_id))
 
 
 def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):

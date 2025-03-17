@@ -296,6 +296,7 @@ class PokemonFRLGData:
     maps: Dict[str, MapData]
     warps: Dict[str, Warp]
     warp_map: Dict[str, Optional[str]]
+    warp_name_map: Dict[str, str]
     species: Dict[int, SpeciesData]
     evolutions: Dict[str, EvolutionData]
     starters: Dict[str, StarterData]
@@ -317,6 +318,7 @@ class PokemonFRLGData:
         self.maps = {}
         self.warps = {}
         self.warp_map = {}
+        self.warp_name_map = {}
         self.species = {}
         self.evolutions = {}
         self.starters = {}
@@ -905,6 +907,8 @@ def init() -> None:
             new_region.warps.append(encoded_warp)
             data.warps[encoded_warp] = Warp(encoded_warp, name, region_id)
             claimed_warps.add(encoded_warp)
+            if name != "":
+                data.warp_name_map[name] = encoded_warp
 
         new_region.warps.sort()
 
