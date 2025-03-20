@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
 
 DEXSANITY_OFFSET = 0x5000
+SHOPSANITY_OFFSET = 0x5200
 FAMESANITY_OFFSET = 0x6000
 
 BASE_ROM_NAME: Dict[str, str] = {
@@ -287,6 +288,20 @@ class PokemonFRLGClient(BizHawkClient):
                     fame_checker_bytes = read_result[0]
                     fame_checker_read_status = True
 
+            # Read shop flags
+            shop_bytes = bytes(0)
+            shop_read_status = False
+            if ctx.slot_data["shopsanity"]:
+                read_result = await bizhawk.guarded_read(
+                    ctx.bizhawk_ctx,
+                    [(sb2_address + 0xB20, 0x30, "System Bus")],  # Shop Flags
+                    [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
+                )
+
+                if read_result is not None:
+                    shop_bytes = read_result[0]
+                    shop_read_status = True
+
             # Read pokedex flags
             pokemon_caught_bytes = bytes(0)
             pokedex_read_status = False
@@ -340,6 +355,15 @@ class PokemonFRLGClient(BizHawkClient):
                                 if location_id in ctx.server_locations:
                                     local_checked_locations.add(location_id)
                             fame_checker_index += 1
+
+            # Check set shop flags
+            if shop_read_status:
+                for byte_i, byte in enumerate(shop_bytes):
+                    for i in range(8):
+                        if byte & (1 << i) != 0:
+                            location_id = SHOPSANITY_OFFSET + byte_i * 8 + i
+                            if location_id in ctx.server_locations:
+                                local_checked_locations.add(location_id)
 
             # Get caught Pokémon count
             if pokedex_read_status:

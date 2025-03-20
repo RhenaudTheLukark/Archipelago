@@ -2,7 +2,7 @@
 Logic rule definitions for Pokémon FireRed and LeafGreen
 """
 from typing import TYPE_CHECKING
-from worlds.generic.Rules import add_rule, set_rule
+from worlds.generic.Rules import add_item_rule, add_rule, set_rule
 from .data import data, LocationCategory, NATIONAL_ID_TO_SPECIES_ID, NUM_REAL_SPECIES
 from .locations import PokemonFRLGLocation
 from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_challenge_giovanni, can_cut,
@@ -867,7 +867,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
                  lambda state: can_cut(state, player, world))
         set_rule(world.get_location("Two Island Game Corner - Lostelle's Dad Gift (Deliver Meteorite)"),
                  lambda state: state.has_all(["Rescue Lostelle", "Meteorite"], player))
-        set_rule(world.get_location("Two Island Town - Market Stall Item 4"),
+        set_rule(world.get_location("Two Island Town - Market Stall Item 5"),
                  lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion"], player))
         set_rule(world.get_location("Two Island Game Corner - Lostelle's Dad's Delivery"),
                  lambda state: state.has_all(["Rescue Lostelle", "Meteorite"], player))
@@ -1100,6 +1100,36 @@ def set_extra_key_item_rules(world: "PokemonFRLGWorld"):
     set_rule(world.get_location("Cerulean Gym - Hidden Item in Water"),
              lambda state: can_surf(state, player, world) and
                            state.has("Itemfinder", player))
+
+
+def set_shopsanity_rules(world: "PokemonFRLGWorld"):
+    player = world.player
+    options = world.options
+
+    if not options.kanto_only:
+        # Two Island Town
+        set_rule(world.get_location("Two Island Town - Market Stall Item 2"),
+                 lambda state: state.has("Rescue Lostelle", player))
+        set_rule(world.get_location("Two Island Town - Market Stall Item 3"),
+                 lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"],
+                                             player))
+        set_rule(world.get_location("Two Island Town - Market Stall Item 4"),
+                 lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"],
+                                             player))
+        set_rule(world.get_location("Two Island Town - Market Stall Item 6"),
+                 lambda state: state.has("Rescue Lostelle", player))
+        set_rule(world.get_location("Two Island Town - Market Stall Item 8"),
+                 lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion"], player))
+        set_rule(world.get_location("Two Island Town - Market Stall Item 9"),
+                 lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"],
+                                             player))
+
+        for location in world.multiworld.get_locations(player):
+            assert isinstance(location, PokemonFRLGLocation)
+            if location.category == LocationCategory.SHOPSANITY:
+                add_item_rule(location, lambda i: i.player != player
+                                                  or (i.name not in world.item_name_groups["HMs"]
+                                                      and i.name not in world.item_name_groups["TMs"]))
 
 
 def set_trainersanity_rules(world: "PokemonFRLGWorld"):
@@ -1437,6 +1467,8 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
         set_hidden_item_rules(world)
     if options.extra_key_items:
         set_extra_key_item_rules(world)
+    if options.shopsanity:
+        set_shopsanity_rules(world)
     if options.trainersanity != Trainersanity.special_range_names["none"]:
         set_trainersanity_rules(world)
     if options.dexsanity != Dexsanity.special_range_names["none"]:

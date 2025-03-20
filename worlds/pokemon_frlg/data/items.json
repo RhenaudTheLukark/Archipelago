@@ -701,7 +701,7 @@
   },
   "ITEM_LEMONADE": {
     "name": "Lemonade",
-    "classification": "FILLER",
+    "classification": "PROGRESSION",
     "tags": ["Healing Items", "HP Healing Items"]
   },
   "ITEM_MOOMOO_MILK": {

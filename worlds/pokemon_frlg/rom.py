@@ -2,12 +2,13 @@
 Classes and functions related to creating a ROM patch
 """
 import bsdiff4
+import logging
 import struct
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
-from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
+from .data import data, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
                       HmCompatibility, LevelScaling, RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeStarters,
@@ -317,6 +318,9 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     # Set shuffled entrances
     _set_shuffled_entrances(world, tokens, game_version_revision)
 
+    # Set shop data
+    _set_shop_data(world, tokens, game_version_revision)
+
     # Set species data
     _set_species_info(world, tokens, game_version_revision)
 
@@ -423,20 +427,21 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     # /* 0x3A */ bool8 flyUnlocks;
     # /* 0x3B */ bool8 isFamesanity;
     # /* 0x3C */ bool8 gymKeys;
+    # /* 0x3D */ bool8 isShopsanity;
     #
-    # /* 0x3D */ u8 removeBadgeRequirement; // Flash, Cut, Fly, Strength, Surf, Rock Smash, Waterfall
-    # /* 0x3E */ u8 additionalDarkCaves; // Mt. Moon, Diglett's Cave, Victory Road
+    # /* 0x3E */ u8 removeBadgeRequirement; // Flash, Cut, Fly, Strength, Surf, Rock Smash, Waterfall
+    # /* 0x3F */ u8 additionalDarkCaves; // Mt. Moon, Diglett's Cave, Victory Road
     #
-    # /* 0x3F */ bool8 passesSplit;
-    # /* 0x40 */ bool8 cardKeysSplit;
-    # /* 0x41 */ bool8 teasSplit;
+    # /* 0x40 */ bool8 passesSplit;
+    # /* 0x41 */ bool8 cardKeysSplit;
+    # /* 0x42 */ bool8 teasSplit;
     #
-    # /* 0x42 */ u8 startingLocation;
-    # /* 0x43 */ u8 free_fly_id;
-    # /* 0x44 */ u8 town_free_fly_id;
-    # /* 0x45 */ u16 resortGorgeousMon;
-    # /* 0x47 */ u16 introSpecies;
-    # /* 0x49 */ u16 pcItemId;
+    # /* 0x43 */ u8 startingLocation;
+    # /* 0x44 */ u8 free_fly_id;
+    # /* 0x45 */ u8 town_free_fly_id;
+    # /* 0x46 */ u16 resortGorgeousMon;
+    # /* 0x48 */ u16 introSpecies;
+    # /* 0x4A */ u16 pcItemId;
     # }
     options_address = data.rom_addresses[game_version_revision]["gArchipelagoOptions"]
 
@@ -651,13 +656,17 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     gym_keys = 1 if world.options.gym_keys else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x3C, struct.pack("<B", gym_keys))
 
+    # Set shopsanity
+    shopsanity = 1 if world.options.shopsanity else 0
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3D, struct.pack("<B", shopsanity))
+
     # Set remove badge requirements
     hms = ["Flash", "Cut", "Fly", "Strength", "Surf", "Rock Smash", "Waterfall"]
     remove_badge_requirements = 0
     for i, hm in enumerate(hms):
         if hm in world.options.remove_badge_requirement.value:
             remove_badge_requirements |= (1 << i)
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3D, struct.pack("<B", remove_badge_requirements))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3E, struct.pack("<B", remove_badge_requirements))
 
     # Set additional dark caves
     dark_caves = ["Mt. Moon", "Diglett's Cave", "Victory Road"]
@@ -672,38 +681,38 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
                 map_data = world.modified_maps[map_id]
                 header_address = map_data.header_address[game_version_revision]
                 tokens.write_token(APTokenTypes.WRITE, header_address + 21, struct.pack("<B", 1))
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3E, struct.pack("<B", additional_dark_caves))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3F, struct.pack("<B", additional_dark_caves))
 
     # Set passes split
     passes_split = 1 if world.options.island_passes.value in [SeviiIslandPasses.option_split,
                                                               SeviiIslandPasses.option_progressive_split] else 0
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x3F, struct.pack("<B", passes_split))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x40, struct.pack("<B", passes_split))
 
     # Set card keys split
     card_keys_split = 1 if world.options.card_key.value in [SilphCoCardKey.option_split,
                                                             SilphCoCardKey.option_progressive] else 0
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x40, struct.pack("<B", card_keys_split))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x41, struct.pack("<B", card_keys_split))
 
     # Set teas split
     teas_split = 1 if world.options.split_teas else 0
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x41, struct.pack("<B", teas_split))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x42, struct.pack("<B", teas_split))
 
     # Set starting town
     starting_town = data.constants[world.starting_town]
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x42, struct.pack("<B", starting_town))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x43, struct.pack("<B", starting_town))
 
     # Set free fly location
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x43, struct.pack("<B", world.free_fly_location_id))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x44, struct.pack("<B", world.free_fly_location_id))
 
     # Set town map fly location
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x44, struct.pack("<B", world.town_map_fly_location_id))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x45, struct.pack("<B", world.town_map_fly_location_id))
 
     # Set resort gorgeous mon
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x45, struct.pack("<H", world.resort_gorgeous_mon))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x46, struct.pack("<H", world.resort_gorgeous_mon))
 
     # Set intro species
     species_id = world.random.choice(list(data.species.keys()))
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x47, struct.pack("<H", species_id))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x48, struct.pack("<H", species_id))
 
     # Set PC item ID
     pc_item_location = world.get_location("Player's PC - PC Item")
@@ -711,7 +720,7 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
         item_id = pc_item_location.item.code
     else:
         item_id = data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x49, struct.pack("<H", item_id))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x4A, struct.pack("<H", item_id))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:
@@ -860,6 +869,31 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenM
         elif fly_data[4] == 4:
             fly_map_address += fly_map_sevii_67_address
         tokens.write_token(APTokenTypes.WRITE, fly_map_address, struct.pack("<B", fly_map_value))
+
+
+def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):
+    if not world.options.shopsanity:
+        return
+
+    min_shop_price = world.options.minimum_shop_price.value
+    max_shop_price = world.options.maximum_shop_price.value
+
+    if world.options.minimum_shop_price > world.options.maximum_shop_price:
+        logging.info("Pokemon FRLG: Minimum Shop Price for player %s (%s) is greater than Maximum Shop Price.",
+                     world.player, world.player_name)
+        min_shop_price = world.options.maximum_shop_price.value
+        max_shop_price = world.options.minimum_shop_price.value
+
+    for location in world.multiworld.get_locations(world.player):
+        assert isinstance(location, PokemonFRLGLocation)
+        if location.address is None:
+            continue
+        if location.category == LocationCategory.SHOPSANITY:
+            address = location.item_address[game_version_revision]
+            shop_price = world.random.randint(min_shop_price, max_shop_price)
+
+            tokens.write_token(APTokenTypes.WRITE, address + 2, struct.pack("<H", shop_price))
+            tokens.write_token(APTokenTypes.WRITE, address + 4, struct.pack("<B", 0))
 
 
 def _set_species_info(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str) -> None:

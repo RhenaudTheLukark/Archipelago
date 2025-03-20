@@ -159,6 +159,33 @@ class ExtraKeyItems(Toggle):
     display_name = "Extra Key Items"
 
 
+class Shopsanity(Toggle):
+    """
+    Shuffles shop items into the general item pool. The Celadon Department Store 4F Held Items Shop is not shuffled.
+    """
+    display_name = "Shopsanity"
+
+
+class MinimumShopPrice(Range):
+    """
+    Sets the minimum cost of Shop Items when Shopsanity is on.
+    """
+    display_name = "Minimum Shop Price"
+    default = 100
+    range_start = 1
+    range_end = 9999
+
+
+class MaximumShopPrice(Range):
+    """
+    Sets the maximum cost of Shop Items when Shopsanity is on.
+    """
+    display_name = "Maximum Shop Price"
+    default = 3000
+    range_start = 1
+    range_end = 9999
+
+
 class Trainersanity(NamedRange):
     """
     Defeating a trainer gives you an item.
@@ -1002,6 +1029,7 @@ class BetterShops(Toggle):
 
     - Celadon Department Store 2F TM Pokemart
     - Celadon Department Store 4F Evo Stone Pokemart
+    - Celadon Department Store 4F Held Items Pokemart
     - Celadon Department Store 5F Vitamin Pokemart
     - Two Island Market Stall
     """
@@ -1130,6 +1158,9 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_badges: ShuffleBadges
     shuffle_hidden: ShuffleHiddenItems
     extra_key_items: ExtraKeyItems
+    shopsanity: Shopsanity
+    minimum_shop_price: MinimumShopPrice
+    maximum_shop_price: MaximumShopPrice
     trainersanity: Trainersanity
     dexsanity: Dexsanity
     famesanity: Famesanity

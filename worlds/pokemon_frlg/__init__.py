@@ -303,6 +303,8 @@ class PokemonFRLGWorld(World):
             categories.add(LocationCategory.HIDDEN_ITEM)
         if self.options.extra_key_items:
             categories.add(LocationCategory.EXTRA_KEY_ITEM)
+        if self.options.shopsanity:
+            categories.add(LocationCategory.SHOPSANITY)
         if self.options.trainersanity != Trainersanity.special_range_names["none"]:
             categories.add(LocationCategory.TRAINERSANITY)
         if self.options.dexsanity != Dexsanity.special_range_names["none"]:
@@ -450,7 +452,7 @@ class PokemonFRLGWorld(World):
         self.random.shuffle(self.filler_items)
 
         if self.options.kanto_only:
-            items_to_add = ["HM06 Rock Smash", "HM07 Waterfall"]
+            items_to_add = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
             for item_name in items_to_add:
                 itempool.append(self.create_item(item_name))
                 item_to_remove = self.filler_items.pop(0)
@@ -803,6 +805,7 @@ class PokemonFRLGWorld(World):
             "shuffle_badges",
             "shuffle_hidden",
             "extra_key_items",
+            "shopsanity",
             "famesanity",
             "shuffle_fly_unlocks",
             "pokemon_request_locations",

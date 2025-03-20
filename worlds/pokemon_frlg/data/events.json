@@ -68,32 +68,22 @@
   "EVENT_BUY_FIRE_STONE": {
     "name": "Celadon Department Store 4F - Evo Shop Item 3",
     "item": "Fire Stone",
-    "category": "EVENT"
+    "category": "EVENT_SHOP"
   },
   "EVENT_BUY_THUNDER_STONE": {
     "name": "Celadon Department Store 4F - Evo Shop Item 4",
     "item": "Thunder Stone",
-    "category": "EVENT"
+    "category": "EVENT_SHOP"
   },
   "EVENT_BUY_WATER_STONE": {
     "name": "Celadon Department Store 4F - Evo Shop Item 5",
     "item": "Water Stone",
-    "category": "EVENT"
+    "category": "EVENT_SHOP"
   },
   "EVENT_BUY_LEAF_STONE": {
     "name": "Celadon Department Store 4F - Evo Shop Item 6",
     "item": "Leaf Stone",
-    "category": "EVENT"
-  },
-  "EVENT_BUY_MOON_STONE": {
-    "name": "Celadon Department Store 4F - Evo Shop Item 7",
-    "item": "Moon Stone",
-    "category": "EVENT"
-  },
-  "EVENT_BUY_SUN_STONE": {
-    "name": "Celadon Department Store 4F - Evo Shop Item 8",
-    "item": "Sun Stone",
-    "category": "EVENT"
+    "category": "EVENT_SHOP"
   },
   "EVENT_BUY_KINGS_ROCK": {
     "name": "Celadon Department Store 4F - Held Shop Item 1",
@@ -151,9 +141,9 @@
     "category": "EVENT"
   },
   "EVENT_BUY_MARKET_LEMONADE": {
-    "name": "Two Island Town - Market Stall Item 4",
+    "name": "Two Island Town - Market Stall Item 5",
     "item": "Lemonade",
-    "category": "EVENT"
+    "category": "EVENT_SHOP"
   },
   "EVENT_DELIVER_METEORITE": {
     "name": "Two Island Game Corner - Lostelle's Dad's Delivery",

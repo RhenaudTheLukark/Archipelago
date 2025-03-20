@@ -2,7 +2,7 @@
 Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/regions for region definitions)
 """
 from typing import TYPE_CHECKING, Dict, List, Tuple, Optional, Callable
-from BaseClasses import Entrance, EntranceType, Region, CollectionState, ItemClassification
+from BaseClasses import Entrance, Region, CollectionState, ItemClassification
 from entrance_rando import ERPlacementState
 from .data import data, LocationCategory, kanto_fly_destinations, sevii_fly_destinations, starting_town_blacklist_map
 from .items import PokemonFRLGItem
@@ -236,6 +236,9 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             event_data = world.modified_events[event_id]
 
             if world.options.kanto_only and event_data.name in SEVII_REQUIRED_EVENTS:
+                continue
+
+            if event_data.category == LocationCategory.EVENT_SHOP and world.options.shopsanity:
                 continue
 
             if type(event_data.name) is list:

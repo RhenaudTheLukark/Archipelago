@@ -34,5 +34,6 @@ def get_item_classification(item_id: int) -> ItemClassification:
 def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassification = None) -> str:
     if item_classification is None:
         item_classification = ItemClassification.useful if world.random.random() < 0.20 else ItemClassification.filler
-    items = [item for item in data.items.values() if item.classification == item_classification]
+    items = [item for item in data.items.values()
+             if item.classification == item_classification and item.name not in world.item_name_groups["Unique Items"]]
     return world.random.choice(items).name

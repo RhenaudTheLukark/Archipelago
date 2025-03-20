@@ -4,7 +4,6 @@ from BaseClasses import Entrance, EntranceType
 from entrance_rando import (ERPlacementState, EntranceRandomizationError, disconnect_entrance_for_randomization,
                             randomize_entrances)
 from .options import DungeonEntranceShuffle
-from .regions import PokemonFRLGEntrance
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
