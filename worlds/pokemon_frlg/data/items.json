@@ -314,12 +314,12 @@
   "ITEM_PROG_CARD_KEY": {
     "name": "Progressive Card Key",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Card Keys", "Unique Items"]
+    "tags": ["Key Items", "Card Keys", "Progressive Items"]
   },
   "ITEM_PROG_PASS": {
     "name": "Progressive Pass",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Island Passes", "Unique Items"]
+    "tags": ["Key Items", "Island Passes", "Progressive Items"]
   },
   "ITEM_PURPLE_TEA": {
     "name": "Purple Tea",

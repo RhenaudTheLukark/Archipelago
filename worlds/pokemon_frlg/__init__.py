@@ -124,8 +124,8 @@ class PokemonFRLGWorld(World):
     encounter_name_list: List[str]
     encounter_level_list: List[int]
     scaling_data: List[ScalingData]
+    itempool: List[PokemonFRLGItem]
     pre_fill_items: List[PokemonFRLGItem]
-    filler_items: List[PokemonFRLGItem]
     fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
     er_placement_state: Optional[ERPlacementState]
     er_spoiler_names: List[str]
@@ -156,8 +156,8 @@ class PokemonFRLGWorld(World):
         self.encounter_name_list = list()
         self.encounter_level_list = list()
         self.scaling_data = list()
+        self.itempool = list()
         self.pre_fill_items = list()
-        self.filler_items = list()
         self.fly_destination_data = dict()
         self.er_placement_state = None
         self.er_spoiler_names = list()
@@ -404,77 +404,88 @@ class PokemonFRLGWorld(World):
         if not self.options.shuffle_tm_case:
             item_locations = [loc for loc in item_locations if loc.name != "Title Screen - Starting Item 2"]
 
-        itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
+        self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
+
+        items_to_remove: List[PokemonFRLGItem] = list()
+        items_to_add: List[PokemonFRLGItem] = list()
 
         if self.options.card_key == SilphCoCardKey.option_split:
-            itempool = [item for item in itempool if item.name != "Card Key"]
-            itempool.append(self.create_item("Card Key 3F"))
+            items_to_remove.append(self.create_item("Card Key"))
+            items_to_add.append(self.create_item("Card Key 3F"))
         elif self.options.card_key == SilphCoCardKey.option_progressive:
-            itempool = [item for item in itempool if "Card Key" not in item.name]
+            for item in ["Card Key", "Card Key 2F", "Card Key 4F", "Card Key 5F", "Card Key 6F", "Card Key 7F",
+                         "Card Key 8F", "Card Key 9F", "Card Key 10F", "Card Key 11F"]:
+                items_to_remove.append(self.create_item(item))
             for _ in range(10):
-                itempool.append(self.create_item("Progressive Card Key"))
+                items_to_add.append(self.create_item("Progressive Card Key"))
 
         if not self.options.kanto_only:
             if self.options.island_passes == SeviiIslandPasses.option_progressive:
-                itempool = [item for item in itempool if item.name not in ("Tri Pass", "Rainbow Pass")]
+                for item in ["Tri Pass", "Rainbow Pass"]:
+                    items_to_remove.append(self.create_item(item))
                 for _ in range(2):
-                    itempool.append(self.create_item("Progressive Pass"))
+                    items_to_add.append(self.create_item("Progressive Pass"))
             elif self.options.island_passes == SeviiIslandPasses.option_split:
-                itempool = [item for item in itempool if item.name not in ("Tri Pass", "Rainbow Pass")]
-                itempool.append(self.create_item("Three Pass"))
-                itempool.append(self.create_item("Four Pass"))
+                for item in ["Tri Pass", "Rainbow Pass"]:
+                    items_to_remove.append(self.create_item(item))
+                for item in ["Three Pass", "Four Pass"]:
+                    items_to_add.append(self.create_item(item))
             elif self.options.island_passes == SeviiIslandPasses.option_progressive_split:
-                items_to_remove = ["Tri Pass", "One Pass", "Two Pass", "Rainbow Pass",
-                                   "Five Pass", "Six Pass", "Seven Pass"]
-                itempool = [item for item in itempool if item.name not in items_to_remove]
+                for item in ["Tri Pass", "One Pass", "Two Pass", "Rainbow Pass", "Five Pass", "Six Pass", "Seven Pass"]:
+                    items_to_remove.append(self.create_item(item))
                 for _ in range(7):
-                    itempool.append(self.create_item("Progressive Pass"))
+                    items_to_add.append(self.create_item("Progressive Pass"))
 
         if self.options.split_teas:
-            itempool = [item for item in itempool if item.name != "Tea"]
-            itempool.append(self.create_item("Green Tea"))
+            items_to_remove.append(self.create_item("Tea"))
+            items_to_add.append(self.create_item("Green Tea"))
 
         if self.options.gym_keys:
-            itempool = [item for item in itempool if item.name != "Secret Key"]
-            itempool.append(self.create_item("Cinnabar Key"))
+            items_to_remove.append(self.create_item("Secret Key"))
+            items_to_add.append(self.create_item("Cinnabar Key"))
 
+        for item in items_to_remove:
+            self.itempool.remove(item)
+        for item in items_to_add:
+            self.itempool.append(item)
+
+        # Remove duplicates of unique items from the itempool
         unique_items = set()
-        for item in itempool.copy():
-            if item.name in item_groups["Unique Items"] and "Progressive" not in item.name:
+        for item in self.itempool.copy():
+            if item.name in item_groups["Unique Items"]:
                 if item in unique_items:
-                    itempool.remove(item)
-                    itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
+                    self.itempool.remove(item)
+                    self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
                 else:
                     unique_items.add(item)
 
-        self.filler_items = [item for item in itempool if item.classification == ItemClassification.filler and
-                             item.name not in item_groups["Unique Items"]]
-        self.random.shuffle(self.filler_items)
+        filler_items = [item for item in self.itempool if item.classification == ItemClassification.filler and
+                        item.name not in item_groups["Unique Items"]]
+        self.random.shuffle(filler_items)
 
+        # Add key items that are relevant in Kanto Only to the itempool
         if self.options.kanto_only:
             items_to_add = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
             for item_name in items_to_add:
-                itempool.append(self.create_item(item_name))
-                item_to_remove = self.filler_items.pop(0)
-                itempool.remove(item_to_remove)
+                self.itempool.append(self.create_item(item_name))
+                self.itempool.remove(filler_items.pop(0))
 
+        # Remove copies of unique and progressive items based on how many are in the start inventory
         for item_name, quantity in self.options.start_inventory.value.items():
-            if item_name in item_groups["Unique Items"]:
-                if not self.options.shuffle_badges and item_name in item_groups["Badges"]:
-                    continue
+            if item_name in item_groups["Unique Items"] or item_name in item_groups["Progressive Items"]:
                 removed_items_count = 0
                 for _ in range(quantity):
                     try:
-                        item_to_remove = next(i for i in itempool if i.name == item_name)
-                        itempool.remove(item_to_remove)
+                        item_to_remove = next(i for i in self.itempool if i.name == item_name)
+                        self.itempool.remove(item_to_remove)
                         removed_items_count += 1
                     except StopIteration:
                         break
                 while removed_items_count > 0:
-                    itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
+                    self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
                     removed_items_count -= 1
 
-        self.multiworld.itempool += itempool
+        self.multiworld.itempool += self.itempool
 
     def set_rules(self) -> None:
         set_rules(self)
@@ -531,19 +542,19 @@ class PokemonFRLGWorld(World):
             badge_locations: List[PokemonFRLGLocation] = [
                 loc for loc in locations if loc.category == LocationCategory.BADGE and loc.item is None
             ]
-            all_state = self.multiworld.get_all_state(False)
+            state = self.get_world_collection_state()
             # Try to place badges with current Pokemon and HM access
             # If it can't, try with all Pokemon collected and fix the HM access after
             if attempt > 1:
                 for species in frlg_data.species.values():
-                    all_state.collect(PokemonFRLGItem(species.name,
+                    state.collect(PokemonFRLGItem(species.name,
                                                       ItemClassification.progression_skip_balancing,
                                                       None,
                                                       self.player))
-            all_state.sweep_for_advancements()
+            state.sweep_for_advancements()
             self.random.shuffle(badge_items)
             self.random.shuffle(badge_locations)
-            fill_restrictive(self.multiworld, all_state, badge_locations.copy(), badge_items,
+            fill_restrictive(self.multiworld, state, badge_locations.copy(), badge_items,
                              single_player_placement=True, lock=True, allow_partial=True, allow_excluded=True)
             if len(badge_items) > 8 - len(badge_locations):
                 for location in badge_locations:
@@ -561,18 +572,21 @@ class PokemonFRLGWorld(World):
         # Create auth
         self.auth = self.random.getrandbits(16 * 8).to_bytes(16, "little")
 
-        all_state = self.multiworld.get_all_state(False)
+        state = self.get_world_collection_state()
+        filler_items = [item for item in self.itempool if item.classification == ItemClassification.filler and
+                        item.name not in item_groups["Unique Items"]]
+        self.random.shuffle(filler_items)
 
         # Delete evolutions that are not in logic in an all_state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
         for location in evolution_region.locations.copy():
-            if not all_state.can_reach(location, player=self.player):
+            if not state.can_reach(location, player=self.player):
                 evolution_region.locations.remove(location)
 
         # Delete trades that are not in logic in an all_state so that the accessibility check doesn't fail
         for trade in self.trade_pokemon:
             location = self.multiworld.get_location(trade[1], self.player)
-            if not all_state.can_reach(location, player=self.player):
+            if not state.can_reach(location, player=self.player):
                 region = self.multiworld.get_region(trade[0], self.player)
                 region.locations.remove(location)
 
@@ -588,7 +602,8 @@ class PokemonFRLGWorld(World):
                         continue
                     region = location.parent_region
                     region.locations.remove(location)
-                    item_to_remove = self.filler_items.pop(0)
+                    item_to_remove = filler_items.pop(0)
+                    self.itempool.remove(item_to_remove)
                     self.multiworld.itempool.remove(item_to_remove)
                     locs_to_remove -= 1
                     if locs_to_remove <= 0:
@@ -598,9 +613,10 @@ class PokemonFRLGWorld(World):
             # Delete dexsanity locations that are not in logic in an all_state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                if not all_state.can_reach(location, player=self.player):
+                if not state.can_reach(location, player=self.player):
                     pokedex_region.locations.remove(location)
-                    item_to_remove = self.filler_items.pop(0)
+                    item_to_remove = filler_items.pop(0)
+                    self.itempool.remove(item_to_remove)
                     self.multiworld.itempool.remove(item_to_remove)
 
             # Delete dexsanity locations if there are more than the amount specified in the settings
@@ -611,7 +627,8 @@ class PokemonFRLGWorld(World):
                     if location.name in self.options.priority_locations.value:
                         continue
                     pokedex_region.locations.remove(location)
-                    item_to_remove = self.filler_items.pop(0)
+                    item_to_remove = filler_items.pop(0)
+                    self.itempool.remove(item_to_remove)
                     self.multiworld.itempool.remove(item_to_remove)
                     if len(pokedex_region.locations) <= self.options.dexsanity.value:
                         break
@@ -860,6 +877,17 @@ class PokemonFRLGWorld(World):
             self.player
         )
 
+    def get_world_collection_state(self) -> CollectionState:
+        state = CollectionState(self.multiworld)
+        progression_items = [item for item in self.itempool if item.advancement]
+        locations = self.get_locations()
+        for item in progression_items:
+            state.collect(item, True)
+        for item in self.get_pre_fill_items():
+            state.collect(item, True)
+        state.sweep_for_advancements(locations)
+        return state
+
     def get_pre_fill_items(self):
         return self.pre_fill_items
 
@@ -894,13 +922,13 @@ class PokemonFRLGWorld(World):
         last_hm_verified = None
         while len(hms) > 0:
             hm_to_verify = hms[0]
-            all_state = self.multiworld.get_all_state(False)
-            if (not can_use_hm(all_state, hm_to_verify) and
-                    has_badge_requirement(all_state, self.player, self.options, hm_to_verify)):
+            state = self.get_world_collection_state()
+            if (not can_use_hm(state, hm_to_verify) and
+                    has_badge_requirement(state, self.player, self.options, hm_to_verify)):
                 if hm_to_verify == last_hm_verified:
                     raise Exception(f"Failed to ensure access to {hm_to_verify} for player {self.player}")
                 last_hm_verified = hm_to_verify
-                valid_mons = [mon for mon in self.repeatable_pokemon if all_state.has(mon, self.player)]
+                valid_mons = [mon for mon in self.repeatable_pokemon if state.has(mon, self.player)]
                 mon = self.random.choice(valid_mons)
                 add_hm_compatability(self, mon, hm_to_verify)
                 self.hm_compatibility[hm_to_verify].add(mon)
