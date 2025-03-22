@@ -160,14 +160,15 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
             break
         except EntranceRandomizationError as error:
             if i >= MAX_GER_ATTEMPTS - 1:
-                raise EntranceRandomizationError(f"Pokemon FRLG: GER failed for player %s (%s) after "
-                                                 f"{MAX_GER_ATTEMPTS} attempts. Final error here: \n\n{error}",
-                                                 world.player, world.player_name)
+                raise EntranceRandomizationError(f"Pokemon FRLG: GER failed for player {world.player} "
+                                                 f"({world.player_name}) after {MAX_GER_ATTEMPTS} attempts. Final "
+                                                 f"error here: \n\n{error}")
             for region in world.get_regions():
                 for exit in region.get_exits():
                     if (exit.randomization_group in available_shuffle_types and
                             exit.parent_region and
                             exit.connected_region):
+                        exit.connected_entrance_name = None
                         disconnect_entrance_for_randomization(exit, exit.randomization_group)
 
 
