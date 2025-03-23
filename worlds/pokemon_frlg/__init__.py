@@ -648,6 +648,7 @@ class PokemonFRLGWorld(World):
         found_mons = set()
         pokemon = {species.name for species in frlg_data.species.values()}
         for sphere in multiworld.get_spheres():
+            mon_locations_in_sphere = dict()
             for location in sphere:
                 if (location.game == "Pokemon FireRed and LeafGreen" and
                         location.item.game == "Pokemon FireRed and LeafGreen" and
@@ -657,7 +658,13 @@ class PokemonFRLGWorld(World):
                     if key in found_mons:
                         location.item.classification = ItemClassification.useful
                     else:
-                        found_mons.add(key)
+                        mon_locations_in_sphere.setdefault(key, []).append(location)
+            for key, mon_locations in mon_locations_in_sphere.items():
+                found_mons.add(key)
+                if len(mon_locations) > 1:
+                    mon_locations.sort()
+                    for location in mon_locations[1:]:
+                        location.item.classification = ItemClassification.useful
 
     @classmethod
     def stage_generate_output(cls, multiworld, output_directory):
