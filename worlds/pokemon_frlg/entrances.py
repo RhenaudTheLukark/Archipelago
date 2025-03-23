@@ -19,30 +19,25 @@ kanto_single_dungeon_exits = ["Vermilion Harbor Exit", "Pokemon Tower 1F Exit",
                               "Navel Rock 1F Exit"]
 
 sevii_single_dungeon_entrances = ["Mt. Ember", "Berry Forest", "Icefall Cave", "Rocket Warehouse", "Lost Cave",
-                                  "Dotted Hole", "Altering Cave", "Tanoby Key", "Viapois Chamber", "Rixy Chamber",
-                                  "Scufib Chamber", "Dilford Chamber", "Weepth Chamber", "Liptoo Chamber",
-                                  "Monean Chamber"]
+                                  "Dotted Hole", "Altering Cave", "Viapois Chamber", "Rixy Chamber", "Scufib Chamber",
+                                  "Dilford Chamber", "Weepth Chamber", "Liptoo Chamber", "Monean Chamber"]
 
 sevii_single_dungeon_exits = ["Mt. Ember Exterior South Exit", "Berry Forest Exit", "Icefall Cave Front Exit",
                               "Rocket Warehouse Exit", "Lost Cave 1F Exit", "Dotted Hole 1F Exit", "Altering Cave Exit",
-                              "Tanoby Key Exit", "Viapois Chamber Exit", "Rixy Chamber Exit", "Scufib Chamber Exit",
+                              "Viapois Chamber Exit", "Rixy Chamber Exit", "Scufib Chamber Exit",
                               "Dilford Chamber Exit", "Weepth Chamber Exit", "Liptoo Chamber Exit",
                               "Monean Chamber Exit"]
 
 kanto_multi_dungeon_entrances = ["Viridian Forest South Gate Exit (North)", "Viridian Forest North Gate Exit (South)",
-                                 "Mt. Moon (West)", "Mt. Moon (East)", "Underground Path North Entrance",
-                                 "Underground Path South Entrance", "Diglett's Cave North Entrance",
+                                 "Mt. Moon (West)", "Mt. Moon (East)", "Diglett's Cave North Entrance",
                                  "Diglett's Cave South Entrance", "Rock Tunnel (North)", "Rock Tunnel (South)",
-                                 "Power Plant (Front)", "Power Plant (Back)", "Underground Path West Entrance",
-                                 "Underground Path East Entrance", "Seafoam Islands (North)", "Seafoam Islands (South)",
-                                 "Victory Road (West)", "Victory Road (East)"]
+                                 "Power Plant (Front)", "Power Plant (Back)", "Seafoam Islands (North)",
+                                 "Seafoam Islands (South)", "Victory Road (West)", "Victory Road (East)"]
 
 kanto_multi_dungeon_exits = ["Viridian Forest Exit (South)", "Viridian Forest Exit (North)", "Mt. Moon 1F Exit",
-                             "Mt. Moon B1F Fourth Tunnel Ladder (East)", "Underground Path North Entrance Exit",
-                             "Underground Path South Entrance Exit", "Diglett's Cave North Entrance Exit",
+                             "Mt. Moon B1F Fourth Tunnel Ladder (East)", "Diglett's Cave North Entrance Exit",
                              "Diglett's Cave South Entrance Exit", "Rock Tunnel 1F Northeast Ladder (Northwest)",
                              "Rock Tunnel 1F South Exit", "Power Plant Exit (Front)", "Power Plant Exit (Back)",
-                             "Underground Path West Entrance Exit", "Underground Path East Entrance Exit",
                              "Seafoam Islands 1F Exit", "Seafoam Islands 1F Southeast Exit",
                              "Victory Road 1F South Exit", "Victory Road 2F East Exit"]
 
@@ -53,21 +48,17 @@ sevii_multi_dungeon_exits = ["Pattern Bush Exit (West)", "Pattern Bush Exit (Eas
 multi_dungeon_pairs = {
     "Viridian Forest South Gate Exit (North)": "Viridian Forest North Gate Exit (South)",
     "Mt. Moon (West)": "Mt. Moon (East)",
-    "Underground Path North Entrance": "Underground Path South Entrance",
     "Diglett's Cave North Entrance": "Diglett's Cave South Entrance",
     "Rock Tunnel (North)": "Rock Tunnel (South)",
     "Power Plant (Front)": "Power Plant (Back)",
-    "Underground Path West Entrance": "Underground Path East Entrance",
     "Seafoam Islands (North)": "Seafoam Islands (South)",
     "Victory Road (West)": "Victory Road (East)",
     "Pattern Bush (West)": "Pattern Bush (East)",
     "Viridian Forest Exit (South)": "Viridian Forest Exit (North)",
     "Mt. Moon 1F Exit": "Mt. Moon B1F Fourth Tunnel Ladder (East)",
-    "Underground Path North Entrance Exit": "Underground Path South Entrance Exit",
     "Diglett's Cave North Entrance Exit": "Diglett's Cave South Entrance Exit",
     "Rock Tunnel 1F Northeast Ladder (Northwest)": "Rock Tunnel 1F South Exit",
     "Power Plant Exit (Front)": "Power Plant Exit (Back)",
-    "Underground Path West Entrance Exit": "Underground Path East Entrance Exit",
     "Seafoam Islands 1F Exit": "Seafoam Islands 1F Southeast Exit",
     "Victory Road 1F South Exit": "Victory Road 2F East Exit",
     "Pattern Bush Exit (West)": "Pattern Bush Exit (East)"

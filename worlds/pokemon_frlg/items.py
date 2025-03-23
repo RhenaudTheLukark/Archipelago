@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING, Dict, FrozenSet, Optional
+from typing import TYPE_CHECKING, Dict, Optional
 from BaseClasses import Item, ItemClassification
 from .data import data
+from .groups import item_groups
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -35,5 +36,5 @@ def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassifi
     if item_classification is None:
         item_classification = ItemClassification.useful if world.random.random() < 0.20 else ItemClassification.filler
     items = [item for item in data.items.values()
-             if item.classification == item_classification and item.name not in world.item_name_groups["Unique Items"]]
+             if item.classification == item_classification and item.name not in item_groups["Unique Items"]]
     return world.random.choice(items).name

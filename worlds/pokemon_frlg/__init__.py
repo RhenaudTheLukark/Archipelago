@@ -113,7 +113,7 @@ class PokemonFRLGWorld(World):
     modified_moves: Dict[str, MoveData]
     modified_type_damage_categories: List[int]
     hm_compatibility: Dict[str, Set[str]]
-    repeatable_pokemon: Set[str]
+    repeatable_pokemon: List[str]
     per_species_tmhm_moves: Dict[int, List[int]]
     trade_pokemon: List[Tuple[str, str]]
     blacklisted_wild_pokemon: Set[int]
@@ -153,7 +153,7 @@ class PokemonFRLGWorld(World):
         self.modified_moves = copy.deepcopy(frlg_data.moves)
         self.modified_type_damage_categories = copy.deepcopy(frlg_data.type_damage_categories)
         self.hm_compatibility = dict()
-        self.repeatable_pokemon = set()
+        self.repeatable_pokemon = list()
         self.per_species_tmhm_moves = dict()
         self.trade_pokemon = list()
         self.trainer_name_level_dict = dict()
@@ -272,7 +272,7 @@ class PokemonFRLGWorld(World):
 
         # Remove badges from non-local items if they are shuffled among gyms
         if not self.options.shuffle_badges:
-            self.options.local_items.value.update(self.item_name_groups["Badges"])
+            self.options.local_items.value.update(item_groups["Badges"])
 
         # Add starting items from settings
         if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
@@ -345,7 +345,7 @@ class PokemonFRLGWorld(World):
 
         # Choose Selphy's requested Pokémon among available wild encounters if necessary
         if self.options.pokemon_request_locations and not self.options.kanto_only:
-            self.resort_gorgeous_mon = NAME_TO_SPECIES_ID[self.random.choice(list(self.repeatable_pokemon))]
+            self.resort_gorgeous_mon = NAME_TO_SPECIES_ID[self.random.choice(self.repeatable_pokemon)]
 
         def exclude_locations(locations: List[str]):
             for location in locations:
@@ -405,20 +405,24 @@ class PokemonFRLGWorld(World):
             location for location in self.multiworld.get_locations(self.player) if location.address is not None
         ]
 
-        if not self.options.shuffle_badges:
-            item_locations = [loc for loc in item_locations if loc.category != LocationCategory.BADGE]
-            self.pre_fill_items.extend([self.create_item(badge) for badge in self.item_name_groups["Badges"]])
-        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
-            item_locations = [loc for loc in item_locations if loc.category != LocationCategory.FLY_UNLOCK]
-        if not self.options.shuffle_berry_pouch:
-            item_locations = [loc for loc in item_locations if loc.name != "Title Screen - Starting Item 1"]
-        if not self.options.shuffle_tm_case:
-            item_locations = [loc for loc in item_locations if loc.name != "Title Screen - Starting Item 2"]
-
         self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
 
         items_to_remove: List[PokemonFRLGItem] = list()
         items_to_add: List[PokemonFRLGItem] = list()
+
+        if not self.options.shuffle_badges:
+            badge_items = [self.create_item(badge) for badge in item_groups["Badges"]]
+            items_to_remove.extend(badge_items)
+            self.pre_fill_items.extend(badge_items)
+
+        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
+            items_to_remove.append(self.create_item("Fly Indigo Plateau"))
+
+        if not self.options.shuffle_berry_pouch:
+            items_to_remove.append(self.create_item("Berry Pouch"))
+
+        if not self.options.shuffle_tm_case:
+            items_to_remove.append(self.create_item("TM Case"))
 
         if self.options.card_key == SilphCoCardKey.option_split:
             items_to_remove.append(self.create_item("Card Key"))
@@ -526,17 +530,10 @@ class PokemonFRLGWorld(World):
 
         if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
             fly_locations = [loc for loc in self.multiworld.get_locations(self.player)
-                             if loc.name in self.location_name_groups["Town Visits"]]
+                             if loc.name in location_groups["Town Visits"]]
             unrandomized_progression_locations.update(fly_locations)
         elif self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-            location = self.get_location("Indigo Plateau - Unlock Fly Destination")
-            assert isinstance(location, PokemonFRLGLocation)
-            location.place_locked_item(PokemonFRLGItem(self.item_id_to_name[location.default_item_id],
-                                                       ItemClassification.progression,
-                                                       location.default_item_id,
-                                                       self.player))
-            location.progress_type = LocationProgressType.DEFAULT
-            self.multiworld.itempool.remove(self.create_item("Fly Indigo Plateau"))
+            unrandomized_progression_locations.add(self.get_location("Indigo Plateau - Unlock Fly Destination"))
 
         if not self.options.shuffle_berry_pouch:
             unrandomized_progression_locations.add(self.get_location("Title Screen - Starting Item 1"))
@@ -546,7 +543,7 @@ class PokemonFRLGWorld(World):
         create_events_for_unrandomized_items(unrandomized_progression_locations)
 
     def shuffle_badges(self) -> None:
-        badge_items: List[PokemonFRLGItem] = [self.create_item(badge) for badge in self.item_name_groups["Badges"]]
+        badge_items: List[PokemonFRLGItem] = [self.create_item(badge) for badge in item_groups["Badges"]]
         self.pre_fill_items.clear()
         locations: List[PokemonFRLGLocation] = self.multiworld.get_locations(self.player)
         for attempt in range(5):

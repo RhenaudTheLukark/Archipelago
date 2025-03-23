@@ -4,6 +4,7 @@ Logic rule definitions for Pokémon FireRed and LeafGreen
 from typing import TYPE_CHECKING
 from worlds.generic.Rules import add_item_rule, add_rule, set_rule
 from .data import data, LocationCategory, NATIONAL_ID_TO_SPECIES_ID, NUM_REAL_SPECIES
+from .groups import item_groups
 from .locations import PokemonFRLGLocation
 from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_challenge_giovanni, can_cut,
                     can_enter_celadon_gym, can_enter_cerulean_cave, can_enter_cerulean_gym, can_enter_cinnabar_gym,
@@ -1129,8 +1130,8 @@ def set_shopsanity_rules(world: "PokemonFRLGWorld"):
             assert isinstance(location, PokemonFRLGLocation)
             if location.category == LocationCategory.SHOPSANITY:
                 add_item_rule(location, lambda i: i.player != player
-                                                  or (i.name not in world.item_name_groups["HMs"]
-                                                      and i.name not in world.item_name_groups["TMs"]))
+                                                  or (i.name not in item_groups["HMs"]
+                                                      and i.name not in item_groups["TMs"]))
 
 
 def set_trainersanity_rules(world: "PokemonFRLGWorld"):
