@@ -4,9 +4,10 @@ from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 
 from .data import (data, LEGENDARY_POKEMON, NUM_REAL_SPECIES, NAME_TO_SPECIES_ID, EncounterSpeciesData, EventData,
                    LearnsetMove, SpeciesData, TrainerPokemonData)
-from .options import (Dexsanity, GameVersion, HmCompatibility, RandomizeAbilities, RandomizeLegendaryPokemon,
-                      RandomizeMiscPokemon, RandomizeMoves, RandomizeStarters, RandomizeTrainerParties, RandomizeTypes,
-                      RandomizeWildPokemon, TmTutorCompatibility, WildPokemonGroups)
+from .options import (Dexsanity, GameVersion, HmCompatibility, RandomizeAbilities, RandomizeDamageCategories,
+                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeMoves, RandomizeMoveTypes,
+                      RandomizeStarters, RandomizeTrainerParties, RandomizeTypes, RandomizeWildPokemon,
+                      TmTutorCompatibility, WildPokemonGroups)
 from .util import bool_array_to_int, int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 if TYPE_CHECKING:
@@ -324,6 +325,69 @@ def randomize_abilities(world: "PokemonFRLGWorld") -> None:
                 0 if old_abilities[1] == 0 else world.random.choice(allowed_abilities)
             )
             species.abilities = new_abilities
+
+
+def randomize_move_types(world: "PokemonFRLGWorld") -> None:
+    if world.options.move_types == RandomizeMoveTypes.option_shuffle:
+        type_map = list(range(18))
+        world.random.shuffle(type_map)
+
+        # Map the ??? type to itself. Moves of that type should remain that type.
+        mystery_type_index = type_map.index(9)
+        type_map[mystery_type_index], type_map[9] = type_map[9], type_map[mystery_type_index]
+
+        for name, move in world.modified_moves.items():
+            if data.constants[name] in _DUMMY_MOVES:
+                continue
+            move.type = type_map[move.type]
+    elif world.options.move_types == RandomizeMoveTypes.option_completely_random:
+        for name, move in world.modified_moves.items():
+            if data.constants[name] in _DUMMY_MOVES:
+                continue
+            move.type = _get_random_type(world.random)
+
+
+def randomize_damage_categories(world: "PokemonFRLGWorld") -> None:
+    if world.options.damage_categories == RandomizeDamageCategories.option_shuffle:
+        new_type_damage_categories = list()
+        num_moves_per_damage_category = {0: data.num_moves_per_damage_category[0],
+                                         1: data.num_moves_per_damage_category[1]}
+        type_map = list(range(18))
+        world.random.shuffle(type_map)
+
+        # Map the ??? type to itself. Its damage category should stay with it.
+        mystery_type_index = type_map.index(9)
+        type_map[mystery_type_index], type_map[9] = type_map[9], type_map[mystery_type_index]
+
+        for type in type_map:
+            new_type_damage_categories.append(world.modified_type_damage_categories[type])
+        world.modified_type_damage_categories = new_type_damage_categories
+
+        for name, move in world.modified_moves.items():
+            if move.category == 2 or data.constants[name] in _DUMMY_MOVES:
+                continue
+            if num_moves_per_damage_category[0] and num_moves_per_damage_category[1]:
+                new_category = world.random.randint(0, 1)
+                move.category = new_category
+                num_moves_per_damage_category[new_category] -= 1
+            elif num_moves_per_damage_category[0]:
+                move.category = 0
+                num_moves_per_damage_category[0] -= 1
+            elif num_moves_per_damage_category[1]:
+                move.category = 1
+                num_moves_per_damage_category[1] -= 1
+            else:  # We should never get here
+                raise RuntimeError("Pokemon FRLG: Error in randomize_damage_categories that shouldn't happen")
+    elif world.options.damage_categories == RandomizeDamageCategories.option_completely_random:
+        for i, _ in enumerate(world.modified_type_damage_categories):
+            if world.modified_type_damage_categories[i] == 2:
+                continue
+            world.modified_type_damage_categories[i] = world.random.randint(0, 1)
+
+        for name, move in world.modified_moves.items():
+            if move.category == 2 or data.constants[name] in _DUMMY_MOVES:
+                continue
+            move.category = world.random.randint(0, 1)
 
 
 def randomize_moves(world: "PokemonFRLGWorld") -> None:

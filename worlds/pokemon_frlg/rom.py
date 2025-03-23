@@ -11,9 +11,10 @@ from settings import get_settings
 from .data import data, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
-                      HmCompatibility, LevelScaling, RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeStarters,
-                      RandomizeTrainerParties, RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks,
-                      ShuffleHiddenItems, SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
+                      HmCompatibility, LevelScaling, RandomizeDamageCategories, RandomizeLegendaryPokemon,
+                      RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters, RandomizeTrainerParties,
+                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, SilphCoCardKey,
+                      TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -348,6 +349,12 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     # Randomize move tutors
     _randomize_move_tutors(world, tokens, game_version_revision)
 
+    # Set types damage catagories
+    _set_types_damage_categories(world, tokens, game_version_revision)
+
+    # Set moves
+    _set_moves(world, tokens, game_version_revision)
+
     # Options
     # struct
     # ArchipelagoOptions
@@ -477,6 +484,10 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     # Set unlock seen dex info
     all_pokemon_seen = 1 if world.options.all_pokemon_seen else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x0A, struct.pack("<B", all_pokemon_seen))
+
+    # Set physical/special split
+    physical_special_split = 1 if world.options.physical_special_split else 0
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x0B, struct.pack("<B", physical_special_split))
 
     # Set Viridian City roadblock
     open_viridian = 1 if world.options.viridian_city_roadblock.value == ViridianCityRoadblock.option_open else 0
@@ -1104,3 +1115,25 @@ def _randomize_move_tutors(world: "PokemonFRLGWorld", tokens: APTokenMixin, game
                     for _ in range(16)
                 ]))
             )
+
+
+def _set_types_damage_categories(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):
+    if world.options.damage_categories == RandomizeDamageCategories.option_vanilla:
+        return
+
+    address = data.rom_addresses[game_version_revision]["sDamageTypeTable"]
+
+    for i, damage_category in enumerate(world.modified_type_damage_categories):
+        tokens.write_token(APTokenTypes.WRITE, address + i, struct.pack("<B", damage_category))
+
+
+def _set_moves(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):
+    if (world.options.move_types == RandomizeMoveTypes.option_vanilla and
+            world.options.damage_categories == RandomizeDamageCategories.option_vanilla):
+        return
+
+    for move in world.modified_moves.values():
+        address = move.address[game_version_revision]
+
+        tokens.write_token(APTokenTypes.WRITE, address + 2, struct.pack("<B", move.type))
+        tokens.write_token(APTokenTypes.WRITE, address + 9, struct.pack("<B", move.category))

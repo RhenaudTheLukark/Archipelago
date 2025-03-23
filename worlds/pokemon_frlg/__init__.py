@@ -15,8 +15,9 @@ from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
-from .data import (data as frlg_data, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID, LocationCategory, EventData,
-                   MapData, MiscPokemonData, SpeciesData, StarterData, TrainerData)
+from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
+                   LocationCategory, EventData, MapData, MiscPokemonData, MoveData, move_name_map, SpeciesData,
+                   StarterData, TrainerData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
@@ -29,9 +30,10 @@ from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, Du
                       FreeFlyLocation, GameVersion, Goal, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
                       RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
                       ShuffleRunningShoes, SilphCoCardKey, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
-from .pokemon import (add_hm_compatability, randomize_abilities, randomize_legendaries, randomize_misc_pokemon,
-                      randomize_moves, randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves,
-                      randomize_trainer_parties, randomize_types, randomize_wild_encounters)
+from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damage_categories, randomize_legendaries,
+                      randomize_misc_pokemon, randomize_moves, randomize_move_types, randomize_starters,
+                      randomize_tm_hm_compatibility, randomize_tm_moves, randomize_trainer_parties, randomize_types,
+                      randomize_wild_encounters)
 from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import set_rules
 from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
@@ -108,6 +110,8 @@ class PokemonFRLGWorld(World):
     modified_misc_pokemon: Dict[str, MiscPokemonData]
     modified_trainers: Dict[str, TrainerData]
     modified_tmhm_moves: List[int]
+    modified_moves: Dict[str, MoveData]
+    modified_type_damage_categories: List[int]
     hm_compatibility: Dict[str, Set[str]]
     repeatable_pokemon: Set[str]
     per_species_tmhm_moves: Dict[int, List[int]]
@@ -145,6 +149,8 @@ class PokemonFRLGWorld(World):
         self.modified_misc_pokemon = copy.deepcopy(frlg_data.misc_pokemon)
         self.modified_trainers = copy.deepcopy(frlg_data.trainers)
         self.modified_tmhm_moves = copy.deepcopy(frlg_data.tmhm_moves)
+        self.modified_moves = copy.deepcopy(frlg_data.moves)
+        self.modified_type_damage_categories = copy.deepcopy(frlg_data.type_damage_categories)
         self.hm_compatibility = dict()
         self.repeatable_pokemon = set()
         self.per_species_tmhm_moves = dict()
@@ -194,8 +200,8 @@ class PokemonFRLGWorld(World):
         if "Legendaries" in self.options.trainer_blacklist.value:
             self.blacklisted_trainer_pokemon |= LEGENDARY_POKEMON
 
-        self.blacklisted_abilities = {frlg_data.abilities[name] for name in self.options.ability_blacklist.value}
-        self.blacklisted_moves = {frlg_data.moves[name] for name in self.options.move_blacklist.value}
+        self.blacklisted_abilities = {ability_name_map[name] for name in self.options.ability_blacklist.value}
+        self.blacklisted_moves = {move_name_map[name] for name in self.options.move_blacklist.value}
 
         # Modify options that are incompatible with each other
         if self.options.kanto_only:
@@ -277,6 +283,8 @@ class PokemonFRLGWorld(World):
         create_scaling_data(self)
         randomize_types(self)
         randomize_abilities(self)
+        randomize_move_types(self)
+        randomize_damage_categories(self)
         randomize_moves(self)
         randomize_wild_encounters(self)
         randomize_starters(self)
@@ -695,15 +703,10 @@ class PokemonFRLGWorld(World):
         del self.modified_events
         del self.modified_legendary_pokemon
         del self.modified_misc_pokemon
-        del self.trade_pokemon
-        del self.trainer_name_level_dict
-        del self.trainer_name_list
-        del self.trainer_level_list
-        del self.encounter_name_level_dict
-        del self.encounter_name_list
-        del self.encounter_level_list
-        del self.scaling_data
-        del self.fly_destination_data
+        del self.modified_trainers
+        del self.modified_tmhm_moves
+        del self.modified_moves
+        del self.modified_type_damage_categories
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.random_starting_town:
