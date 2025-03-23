@@ -395,6 +395,24 @@ class FameCheckerRequired(DefaultOnToggle):
     display_name = "Fame Checker Required"
 
 
+class EvolutionsRequired(OptionSet):
+    """
+    Sets which types of locations and/or access rules that evolutions may be logically required for.
+    """
+    display_name = "Evolutions Required"
+    valid_keys = ["HM Requirement", "Oak's Aides", "Dexsanity"]
+    default = ["HM Requirement", "Oak's Aides", "Dexsanity"]
+
+
+class EvolutionMethodsRequired(OptionSet):
+    """
+    Sets which types of evolutions may be logically required.
+    """
+    display_name = "Evolution Methods Required"
+    valid_keys = ["Level", "Level Tyrogue", "Level Wurmple", "Evo Item", "Evo & Held Item", "Friendship"]
+    default = ["Level", "Level Tyrogue", "Level Wurmple", "Evo Item", "Evo & Held Item", "Friendship"]
+
+
 class ViridianCityRoadblock(Choice):
     """
     Sets the requirement for passing the Viridian City Roadblock.
@@ -1218,6 +1236,8 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     itemfinder_required: ItemfinderRequired
     flash_required: FlashRequired
     fame_checker_required: FameCheckerRequired
+    evolutions_required: EvolutionsRequired
+    evolution_methods_required: EvolutionMethodsRequired
     viridian_city_roadblock: ViridianCityRoadblock
     pewter_city_roadblock: PewterCityRoadblock
     modify_world_state: ModifyWorldState

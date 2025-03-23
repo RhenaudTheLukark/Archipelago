@@ -30,13 +30,61 @@ island_passes: Dict[int, List[str]] = {
     7: ["Rainbow Pass", "Seven Pass"]
 }
 
+evo_methods_level = [
+    EvolutionMethodEnum.LEVEL,
+    EvolutionMethodEnum.LEVEL_NINJASK,
+    EvolutionMethodEnum.LEVEL_SHEDINJA
+]
+
+evo_methods_tyrogue_level = [
+    EvolutionMethodEnum.LEVEL_ATK_LT_DEF,
+    EvolutionMethodEnum.LEVEL_ATK_EQ_DEF,
+    EvolutionMethodEnum.LEVEL_ATK_GT_DEF
+]
+
+evo_methods_wurmple_level = [
+    EvolutionMethodEnum.LEVEL_SILCOON,
+    EvolutionMethodEnum.LEVEL_CASCOON
+]
+
+evo_methods_item = [
+    EvolutionMethodEnum.ITEM
+]
+
+evo_methods_held_item = [
+    EvolutionMethodEnum.ITEM_HELD
+]
+
+evo_methods_friendship = [
+    EvolutionMethodEnum.FRIENDSHIP
+]
+
+
+def set_allowed_evo_methods(world: "PokemonFRLGWorld"):
+    if "Level" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_level)
+    if "Level Tyrogue" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_tyrogue_level)
+    if "Level Wurmple" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_wurmple_level)
+    if "Evo Item" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_item)
+    if "Evo & Held Item" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_held_item)
+    if "Friendship" in world.options.evolution_methods_required.value:
+        world.allowed_evo_methods.extend(evo_methods_friendship)
+
 
 def has_badge_requirement(state: CollectionState, player: int, options: PokemonFRLGOptions, hm: str):
     return hm in options.remove_badge_requirement.value or state.has(badge_requirements[hm], player)
 
 
 def can_use_hm(state: CollectionState, player: int, world: "PokemonFRLGWorld", hm: str):
-    return state.has_any(world.hm_compatibility[hm], player)
+    evos_allowed = "HM Requirement" in world.options.evolutions_required.value
+    for species in world.hm_compatibility[hm]:
+        if state.has(species, player) or (state.has(f"Evolved {species}", player) and evos_allowed):
+            return True
+    return False
 
 
 def can_cut(state: CollectionState, player: int, world: "PokemonFRLGWorld"):
@@ -93,18 +141,23 @@ def has_n_gyms(state: CollectionState, player: int, n: int):
     return sum([state.has(gym, player) for gym in gyms]) >= n
 
 
-def has_n_pokemon(state: CollectionState, player: int, n: int):
+def has_n_pokemon(state: CollectionState, player: int, evos_allowed: bool, n: int):
     count = 0
     for species in data.species.values():
-        if state.has(species.name, player) or state.has(f"Static {species.name}", player):
+        if (state.has(species.name, player)
+                or state.has(f"Static {species.name}", player)
+                or (state.has(f"Evolved {species.name}", player) and evos_allowed)):
             count += 1
         if count >= n:
             return True
     return False
 
 
-def has_pokemon(state: CollectionState, player: int, pokemon: str):
-    return state.has_any([pokemon, f"Static {pokemon}"], player)
+def has_pokemon(state: CollectionState, player: int, evos_allowed: bool, pokemon: str):
+    if evos_allowed:
+        return state.has_any([pokemon, f"Static {pokemon}", f"Evolved {pokemon}"], player)
+    else:
+        return state.has_any([pokemon, f"Static {pokemon}"], player)
 
 
 def can_leave_viridian(state: CollectionState, player: int, options: PokemonFRLGOptions):
@@ -274,14 +327,18 @@ def post_game_gossipers(state: CollectionState, player: int, options: PokemonFRL
 def can_evolve(state: CollectionState, player: int, world: "PokemonFRLGWorld", pokemon: str):
     evolution_data = data.evolutions[pokemon]
     pokemon = re.sub(r'\d+', '', pokemon)
-    if state.has(pokemon, player):
-        if evolution_data.method == EvolutionMethodEnum.ITEM:
+    if ((state.has(pokemon, player) or state.has(f"Evolved {pokemon}", player))
+            and evolution_data.method in world.allowed_evo_methods):
+        if evolution_data.method in evo_methods_item:
             return state.has(world.item_id_to_name[evolution_data.param], player)
-        elif evolution_data.method == EvolutionMethodEnum.ITEM_HELD:
+        elif evolution_data.method in evo_methods_held_item:
             return state.has_all([world.item_id_to_name[evolution_data.param],
                                   world.item_id_to_name[evolution_data.param2]],
                                  player)
-        elif evolution_data.method in range(EvolutionMethodEnum.LEVEL, EvolutionMethodEnum.ITEM):
+        elif (evolution_data.method in evo_methods_level
+              or evolution_data.method in evo_methods_tyrogue_level
+              or evolution_data.method in evo_methods_wurmple_level):
             return has_n_gyms(state, player, evolution_data.param / 7)
-        return True
+        elif evolution_data.method in evo_methods_friendship:
+            return True
     return False

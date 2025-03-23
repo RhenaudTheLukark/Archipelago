@@ -16,8 +16,8 @@ from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
 from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
-                   LocationCategory, EventData, MapData, MiscPokemonData, MoveData, move_name_map, SpeciesData,
-                   StarterData, TrainerData)
+                   LocationCategory, EventData, EvolutionMethodEnum, MapData, MiscPokemonData, MoveData, move_name_map,
+                   SpeciesData, StarterData, TrainerData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
@@ -25,7 +25,7 @@ from .level_scaling import ScalingData, create_scaling_data, level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations_from_categories,
                         set_free_fly)
 from .logic import (can_cut, can_flash, can_fly, can_rock_smash, can_strength, can_surf, can_waterfall,
-                    has_badge_requirement)
+                    has_badge_requirement, set_allowed_evo_methods)
 from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle, FlashRequired,
                       FreeFlyLocation, GameVersion, Goal, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
                       RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
@@ -133,6 +133,7 @@ class PokemonFRLGWorld(World):
     fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
     er_placement_state: Optional[ERPlacementState]
     er_spoiler_names: List[str]
+    allowed_evo_methods: List[EvolutionMethodEnum]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -167,6 +168,7 @@ class PokemonFRLGWorld(World):
         self.fly_destination_data = dict()
         self.er_placement_state = None
         self.er_spoiler_names = list()
+        self.allowed_evo_methods = list()
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -280,6 +282,7 @@ class PokemonFRLGWorld(World):
                 not self.options.random_starting_town):
             self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
+        set_allowed_evo_methods(self)
         create_scaling_data(self)
         randomize_types(self)
         randomize_abilities(self)
@@ -652,7 +655,9 @@ class PokemonFRLGWorld(World):
             for location in sphere:
                 if (location.game == "Pokemon FireRed and LeafGreen" and
                         location.item.game == "Pokemon FireRed and LeafGreen" and
-                        (location.item.name in pokemon or "Static " in location.item.name)
+                        (location.item.name in pokemon or
+                         "Static " in location.item.name or
+                         "Evolved " in location.item.name)
                         and location.item.advancement):
                     key = (location.player, location.item.name)
                     if key in found_mons:

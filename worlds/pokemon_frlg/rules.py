@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 def set_default_rules(world: "PokemonFRLGWorld"):
     player = world.player
     options = world.options
+    evos_oaks_aides = "Oak's Aides" in options.evolutions_required.value
 
     if options.goal == Goal.option_champion:
         world.multiworld.completion_condition[player] = lambda state: state.has("Defeat Champion", player)
@@ -103,7 +104,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
 
     # Route 2
     set_rule(world.get_location("Route 2 Gate - Oak's Aide Gift (Pokedex Progress)"),
-             lambda state: has_n_pokemon(state, player, options.oaks_aide_route_2.value))
+             lambda state: has_n_pokemon(state, player, evos_oaks_aides, options.oaks_aide_route_2.value))
     set_rule(world.get_location("Route 2 Trade House - Trade Abra"),
              lambda state: state.has("Abra", player))
     set_rule(world.get_entrance("Route 2 Southwest Cuttable Trees"),
@@ -244,7 +245,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
 
     # Route 11
     set_rule(world.get_location("Route 11 Gate 2F - Oak's Aide Gift (Pokedex Progress)"),
-             lambda state: has_n_pokemon(state, player, options.oaks_aide_route_11.value))
+             lambda state: has_n_pokemon(state, player, evos_oaks_aides, options.oaks_aide_route_11.value))
     set_rule(world.get_entrance("Route 11 West Surfing Spot"),
              lambda state: can_surf(state, player, world))
 
@@ -278,7 +279,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
 
     # Route 10
     set_rule(world.get_location("Route 10 Pokemon Center 1F - Oak's Aide Gift (Pokedex Progress)"),
-             lambda state: has_n_pokemon(state, player, options.oaks_aide_route_10.value))
+             lambda state: has_n_pokemon(state, player, evos_oaks_aides, options.oaks_aide_route_10.value))
     set_rule(world.get_entrance("Route 10 North Surfing Spot"),
              lambda state: can_surf(state, player, world))
     set_rule(world.get_entrance("Route 10 Near Power Plant Surfing Spot"),
@@ -461,11 +462,11 @@ def set_default_rules(world: "PokemonFRLGWorld"):
 
     # Route 15
     set_rule(world.get_location("Route 15 Gate 2F - Oak's Aide Gift (Pokedex Progress)"),
-             lambda state: has_n_pokemon(state, player, options.oaks_aide_route_15.value))
+             lambda state: has_n_pokemon(state, player, evos_oaks_aides, options.oaks_aide_route_15.value))
 
     # Route 16
     set_rule(world.get_location("Route 16 Gate 2F - Oak's Aide Gift (Pokedex Progress)"),
-             lambda state: has_n_pokemon(state, player, options.oaks_aide_route_16.value))
+             lambda state: has_n_pokemon(state, player, evos_oaks_aides, options.oaks_aide_route_16.value))
     set_rule(world.get_entrance("Route 16 Southeast Cuttable Tree"),
              lambda state: can_cut(state, player, world))
     set_rule(world.get_entrance("Route 16 Southeast Play Poke Flute"),
@@ -1221,10 +1222,12 @@ def set_trainersanity_rules(world: "PokemonFRLGWorld"):
 
 
 def set_dexsanity_rules(world: "PokemonFRLGWorld"):
+    evos_dexsanity = "Dexsanity" in world.options.evolutions_required.value
+
     for i in range(NUM_REAL_SPECIES):
         species = data.species[NATIONAL_ID_TO_SPECIES_ID[i + 1]]
         set_rule(world.get_location(f"Pokedex - {species.name}"),
-                 lambda state, pokemon=species.name: has_pokemon(state, world.player, pokemon))
+                 lambda state, pokemon=species.name: has_pokemon(state, world.player, evos_dexsanity, pokemon))
 
 
 def set_famesanity_rules(world: "PokemonFRLGWorld"):
