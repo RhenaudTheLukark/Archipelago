@@ -403,7 +403,7 @@ class PokemonFRLGWorld(World):
 
     def create_items(self) -> None:
         item_locations: List[PokemonFRLGLocation] = [
-            location for location in self.multiworld.get_locations(self.player) if location.address is not None
+            location for location in self.get_locations() if location.address is not None
         ]
 
         self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
@@ -416,7 +416,15 @@ class PokemonFRLGWorld(World):
             items_to_remove.extend(badge_items)
             self.pre_fill_items.extend(badge_items)
 
-        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
+        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
+            sevii_fly_points = ["Fly One Island", "Fly Two Island", "Fly Three Island", "Fly Four Island",
+                                "Fly Five Island", "Fly Six Island", "Fly Seven Island"]
+            fly_points = [self.create_item(fly) for fly in item_groups["Fly Points"]]
+            if not self.options.kanto_only:
+                items_to_remove.extend(fly_points)
+            else:
+                items_to_remove.extend([fly for fly in fly_points if fly.name not in sevii_fly_points])
+        elif self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
             items_to_remove.append(self.create_item("Fly Indigo Plateau"))
 
         if not self.options.shuffle_berry_pouch:
@@ -530,8 +538,7 @@ class PokemonFRLGWorld(World):
         unrandomized_progression_locations = set()
 
         if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
-            fly_locations = [loc for loc in self.multiworld.get_locations(self.player)
-                             if loc.name in location_groups["Town Visits"]]
+            fly_locations = [loc for loc in self.get_locations() if loc.name in location_groups["Town Visits"]]
             unrandomized_progression_locations.update(fly_locations)
         elif self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
             unrandomized_progression_locations.add(self.get_location("Indigo Plateau - Unlock Fly Destination"))
@@ -546,7 +553,7 @@ class PokemonFRLGWorld(World):
     def shuffle_badges(self) -> None:
         badge_items: List[PokemonFRLGItem] = [self.create_item(badge) for badge in item_groups["Badges"]]
         self.pre_fill_items.clear()
-        locations: List[PokemonFRLGLocation] = self.multiworld.get_locations(self.player)
+        locations: List[PokemonFRLGLocation] = self.get_locations()
         for attempt in range(5):
             badge_locations: List[PokemonFRLGLocation] = [
                 loc for loc in locations if loc.category == LocationCategory.BADGE and loc.item is None
@@ -601,7 +608,7 @@ class PokemonFRLGWorld(World):
 
         # Delete trainersanity locations if there are more than the amount specified in the settings
         if self.options.trainersanity != Trainersanity.special_range_names["none"]:
-            locations: List[PokemonFRLGLocation] = self.multiworld.get_locations(self.player)
+            locations: List[PokemonFRLGLocation] = self.get_locations()
             trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINERSANITY]
             locs_to_remove = len(trainer_locations) - self.options.trainersanity.value
             if locs_to_remove > 0:
@@ -754,7 +761,7 @@ class PokemonFRLGWorld(World):
             from collections import defaultdict
 
             species_locations = defaultdict(set)
-            locations: List[PokemonFRLGLocation] = self.multiworld.get_locations(self.player)
+            locations: List[PokemonFRLGLocation] = self.get_locations()
 
             if self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla:
                 pokemon_locations: List[PokemonFRLGLocation] = [
@@ -792,7 +799,7 @@ class PokemonFRLGWorld(World):
             from collections import defaultdict
 
             species_locations = defaultdict(set)
-            locations: List[PokemonFRLGLocation] = self.multiworld.get_locations(self.player)
+            locations: List[PokemonFRLGLocation] = self.get_locations()
 
             pokemon_locations: List[PokemonFRLGLocation] = [
                 loc for loc in locations if loc.category == LocationCategory.EVENT_WILD_POKEMON

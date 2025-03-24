@@ -382,10 +382,7 @@ class PokemonFRLGClient(BizHawkClient):
                 self.local_checked_locations = local_checked_locations
 
                 if local_checked_locations is not None:
-                    await ctx.send_msgs([{
-                        "cmd": "LocationChecks",
-                        "locations": list(local_checked_locations)
-                    }])
+                    await ctx.check_locations(local_checked_locations)
 
             # Send game clear
             if not ctx.finished_game and game_clear:

@@ -772,7 +772,7 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: can_sail_vermilion(state, player, options))
 
     # Evolutions
-    for location in world.multiworld.get_locations(player):
+    for location in world.get_locations():
         assert isinstance(location, PokemonFRLGLocation)
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             pokemon_name = location.name.split("-")[1].strip()
@@ -1089,7 +1089,7 @@ def set_hidden_item_rules(world: "PokemonFRLGWorld"):
 
     # Add rules for hidden items
     if world.options.itemfinder_required != ItemfinderRequired.option_off:
-        for location in world.multiworld.get_locations(player):
+        for location in world.get_locations():
             assert isinstance(location, PokemonFRLGLocation)
             if location.category in [LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING]:
                 add_rule(location, lambda state: state.has("Itemfinder", player))
@@ -1126,7 +1126,7 @@ def set_shopsanity_rules(world: "PokemonFRLGWorld"):
                  lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"],
                                              player))
 
-        for location in world.multiworld.get_locations(player):
+        for location in world.get_locations():
             assert isinstance(location, PokemonFRLGLocation)
             if location.category == LocationCategory.SHOPSANITY:
                 add_item_rule(location, lambda i: i.player != player
@@ -1337,7 +1337,7 @@ def set_famesanity_rules(world: "PokemonFRLGWorld"):
 
     # Add rules for fame checker locations
     if world.options.fame_checker_required:
-        for location in world.multiworld.get_locations(player):
+        for location in world.get_locations():
             assert isinstance(location, PokemonFRLGLocation)
             if location.category == LocationCategory.FAMESANITY:
                 add_rule(location, lambda state: state.has("Fame Checker", player))

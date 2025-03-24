@@ -153,7 +153,7 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
 
     state = CollectionState(world.multiworld)
     regions = world.multiworld.get_regions(world.player)
-    events = [loc for loc in world.multiworld.get_locations(world.player) if loc.is_event]
+    events = [loc for loc in world.get_locations() if loc.is_event]
     forbidden_fly_list = list()
 
     if world.options.kanto_only:

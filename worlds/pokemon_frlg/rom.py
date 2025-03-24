@@ -173,7 +173,7 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
 
     # Set item values
     location_info: List[Tuple[int, int, str]] = []
-    for location in world.multiworld.get_locations(world.player):
+    for location in world.get_locations():
         assert isinstance(location, PokemonFRLGLocation)
         if location.address is None:
             continue
@@ -896,7 +896,7 @@ def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version
         min_shop_price = world.options.maximum_shop_price.value
         max_shop_price = world.options.minimum_shop_price.value
 
-    for location in world.multiworld.get_locations(world.player):
+    for location in world.get_locations():
         assert isinstance(location, PokemonFRLGLocation)
         if location.address is None:
             continue
