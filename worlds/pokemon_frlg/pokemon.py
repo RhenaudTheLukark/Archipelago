@@ -825,6 +825,8 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
         RandomizeMiscPokemon.option_match_base_stats_and_type
     }
 
+    prize_pokemon = set()
+
     for name, misc_pokemon in data.misc_pokemon.items():
         original_species = world.modified_species[misc_pokemon.species_id[game_version]]
 
@@ -837,8 +839,15 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
             ]
         if should_match_bst:
             candidates = _filter_species_by_nearby_bst(candidates, sum(original_species.base_stats))
+        if "CELADON_PRIZE_POKEMON" in name:
+            candidates = [species for species in candidates if species.species_id not in prize_pokemon]
 
-        world.modified_misc_pokemon[name].species_id[game_version] = world.random.choice(candidates).species_id
+        new_species_id = world.random.choice(candidates).species_id
+
+        if "CELADON_PRIZE_POKEMON" in name:
+            prize_pokemon.add(new_species_id)
+
+        world.modified_misc_pokemon[name].species_id[game_version] = new_species_id
 
     # Update the events that correspond to the misc Pokémon
     for name, misc_pokemon in world.modified_misc_pokemon.items():
