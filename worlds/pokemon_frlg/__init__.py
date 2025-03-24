@@ -134,6 +134,7 @@ class PokemonFRLGWorld(World):
     er_placement_state: Optional[ERPlacementState]
     er_spoiler_names: List[str]
     allowed_evo_methods: List[EvolutionMethodEnum]
+    moves_by_type: Dict[int, Set[int]]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -169,6 +170,7 @@ class PokemonFRLGWorld(World):
         self.er_placement_state = None
         self.er_spoiler_names = list()
         self.allowed_evo_methods = list()
+        self.moves_by_type = dict()
         self.finished_level_scaling = threading.Event()
 
     @classmethod

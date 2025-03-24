@@ -159,24 +159,43 @@ def _get_random_type(random: "Random") -> int:
     return picked_type
 
 
-def _get_random_move(random: "Random", blacklists: List[Set[int]]) -> int:
-    blacklist_length = len(blacklists)
+def _get_random_move(world: "PokemonFRLGWorld",
+                     blacklists: List[Set[int]],
+                     use_bias: bool = False,
+                     types: Tuple[int, int] | None = None) -> int:
     allowed_moves = list()
+
+    if use_bias:
+        type_bias = world.options.move_match_type_bias.value
+        normal_bias = world.options.move_normal_type_bias.value
+        bias = world.random.random() * 100
+        if bias < type_bias:
+            moves_by_type = world.moves_by_type[types[0]]
+            if types[0] != types[1]:
+                moves_by_type |= world.moves_by_type[types[1]]
+            blacklists.append({move for move in range(data.constants["MOVES_COUNT"])
+                               if move not in moves_by_type})
+        elif bias < type_bias + ((100 - type_bias) * (normal_bias / 100)):
+            blacklists.append({move for move in range(data.constants["MOVES_COUNT"])
+                               if move not in world.moves_by_type[0]})
 
     while len(allowed_moves) == 0:
         merged_blacklist = _HM_MOVES | _DUMMY_MOVES
-        for i in range(blacklist_length):
-            merged_blacklist |= blacklists[i]
+        for blacklist in blacklists:
+            merged_blacklist |= blacklist
         allowed_moves = [i for i in range(data.constants["MOVES_COUNT"]) if i not in merged_blacklist]
-        blacklist_length -= 1
+        blacklists.pop()
 
-    return random.choice(allowed_moves)
+    return world.random.choice(allowed_moves)
 
 
-def _get_random_damaging_move(random: "Random", blacklists: List[Set[int]]) -> int:
+def _get_random_damaging_move(world: "PokemonFRLGWorld",
+                              blacklists: List[Set[int]],
+                              use_bias: bool = False,
+                              types: Tuple[int, int] | None = None) -> int:
     non_damage_blacklist = {i for i in range(data.constants["MOVES_COUNT"]) if i not in _DAMAGING_MOVES}
     blacklists.insert(0, non_damage_blacklist)
-    return _get_random_move(random, blacklists)
+    return _get_random_move(world, blacklists, use_bias, types)
 
 
 def _filter_species_by_nearby_bst(species: List[SpeciesData], target_bst: int) -> List[SpeciesData]:
@@ -346,6 +365,13 @@ def randomize_move_types(world: "PokemonFRLGWorld") -> None:
                 continue
             move.type = _get_random_type(world.random)
 
+    for name, move in world.modified_moves.items():
+        if data.constants[name] in _DUMMY_MOVES:
+            continue
+        if move.type not in world.moves_by_type:
+            world.moves_by_type[move.type] = set()
+        world.moves_by_type[move.type].add(data.constants[name])
+
 
 def randomize_damage_categories(world: "PokemonFRLGWorld") -> None:
     if world.options.damage_categories == RandomizeDamageCategories.option_shuffle:
@@ -404,8 +430,10 @@ def randomize_moves(world: "PokemonFRLGWorld") -> None:
         move_index = 0
         while old_learnset[move_index].move_id == 0:
             if world.options.moves == RandomizeMoves.option_start_with_four_moves:
-                new_move = _get_random_move(world.random,
-                                            [{move.move_id for move in new_learnset}, world.blacklisted_moves])
+                new_move = _get_random_move(world,
+                                            [{move.move_id for move in new_learnset}, world.blacklisted_moves],
+                                            True,
+                                            species.types)
             else:
                 new_move = 0
             new_learnset.append(LearnsetMove(old_learnset[move_index].level, new_move))
@@ -413,10 +441,15 @@ def randomize_moves(world: "PokemonFRLGWorld") -> None:
 
         while move_index < len(old_learnset):
             if move_index == 3:
-                new_move = _get_random_damaging_move(world.random, [{move.move_id for move in new_learnset}])
+                new_move = _get_random_damaging_move(world,
+                                                     [{move.move_id for move in new_learnset}],
+                                                     True,
+                                                     species.types)
             else:
-                new_move = _get_random_move(world.random,
-                                            [{move.move_id for move in new_learnset}, world.blacklisted_moves])
+                new_move = _get_random_move(world,
+                                            [{move.move_id for move in new_learnset}, world.blacklisted_moves],
+                                            True,
+                                            species.types)
             new_learnset.append(LearnsetMove(old_learnset[move_index].level, new_move))
             move_index += 1
 
@@ -918,7 +951,7 @@ def randomize_tm_moves(world: "PokemonFRLGWorld") -> None:
     new_moves: Set[int] = set()
 
     for i in range(50):
-        new_move = _get_random_move(world.random, [new_moves, world.blacklisted_moves])
+        new_move = _get_random_move(world, [new_moves, world.blacklisted_moves])
         new_moves.add(new_move)
         world.modified_tmhm_moves[i] = new_move
 
@@ -927,7 +960,7 @@ def randomize_tutor_moves(world: "PokemonFRLGWorld") -> List[int]:
     new_moves = []
 
     for i in range(15):
-        new_move = _get_random_move(world.random, [set(new_moves), world.blacklisted_moves])
+        new_move = _get_random_move(world, [set(new_moves), world.blacklisted_moves])
         new_moves.append(new_move)
 
     return new_moves

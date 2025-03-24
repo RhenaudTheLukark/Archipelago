@@ -939,6 +939,30 @@ class RandomizeMoves(Choice):
     option_start_with_four_moves = 2
 
 
+class MoveMatchTypeBias(Range):
+    """
+    Sets the probability that a learned move will be forced to match one of the types of a Pokemon.
+
+    If a move is not forced to match type, it will roll for Normal type bias.
+    """
+    display_name = "Move Match Type Bias"
+    default = 0
+    range_start = 0
+    range_end = 100
+
+
+class MoveNormalTypeBias(Range):
+    """
+    Sets the probability that a learned move will be forced to be a Normal type move.
+
+    If a move is not forced to be Normal, it will be completely random.
+    """
+    display_name = "Move Normal Type Bias"
+    default = 0
+    range_start = 0
+    range_end = 100
+
+
 class MoveBlacklist(OptionSet):
     """
     Prevents species from learning these moves via learnsets, TMs, and move tutors.
@@ -1279,6 +1303,8 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     abilities: RandomizeAbilities
     ability_blacklist: AbilityBlacklist
     moves: RandomizeMoves
+    move_match_type_bias: MoveMatchTypeBias
+    move_normal_type_bias: MoveNormalTypeBias
     move_blacklist: MoveBlacklist
     physical_special_split: PhysicalSpecialSplit
     move_types: RandomizeMoveTypes
