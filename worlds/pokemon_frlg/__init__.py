@@ -364,8 +364,9 @@ class PokemonFRLGWorld(World):
                 "Two Island Town - Beauty Info"
             ])
 
-            if (self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_vanilla or
-                    self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_champion):
+            if ((self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_vanilla
+                    or self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_champion)
+                    and self.options.dungeon_entrance_shuffle == DungeonEntranceShuffle.option_off):
                 exclude_locations([
                     "Cerulean Cave 1F - Southwest Item",
                     "Cerulean Cave 1F - East Plateau Item",
