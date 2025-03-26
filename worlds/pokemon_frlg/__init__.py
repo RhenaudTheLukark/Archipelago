@@ -21,7 +21,7 @@ from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_P
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
-from .level_scaling import ScalingData, create_scaling_data, level_scaling
+from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations_from_categories,
                         set_free_fly)
 from .logic import (can_cut, can_flash, can_fly, can_rock_smash, can_strength, can_surf, can_waterfall,
@@ -127,7 +127,6 @@ class PokemonFRLGWorld(World):
     encounter_name_level_dict: Dict[str, int]
     encounter_name_list: List[str]
     encounter_level_list: List[int]
-    scaling_data: List[ScalingData]
     itempool: List[PokemonFRLGItem]
     pre_fill_items: List[PokemonFRLGItem]
     fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
@@ -163,7 +162,6 @@ class PokemonFRLGWorld(World):
         self.encounter_name_level_dict = dict()
         self.encounter_name_list = list()
         self.encounter_level_list = list()
-        self.scaling_data = list()
         self.itempool = list()
         self.pre_fill_items = list()
         self.fly_destination_data = dict()
@@ -285,7 +283,6 @@ class PokemonFRLGWorld(World):
             self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
         set_allowed_evo_methods(self)
-        create_scaling_data(self)
         randomize_types(self)
         randomize_abilities(self)
         randomize_move_types(self)

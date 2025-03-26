@@ -300,6 +300,16 @@ class MoveData:
     address: Dict[str, int]
 
 
+@dataclass
+class ScalingData:
+    region: str
+    kanto: bool
+    connections: List[str]
+    type: Optional[str]
+    category: LocationCategory
+    locations: Dict[str, List[str]]
+
+
 class PokemonFRLGData:
     rom_names: Dict[str, str]
     rom_checksum: int
@@ -322,6 +332,7 @@ class PokemonFRLGData:
     trainers: Dict[str, TrainerData]
     tmhm_moves: List[int]
     moves: Dict[str, MoveData]
+    scaling: Dict[str, ScalingData]
     type_damage_categories: List[int]
     num_moves_per_damage_category: Dict[int, int]
 
@@ -345,6 +356,7 @@ class PokemonFRLGData:
         self.trainers = {}
         self.tmhm_moves = []
         self.moves = {}
+        self.scaling = {}
         self.type_damage_categories = [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1]
         self.num_moves_per_damage_category = {0: 0, 1: 0, 2: 0}
 
@@ -826,16 +838,15 @@ def init() -> None:
 
     regions_json = {}
     for region_subset in region_json_list:
-        for region_name, region_json in region_subset.items():
-            if region_name in regions_json:
-                raise AssertionError("Pokemon FRLG: Region [{region_name}] was defined multiple times")
-            regions_json[region_name] = region_json
+        for region_id, region_json in region_subset.items():
+            if region_id in regions_json:
+                raise AssertionError(f"Pokemon FRLG: Region [{region_id}] was defined multiple times")
+            regions_json[region_id] = region_json
 
     # Create region data
     claimed_locations: Set[str] = set()
     claimed_warps: Set[str] = set()
 
-    data.regions = {}
     for region_id, region_json in regions_json.items():
         parent_map = data.maps[region_json["parent_map"]] if region_json["parent_map"] is not None else None
 
@@ -929,12 +940,9 @@ def init() -> None:
             if name != "":
                 data.warp_name_map[name] = encoded_warp
 
-        new_region.warps.sort()
-
         data.regions[region_id] = new_region
 
     # Create item data
-    data.items = {}
     for item_id_name, attributes in item_data.items():
         if attributes["classification"] == "PROGRESSION":
             item_classification = ItemClassification.progression
@@ -1085,6 +1093,31 @@ def init() -> None:
         )
         if name not in ["MOVE_NONE", "MOVE_STRUGGLE"]:
             data.num_moves_per_damage_category[move_data["category"]] += 1
+
+    # Load/merge scaling json files
+    scaling_json_list = []
+    for file in resource_listdir(__name__, "data/scalings"):
+        if not resource_isdir(__name__, "data/scalings/" + file):
+            scaling_json_list.append(load_json_data("scalings/" + file))
+
+    scalings_json = {}
+    for scaling_subset in scaling_json_list:
+        for scaling_id, scaling_json in scaling_subset.items():
+            if scaling_id in scalings_json:
+                raise AssertionError(f"Pokemon FRLG: Scaling [{scaling_id}] was defined multiple times")
+            scalings_json[scaling_id] = scaling_json
+
+    for scaling_id, scaling_json in scalings_json.items():
+        scaling_data = ScalingData(
+            scaling_json["region"],
+            scaling_json["kanto"],
+            scaling_json["connections"],
+            scaling_json["type"],
+            LocationCategory[scaling_json["category"]],
+            scaling_json["locations"]
+        )
+
+        data.scaling[scaling_id] = scaling_data
 
 
 data = PokemonFRLGData()

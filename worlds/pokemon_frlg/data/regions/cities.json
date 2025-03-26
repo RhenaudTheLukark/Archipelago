@@ -383,7 +383,7 @@
       "MAP_PEWTER_CITY:1/MAP_PEWTER_CITY_MUSEUM_1F:1": "Pewter Museum (East)"
     }
   },
-  "REGION_MAP_PEWTER_CITY_MUSEUM_1F/WEST": {
+  "REGION_PEWTER_CITY_MUSEUM_1F/WEST": {
     "parent_map": "MAP_PEWTER_CITY_MUSEUM_1F",
     "name": "Pewter Museum 1F West",
     "encounter_region": null,
@@ -399,7 +399,7 @@
       "MAP_PEWTER_CITY_MUSEUM_1F:2/MAP_PEWTER_CITY_MUSEUM_2F:0": "Pewter Museum 1F Stairs"
     }
   },
-  "REGION_MAP_PEWTER_CITY_MUSEUM_1F/EAST": {
+  "REGION_PEWTER_CITY_MUSEUM_1F/EAST": {
     "parent_map": "MAP_PEWTER_CITY_MUSEUM_1F",
     "name": "Pewter Museum 1F East",
     "encounter_region": null,
@@ -417,7 +417,7 @@
       "MAP_PEWTER_CITY_MUSEUM_1F:1/MAP_PEWTER_CITY:1": "Pewter Museum 1F Exit (East)"
     }
   },
-  "REGION_MAP_PEWTER_CITY_MUSEUM_2F/MAIN": {
+  "REGION_PEWTER_CITY_MUSEUM_2F/MAIN": {
     "parent_map": "MAP_PEWTER_CITY_MUSEUM_2F",
     "name": "Pewter Museum 2F",
     "encounter_region": null,
@@ -434,7 +434,7 @@
       "MAP_PEWTER_CITY_MUSEUM_2F:0/MAP_PEWTER_CITY_MUSEUM_1F:2": "Pewter Museum 2F Stairs"
     }
   },
-  "REGION_MAP_PEWTER_CITY_GYM/MAIN": {
+  "REGION_PEWTER_CITY_GYM/MAIN": {
     "parent_map": "MAP_PEWTER_CITY_GYM",
     "name": "Pewter Gym",
     "encounter_region": null,
