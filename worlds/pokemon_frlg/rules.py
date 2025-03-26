@@ -388,25 +388,14 @@ def set_default_rules(world: "PokemonFRLGWorld"):
              lambda state: state.has("Lift Key", player))
 
     # Pokemon Tower
-    set_rule(world.get_entrance("Pokemon Tower 6F (Ghost Battle)"),
-             lambda state: state.has("Silph Scope", player))
-    set_rule(world.get_entrance("Pokemon Tower 6F Near Stairs (Ghost Battle)"),
+    set_rule(world.get_location("Pokemon Tower 6F - Ghost Pokemon"),
              lambda state: state.has("Silph Scope", player))
     set_rule(world.get_entrance("Pokemon Tower 6F Reveal Ghost"),
              lambda state: state.has("Silph Scope", player))
 
     if "Block Tower" in options.modify_world_state.value:
-        set_rule(world.get_entrance("Pokemon Tower 1F (Ghost Battle)"),
-                 lambda state: state.has("Silph Scope", player))
-        set_rule(world.get_entrance("Pokemon Tower 1F Near Stairs (Ghost Battle)"),
-                 lambda state: state.has("Silph Scope", player))
         set_rule(world.get_entrance("Pokemon Tower 1F Reveal Ghost"),
                  lambda state: state.has("Silph Scope", player))
-    else:
-        set_rule(world.get_entrance("Pokemon Tower 1F (Ghost Battle)"),
-                 lambda state: False)
-        set_rule(world.get_entrance("Pokemon Tower 1F Near Stairs (Ghost Battle)"),
-                 lambda state: False)
 
     for i in range(3, 8):
         for j in range(1, 4):
@@ -1407,43 +1396,47 @@ def set_scaling_rules(world: "PokemonFRLGWorld"):
     options = world.options
 
     # Route 22
-    set_rule(world.get_location("Route 22 Early Rival"),
+    set_rule(world.get_location("Route 22 Early Rival Scaling"),
              lambda state: state.has("Deliver Oak's Parcel", player))
-    set_rule(world.get_location("Route 22 Late Rival"),
+    set_rule(world.get_location("Route 22 Late Rival Scaling"),
              lambda state: state.has_all(["Defeat Route 22 Rival", "Defeat Giovanni"], player))
 
+    # Pokemon Tower
+    set_rule(world.get_location("Static Marowak Scaling"),
+             lambda state: state.has("Silph Scope", player))
+
     # Celadon City
-    set_rule(world.get_location("Prize Pokemon 1"),
+    set_rule(world.get_location("Prize Pokemon 1 Scaling"),
              lambda state: state.has("Coin Case", player))
-    set_rule(world.get_location("Prize Pokemon 2"),
+    set_rule(world.get_location("Prize Pokemon 2 Scaling"),
              lambda state: state.has("Coin Case", player))
-    set_rule(world.get_location("Prize Pokemon 3"),
+    set_rule(world.get_location("Prize Pokemon 3 Scaling"),
              lambda state: state.has("Coin Case", player))
-    set_rule(world.get_location("Prize Pokemon 4"),
+    set_rule(world.get_location("Prize Pokemon 4 Scaling"),
              lambda state: state.has("Coin Case", player))
-    set_rule(world.get_location("Prize Pokemon 5"),
+    set_rule(world.get_location("Prize Pokemon 5 Scaling"),
              lambda state: state.has("Coin Case", player))
 
     # Cinnabar Island
-    set_rule(world.get_location("Gift Omanyte"),
+    set_rule(world.get_location("Gift Omanyte Scaling"),
              lambda state: state.has("Helix Fossil", player))
-    set_rule(world.get_location("Gift Kabuto"),
+    set_rule(world.get_location("Gift Kabuto Scaling"),
              lambda state: state.has("Dome Fossil", player))
-    set_rule(world.get_location("Gift Aerodactyl"),
+    set_rule(world.get_location("Gift Aerodactyl Scaling"),
              lambda state: state.has("Old Amber", player))
 
     if not options.kanto_only:
         # Mt. Ember
-        set_rule(world.get_location("Team Rocket Grunt 43"),
+        set_rule(world.get_location("Team Rocket Grunt 43 Scaling"),
                  lambda state: state.has("Deliver Meteorite", player))
-        set_rule(world.get_location("Team Rocket Grunt 44"),
+        set_rule(world.get_location("Team Rocket Grunt 44 Scaling"),
                  lambda state: state.has("Deliver Meteorite", player))
-        set_rule(world.get_location("Legendary Moltres"),
+        set_rule(world.get_location("Legendary Moltres Scaling"),
                  lambda state: can_strength(state, player, world))
 
         # Indigo Plateau
         if not options.skip_elite_four:
-            set_rule(world.get_location("Elite Four Rematch"),
+            set_rule(world.get_location("Elite Four Rematch Scaling"),
                      lambda state: state.has_all(["Defeat Champion", "Restore Pokemon Network Machine"], player))
 
         # Tanoby Ruins

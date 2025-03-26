@@ -924,8 +924,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_POKEMON_TOWER_1F/NEAR_STAIRS": "Pokemon Tower 1F Unobstructed Path",
-      "REGION_POKEMON_TOWER_GHOST/MAIN": "Pokemon Tower 1F (Ghost Battle)"
+      "REGION_POKEMON_TOWER_1F/NEAR_STAIRS": "Pokemon Tower 1F Unobstructed Path"
     },
     "warps": {
       "MAP_POKEMON_TOWER_1F:0/MAP_LAVENDER_TOWN:0": "Pokemon Tower 1F Exit"
@@ -942,8 +941,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_POKEMON_TOWER_1F/MAIN": "Pokemon Tower 1F Near Stairs Unobstructed Path",
-      "REGION_POKEMON_TOWER_GHOST/MAIN": "Pokemon Tower 1F Near Stairs (Ghost Battle)"
+      "REGION_POKEMON_TOWER_1F/MAIN": "Pokemon Tower 1F Near Stairs Unobstructed Path"
     },
     "warps": {
       "MAP_POKEMON_TOWER_1F:1/MAP_POKEMON_TOWER_2F:1": "Pokemon Tower 1F Stairs"
@@ -1050,10 +1048,11 @@
       "TRAINER_CHANNELER_EMILIA_REWARD",
       "ITEM_POKEMON_TOWER_6F_RARE_CANDY"
     ],
-    "events": [],
+    "events": [
+      "STATIC_POKEMON_MAROWAK"
+    ],
     "exits": {
-      "REGION_POKEMON_TOWER_6F/NEAR_STAIRS": "Pokemon Tower 6F Reveal Ghost",
-      "REGION_POKEMON_TOWER_GHOST/MAIN": "Pokemon Tower 6F (Ghost Battle)"
+      "REGION_POKEMON_TOWER_6F/NEAR_STAIRS": "Pokemon Tower 6F Reveal Ghost"
     },
     "warps": {
       "MAP_POKEMON_TOWER_6F:1/MAP_POKEMON_TOWER_5F:1": "Pokemon Tower 6F Stairs (East)"
@@ -1070,8 +1069,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_POKEMON_TOWER_6F/MAIN": "Pokemon Tower 6F Near Stairs Pass Ghost",
-      "REGION_POKEMON_TOWER_GHOST/MAIN": "Pokemon Tower 6F Near Stairs (Ghost Battle)"
+      "REGION_POKEMON_TOWER_6F/MAIN": "Pokemon Tower 6F Near Stairs Pass Ghost"
     },
     "warps": {
       "MAP_POKEMON_TOWER_6F:0/MAP_POKEMON_TOWER_7F:0": "Pokemon Tower 6F Stairs (South)"
@@ -1101,21 +1099,6 @@
     "warps": {
       "MAP_POKEMON_TOWER_7F:0/MAP_POKEMON_TOWER_6F:0": "Pokemon Tower 7F Stairs"
     }
-  },
-  "REGION_POKEMON_TOWER_GHOST/MAIN": {
-    "parent_map": null,
-    "name": "Pokemon Tower Ghost Encounter",
-    "encounter_region": null,
-    "has_land": false,
-    "has_water": false,
-    "has_fishing": false,
-    "kanto": true,
-    "locations": [],
-    "events": [
-      "STATIC_POKEMON_MAROWAK"
-    ],
-    "exits": {},
-    "warps": {}
   },
   "REGION_UNDERGROUND_PATH_EAST_ENTRANCE/MAIN": {
     "parent_map": "MAP_UNDERGROUND_PATH_EAST_ENTRANCE",
