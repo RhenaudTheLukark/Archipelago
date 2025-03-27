@@ -1126,12 +1126,12 @@ def set_shopsanity_rules(world: "PokemonFRLGWorld"):
                  lambda state: state.has_all(["Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"],
                                              player))
 
-        for location in world.get_locations():
-            assert isinstance(location, PokemonFRLGLocation)
-            if location.category == LocationCategory.SHOPSANITY:
-                add_item_rule(location, lambda i: i.player != player
-                                                  or (i.name not in item_groups["HMs"]
-                                                      and i.name not in item_groups["TMs"]))
+    for location in world.get_locations():
+        assert isinstance(location, PokemonFRLGLocation)
+        if location.category == LocationCategory.SHOPSANITY:
+            add_item_rule(location, lambda i: i.player != player
+                                              or (i.name not in item_groups["HMs"]
+                                                  and i.name not in item_groups["TMs"]))
 
 
 def set_trainersanity_rules(world: "PokemonFRLGWorld"):
