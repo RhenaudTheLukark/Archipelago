@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Optional
+from typing import TYPE_CHECKING, Dict
 from BaseClasses import Item, ItemClassification
 from .data import data
 from .groups import item_groups
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 class PokemonFRLGItem(Item):
     game: str = "Pokemon FireRed and LeafGreen"
 
-    def __init__(self, name: str, classification: ItemClassification, code: Optional[int], player: int) -> None:
+    def __init__(self, name: str, classification: ItemClassification, code: int | None, player: int) -> None:
         super().__init__(name, classification, code, player)
 
 

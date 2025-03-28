@@ -139,8 +139,8 @@ def validate_regions() -> bool:
     """
 
     extracted_data = load_json_data("extracted_data.json")
-    error_messages: List[str] = []
-    warn_messages: List[str] = []
+    error_messages: List[str] = list()
+    warn_messages: List[str] = list()
     failed = False
 
     def error(message: str) -> None:

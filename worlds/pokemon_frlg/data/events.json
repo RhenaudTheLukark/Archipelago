@@ -244,7 +244,7 @@
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "STATIC_POKEMON_MAROWAK": {
-    "name": "Pokemon Tower 6F - Ghost Pokemon",
+    "name": "Pokemon Tower - Ghost Pokemon",
     "item": "Missable Marowak",
     "category": "EVENT_STATIC_POKEMON"
   },

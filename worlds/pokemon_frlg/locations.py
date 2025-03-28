@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, List, Optional, Set, Union
+from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, Region, ItemClassification
 from .data import data, LocationCategory, fly_blacklist_map
 from .items import PokemonFRLGItem, get_random_item
@@ -31,15 +31,6 @@ fly_item_id_map = {
     "ITEM_FLY_ROUTE10": 20
 }
 
-sevii_required_locations = [
-    "One Cinnabar Pokemon Center 1F - Bill Gift",
-    "Lorelei's Room - Elite Four Lorelei Rematch Reward",
-    "Bruno's Room - Elite Four Bruno Rematch Reward",
-    "Agatha's Room - Elite Four Agatha Rematch Reward",
-    "Lance's Room - Elite Four Lance Rematch Reward",
-    "Champion's Room - Champion Rematch Reward"
-]
-
 fly_item_map = {
     "Pallet Town": "ITEM_FLY_PALLET",
     "Viridian City South": "ITEM_FLY_VIRIDIAN",
@@ -66,23 +57,23 @@ fly_item_map = {
 
 class PokemonFRLGLocation(Location):
     game: str = "Pokemon FireRed and LeafGreen"
-    item_address = Optional[Dict[str, int]]
-    default_item_id: Optional[int]
+    item_address = Dict[str, int | List[int]] | None
+    default_item_id: int | None
     category: LocationCategory
-    data_ids: Optional[List[str]]
+    data_ids: List[str] | None
     spoiler_name: str
 
     def __init__(
             self,
             player: int,
             name: str,
-            address: Optional[int],
+            address: int | None,
             category: LocationCategory,
-            parent: Optional[Region] = None,
-            item_address: Optional[Dict[str, Union[int, List[int]]]] = None,
-            default_item_id: Optional[int] = None,
-            data_ids: Optional[List[str]] = None,
-            spoiler_name: Optional[str] = None) -> None:
+            parent: Region | None = None,
+            item_address: Dict[str, int | List[int]] | None = None,
+            default_item_id: int | None = None,
+            data_ids: List[str] | None = None,
+            spoiler_name: str | None = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address
@@ -107,13 +98,22 @@ def create_location_name_to_id_map() -> Dict[str, int]:
 def create_locations_from_categories(world: "PokemonFRLGWorld",
                                      regions: Dict[str, Region],
                                      categories: Set[LocationCategory]) -> None:
+    def exclude_location(location_id: str):
+        sevii_required_locations = [
+            "NPC_GIFT_GOT_ONE_PASS", "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
+            "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
+            "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD"
+        ]
+
+        if world.options.kanto_only and location_id in sevii_required_locations:
+            return True
+        return False
+
     """
     Iterates through region data and adds locations to the multiworld if
     those locations are included in the given categories.
     """
     for region_data in data.regions.values():
-        if world.options.kanto_only and not region_data.kanto:
-            continue
         if region_data.name not in regions:
             continue
 
@@ -121,10 +121,10 @@ def create_locations_from_categories(world: "PokemonFRLGWorld",
         included_locations = [loc for loc in region_data.locations if data.locations[loc].category in categories]
 
         for location_id in included_locations:
-            location_data = data.locations[location_id]
-
-            if world.options.kanto_only and location_data.name in sevii_required_locations:
+            if exclude_location(location_id):
                 continue
+
+            location_data = data.locations[location_id]
 
             if location_data.default_item == data.constants["ITEM_NONE"]:
                 default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]
