@@ -29,20 +29,8 @@
       ]
     }
   },
-  "STATIC_SCALING_POKEMON_TOWER_1F/MAIN": {
-    "region": "Pokemon Tower 1F",
-    "kanto": true,
-    "connections": [],
-    "type": null,
-    "category": "EVENT_STATIC_POKEMON_SCALING",
-    "locations": {
-      "Static Marowak Scaling": [
-        "STATIC_POKEMON_MAROWAK"
-      ]
-    }
-  },
-  "STATIC_SCALING_POKEMON_TOWER_6F/MAIN": {
-    "region": "Pokemon Tower 6F",
+  "STATIC_SCALING_POKEMON_TOWER_GHOST/MAIN": {
+    "region": "Pokemon Tower Ghost Encounter",
     "kanto": true,
     "connections": [],
     "type": null,

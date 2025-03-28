@@ -31,15 +31,6 @@ fly_item_id_map = {
     "ITEM_FLY_ROUTE10": 20
 }
 
-sevii_required_locations = [
-    "One Cinnabar Pokemon Center 1F - Bill Gift",
-    "Lorelei's Room - Elite Four Lorelei Rematch Reward",
-    "Bruno's Room - Elite Four Bruno Rematch Reward",
-    "Agatha's Room - Elite Four Agatha Rematch Reward",
-    "Lance's Room - Elite Four Lance Rematch Reward",
-    "Champion's Room - Champion Rematch Reward"
-]
-
 fly_item_map = {
     "Pallet Town": "ITEM_FLY_PALLET",
     "Viridian City South": "ITEM_FLY_VIRIDIAN",
@@ -107,13 +98,22 @@ def create_location_name_to_id_map() -> Dict[str, int]:
 def create_locations_from_categories(world: "PokemonFRLGWorld",
                                      regions: Dict[str, Region],
                                      categories: Set[LocationCategory]) -> None:
+    def exclude_location(location_id: str):
+        sevii_required_locations = [
+            "NPC_GIFT_GOT_ONE_PASS", "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
+            "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
+            "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD"
+        ]
+
+        if world.options.kanto_only and location_id in sevii_required_locations:
+            return True
+        return False
+
     """
     Iterates through region data and adds locations to the multiworld if
     those locations are included in the given categories.
     """
     for region_data in data.regions.values():
-        if world.options.kanto_only and not region_data.kanto:
-            continue
         if region_data.name not in regions:
             continue
 
@@ -121,10 +121,10 @@ def create_locations_from_categories(world: "PokemonFRLGWorld",
         included_locations = [loc for loc in region_data.locations if data.locations[loc].category in categories]
 
         for location_id in included_locations:
-            location_data = data.locations[location_id]
-
-            if world.options.kanto_only and location_data.name in sevii_required_locations:
+            if exclude_location(location_id):
                 continue
+
+            location_data = data.locations[location_id]
 
             if location_data.default_item == data.constants["ITEM_NONE"]:
                 default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]

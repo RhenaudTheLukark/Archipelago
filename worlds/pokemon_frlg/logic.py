@@ -256,6 +256,10 @@ def route_10_waterfall_exists(world: "PokemonFRLGWorld"):
     return "Modify Route 10" in world.options.modify_world_state.value
 
 
+def pokemon_tower_1f_ghost_exists(world: "PokemonFRLGWorld"):
+    return "Block Tower" in world.options.modify_world_state.value
+
+
 def can_enter_celadon_gym(state: CollectionState, world: "PokemonFRLGWorld"):
     return not world.options.gym_keys or state.has("Celadon Key", world.player)
 

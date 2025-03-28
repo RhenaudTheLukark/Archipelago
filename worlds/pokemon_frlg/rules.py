@@ -14,8 +14,9 @@ from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, 
                     can_navigate_dark_caves, can_open_silph_door, can_pass_route_22_gate, can_pass_route_23_guard,
                     can_remove_victory_road_barrier, can_rock_smash, can_rock_smash_past_snorlax, can_sail_island,
                     can_sail_vermilion, can_stop_seafoam_b3f_current, can_stop_seafoam_b4f_current, can_strength,
-                    can_surf, can_surf_past_snorlax, can_waterfall,  has_n_pokemon, has_pokemon, post_game_gossipers,
-                    route_10_waterfall_exists, saffron_rockets_gone, two_island_shop_expansion)
+                    can_surf, can_surf_past_snorlax, can_waterfall,  has_n_pokemon, has_pokemon,
+                    pokemon_tower_1f_ghost_exists, post_game_gossipers, route_10_waterfall_exists, saffron_rockets_gone,
+                    two_island_shop_expansion)
 from .options import Goal, ItemfinderRequired
 
 if TYPE_CHECKING:
@@ -197,8 +198,12 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Rocket Hideout Elevator B4F Stop": lambda state: state.has("Lift Key", player),
 
         # Pokemon Tower
-        "Pokemon Tower 1F Reveal Ghost": lambda state: state.has("Silph Scope", player),
+        "Pokemon Tower 1F Reveal Ghost": lambda state: pokemon_tower_1f_ghost_exists(world) and
+                                                       state.has("Silph Scope", player),
         "Pokemon Tower 6F Reveal Ghost": lambda state: state.has("Silph Scope", player),
+        "Pokemon Tower 1F (Ghost Battle)": lambda state: pokemon_tower_1f_ghost_exists(world) and
+                                                         state.has("Silph Scope", player),
+        "Pokemon Tower 6F (Ghost Battle)": lambda state: state.has("Silph Scope", player),
 
         # Route 12
         "Route 12 West Exit": lambda state: can_enter_route_12(state, world),
