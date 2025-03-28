@@ -27,8 +27,7 @@ def set_evolution_rules(world: "PokemonFRLGWorld"):
         assert isinstance(location, PokemonFRLGLocation)
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             pokemon_name = location.name.split("-")[1].strip()
-            add_rule(world.get_location(location.name),
-                     lambda state, pokemon=pokemon_name: can_evolve(state, world, pokemon))
+            add_rule(location, lambda state, pokemon=pokemon_name: can_evolve(state, world, pokemon))
 
 
 def set_rules(world: "PokemonFRLGWorld"):
@@ -427,6 +426,27 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Tanoby Ruins Rixy Island Surfing Spot": lambda state: can_surf(state, world),
         "Tanoby Ruins Viapois Island Surfing Spot": lambda state: can_surf(state, world),
 
+        # Monean Chamber
+        "Monean Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Liptoo Chamber
+        "Liptoo Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Weepth Chamber
+        "Weepth Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Dilford Chamber
+        "Dilford Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Scufib Chamber
+        "Scufib Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Rixy Chamber
+        "Rixy Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
+        # Viapois Chamber
+        "Viapos Chamber (Land Battle)": lambda state: state.has("Unlock Ruins", player),
+
         # Trainer Tower
         "Trainer Tower Exterior South Surfing Spot": lambda state: can_surf(state, world),
         "Trainer Tower Exterior North Surfing Spot": lambda state: can_surf(state, world),
@@ -765,34 +785,6 @@ def set_rules(world: "PokemonFRLGWorld"):
 
         # Tanoby Ruins
         "Tanoby Ruins - Island Item": lambda state: state.has("Unlock Ruins", player),
-
-        # Monean Chamber
-        "Monean Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Monean Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Liptoo Chamber
-        "Liptoo Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Liptoo Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Weepth Chamber
-        "Weepth Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Weepth Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Dilford Chamber
-        "Dilford Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Dilford Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Scufib Chamber
-        "Scufib Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Scufib Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Rixy Chamber
-        "Rixy Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Rixy Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
-
-        # Viapois Chamber
-        "Viapos Chamber - Land Encounter 1": lambda state: state.has("Unlock Ruins", player),
-        "Viapos Chamber Land Scaling 1": lambda state: state.has("Unlock Ruins", player),
 
         # Cerulean Cave
         "Cerulean Cave 2F - East Item": lambda state: can_rock_smash(state, world),
