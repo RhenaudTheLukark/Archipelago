@@ -160,10 +160,8 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Route 10 Near Power Plant Surfing Spot": lambda state: can_surf(state, world),
         "Power Plant (Front)": lambda state: state.has("Machine Part", player) or
                                              not options.extra_key_items,
-        "Route 10 Waterfall Drop": lambda state: route_10_waterfall_exists(world) and
-                                                 can_waterfall(state, world),
-        "Route 10 Waterfall Ascend": lambda state: route_10_waterfall_exists(world) and
-                                                   can_waterfall(state, world),
+        "Route 10 Waterfall Drop": lambda state: can_waterfall(state, world),
+        "Route 10 Waterfall Ascend": lambda state: can_waterfall(state, world),
         "Route 10 South Surfing Spot": lambda state: route_10_waterfall_exists(world) and
                                                      can_surf(state, world),
         "Route 10 South Landing": lambda state: route_10_waterfall_exists(world),
