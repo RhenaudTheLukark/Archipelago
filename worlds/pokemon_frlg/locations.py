@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, List, Optional, Set, Union
+from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, Region, ItemClassification
 from .data import data, LocationCategory, fly_blacklist_map
 from .items import PokemonFRLGItem, get_random_item
@@ -66,23 +66,23 @@ fly_item_map = {
 
 class PokemonFRLGLocation(Location):
     game: str = "Pokemon FireRed and LeafGreen"
-    item_address = Optional[Dict[str, int]]
-    default_item_id: Optional[int]
+    item_address = Dict[str, int | List[int]] | None
+    default_item_id: int | None
     category: LocationCategory
-    data_ids: Optional[List[str]]
+    data_ids: List[str] | None
     spoiler_name: str
 
     def __init__(
             self,
             player: int,
             name: str,
-            address: Optional[int],
+            address: int | None,
             category: LocationCategory,
-            parent: Optional[Region] = None,
-            item_address: Optional[Dict[str, Union[int, List[int]]]] = None,
-            default_item_id: Optional[int] = None,
-            data_ids: Optional[List[str]] = None,
-            spoiler_name: Optional[str] = None) -> None:
+            parent: Region | None = None,
+            item_address: Dict[str, int | List[int]] | None = None,
+            default_item_id: int | None = None,
+            data_ids: List[str] | None = None,
+            spoiler_name: str | None = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address

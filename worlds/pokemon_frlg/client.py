@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, List, Optional, Set, Tuple
+from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 from NetUtils import ClientStatus
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
@@ -129,7 +129,7 @@ class PokemonFRLGClient(BizHawkClient):
     system = "GBA"
     patch_suffix = (".apfirered", ".apleafgreen")
     game_version: str
-    goal_flag: Optional[int]
+    goal_flag: int | None
     local_checked_locations: Set[int]
     local_set_events: Dict[str, bool]
     local_set_fly_unlocks: Dict[str, bool]

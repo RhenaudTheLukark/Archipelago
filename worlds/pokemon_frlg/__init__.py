@@ -8,7 +8,7 @@ import threading
 import settings
 import pkgutil
 
-from typing import Any, ClassVar, Dict, List, Optional, Set, TextIO, Tuple
+from typing import Any, ClassVar, Dict, List, Set, TextIO, Tuple
 
 from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
 from Fill import fill_restrictive, FillError
@@ -130,7 +130,7 @@ class PokemonFRLGWorld(World):
     itempool: List[PokemonFRLGItem]
     pre_fill_items: List[PokemonFRLGItem]
     fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
-    er_placement_state: Optional[ERPlacementState]
+    er_placement_state: ERPlacementState | None
     er_spoiler_names: List[str]
     allowed_evo_methods: List[EvolutionMethodEnum]
     moves_by_type: Dict[int, Set[int]]

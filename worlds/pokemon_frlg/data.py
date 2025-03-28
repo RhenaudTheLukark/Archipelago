@@ -9,7 +9,7 @@ import pkgutil
 from pkg_resources import resource_listdir, resource_isdir
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import Dict, List, NamedTuple, Optional, Set, FrozenSet, Any, Union, Tuple
+from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
 
 NUM_REAL_SPECIES = 386
@@ -24,12 +24,13 @@ class Warp:
     source_ids: List[str]
     dest_map: str
     dest_ids: List[str]
-    name: Optional[str]
-    parent_region_id: Optional[str]
+    name: str | None
+    parent_region_id: str | None
 
-    def __init__(self, encoded_string: Optional[str] = None,
-                 name: Optional[str] = None,
-                 parent_region_id: Optional[str] = None) -> None:
+    def __init__(self,
+                 encoded_string: str | None = None,
+                 name: str | None = None,
+                 parent_region_id: str | None = None) -> None:
         if encoded_string is not None:
             decoded_warp = Warp.decode(encoded_string)
             self.is_one_way = decoded_warp.is_one_way
@@ -114,7 +115,7 @@ class LocationData(NamedTuple):
     name: str
     parent_region_id: str
     default_item: int
-    address: Dict[str, Union[int, List[int]]]
+    address: Dict[str, int | List[int]]
     flag: int
     category: LocationCategory
     tags: FrozenSet[str]
@@ -137,16 +138,16 @@ class MapData:
     name: str
     header_address: Dict[str, int]
     warp_table_address: Dict[str, int]
-    land_encounters: Optional[EncounterTableData]
-    water_encounters: Optional[EncounterTableData]
-    fishing_encounters: Optional[EncounterTableData]
+    land_encounters: EncounterTableData | None
+    water_encounters: EncounterTableData | None
+    fishing_encounters: EncounterTableData | None
     kanto: bool
 
 
 class EventData(NamedTuple):
     id: str
-    name: Union[str, List[str]]
-    item: Union[str, List[str]]
+    name: str | List[str]
+    item: str | List[str]
     parent_region_id: str
     category: LocationCategory
 
@@ -154,7 +155,7 @@ class EventData(NamedTuple):
 class RegionData:
     id: str
     name: str
-    parent_map: Optional[MapData]
+    parent_map: MapData | None
     encounter_region: str
     has_land: bool
     has_water: bool
@@ -165,7 +166,7 @@ class RegionData:
     locations: List[str]
     events: List[str]
 
-    def __init__(self, region_id: str, name: str, parent_map: Optional[MapData], encounter_region: str,
+    def __init__(self, region_id: str, name: str, parent_map: MapData | None, encounter_region: str,
                  has_land: bool, has_water: bool, has_fishing: bool, kanto: bool):
         self.id = region_id
         self.name = name
@@ -226,7 +227,7 @@ class SpeciesData:
     types: Tuple[int, int]
     abilities: Tuple[int, int]
     evolutions: List[EvolutionData]
-    pre_evolution: Optional[int]
+    pre_evolution: int | None
     catch_rate: int
     friendship: int
     learnset: List[LearnsetMove]
@@ -268,7 +269,7 @@ POKEMON_DATA_TYPE: Dict[str, TrainerPokemonDataTypeEnum] = {
 class TrainerPokemonData:
     species_id: int
     level: int
-    moves: Optional[Tuple[int, int, int, int]]
+    moves: Tuple[int, int, int, int] | None
     locked: bool
 
 
@@ -305,7 +306,7 @@ class ScalingData:
     region: str
     kanto: bool
     connections: List[str]
-    type: Optional[str]
+    type: str | None
     category: LocationCategory
     locations: Dict[str, List[str]]
 
@@ -322,7 +323,7 @@ class PokemonFRLGData:
     items: Dict[int, ItemData]
     maps: Dict[str, MapData]
     warps: Dict[str, Warp]
-    warp_map: Dict[str, Optional[str]]
+    warp_map: Dict[str, str | None]
     warp_name_map: Dict[str, str]
     species: Dict[int, SpeciesData]
     evolutions: Dict[str, EvolutionData]
@@ -752,7 +753,7 @@ ALL_SPECIES: List[Tuple[str, str, int]] = [
 ]
 
 
-def load_json_data(data_name: str) -> Union[List[Any], Dict[str, Any]]:
+def load_json_data(data_name: str) -> List[Any] | Dict[str, Any]:
     return orjson.loads(pkgutil.get_data(__name__, "data/" + data_name).decode("utf-8-sig"))
 
 

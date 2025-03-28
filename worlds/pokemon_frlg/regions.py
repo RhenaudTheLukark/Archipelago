@@ -1,7 +1,7 @@
 """
 Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/regions for region definitions)
 """
-from typing import TYPE_CHECKING, Dict, List, Tuple, Optional, Callable
+from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
 from BaseClasses import Entrance, Region, CollectionState, ItemClassification
 from entrance_rando import ERPlacementState
 from .data import data, LocationCategory, kanto_fly_destinations, sevii_fly_destinations, starting_town_blacklist_map
@@ -98,7 +98,7 @@ fly_destination_entrance_map = {
 
 
 class PokemonFRLGEntrance(Entrance):
-    connected_entrance_name: Optional[str] = None
+    connected_entrance_name: str | None = None
 
     def can_connect_to(self, other: Entrance, dead_end: bool, er_state: "ERPlacementState") -> bool:
         return (self.randomization_type == other.randomization_type
@@ -107,7 +107,7 @@ class PokemonFRLGEntrance(Entrance):
 
 
 class PokemonFRLGRegion(Region):
-    distance: Optional[int]
+    distance: int | None
     entrance_type = PokemonFRLGEntrance
 
     def __init__(self, name, player, multiworld):
@@ -123,7 +123,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
     # Used in connect_to_map_encounters. Splits encounter categories into "subcategories" and gives them names
     # and rules so the rods can only access their specific slots.
-    encounter_categories: Dict[str, List[Tuple[Optional[str], range, Optional[Callable[[CollectionState], bool]]]]] = {
+    encounter_categories: Dict[str, List[Tuple[str | None, range, Callable[[CollectionState], bool] | None]]] = {
         "Land": [(None, range(0, 12), None)],
         "Water": [(None, range(0, 5), None)],
         "Fishing": [
@@ -442,7 +442,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                     region.locations.append(scaling_event)
                 elif scaling_data.category == LocationCategory.EVENT_WILD_POKEMON_SCALING:
                     index = 1
-                    events: Dict[str, Tuple[str, List[str], Optional[Callable[[CollectionState], bool]]]] = {}
+                    events: Dict[str, Tuple[str, List[str], Callable[[CollectionState], bool] | None]] = {}
                     encounter_category_data = encounter_categories[scaling_data.type]
                     for data_id in data_ids:
                         map_data = data.maps[data_id]
