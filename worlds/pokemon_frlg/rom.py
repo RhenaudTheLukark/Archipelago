@@ -901,11 +901,16 @@ def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version
         if location.address is None:
             continue
         if location.category == LocationCategory.SHOPSANITY:
-            address = location.item_address[game_version_revision]
+            item_address = location.item_address[game_version_revision]
             shop_price = world.random.randint(min_shop_price, max_shop_price)
 
-            tokens.write_token(APTokenTypes.WRITE, address + 2, struct.pack("<H", shop_price))
-            tokens.write_token(APTokenTypes.WRITE, address + 4, struct.pack("<B", 0))
+            if type(item_address) is int:
+                tokens.write_token(APTokenTypes.WRITE, item_address + 2, struct.pack("<H", shop_price))
+                tokens.write_token(APTokenTypes.WRITE, item_address + 4, struct.pack("<B", 0))
+            elif type(item_address) is list:
+                for address in item_address:
+                    tokens.write_token(APTokenTypes.WRITE, address + 2, struct.pack("<H", shop_price))
+                    tokens.write_token(APTokenTypes.WRITE, address + 4, struct.pack("<B", 0))
 
 
 def _set_species_info(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str) -> None:

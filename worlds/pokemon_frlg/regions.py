@@ -23,6 +23,12 @@ INDIRECT_CONDITIONS: Dict[str, List[str]] = {
 }
 
 STATIC_POKEMON_SPOILER_NAMES = {
+    "TRADE_POKEMON_MR_MIME": "Route 2 Trade House",
+    "GIFT_POKEMON_MAGIKARP": "Route 4 Pokemon Center 1F",
+    "TRADE_POKEMON_JYNX": "Cerulean Trade House",
+    "TRADE_POKEMON_NIDORAN": "Underground Path North Entrance",
+    "TRADE_POKEMON_FARFETCHD": "Vermilion Trade House",
+    "TRADE_POKEMON_NIDORINOA": "Route 11 Gate 2F",
     "STATIC_POKEMON_ELECTRODE_1": "Power Plant (Static)",
     "STATIC_POKEMON_ELECTRODE_2": "Power Plant (Static)",
     "LEGENDARY_POKEMON_ZAPDOS": "Power Plant (Static)",
@@ -34,13 +40,17 @@ STATIC_POKEMON_SPOILER_NAMES = {
     "GIFT_POKEMON_EEVEE": "Celadon Condominiums Roof Room",
     "STATIC_POKEMON_ROUTE12_SNORLAX": "Route 12 (Static)",
     "STATIC_POKEMON_ROUTE16_SNORLAX": "Route 16 (Static)",
+    "TRADE_POKEMON_LICKITUNG": "Route 18 Gate 2F",
     "GIFT_POKEMON_HITMONCHAN": "Saffron Dojo",
     "GIFT_POKEMON_HITMONLEE": "Saffron Dojo",
     "GIFT_POKEMON_LAPRAS": "Silph Co. 7F",
     "LEGENDARY_POKEMON_ARTICUNO": "Seafoam Islands B4F (Static)",
+    "TRADE_POKEMON_ELECTRODE": "Pokemon Lab Lounge",
+    "TRADE_POKEMON_TANGELA": "Pokemon Lab Lounge",
     "GIFT_POKEMON_OMANYTE": "Pokemon Lab Experiment Room (Helix)",
     "GIFT_POKEMON_KABUTO": "Pokemon Lab Experiment Room (Dome)",
     "GIFT_POKEMON_AERODACTYL": "Pokemon Lab Experiment Room (Amber)",
+    "TRADE_POKEMON_SEEL": "Pokemon Lab Experiment Room (Trade)",
     "LEGENDARY_POKEMON_MOLTRES": "Mt. Ember Summit",
     "STATIC_POKEMON_HYPNO": "Berry Forest (Static)",
     "EGG_POKEMON_TOGEPI": "Water Labyrinth (Egg)",
@@ -322,24 +332,8 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             if exclude_event(event_id):
                 continue
 
-            if type(event_data.name) is list:
-                if world.options.game_version == GameVersion.option_firered:
-                    name = event_data.name[0]
-                else:
-                    name = event_data.name[1]
-            else:
-                name = event_data.name
-
-            if type(event_data.item) is list:
-                if world.options.game_version == GameVersion.option_firered:
-                    item = event_data.item[0]
-                else:
-                    item = event_data.item[1]
-            else:
-                item = event_data.item
-
             event = PokemonFRLGLocation(world.player,
-                                        name,
+                                        event_data.name,
                                         None,
                                         event_data.category,
                                         new_region,
@@ -347,15 +341,12 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                                         None,
                                         spoiler_name=STATIC_POKEMON_SPOILER_NAMES[event_id]
                                         if event_id in STATIC_POKEMON_SPOILER_NAMES else None)
-            event.place_locked_item(PokemonFRLGItem(item,
+            event.place_locked_item(PokemonFRLGItem(event_data.item,
                                                     ItemClassification.progression,
                                                     None,
                                                     world.player))
             event.show_in_spoiler = False
             new_region.locations.append(event)
-
-            if "Trade" in name:
-                world.trade_pokemon.append([region_name, name])
 
         for exit_region_id, exit_name in region_data.exits.items():
             if exclude_exit(region_id, exit_region_id):

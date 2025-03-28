@@ -6,9 +6,10 @@ and sorting, and Warp methods.
 """
 import orjson
 import pkgutil
-from pkg_resources import resource_listdir, resource_isdir
+from collections import defaultdict
 from dataclasses import dataclass
 from enum import IntEnum
+from pkg_resources import resource_listdir, resource_isdir
 from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
 
@@ -250,6 +251,14 @@ class MiscPokemonData:
     level_address: Dict[str, int]
 
 
+@dataclass
+class TradePokemonData:
+    species_id: Dict[str, int]
+    species_address: Dict[str, int]
+    requested_species: Dict[str, int]
+    requested_species_address: Dict[str, int]
+
+
 class TrainerPokemonDataTypeEnum(IntEnum):
     NO_ITEM_DEFAULT_MOVES = 0
     NO_ITEM_CUSTOM_MOVES = 1
@@ -330,6 +339,7 @@ class PokemonFRLGData:
     starters: Dict[str, StarterData]
     legendary_pokemon: Dict[str, MiscPokemonData]
     misc_pokemon: Dict[str, MiscPokemonData]
+    trade_pokemon: Dict[str, TradePokemonData]
     trainers: Dict[str, TrainerData]
     tmhm_moves: List[int]
     moves: Dict[str, MoveData]
@@ -354,12 +364,13 @@ class PokemonFRLGData:
         self.starters = {}
         self.legendary_pokemon = {}
         self.misc_pokemon = {}
+        self.trade_pokemon = {}
         self.trainers = {}
         self.tmhm_moves = []
         self.moves = {}
         self.scaling = {}
-        self.type_damage_categories = [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1]
-        self.num_moves_per_damage_category = {0: 0, 1: 0, 2: 0}
+        self.type_damage_categories = []
+        self.num_moves_per_damage_category = defaultdict(lambda: 0)
 
 
 # Excludes extras like copies of Unown and special species values like SPECIES_EGG
@@ -880,7 +891,7 @@ def init() -> None:
                     f"TRAINER_{trainer}_SQUIRTLE_REWARD"
                 ]]
 
-                location_address: Dict[str, List[int]] = {}
+                location_address: Dict[str, List[int]] = dict()
 
                 for game_version_revision in location_json["address"].keys():
                     location_address[game_version_revision] = [location_json["address"][game_version_revision]]
@@ -889,6 +900,43 @@ def init() -> None:
                     for alternate_rival_json in alternate_rival_jsons:
                         location_address[game_version_revision].append(
                             alternate_rival_json["address"][game_version_revision])
+
+                new_location = LocationData(
+                    location_id,
+                    location_data[location_id]["name"],
+                    region_id,
+                    location_json["default_item"],
+                    location_address,
+                    location_json["flag"],
+                    LocationCategory[location_data[location_id]["category"]],
+                    frozenset(location_data[location_id]["tags"])
+                )
+            elif "SHOP_TWO_ISLAND" in location_id:
+                extra_addresses = {
+                    "SHOP_TWO_ISLAND_EXPANDED3_1": ["SHOP_TWO_ISLAND_INITIAL_1", "SHOP_TWO_ISLAND_EXPANDED1_1",
+                                                    "SHOP_TWO_ISLAND_EXPANDED2_1"],
+                    "SHOP_TWO_ISLAND_EXPANDED3_2": ["SHOP_TWO_ISLAND_EXPANDED1_2", "SHOP_TWO_ISLAND_EXPANDED2_2"],
+                    "SHOP_TWO_ISLAND_EXPANDED3_5": ["SHOP_TWO_ISLAND_EXPANDED2_3"],
+                    "SHOP_TWO_ISLAND_EXPANDED3_6": ["SHOP_TWO_ISLAND_EXPANDED1_3", "SHOP_TWO_ISLAND_EXPANDED2_4"],
+                    "SHOP_TWO_ISLAND_EXPANDED3_7": ["SHOP_TWO_ISLAND_INITIAL_2", "SHOP_TWO_ISLAND_EXPANDED1_4",
+                                                    "SHOP_TWO_ISLAND_EXPANDED2_5"],
+                    "SHOP_TWO_ISLAND_EXPANDED3_8": ["SHOP_TWO_ISLAND_EXPANDED2_6"],
+                }
+
+                alternate_shop_jsons = list()
+                if location_id in extra_addresses:
+                    alternate_shop_jsons = [extracted_data["locations"][alternate]
+                                            for alternate in extra_addresses[location_id]]
+
+                location_address: Dict[str, List[int]] = dict()
+
+                for game_version_revision in location_json["address"].keys():
+                    location_address[game_version_revision] = [location_json["address"][game_version_revision]]
+
+                for game_version_revision in location_address.keys():
+                    for alternate_shop_json in alternate_shop_jsons:
+                        location_address[game_version_revision].append(
+                            alternate_shop_json["address"][game_version_revision])
 
                 new_location = LocationData(
                     location_id,
@@ -1054,6 +1102,15 @@ def init() -> None:
             misc_data["level_address"]
         )
 
+    # Create trade pokemon data
+    for name, trade_pokemon in extracted_data["trade_pokemon"].items():
+        data.trade_pokemon[name] = TradePokemonData(
+            trade_pokemon["species"],
+            trade_pokemon["species_address"],
+            trade_pokemon["requested_species"],
+            trade_pokemon["requested_species_address"]
+        )
+
     # Create trainer data
     for name, trainer_data in extracted_data["trainers"].items():
         party_data = trainer_data["party"]
@@ -1076,6 +1133,9 @@ def init() -> None:
 
     # TM/HM Moves
     data.tmhm_moves = extracted_data["tmhm_moves"]
+
+    # Type damage categories
+    data.type_damage_categories = extracted_data["damage_type_table"]
 
     # Create move data
     for name, move_data in extracted_data["moves"].items():

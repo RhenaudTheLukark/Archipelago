@@ -17,7 +17,7 @@ from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
 from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
                    LocationCategory, EventData, EvolutionMethodEnum, MapData, MiscPokemonData, MoveData, move_name_map,
-                   SpeciesData, StarterData, TrainerData)
+                   SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
@@ -31,9 +31,9 @@ from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, Du
                       RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
                       ShuffleRunningShoes, SilphCoCardKey, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damage_categories, randomize_legendaries,
-                      randomize_misc_pokemon, randomize_moves, randomize_move_types, randomize_starters,
-                      randomize_tm_hm_compatibility, randomize_tm_moves, randomize_trainer_parties, randomize_types,
-                      randomize_wild_encounters)
+                      randomize_misc_pokemon, randomize_moves, randomize_move_types, randomize_requested_trade_pokemon,
+                      randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves, randomize_trainer_parties,
+                      randomize_types, randomize_wild_encounters)
 from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import set_evolution_rules, set_rules
 from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
@@ -108,6 +108,7 @@ class PokemonFRLGWorld(World):
     modified_events: Dict[str, EventData]
     modified_legendary_pokemon: Dict[str, MiscPokemonData]
     modified_misc_pokemon: Dict[str, MiscPokemonData]
+    modified_trade_pokemon: Dict[str, TradePokemonData]
     modified_trainers: Dict[str, TrainerData]
     modified_tmhm_moves: List[int]
     modified_moves: Dict[str, MoveData]
@@ -115,7 +116,6 @@ class PokemonFRLGWorld(World):
     hm_compatibility: Dict[str, Set[str]]
     repeatable_pokemon: List[str]
     per_species_tmhm_moves: Dict[int, List[int]]
-    trade_pokemon: List[Tuple[str, str]]
     blacklisted_wild_pokemon: Set[int]
     blacklisted_starters: Set[int]
     blacklisted_trainer_pokemon: Set[int]
@@ -134,6 +134,7 @@ class PokemonFRLGWorld(World):
     er_spoiler_names: List[str]
     allowed_evo_methods: List[EvolutionMethodEnum]
     moves_by_type: Dict[int, Set[int]]
+    required_trade_pokemon: Dict[str, str]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -148,27 +149,29 @@ class PokemonFRLGWorld(World):
         self.modified_events = copy.deepcopy(frlg_data.events)
         self.modified_legendary_pokemon = copy.deepcopy(frlg_data.legendary_pokemon)
         self.modified_misc_pokemon = copy.deepcopy(frlg_data.misc_pokemon)
+        self.modified_trade_pokemon = copy.deepcopy(frlg_data.trade_pokemon)
         self.modified_trainers = copy.deepcopy(frlg_data.trainers)
         self.modified_tmhm_moves = copy.deepcopy(frlg_data.tmhm_moves)
         self.modified_moves = copy.deepcopy(frlg_data.moves)
         self.modified_type_damage_categories = copy.deepcopy(frlg_data.type_damage_categories)
-        self.hm_compatibility = dict()
-        self.repeatable_pokemon = list()
-        self.per_species_tmhm_moves = dict()
-        self.trade_pokemon = list()
-        self.trainer_name_level_dict = dict()
-        self.trainer_name_list = list()
-        self.trainer_level_list = list()
-        self.encounter_name_level_dict = dict()
-        self.encounter_name_list = list()
-        self.encounter_level_list = list()
-        self.itempool = list()
-        self.pre_fill_items = list()
-        self.fly_destination_data = dict()
+        self.hm_compatibility = {}
+        self.repeatable_pokemon = []
+        self.per_species_tmhm_moves = {}
+        self.trainer_name_level_dict = {}
+        self.trainer_name_list = []
+        self.trainer_level_list = []
+        self.encounter_name_level_dict = {}
+        self.encounter_name_list = []
+        self.encounter_level_list = []
+        self.scaling_data = []
+        self.itempool = []
+        self.pre_fill_items = []
+        self.fly_destination_data = {}
         self.er_placement_state = None
-        self.er_spoiler_names = list()
-        self.allowed_evo_methods = list()
-        self.moves_by_type = dict()
+        self.er_spoiler_names = []
+        self.allowed_evo_methods = []
+        self.moves_by_type = {}
+        self.required_trade_pokemon = {}
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -345,6 +348,8 @@ class PokemonFRLGWorld(World):
         # Choose Selphy's requested Pokémon among available wild encounters if necessary
         if self.options.pokemon_request_locations and not self.options.kanto_only:
             self.resort_gorgeous_mon = NAME_TO_SPECIES_ID[self.random.choice(self.repeatable_pokemon)]
+
+        randomize_requested_trade_pokemon(self)
 
         self.fill_unrandomized_locations()
 
@@ -626,15 +631,6 @@ class PokemonFRLGWorld(World):
         # Create auth
         self.auth = self.random.getrandbits(16 * 8).to_bytes(16, "little")
 
-        state = self.get_world_collection_state()
-
-        # Delete trades that are not in logic in an all_state so that the accessibility check doesn't fail
-        for trade in self.trade_pokemon:
-            location = self.multiworld.get_location(trade[1], self.player)
-            if not state.can_reach(location, player=self.player):
-                region = self.multiworld.get_region(trade[0], self.player)
-                region.locations.remove(location)
-
     @classmethod
     def stage_post_fill(cls, multiworld):
         # Change all but one instance of a Pokémon in each sphere to useful classification
@@ -706,6 +702,7 @@ class PokemonFRLGWorld(World):
         del self.modified_events
         del self.modified_legendary_pokemon
         del self.modified_misc_pokemon
+        del self.modified_trade_pokemon
         del self.modified_trainers
         del self.modified_tmhm_moves
         del self.modified_moves

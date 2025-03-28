@@ -395,3 +395,7 @@ def can_evolve(state: CollectionState, world: "PokemonFRLGWorld", pokemon: str):
         elif evolution_data.method in evo_methods_friendship:
             return True
     return False
+
+
+def has_trade_pokemon(state: CollectionState, world: "PokemonFRLGWorld", location: str):
+    return state.has(world.required_trade_pokemon[location], world.player)

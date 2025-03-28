@@ -187,204 +187,183 @@
   },
 
   "TRADE_POKEMON_MR_MIME": {
-    "name": "Route 2 Trade House - Trade Abra",
-    "item": "Missable Mr. Mime",
+    "name": "Route 2 Trade House - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_MAGIKARP": {
     "name": "Route 4 Pokemon Center 1F - Purchase Pokemon",
-    "item": "Static Magikarp",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_JYNX": {
-    "name": "Cerulean Trade House - Trade Poliwhirl",
-    "item": "Missable Jynx",
+    "name": "Cerulean Trade House - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_NIDORAN": {
-    "name": [
-      "Underground Path North Entrance - Trade Nidoran M",
-      "Underground Path North Entrance - Trade Nidoran F"
-    ],
-    "item": [
-      "Missable Nidoran F",
-      "Missable Nidoran M"
-      ],
+    "name": "Underground Path North Entrance - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_FARFETCHD": {
-    "name": "Vermilion Trade House - Trade Spearow",
-    "item": "Missable Farfetch'd",
+    "name": "Vermilion Trade House - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_NIDORINOA": {
-    "name": [
-      "Route 11 Gate 2F - Trade Nidorino",
-      "Route 11 Gate 2F - Trade Nidorina"
-    ],
-    "item": [
-      "Missable Nidorina",
-      "Missable Nidorino"
-      ],
+    "name": "Route 11 Gate 2F - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "STATIC_POKEMON_ELECTRODE_1": {
     "name": "Power Plant - South Room Item",
-    "item": "Static Electrode",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "STATIC_POKEMON_ELECTRODE_2": {
     "name": "Power Plant - Northeast Room Item (Left)",
-    "item": "Static Electrode",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "LEGENDARY_POKEMON_ZAPDOS": {
     "name": "Power Plant - Legendary Pokemon",
-    "item": "Static Zapdos",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "STATIC_POKEMON_MAROWAK": {
     "name": "Pokemon Tower - Ghost Pokemon",
-    "item": "Missable Marowak",
+    "item": "Missable Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "CELADON_PRIZE_POKEMON_1": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 1",
-    "item": "Abra",
+    "item": "Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "CELADON_PRIZE_POKEMON_2": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 2",
-    "item": "Clefairy",
+    "item": "Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "CELADON_PRIZE_POKEMON_3": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 3",
-    "item": [
-      "Dratini",
-      "Pinsir"
-      ],
+    "item": "Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "CELADON_PRIZE_POKEMON_4": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 4",
-    "item": [
-      "Scyther",
-      "Dratini"
-      ],
+    "item": "Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "CELADON_PRIZE_POKEMON_5": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 5",
-    "item": "Porygon",
+    "item": "Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_EEVEE": {
     "name": "Celadon Condominiums Roof Room - Item",
-    "item": "Static Eevee",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "STATIC_POKEMON_ROUTE12_SNORLAX": {
     "name": "Route 12 - Sleeping Pokemon",
-    "item": "Static Snorlax",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "STATIC_POKEMON_ROUTE16_SNORLAX": {
     "name": "Route 16 - Sleeping Pokemon",
-    "item": "Static Snorlax",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_LICKITUNG": {
-    "name": [
-      "Route 18 Gate 2F - Trade Golduck",
-      "Route 18 Gate 2F - Trade Slowbro"
-    ],
-    "item": "Missable Lickitung",
+    "name": "Route 18 Gate 2F - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_HITMONCHAN": {
     "name": "Saffron Dojo - Item (Right)",
-    "item": "Static Hitmonchan",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_HITMONLEE": {
     "name": "Saffron Dojo - Item (Left)",
-    "item": "Static Hitmonlee",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_LAPRAS": {
     "name": "Silph Co. 7F - Employee Pokemon",
-    "item": "Static Lapras",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "LEGENDARY_POKEMON_ARTICUNO": {
     "name": "Seafoam Islands B4F - Legendary Pokemon",
-    "item": "Static Articuno",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "TRADE_POKEMON_ELECTRODE": {
-    "name": "Pokemon Lab Lounge - Trade Raichu",
-    "item": "Missable Electrode",
+    "name": "Pokemon Lab Lounge - Trade Pokemon 1",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_TANGELA": {
-    "name": "Pokemon Lab Lounge - Trade Venonat",
-    "item": "Missable Tangela",
+    "name": "Pokemon Lab Lounge - Trade Pokemon 2",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_OMANYTE": {
     "name": "Pokemon Lab Experiment Room - Revive Helix Fossil",
-    "item": "Static Omanyte",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_KABUTO": {
     "name": "Pokemon Lab Experiment Room - Revive Dome Fossil",
-    "item": "Static Kabuto",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "GIFT_POKEMON_AERODACTYL": {
     "name": "Pokemon Lab Experiment Room - Revive Old Amber",
-    "item": "Static Aerodactyl",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "TRADE_POKEMON_SEEL": {
-    "name": "Pokemon Lab Experiment Room - Trade Ponyta",
-    "item": "Missable Seel",
+    "name": "Pokemon Lab Experiment Room - Trade Pokemon",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "LEGENDARY_POKEMON_MOLTRES": {
     "name": "Mt. Ember Summit - Legendary Pokemon",
-    "item": "Static Moltres",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "STATIC_POKEMON_HYPNO": {
     "name": "Berry Forest - Scary Pokemon",
-    "item": "Static Hypno",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "EGG_POKEMON_TOGEPI": {
     "name": "Water Labyrinth - Pokemon Egg",
-    "item": "Static Togepi",
+    "item": "Static Pokemon",
     "category": "EVENT_STATIC_POKEMON"
   },
   "LEGENDARY_POKEMON_MEWTWO": {
     "name": "Cerulean Cave B1F - Legendary Pokemon",
-    "item": "Static Mewtwo",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "LEGENDARY_POKEMON_HO_OH": {
     "name": "Navel Rock Summit - Legendary Pokemon",
-    "item": "Static Ho-Oh",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "LEGENDARY_POKEMON_LUGIA": {
     "name": "Navel Rock Base - Legendary Pokemon",
-    "item": "Static Lugia",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
   "LEGENDARY_POKEMON_DEOXYS": {
     "name": "Birth Island Exterior - Legendary Pokemon",
-    "item": "Static Deoxys",
+    "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
 

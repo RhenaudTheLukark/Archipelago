@@ -2,9 +2,8 @@
 Logic rule definitions for Pokémon FireRed and LeafGreen
 """
 from typing import TYPE_CHECKING
-from worlds.generic.Rules import add_item_rule, add_rule
+from worlds.generic.Rules import add_rule
 from .data import data, LocationCategory
-from .groups import item_groups
 from .locations import PokemonFRLGLocation
 from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, can_challenge_giovanni, can_cut,
                     can_enter_celadon_gym, can_enter_cerulean_cave, can_enter_cerulean_gym, can_enter_cinnabar_gym,
@@ -14,7 +13,7 @@ from .logic import (can_challenge_elite_four, can_challenge_elite_four_rematch, 
                     can_navigate_dark_caves, can_open_silph_door, can_pass_route_22_gate, can_pass_route_23_guard,
                     can_remove_victory_road_barrier, can_rock_smash, can_rock_smash_past_snorlax, can_sail_island,
                     can_sail_vermilion, can_stop_seafoam_b3f_current, can_stop_seafoam_b4f_current, can_strength,
-                    can_surf, can_surf_past_snorlax, can_waterfall,  has_n_pokemon, has_pokemon,
+                    can_surf, can_surf_past_snorlax, can_waterfall,  has_n_pokemon, has_pokemon, has_trade_pokemon,
                     pokemon_tower_1f_ghost_exists, post_game_gossipers, route_10_waterfall_exists, saffron_rockets_gone,
                     two_island_shop_expansion)
 from .options import Goal, ItemfinderRequired
@@ -498,7 +497,8 @@ def set_rules(world: "PokemonFRLGWorld"):
         # Route 2
         "Route 2 Gate - Oak's Aide Gift (Pokedex Progress)":
             lambda state: has_n_pokemon(state, world, evos_oaks_aides, options.oaks_aide_route_2.value),
-        "Route 2 Trade House - Trade Abra": lambda state: state.has("Abra", player),
+        "Route 2 Trade House - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Route 2 Trade House - Trade Pokemon"),
 
         # Pewter City
         "Pewter City - Gift from Mom": lambda state: state.has("Defeat Brock", player) and
@@ -507,7 +507,8 @@ def set_rules(world: "PokemonFRLGWorld"):
         # Cerulean City
         "Berry Powder Man's House - Berry Powder Man Gift": lambda state: state.has("Berry Pouch", player),
         "Bike Shop - Bicycle Purchase": lambda state: state.has("Bike Voucher", player),
-        "Cerulean Trade House - Trade Poliwhirl": lambda state: state.has("Poliwhirl", player),
+        "Cerulean Trade House - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Cerulean Trade House - Trade Pokemon"),
         "Cerulean Gym - Hidden Item in Water": lambda state: can_surf(state, world) and
                                                              state.has("Itemfinder", player),
         "Cerulean Pokemon Center 1F - Bookshelf Info": lambda state: post_game_gossipers(state, world),
@@ -516,19 +517,20 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Route 25 - Item Near Bush": lambda state: can_cut(state, world),
 
         # Underground Path North-South Tunnel
-        "Underground Path North Entrance - Trade Nidoran M": lambda state: state.has("Nidoran M", player),
-        "Underground Path North Entrance - Trade Nidoran F": lambda state: state.has("Nidoran F", player),
+        "Underground Path North Entrance - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Underground Path North Entrance - Trade Pokemon"),
 
         # Vermilion City
-        "Vermilion Trade House - Trade Spearow": lambda state: state.has("Spearow", player),
+        "Vermilion Trade House - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Vermilion Trade House - Trade Pokemon"),
         "Pokemon Fan Club - Worker Info": lambda state: post_game_gossipers(state, world),
         "Vermilion Pokemon Center 1F - Bookshelf Info": lambda state: state.has("Defeat Lt. Surge", player),
 
         # Route 11
         "Route 11 Gate 2F - Oak's Aide Gift (Pokedex Progress)":
             lambda state: has_n_pokemon(state, world, evos_oaks_aides, options.oaks_aide_route_11.value),
-        "Route 11 Gate 2F - Trade Nidorino": lambda state: state.has("Nidorino", player),
-        "Route 11 Gate 2F - Trade Nidorina": lambda state: state.has("Nidorina", player),
+        "Route 11 Gate 2F - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Route 11 Gate 2F - Trade Pokemon"),
 
         # Route 10
         "Route 10 Pokemon Center 1F - Oak's Aide Gift (Pokedex Progress)":
@@ -615,8 +617,8 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Route 16 - Young Couple Lea & Jed Reward": lambda state: state.has_any(world.repeatable_pokemon, player),
 
         # Route 18
-        "Route 18 Gate 2F - Trade Golduck": lambda state: state.has("Golduck", player),
-        "Route 18 Gate 2F - Trade Slowbro": lambda state: state.has("Slowbro", player),
+        "Route 18 Gate 2F - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Route 18 Gate 2F - Trade Pokemon"),
 
         # Fuchsia City
         "Safari Zone Warden's House - Warden Gift (Return Teeth)": lambda state: state.has("Gold Teeth", player),
@@ -633,12 +635,15 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Route 19 - Sis and Bro Lia & Luc Reward": lambda state: state.has_any(world.repeatable_pokemon, player),
 
         # Cinnabar Island
-        "Pokemon Lab Lounge - Trade Raichu": lambda state: state.has("Raichu", player),
-        "Pokemon Lab Lounge - Trade Venonat": lambda state: state.has("Venonat", player),
+        "Pokemon Lab Lounge - Trade Pokemon 1":
+            lambda state: has_trade_pokemon(state, world, "Pokemon Lab Lounge - Trade Pokemon 1"),
+        "Pokemon Lab Lounge - Trade Pokemon 2":
+            lambda state: has_trade_pokemon(state, world, "Pokemon Lab Lounge - Trade Pokemon 2"),
         "Pokemon Lab Experiment Room - Revive Helix Fossil": lambda state: state.has("Helix Fossil", player),
         "Pokemon Lab Experiment Room - Revive Dome Fossil": lambda state: state.has("Dome Fossil", player),
         "Pokemon Lab Experiment Room - Revive Old Amber": lambda state: state.has("Old Amber", player),
-        "Pokemon Lab Experiment Room - Trade Ponyta": lambda state: state.has("Ponyta", player),
+        "Pokemon Lab Experiment Room - Trade Pokemon":
+            lambda state: has_trade_pokemon(state, world, "Pokemon Lab Experiment Room - Trade Pokemon"),
         "Cinnabar Pokemon Center 1F - Bookshelf Info": lambda state: post_game_gossipers(state, world),
         "Cinnabar Pokemon Center 1F - Bill Gift": lambda state: state.has("Defeat Blaine", player),
         "Gift Omanyte Scaling": lambda state: state.has("Helix Fossil", player),
@@ -826,9 +831,6 @@ def set_rules(world: "PokemonFRLGWorld"):
         if (world.options.itemfinder_required != ItemfinderRequired.option_off and
                 location.category in [LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING]):
             add_rule(location, lambda state: state.has("Itemfinder", player))
-        if location.category == LocationCategory.SHOPSANITY:
-            add_item_rule(location, lambda i: i.player != player or
-                                              (i.name not in item_groups["HMs"] and i.name not in item_groups["TMs"]))
         if world.options.fame_checker_required and location.category == LocationCategory.FAMESANITY:
             add_rule(location, lambda state: state.has("Fame Checker", player))
         if location.category == LocationCategory.DEXSANITY:
