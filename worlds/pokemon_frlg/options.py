@@ -241,7 +241,7 @@ class Famesanity(Toggle):
 class ShuffleFlyUnlocks(Choice):
     """
     Shuffles the ability to fly to Pokemon Centers into the pool. Entering the map that normally would unlock the
-    fly destination gives a random item.
+    fly point on the map gives a random item.
 
     - Off: Fly Unlocks are not shuffled
     - Exclude Indigo: Fly Unlocks are shuffled. Indigo Plateau Fly Unlock is vanilla

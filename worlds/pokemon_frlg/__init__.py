@@ -733,7 +733,7 @@ class PokemonFRLGWorld(World):
         if self.options.randomize_fly_destinations:
             spoiler_handle.write(f"\n\nFly Destinations ({self.multiworld.player_name[self.player]}):\n\n")
             for exit in self.get_region("Sky").exits:
-                spoiler_handle.write(f"{exit.name}: {exit.connected_region}\n")
+                spoiler_handle.write(f"{exit.name}: {exit.connected_region.name}\n")
 
         # Add Pokémon locations to the spoiler log if they are not vanilla
         if (self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla or
@@ -867,6 +867,10 @@ class PokemonFRLGWorld(World):
         slot_data["starting_town"] = frlg_data.constants[self.starting_town]
         slot_data["free_fly_location_id"] = self.free_fly_location_id
         slot_data["town_map_fly_location_id"] = self.town_map_fly_location_id
+        if self.options.randomize_fly_destinations:
+            slot_data["randomize_fly_destinations"] = {}
+            for exit in self.get_region("Sky").exits:
+                slot_data["randomize_fly_destinations"][exit.name] = exit.connected_region.name
         return slot_data
 
     def create_item(self, name: str) -> "PokemonFRLGItem":
