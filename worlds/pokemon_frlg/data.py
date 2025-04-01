@@ -1699,7 +1699,6 @@ move_name_map = {j: data.constants[i] for i, j in [
     ("MOVE_PSYCHO_BOOST", "Psycho Boost")
 ]}
 
-# Data is formatted as (Map Group, Map Num, X-Coord, Y-Coord, Region Map ID, Region Map Index)
 kanto_fly_destinations = {
     "Pallet Town": {
         "Pallet Town": [

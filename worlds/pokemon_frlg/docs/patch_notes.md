@@ -2,6 +2,7 @@
 ## Updates
 + The Berry Pouch and TM Case are now given to the player at the start of the game instead of when the first berry and HM/TM are obtained
 + If a gym door is locked, such as the Cinnabar or Viridian Gym, then you now need to interact with the door to unlock it
++ When you receive a fly unlock it will now tell you what location it allows you to fly to
 + Interacting with the Receptionist on the far right of the 2F of Pokémon Centers will allow you to purchase various consumable items that you have already obtained
 + New option `skip_elite_four`
   + Makes it so that entering the Pokémon League takes the player directly to the Champion battle. Any location checks that would require fighting the Elite Four will not exist
