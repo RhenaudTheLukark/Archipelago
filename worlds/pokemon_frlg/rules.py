@@ -44,26 +44,26 @@ def set_rules(world: "PokemonFRLGWorld"):
     entrance_rules = {
         # Sky
         "Flying": lambda state: can_fly(state, world),
-        "Pallet Town Fly Destination": lambda state: state.has("Fly Pallet Town", player),
-        "Viridian City Fly Destination": lambda state: state.has("Fly Viridian City", player),
-        "Pewter City Fly Destination": lambda state: state.has("Fly Pewter City", player),
-        "Route 4 Fly Destination": lambda state: state.has("Fly Route 4", player),
-        "Cerulean City Fly Destination": lambda state: state.has("Fly Cerulean City", player),
-        "Vermilion City Fly Destination": lambda state: state.has("Fly Vermilion City", player),
-        "Route 10 Fly Destination": lambda state: state.has("Fly Route 10", player),
-        "Lavender Town Fly Destination": lambda state: state.has("Fly Lavender Town", player),
-        "Celadon City Fly Destination": lambda state: state.has("Fly Celadon City", player),
-        "Fuchsia City Fly Destination": lambda state: state.has("Fly Fuchsia City", player),
-        "Saffron City Fly Destination": lambda state: state.has("Fly Saffron City", player),
-        "Cinnabar Island Fly Destination": lambda state: state.has("Fly Cinnabar Island", player),
-        "Indigo Plateau Fly Destination": lambda state: state.has("Fly Indigo Plateau", player),
-        "One Island Fly Destination": lambda state: state.has("Fly One Island", player),
-        "Two Island Fly Destination": lambda state: state.has("Fly Two Island", player),
-        "Three Island Fly Destination": lambda state: state.has("Fly Three Island", player),
-        "Four Island Fly Destination": lambda state: state.has("Fly Four Island", player),
-        "Five Island Fly Destination": lambda state: state.has("Fly Five Island", player),
-        "Six Island Fly Destination": lambda state: state.has("Fly Six Island", player),
-        "Seven Island Fly Destination": lambda state: state.has("Fly Seven Island", player),
+        "Pallet Town Fly Destination": lambda state: state.has("Fly Unlock (Pallet Town)", player),
+        "Viridian City Fly Destination": lambda state: state.has("Fly Unlock (Viridian City)", player),
+        "Pewter City Fly Destination": lambda state: state.has("Fly Unlock (Pewter City)", player),
+        "Route 4 Fly Destination": lambda state: state.has("Fly Unlock (Route 4)", player),
+        "Cerulean City Fly Destination": lambda state: state.has("Fly Unlock (Cerulean City)", player),
+        "Vermilion City Fly Destination": lambda state: state.has("Fly Unlock (Vermilion City)", player),
+        "Route 10 Fly Destination": lambda state: state.has("Fly Unlock (Route 10)", player),
+        "Lavender Town Fly Destination": lambda state: state.has("Fly Unlock (Lavender Town)", player),
+        "Celadon City Fly Destination": lambda state: state.has("Fly Unlock (Celadon City)", player),
+        "Fuchsia City Fly Destination": lambda state: state.has("Fly Unlock (Fuchsia City)", player),
+        "Saffron City Fly Destination": lambda state: state.has("Fly Unlock (Saffron City)", player),
+        "Cinnabar Island Fly Destination": lambda state: state.has("Fly Unlock (Cinnabar Island)", player),
+        "Indigo Plateau Fly Destination": lambda state: state.has("Fly Unlock (Indigo Plateau)", player),
+        "One Island Fly Destination": lambda state: state.has("Fly Unlock (One Island)", player),
+        "Two Island Fly Destination": lambda state: state.has("Fly Unlock (Two Island)", player),
+        "Three Island Fly Destination": lambda state: state.has("Fly Unlock (Three Island)", player),
+        "Four Island Fly Destination": lambda state: state.has("Fly Unlock (Four Island)", player),
+        "Five Island Fly Destination": lambda state: state.has("Fly Unlock (Five Island)", player),
+        "Six Island Fly Destination": lambda state: state.has("Fly Unlock (Six Island)", player),
+        "Seven Island Fly Destination": lambda state: state.has("Fly Unlock (Seven Island)", player),
 
         # Seagallop
         "Vermilion City Arrival": lambda state: can_sail_vermilion(state, world),
@@ -834,7 +834,7 @@ def set_rules(world: "PokemonFRLGWorld"):
         if world.options.fame_checker_required and location.category == LocationCategory.FAMESANITY:
             add_rule(location, lambda state: state.has("Fame Checker", player))
         if location.category == LocationCategory.DEXSANITY:
-            name = location.name.split()[2]
+            name = location.name.split(" - ")[1].strip()
             add_rule(location, lambda state, pokemon=name: has_pokemon(state, world, evos_dexsanity, pokemon))
 
     dark_cave_regions = list()

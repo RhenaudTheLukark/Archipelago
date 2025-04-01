@@ -858,6 +858,7 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenM
     fly_map_sevii_123_address = data.rom_addresses[game_version_revision]["sRegionMapSections_Sevii123"]
     fly_map_sevii_45_address = data.rom_addresses[game_version_revision]["sRegionMapSections_Sevii45"]
     fly_map_sevii_67_address = data.rom_addresses[game_version_revision]["sRegionMapSections_Sevii67"]
+    fly_name_array_address = data.rom_addresses[game_version_revision]["gFlyUnlockNames"]
     for i in range(fly_layer_offset, fly_layer_offset + 0x14A):
         value = data.constants["MAPSEC_NONE"]
         tokens.write_token(APTokenTypes.WRITE, fly_map_kanto_address + i, struct.pack("<B", value))
@@ -866,21 +867,24 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenM
         tokens.write_token(APTokenTypes.WRITE, fly_map_sevii_67_address + i, struct.pack("<B", value))
     for fly_id, fly_data in world.fly_destination_data.items():
         fly_id_address = fly_point_table_address + (data.constants[fly_id] - 1) * 8
-        fly_map_address = fly_layer_offset + fly_data[5]
+        fly_map_address = fly_layer_offset + fly_data.region_map_index
+        fly_name_address = fly_name_array_address + (data.constants[fly_id] - 1) * 17
         fly_map_value = data.constants[fly_id_map[fly_id]]
-        tokens.write_token(APTokenTypes.WRITE, fly_id_address, struct.pack("<B", fly_data[0]))
-        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 1, struct.pack("<B", fly_data[1]))
-        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 2, struct.pack("<H", fly_data[2]))
-        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 4, struct.pack("<H", fly_data[3]))
-        if fly_data[4] == 1:
+        tokens.write_token(APTokenTypes.WRITE, fly_id_address, struct.pack("<B", fly_data.map_group))
+        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 1, struct.pack("<B", fly_data.map_num))
+        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 2, struct.pack("<H", fly_data.x_pos))
+        tokens.write_token(APTokenTypes.WRITE, fly_id_address + 4, struct.pack("<H", fly_data.y_pos))
+        if fly_data.region_map_id == 1:
             fly_map_address += fly_map_kanto_address
-        elif fly_data[4] == 2:
+        elif fly_data.region_map_id == 2:
             fly_map_address += fly_map_sevii_123_address
-        elif fly_data[4] == 3:
+        elif fly_data.region_map_id == 3:
             fly_map_address += fly_map_sevii_45_address
-        elif fly_data[4] == 4:
+        elif fly_data.region_map_id == 4:
             fly_map_address += fly_map_sevii_67_address
         tokens.write_token(APTokenTypes.WRITE, fly_map_address, struct.pack("<B", fly_map_value))
+        for j, b in enumerate(encode_string(fly_data.name, 17)):
+            tokens.write_token(APTokenTypes.WRITE, fly_name_address + j, struct.pack("<B", b))
 
 
 def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str):

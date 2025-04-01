@@ -8,7 +8,7 @@ from .options import DungeonEntranceShuffle
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
 
-MAX_GER_ATTEMPTS = 5
+MAX_GER_ATTEMPTS = 10
 
 kanto_single_dungeon_entrances = ["Vermilion Harbor", "Pokemon Tower", "Rocket Hideout", "Safari Zone Entrance",
                                   "Silph Co.", "Pokemon Mansion", "Cerulean Cave", "Navel Rock"]

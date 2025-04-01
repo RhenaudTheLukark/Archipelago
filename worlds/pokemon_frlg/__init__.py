@@ -16,8 +16,8 @@ from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
 from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
-                   LocationCategory, EventData, EvolutionMethodEnum, MapData, MiscPokemonData, MoveData, move_name_map,
-                   SpeciesData, StarterData, TrainerData, TradePokemonData)
+                   LocationCategory, EventData, EvolutionMethodEnum, FlyData, MapData, MiscPokemonData, MoveData,
+                   move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
@@ -129,7 +129,7 @@ class PokemonFRLGWorld(World):
     encounter_level_list: List[int]
     itempool: List[PokemonFRLGItem]
     pre_fill_items: List[PokemonFRLGItem]
-    fly_destination_data: Dict[str, Tuple[str, int, int, int, int, int, int]]
+    fly_destination_data: Dict[str, FlyData]
     er_placement_state: ERPlacementState | None
     er_spoiler_names: List[str]
     allowed_evo_methods: List[EvolutionMethodEnum]
@@ -561,7 +561,7 @@ class PokemonFRLGWorld(World):
             evos_allowed = "Dexsanity" in self.options.evolutions_required.value
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                pokemon = location.name.split()[2]
+                pokemon = location.name.split(" - ")[1].strip()
                 if not has_pokemon(state, self, evos_allowed, pokemon):
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop(0))

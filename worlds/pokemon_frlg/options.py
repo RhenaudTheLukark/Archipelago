@@ -94,7 +94,7 @@ class RandomizeFlyDestinations(Toggle):
 
 class FlyDestinationPlando(OptionDict):
     """
-    Plando what map certain fly points will take you to. For example \"Pallet Town Fly Destination\": \"Route 8\"
+    Plando what map certain fly unlocks will take you to. For example \"Pallet Town Fly Destination\": \"Route 8\"
     will make it so that unlocking the Pallet Town fly point will let you fly to Route 8.
 
     Has no effect if fly destinations aren't randomized.

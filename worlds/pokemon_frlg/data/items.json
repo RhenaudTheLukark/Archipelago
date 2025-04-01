@@ -463,104 +463,104 @@
   },
 
   "ITEM_FLY_PALLET": {
-    "name": "Fly Pallet Town",
+    "name": "Fly Unlock (Pallet Town)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_VIRIDIAN": {
-    "name": "Fly Viridian City",
+    "name": "Fly Unlock (Viridian City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_PEWTER": {
-    "name": "Fly Pewter City",
+    "name": "Fly Unlock (Pewter City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_CERULEAN": {
-    "name": "Fly Cerulean City",
+    "name": "Fly Unlock (Cerulean City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_LAVENDER": {
-    "name": "Fly Lavender Town",
+    "name": "Fly Unlock (Lavender Town)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_VERMILION": {
-    "name": "Fly Vermilion City",
+    "name": "Fly Unlock (Vermilion City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_CELADON": {
-    "name": "Fly Celadon City",
+    "name": "Fly Unlock (Celadon City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_FUCHSIA": {
-    "name": "Fly Fuchsia City",
+    "name": "Fly Unlock (Fuchsia City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_CINNABAR": {
-    "name": "Fly Cinnabar Island",
+    "name": "Fly Unlock (Cinnabar Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_INDIGO": {
-    "name": "Fly Indigo Plateau",
+    "name": "Fly Unlock (Indigo Plateau)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_SAFFRON": {
-    "name": "Fly Saffron City",
+    "name": "Fly Unlock (Saffron City)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_ONE_ISLAND": {
-    "name": "Fly One Island",
+    "name": "Fly Unlock (One Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_TWO_ISLAND": {
-    "name": "Fly Two Island",
+    "name": "Fly Unlock (Two Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_THREE_ISLAND": {
-    "name": "Fly Three Island",
+    "name": "Fly Unlock (Three Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_FOUR_ISLAND": {
-    "name": "Fly Four Island",
+    "name": "Fly Unlock (Four Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_FIVE_ISLAND": {
-    "name": "Fly Five Island",
+    "name": "Fly Unlock (Five Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_SEVEN_ISLAND": {
-    "name": "Fly Seven Island",
+    "name": "Fly Unlock (Seven Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_SIX_ISLAND": {
-    "name": "Fly Six Island",
+    "name": "Fly Unlock (Six Island)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_ROUTE4": {
-    "name": "Fly Route 4",
+    "name": "Fly Unlock (Route 4)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
   "ITEM_FLY_ROUTE10": {
-    "name": "Fly Route 10",
+    "name": "Fly Unlock (Route 10)",
     "classification": "PROGRESSION",
-    "tags": ["Fly Points", "Unique Items"]
+    "tags": ["Fly Unlocks", "Unique Items"]
   },
 
   "ITEM_MASTER_BALL": {

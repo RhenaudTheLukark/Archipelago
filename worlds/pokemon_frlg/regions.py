@@ -7,7 +7,7 @@ from entrance_rando import ERPlacementState
 from .data import data, LocationCategory, kanto_fly_destinations, sevii_fly_destinations, starting_town_blacklist_map
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
-from .options import GameVersion, LevelScaling
+from .options import LevelScaling
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
