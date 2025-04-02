@@ -148,6 +148,17 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
             world.er_placement_state = randomize_entrances(world, True, dungeon_group_lookup,
                                                            on_connect=connect_simple_entrances)
             world.er_spoiler_names.extend(single_dungeon_entrances + multi_dungeon_entrances)
+            # Make the Pokemon Mansion other exit match the shuffled exit
+            region = world.get_region("Cinnabar Island")
+            shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit")
+            other_entrance = world.get_entrance("Pokemon Mansion 1F Southeast Exit")
+            region.entrances.remove(other_entrance)
+            other_entrance.connected_region = shuffled_entrance.connected_region
+            shuffled_entrance.connected_region.entrances.append(other_entrance)
+            for source, dest in world.er_placement_state.pairings:
+                if source == "Pokemon Mansion 1F Exit":
+                    world.er_placement_state.pairings.append((other_entrance.name, dest))
+                    break
             break
         except EntranceRandomizationError as error:
             if i >= MAX_GER_ATTEMPTS - 1:
