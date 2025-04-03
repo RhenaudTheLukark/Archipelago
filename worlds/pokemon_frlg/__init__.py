@@ -1,13 +1,15 @@
 """
 Archipelago World definition for Pokémon FireRed/LeafGreen
 """
+import base64
 import copy
 import logging
 import os.path
-import threading
-import settings
 import pkgutil
+import settings
+import threading
 
+from collections import defaultdict
 from typing import Any, ClassVar, Dict, List, Set, TextIO
 
 from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
@@ -37,6 +39,7 @@ from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damag
 from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import set_evolution_rules, set_rules
 from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
+from .sanity_check import validate_regions
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 
@@ -164,7 +167,6 @@ class PokemonFRLGWorld(World):
         self.encounter_name_level_dict = {}
         self.encounter_name_list = []
         self.encounter_level_list = []
-        self.scaling_data = []
         self.itempool = []
         self.pre_fill_items = []
         self.fly_destination_data = {}
@@ -178,8 +180,6 @@ class PokemonFRLGWorld(World):
 
     @classmethod
     def stage_assert_generate(cls, multiworld: MultiWorld) -> None:
-        from .sanity_check import validate_regions
-
         assert validate_regions()
 
     def get_filler_item_name(self) -> str:
@@ -233,9 +233,9 @@ class PokemonFRLGWorld(World):
         passes_progressive = ["Progressive Pass"]
         tea_vanilla = ["Tea"]
         tea_split = ["Blue Tea", "Green Tea", "Purple Tea", "Red Tea"]
-        not_allowed_card_key = list()
-        not_allowed_pass = list()
-        not_allowed_tea = list()
+        not_allowed_card_key = []
+        not_allowed_pass = []
+        not_allowed_tea = []
 
         if self.options.card_key == SilphCoCardKey.option_vanilla:
             not_allowed_card_key.extend(card_key_split)
@@ -737,41 +737,28 @@ class PokemonFRLGWorld(World):
             for exit in self.get_region("Sky").exits:
                 spoiler_handle.write(f"{exit.name}: {exit.connected_region.name}\n")
 
+        wild_pokemon_randomized = self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla
+        static_pokemon_randomized = self.options.misc_pokemon != RandomizeMiscPokemon.option_vanilla
+        legendary_pokemon_randomized = self.options.legendary_pokemon != RandomizeLegendaryPokemon.option_vanilla
+
         # Add Pokémon locations to the spoiler log if they are not vanilla
-        if (self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla or
-                self.options.misc_pokemon != RandomizeMiscPokemon.option_vanilla or
-                self.options.legendary_pokemon != RandomizeLegendaryPokemon.option_vanilla):
+        if wild_pokemon_randomized or static_pokemon_randomized or legendary_pokemon_randomized:
             spoiler_handle.write(f"\n\nPokemon Locations ({self.multiworld.player_name[self.player]}):\n\n")
 
-            from collections import defaultdict
-
             species_locations = defaultdict(set)
-            locations: List[PokemonFRLGLocation] = self.get_locations()
 
-            if self.options.wild_pokemon != RandomizeWildPokemon.option_vanilla:
-                pokemon_locations: List[PokemonFRLGLocation] = [
-                    loc for loc in locations if loc.category == LocationCategory.EVENT_WILD_POKEMON
-                ]
-                for location in pokemon_locations:
-                    species_locations[location.item.name].add(location.spoiler_name)
-
-            if self.options.misc_pokemon != RandomizeMiscPokemon.option_vanilla:
-                pokemon_locations: List[PokemonFRLGLocation] = [
-                    loc for loc in locations if loc.category == LocationCategory.EVENT_STATIC_POKEMON
-                ]
-                for location in pokemon_locations:
+            for location in self.get_locations():
+                assert isinstance(location, PokemonFRLGLocation)
+                if ((wild_pokemon_randomized and
+                     location.category == LocationCategory.EVENT_WILD_POKEMON) or
+                        (static_pokemon_randomized and
+                         location.category == LocationCategory.EVENT_STATIC_POKEMON) or
+                        (legendary_pokemon_randomized and
+                         location.category == LocationCategory.EVENT_LEGENDARY_POKEMON)):
                     if location.item.name.startswith("Missable"):
                         continue
-                    species_locations[location.item.name.replace("Static ", "")].add(location.spoiler_name)
-
-            if self.options.legendary_pokemon != RandomizeLegendaryPokemon.option_vanilla:
-                pokemon_locations: List[PokemonFRLGLocation] = [
-                    loc for loc in locations if loc.category == LocationCategory.EVENT_LEGENDARY_POKEMON
-                ]
-                for location in pokemon_locations:
-                    if location.item.name.startswith("Missable"):
-                        continue
-                    species_locations[location.item.name.replace("Static ", "")].add(location.spoiler_name)
+                    pokemon_name = location.item.name.replace("Static ", "")
+                    species_locations[pokemon_name].add(location.spoiler_name)
 
             lines = [f"{species}: {', '.join(sorted(locations))}\n"
                      for species, locations in species_locations.items()]
@@ -781,32 +768,17 @@ class PokemonFRLGWorld(World):
 
     def extend_hint_information(self, hint_data):
         if self.options.dexsanity != Dexsanity.special_range_names["none"]:
-            from collections import defaultdict
-
             species_locations = defaultdict(set)
-            locations: List[PokemonFRLGLocation] = self.get_locations()
 
-            pokemon_locations: List[PokemonFRLGLocation] = [
-                loc for loc in locations if loc.category == LocationCategory.EVENT_WILD_POKEMON
-            ]
-            for location in pokemon_locations:
-                species_locations[location.item.name].add(location.spoiler_name)
-
-            pokemon_locations: List[PokemonFRLGLocation] = [
-                loc for loc in locations if loc.category == LocationCategory.EVENT_STATIC_POKEMON
-            ]
-            for location in pokemon_locations:
-                if location.item.name.startswith("Missable"):
-                    continue
-                species_locations[location.item.name.replace("Static ", "")].add(location.spoiler_name)
-
-            pokemon_locations: List[PokemonFRLGLocation] = [
-                loc for loc in locations if loc.category == LocationCategory.EVENT_LEGENDARY_POKEMON
-            ]
-            for location in pokemon_locations:
-                if location.item.name.startswith("Missable"):
-                    continue
-                species_locations[location.item.name.replace("Static ", "")].add(location.spoiler_name)
+            for location in self.get_locations():
+                assert isinstance(location, PokemonFRLGLocation)
+                if location.category in [LocationCategory.EVENT_WILD_POKEMON,
+                                         LocationCategory.EVENT_STATIC_POKEMON,
+                                         LocationCategory.EVENT_LEGENDARY_POKEMON]:
+                    if location.item.name.startswith("Missable"):
+                        continue
+                    pokemon_name = location.item.name.replace("Static ", "")
+                    species_locations[pokemon_name].add(location.spoiler_name)
 
             hint_data[self.player] = {
                 self.location_name_to_id[f"Pokedex - {species}"]: ", ".join(sorted(maps))
@@ -814,7 +786,6 @@ class PokemonFRLGWorld(World):
             }
 
     def modify_multidata(self, multidata: Dict[str, Any]):
-        import base64
         multidata["connect_names"][base64.b64encode(self.auth).decode("ascii")] = \
             multidata["connect_names"][self.player_name]
 
