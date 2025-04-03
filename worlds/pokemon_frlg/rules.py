@@ -326,6 +326,7 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Pokemon Mansion": lambda state: state.has("Letter", player) or
                                          not options.extra_key_items,
         "Follow Bill": lambda state: state.has("Defeat Blaine", player),
+        "Pokemon Mansion 1F Southeast Exit": lambda state: not world.randomizing_entrances,
 
         # Route 23
         "Route 23 South Surfing Spot": lambda state: can_surf(state, world),

@@ -8,7 +8,7 @@ import threading
 import settings
 import pkgutil
 
-from typing import Any, ClassVar, Dict, List, Set, TextIO, Tuple
+from typing import Any, ClassVar, Dict, List, Set, TextIO
 
 from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
 from Fill import fill_restrictive, FillError
@@ -135,6 +135,7 @@ class PokemonFRLGWorld(World):
     allowed_evo_methods: List[EvolutionMethodEnum]
     moves_by_type: Dict[int, Set[int]]
     required_trade_pokemon: Dict[str, str]
+    randomizing_entrances: bool
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -172,6 +173,7 @@ class PokemonFRLGWorld(World):
         self.allowed_evo_methods = []
         self.moves_by_type = {}
         self.required_trade_pokemon = {}
+        self.randomizing_entrances = False
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -871,6 +873,10 @@ class PokemonFRLGWorld(World):
             slot_data["randomize_fly_destinations"] = {}
             for exit in self.get_region("Sky").exits:
                 slot_data["randomize_fly_destinations"][exit.name] = exit.connected_region.name
+        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
+            slot_data["dungeon_entrance_shuffle"] = {}
+            for source, dest in self.er_placement_state.pairings:
+                slot_data["dungeon_entrance_shuffle"][source] = dest
         return slot_data
 
     def create_item(self, name: str) -> "PokemonFRLGItem":
