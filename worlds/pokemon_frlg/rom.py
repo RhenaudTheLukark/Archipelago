@@ -6,10 +6,9 @@ import logging
 import struct
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
-from BaseClasses import ItemClassification
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
-from .data import data, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
+from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
                       HmCompatibility, LevelScaling, RandomizeDamageCategories, RandomizeLegendaryPokemon,
@@ -337,6 +336,9 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
 
     # Set misc pokemon
     _set_misc_pokemon(world, tokens, game_version, game_version_revision)
+
+    # Set trade pokemon
+    _set_trade_pokemon(world, tokens, game_version, game_version_revision)
 
     # Set trainer parties
     _set_trainer_parties(world, tokens, game_version_revision)
@@ -1025,6 +1027,17 @@ def _set_misc_pokemon(world: "PokemonFRLGWorld", tokens: APTokenMixin,
             tokens.write_token(APTokenTypes.WRITE,
                                misc_pokemon.level_address[game_version_revision],
                                struct.pack("<B", misc_pokemon.level[game_version]))
+
+
+def _set_trade_pokemon(world: "PokemonFRLGWorld", tokens: APTokenMixin,
+                       game_version: str, game_version_revision: str) -> None:
+    for name, trade_pokemon in world.modified_trade_pokemon.items():
+        tokens.write_token(APTokenTypes.WRITE,
+                           trade_pokemon.species_address[game_version_revision],
+                           struct.pack("<H", trade_pokemon.species_id[game_version]))
+        tokens.write_token(APTokenTypes.WRITE,
+                           trade_pokemon.requested_species_address[game_version_revision],
+                           struct.pack("<H", trade_pokemon.requested_species_id[game_version]))
 
 
 def _set_trainer_parties(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version_revision: str) -> None:

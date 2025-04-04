@@ -255,7 +255,7 @@ class MiscPokemonData:
 class TradePokemonData:
     species_id: Dict[str, int]
     species_address: Dict[str, int]
-    requested_species: Dict[str, int]
+    requested_species_id: Dict[str, int]
     requested_species_address: Dict[str, int]
 
 

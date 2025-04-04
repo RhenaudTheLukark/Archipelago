@@ -917,7 +917,7 @@ def randomize_requested_trade_pokemon(world: "PokemonFRLGWorld") -> None:
     for trade_id, trade_pokemon in world.modified_trade_pokemon.items():
         species = world.random.choice(world.repeatable_pokemon)
         species_id = NAME_TO_SPECIES_ID[species]
-        trade_pokemon.requested_species[game_version] = species_id
+        trade_pokemon.requested_species_id[game_version] = species_id
         world.required_trade_pokemon[data.events[trade_id].name] = species
 
 
