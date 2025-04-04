@@ -166,6 +166,23 @@ class Shopsanity(Toggle):
     display_name = "Shopsanity"
 
 
+class ShopPrices(Choice):
+    """
+    Sets how Shop Item's prices are determined when Shopsanity is on.
+
+    - Spheres: Shop prices are determined by sphere access
+    - Classification: Shop prices are determined by item classifications (Progression, Useful, Filler/Trap)
+    - Spheres and Classifications: Shop prices are determined by both sphere access and item classifications
+    - Completely Random: Shop prices will be completely random
+    """
+    display_name = "Shop Prices"
+    default = 2
+    option_spheres = 0
+    option_classification = 1
+    option_spheres_and_classification = 2
+    option_completely_random = 3
+
+
 class MinimumShopPrice(Range):
     """
     Sets the minimum cost of Shop Items when Shopsanity is on.
@@ -1242,6 +1259,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_hidden: ShuffleHiddenItems
     extra_key_items: ExtraKeyItems
     shopsanity: Shopsanity
+    shop_prices: ShopPrices
     minimum_shop_price: MinimumShopPrice
     maximum_shop_price: MaximumShopPrice
     trainersanity: Trainersanity

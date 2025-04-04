@@ -139,6 +139,7 @@ class PokemonFRLGWorld(World):
     moves_by_type: Dict[int, Set[int]]
     required_trade_pokemon: Dict[str, str]
     randomizing_entrances: bool
+    shop_locations_by_spheres: List[Set[PokemonFRLGLocation]]
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -176,6 +177,7 @@ class PokemonFRLGWorld(World):
         self.moves_by_type = {}
         self.required_trade_pokemon = {}
         self.randomizing_entrances = False
+        self.shop_locations_by_spheres = []
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -639,26 +641,36 @@ class PokemonFRLGWorld(World):
         # This cuts down on time calculating the playthrough
         found_mons = set()
         pokemon = {species.name for species in frlg_data.species.values()}
+        shop_locations: Dict[int, List[Set[PokemonFRLGLocation]]] = defaultdict(list)
         for sphere in multiworld.get_spheres():
-            mon_locations_in_sphere = dict()
+            mon_locations_in_sphere = defaultdict(list)
+            shop_locations_in_sphere = defaultdict(set)
             for location in sphere:
-                if (location.game == "Pokemon FireRed and LeafGreen" and
-                        location.item.game == "Pokemon FireRed and LeafGreen" and
-                        (location.item.name in pokemon or
-                         "Static " in location.item.name or
-                         "Evolved " in location.item.name)
-                        and location.item.advancement):
-                    key = (location.player, location.item.name)
-                    if key in found_mons:
-                        location.item.classification = ItemClassification.useful
-                    else:
-                        mon_locations_in_sphere.setdefault(key, []).append(location)
+                if location.game == "Pokemon FireRed and LeafGreen":
+                    assert isinstance(location, PokemonFRLGLocation)
+                    if (location.item.game == "Pokemon FireRed and LeafGreen" and
+                            (location.item.name in pokemon or
+                             "Static " in location.item.name or
+                             "Evolved " in location.item.name)
+                            and location.item.advancement):
+                        key = (location.player, location.item.name)
+                        if key in found_mons:
+                            location.item.classification = ItemClassification.useful
+                        else:
+                            mon_locations_in_sphere[key].append(location)
+                    if location.category == LocationCategory.SHOPSANITY:
+                        shop_locations_in_sphere[location.player].add(location)
             for key, mon_locations in mon_locations_in_sphere.items():
                 found_mons.add(key)
                 if len(mon_locations) > 1:
                     mon_locations.sort()
                     for location in mon_locations[1:]:
                         location.item.classification = ItemClassification.useful
+            for player, locations in shop_locations_in_sphere.items():
+                shop_locations[player].append(locations)
+        for world in multiworld.get_game_worlds("Pokemon FireRed and LeafGreen"):
+            if world.options.shopsanity:
+                world.shop_locations_by_spheres = shop_locations[world.player]
 
     @classmethod
     def stage_generate_output(cls, multiworld, output_directory):

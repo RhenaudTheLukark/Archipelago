@@ -6,6 +6,7 @@ import logging
 import struct
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
+from BaseClasses import ItemClassification
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
 from .data import data, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
@@ -13,8 +14,8 @@ from .locations import PokemonFRLGLocation
 from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
                       HmCompatibility, LevelScaling, RandomizeDamageCategories, RandomizeLegendaryPokemon,
                       RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters, RandomizeTrainerParties,
-                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, SilphCoCardKey,
-                      TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
+                      RandomizeWildPokemon, SeviiIslandPasses, ShopPrices, ShuffleFlyUnlocks, ShuffleHiddenItems,
+                      SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -893,6 +894,15 @@ def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version
 
     min_shop_price = world.options.minimum_shop_price.value
     max_shop_price = world.options.maximum_shop_price.value
+    total_shop_spheres = len(world.shop_locations_by_spheres)
+    by_spheres = world.options.shop_prices in {
+        ShopPrices.option_spheres,
+        ShopPrices.option_spheres_and_classification
+    }
+    by_classification = world.options.shop_prices in {
+        ShopPrices.option_classification,
+        ShopPrices.option_spheres_and_classification
+    }
 
     if world.options.minimum_shop_price > world.options.maximum_shop_price:
         logging.info("Pokemon FRLG: Minimum Shop Price for player %s (%s) is greater than Maximum Shop Price.",
@@ -900,13 +910,29 @@ def _set_shop_data(world: "PokemonFRLGWorld", tokens: APTokenMixin, game_version
         min_shop_price = world.options.maximum_shop_price.value
         max_shop_price = world.options.minimum_shop_price.value
 
-    for location in world.get_locations():
-        assert isinstance(location, PokemonFRLGLocation)
-        if location.address is None:
-            continue
-        if location.category == LocationCategory.SHOPSANITY:
+    for i, locations in enumerate(world.shop_locations_by_spheres):
+        sphere_min_shop_price = min_shop_price
+        sphere_max_shop_price = max_shop_price
+        if by_spheres:
+            base_price = sphere_min_shop_price
+            price_difference = max_shop_price - min_shop_price
+            sphere_min_shop_price = int(round(base_price + ((price_difference / total_shop_spheres) * i)))
+            sphere_max_shop_price = int(round(base_price + ((price_difference / total_shop_spheres) * (i + 1))))
+        for location in locations:
+            item_min_shop_price = sphere_min_shop_price
+            item_max_shop_price = sphere_max_shop_price
+            if by_classification:
+                base_price = item_min_shop_price
+                price_difference = item_max_shop_price - item_min_shop_price
+                if location.item.advancement:
+                    item_min_shop_price = base_price + int(round(price_difference * 0.6))
+                elif location.item.useful:
+                    item_min_shop_price = base_price + int(round(price_difference * 0.2))
+                    item_max_shop_price = base_price + int(round(price_difference * 0.6))
+                else:
+                    item_max_shop_price = base_price + int(round(price_difference * 0.2))
             item_address = location.item_address[game_version_revision]
-            shop_price = world.random.randint(min_shop_price, max_shop_price)
+            shop_price = world.random.randint(item_min_shop_price, item_max_shop_price)
 
             if type(item_address) is int:
                 tokens.write_token(APTokenTypes.WRITE, item_address + 2, struct.pack("<H", shop_price))

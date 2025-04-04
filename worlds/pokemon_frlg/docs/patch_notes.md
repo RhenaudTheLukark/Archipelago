@@ -12,6 +12,8 @@
   + Full: All dungeon entrances are shuffled together
 + New option `shopsanity`
   + Shuffles shop items into the item pool. The Celadon Department Store 4F Held Item Shop is not shuffled
++ New option `shop_prices`
+  + Sets how shop prices are determined (by spheres, by item classification, by both, or completely random)
 + New options `minimum_shop_price` and `maximum_shop_price`
   + Sets the minimum and maximum prices that shop items can be when `shopsanity` is on
 + New options `shuffle_berry_pouch` and `shuffle_tm_case`
