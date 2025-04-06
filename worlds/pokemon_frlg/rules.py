@@ -26,7 +26,7 @@ def set_evolution_rules(world: "PokemonFRLGWorld"):
     for location in world.get_locations():
         assert isinstance(location, PokemonFRLGLocation)
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
-            pokemon_name = location.name.split("-")[1].strip()
+            pokemon_name = location.name.split(" - ")[1].strip()
             add_rule(location, lambda state, pokemon=pokemon_name: can_evolve(state, world, pokemon))
 
 

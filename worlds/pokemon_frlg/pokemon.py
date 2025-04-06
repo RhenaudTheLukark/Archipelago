@@ -507,7 +507,7 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
         dexsanity_priority_locations = [loc for loc in world.options.priority_locations.value
                                         if loc.startswith("Pokedex -")]
         for location in dexsanity_priority_locations:
-            priority_species.add(NAME_TO_SPECIES_ID[location.split("-")[1].strip()])
+            priority_species.add(NAME_TO_SPECIES_ID[location.split(" - ")[1].strip()])
 
     map_names = list(world.modified_maps.keys())
     world.random.shuffle(map_names)

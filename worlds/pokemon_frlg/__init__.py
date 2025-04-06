@@ -539,7 +539,7 @@ class PokemonFRLGWorld(World):
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
         for location in evolution_region.locations.copy():
-            pokemon = location.name.split("-")[1].strip()
+            pokemon = location.name.split(" - ")[1].strip()
             if not can_evolve(state, self, pokemon):
                 evolution_region.locations.remove(location)
 
