@@ -163,14 +163,15 @@ def _get_random_move(world: "PokemonFRLGWorld",
                      blacklists: List[Set[int]],
                      use_bias: bool = False,
                      types: Tuple[int, int] | None = None) -> int:
-    allowed_moves = list()
+    allowed_moves = []
+    moves_by_type = set()
 
     if use_bias:
         type_bias = world.options.move_match_type_bias.value
         normal_bias = world.options.move_normal_type_bias.value
         bias = world.random.random() * 100
         if bias < type_bias:
-            moves_by_type = world.moves_by_type[types[0]]
+            moves_by_type.update(world.moves_by_type[types[0]])
             if types[0] != types[1]:
                 moves_by_type |= world.moves_by_type[types[1]]
             blacklists.append({move for move in range(data.constants["MOVES_COUNT"])

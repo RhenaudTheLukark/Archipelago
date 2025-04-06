@@ -224,12 +224,8 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
             rival_rewards.append("CHAMPION_REMATCH")
         for trainer in rival_rewards:
             try:
-                location = world.multiworld.get_location(data.locations[f"TRAINER_{trainer}_BULBASAUR_REWARD"].name,
-                                                         world.player)
-                alternates = [
-                    f"TRAINER_{trainer}_CHARMANDER",
-                    f"TRAINER_{trainer}_SQUIRTLE"
-                ]
+                location = world.get_location(data.locations[f"TRAINER_{trainer}_BULBASAUR_REWARD"].name)
+                alternates = [f"TRAINER_{trainer}_CHARMANDER", f"TRAINER_{trainer}_SQUIRTLE"]
 
                 location_info.extend(
                     (
