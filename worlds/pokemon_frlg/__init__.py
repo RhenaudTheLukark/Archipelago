@@ -644,7 +644,7 @@ class PokemonFRLGWorld(World):
         self.auth = self.random.getrandbits(16 * 8).to_bytes(16, "little")
 
     @classmethod
-    def stage_post_fill(cls, multiworld):
+    def stage_generate_output(cls, multiworld, output_directory):
         # Change all but one instance of a Pokémon in each sphere to useful classification
         # This cuts down on time calculating the playthrough
         found_mons = set()
@@ -679,9 +679,6 @@ class PokemonFRLGWorld(World):
         for world in multiworld.get_game_worlds("Pokemon FireRed and LeafGreen"):
             if world.options.shopsanity:
                 world.shop_locations_by_spheres = shop_locations[world.player]
-
-    @classmethod
-    def stage_generate_output(cls, multiworld, output_directory):
         level_scaling(multiworld)
 
     def generate_output(self, output_directory: str) -> None:
