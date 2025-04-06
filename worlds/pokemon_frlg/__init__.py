@@ -549,10 +549,14 @@ class PokemonFRLGWorld(World):
             trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINERSANITY]
             locs_to_remove = len(trainer_locations) - self.options.trainersanity.value
             if locs_to_remove > 0:
-                self.random.shuffle(trainer_locations)
+                priority_trainer_locations = [loc for loc in trainer_locations
+                                              if loc.name in self.options.priority_locations.value]
+                non_priority_trainer_locations = [loc for loc in trainer_locations
+                                                  if loc.name not in self.options.priority_locations.value]
+                self.random.shuffle(priority_trainer_locations)
+                self.random.shuffle(non_priority_trainer_locations)
+                trainer_locations = non_priority_trainer_locations + priority_trainer_locations
                 for location in trainer_locations:
-                    if location.name in self.options.priority_locations.value:
-                        continue
                     region = location.parent_region
                     region.locations.remove(location)
                     self.itempool.remove(filler_items.pop(0))
@@ -572,11 +576,15 @@ class PokemonFRLGWorld(World):
 
             # Delete dexsanity locations if there are more than the amount specified in the settings
             if len(pokedex_region.locations) > self.options.dexsanity.value:
-                pokedex_region_locations = pokedex_region.locations.copy()
-                self.random.shuffle(pokedex_region_locations)
-                for location in pokedex_region_locations:
-                    if location.name in self.options.priority_locations.value:
-                        continue
+                pokedex_locations = pokedex_region.locations.copy()
+                priority_pokedex_locations = [loc for loc in pokedex_locations
+                                              if loc.name in self.options.priority_locations.value]
+                non_priority_pokedex_locations = [loc for loc in pokedex_locations
+                                                  if loc.name not in self.options.priority_locations.value]
+                self.random.shuffle(priority_pokedex_locations)
+                self.random.shuffle(non_priority_pokedex_locations)
+                pokedex_locations = non_priority_pokedex_locations + priority_pokedex_locations
+                for location in pokedex_locations:
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop(0))
                     if len(pokedex_region.locations) <= self.options.dexsanity.value:
