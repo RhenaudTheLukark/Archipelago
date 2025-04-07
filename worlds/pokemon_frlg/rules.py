@@ -203,6 +203,7 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Pokemon Tower 1F (Ghost Battle)": lambda state: pokemon_tower_1f_ghost_exists(world) and
                                                          state.has("Silph Scope", player),
         "Pokemon Tower 6F (Ghost Battle)": lambda state: state.has("Silph Scope", player),
+        "Follow Mr. Fuji": lambda state: state.has("Rescue Mr. Fuji", player),
 
         # Route 12
         "Route 12 West Exit": lambda state: can_enter_route_12(state, world),
@@ -381,6 +382,7 @@ def set_rules(world: "PokemonFRLGWorld"):
 
         # Berry Forest
         "Berry Forest Surfing Spot": lambda state: can_surf(state, world),
+        "Follow Lostelle": lambda state: state.has("Rescue Lostelle", player),
 
         # Four Island Town
         "Four Island Town Surfing Spot": lambda state: can_surf(state, world),
@@ -404,6 +406,9 @@ def set_rules(world: "PokemonFRLGWorld"):
         # Resort Gorgeous
         "Resort Gorgeous Near Resort Surfing Spot": lambda state: can_surf(state, world),
         "Resort Gorgeous Near Cave Surfing Spot": lambda state: can_surf(state, world),
+
+        # Lost Cave
+        "Follow Selphy": lambda state: state.has("Rescue Selphy", player),
 
         # Water Path
         "Water Path South Surfing Spot": lambda state: can_surf(state, world),

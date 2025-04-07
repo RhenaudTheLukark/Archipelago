@@ -735,10 +735,10 @@ class PokemonFRLGWorld(World):
             spoiler_handle.write(f"Starting Town:                   {starting_town}\n")
         if self.options.free_fly_location:
             free_fly_location = self.multiworld.get_location("Free Fly Location", self.player)
-            spoiler_handle.write(f"Free Fly Location:               {free_fly_location.item.name[4:]}\n")
+            spoiler_handle.write(f"Free Fly Location:               {free_fly_location.item.name}\n")
         if self.options.town_map_fly_location:
             town_map_fly_location = self.multiworld.get_location("Town Map Fly Location", self.player)
-            spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name[4:]}\n")
+            spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name}\n")
 
     def write_spoiler(self, spoiler_handle: TextIO) -> None:
         # Add dungeon entrances to the spoiler log if they are shuffled
