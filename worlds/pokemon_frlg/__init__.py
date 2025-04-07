@@ -879,7 +879,7 @@ class PokemonFRLGWorld(World):
         )
 
     def get_world_collection_state(self) -> CollectionState:
-        state = CollectionState(self.multiworld)
+        state = CollectionState(self.multiworld, True)
         progression_items = [item for item in self.itempool if item.advancement]
         locations = self.get_locations()
         for item in progression_items:
