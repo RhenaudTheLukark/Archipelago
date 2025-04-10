@@ -4,7 +4,8 @@ Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/r
 from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
 from BaseClasses import Entrance, Region, CollectionState, ItemClassification
 from entrance_rando import ERPlacementState
-from .data import data, LocationCategory, kanto_fly_destinations, sevii_fly_destinations, starting_town_blacklist_map
+from .data import (data, LocationCategory, fly_plando_maps, kanto_fly_destinations, sevii_fly_destinations,
+                   starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
 from .options import LevelScaling
@@ -540,21 +541,18 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             fly_destinations.update(sevii_fly_destinations)
         maps_already_chosen = set()
         exit_already_randomized = set()
-        for exit_name, map in world.options.fly_destination_plando.value.items():
-            if map in maps_already_chosen or map not in fly_destinations.keys():
+        for exit_name, warp_name in world.options.fly_destination_plando.value.items():
+            fly_plando = fly_plando_maps[warp_name]
+            if fly_plando[0] in maps_already_chosen or fly_plando[0] not in fly_destinations.keys():
                 continue
             exit = world.multiworld.get_entrance(exit_name, world.player)
             regions[exit.connected_region.name].entrances.remove(exit)
             exit.connected_region = None
-            allowed_regions = list(fly_destinations[map].keys())
-            region = world.random.choice(allowed_regions)
-            allowed_warps = fly_destinations[map][region]
-            warp = world.random.choice(allowed_warps)
-            maps_already_chosen.add(map)
+            maps_already_chosen.add(fly_plando[0])
             exit_already_randomized.add(exit_name)
-            exit.connected_region = regions[region]
-            regions[region].entrances.append(exit)
-            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = warp
+            exit.connected_region = regions[fly_plando[1]]
+            regions[fly_plando[1]].entrances.append(exit)
+            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = fly_plando[2]
         for exit in regions["Sky"].exits:
             if exit.name in exit_already_randomized:
                 continue
@@ -563,13 +561,13 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             allowed_maps = [k for k in fly_destinations.keys() if k not in maps_already_chosen]
             map = world.random.choice(allowed_maps)
             allowed_regions = list(fly_destinations[map].keys())
-            region = world.random.choice(allowed_regions)
-            allowed_warps = fly_destinations[map][region]
-            warp = world.random.choice(allowed_warps)
+            map_region = world.random.choice(allowed_regions)
+            allowed_warps = fly_destinations[map][map_region]
+            map_warp = world.random.choice(allowed_warps)
             maps_already_chosen.add(map)
-            exit.connected_region = regions[region]
-            regions[region].entrances.append(exit)
-            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = warp
+            exit.connected_region = regions[map_region]
+            regions[map_region].entrances.append(exit)
+            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = map_warp
 
     regions["Title Screen"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
     regions["Title Screen"].connect(regions["Player's PC"], "Use PC")

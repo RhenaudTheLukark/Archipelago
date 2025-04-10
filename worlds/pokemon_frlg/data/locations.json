@@ -2288,7 +2288,7 @@
     "category": "NPC_GIFT"
   },
   "NPC_GIFT_GOT_LUXURY_BALL_FROM_RESORT_GORGEOUS_HOUSE": {
-    "name": "Resort Gorgeous House - Selphy Gift (Show Pokemon)",
+    "name": "Selphy's House - Selphy Gift (Show Pokemon)",
     "tags": ["NPC Gifts", "Sevii Islands", "Five Island", "Resort Gorgeous"],
     "category": "POKEMON_REQUEST"
   },
@@ -5521,7 +5521,7 @@
     "category": "FAMESANITY"
   },
   "FAME_CHECKER_BLAINE_6": {
-    "name": "Resort Gorgeous House - Bookshelf Info",
+    "name": "Selphy's House - Bookshelf Info",
     "tags": ["Fame Entries", "Blaine Fame Entries", "Sevii Islands", "Five Island", "Resort Gorgeous"],
     "category": "FAMESANITY"
   },

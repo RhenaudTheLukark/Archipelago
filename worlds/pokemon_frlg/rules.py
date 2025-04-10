@@ -763,7 +763,7 @@ def set_rules(world: "PokemonFRLGWorld"):
         "Water Labyrinth - Gentleman Info": lambda state: state.has_any(["Togepi", "Togetic"], player),
 
         # Resort Gorgeous
-        "Resort Gorgeous House - Selphy Gift (Show Pokemon)":
+        "Selphy's House - Selphy Gift (Show Pokemon)":
             lambda state: state.has_all(["Rescue Selphy", data.species[world.resort_gorgeous_mon].name], player),
 
         # Water Path

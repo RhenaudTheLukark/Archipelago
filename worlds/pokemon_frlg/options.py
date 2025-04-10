@@ -94,33 +94,34 @@ class RandomizeFlyDestinations(Toggle):
 
 class FlyDestinationPlando(OptionDict):
     """
-    Plando what map certain fly unlocks will take you to. For example \"Pallet Town Fly Destination\": \"Route 8\"
-    will make it so that unlocking the Pallet Town fly point will let you fly to Route 8.
+    Plando what warp certain fly unlocks will take you to.
+    For example \"Pallet Town Fly Destination\": \"Player's House\" will make it so that unlocking the Pallet Town fly
+    point will let you fly to in front of the Player's House.
 
     Has no effect if fly destinations aren't randomized.
     """
     display_name = "Fly Destination Plando"
     schema = Schema({
-        Optional("Pallet Town Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Viridian City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Pewter City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Route 4 Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Cerulean City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Vermilion City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Route 10 Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Lavender Town Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Celadon City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Fuchsia City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Saffron City Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Cinnabar Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Indigo Plateau Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("One Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Two Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Three Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Four Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Five Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Six Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
-        Optional("Seven Island Fly Destination"): And(str, lambda s: s in fly_plando_maps),
+        Optional("Pallet Town Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Viridian City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Pewter City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Route 4 Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Cerulean City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Vermilion City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Route 10 Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Lavender Town Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Celadon City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Fuchsia City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Saffron City Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Cinnabar Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Indigo Plateau Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("One Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Two Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Three Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Four Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Five Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Six Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
+        Optional("Seven Island Fly Destination"): And(str, lambda s: s in fly_plando_maps.keys()),
     })
 
 

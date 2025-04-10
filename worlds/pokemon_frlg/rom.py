@@ -882,7 +882,7 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld", tokens: APTokenM
         elif fly_data.region_map_id == 4:
             fly_map_address += fly_map_sevii_67_address
         tokens.write_token(APTokenTypes.WRITE, fly_map_address, struct.pack("<B", fly_map_value))
-        for j, b in enumerate(encode_string(fly_data.name, 17)):
+        for j, b in enumerate(encode_string(fly_data.display_name, 17)):
             tokens.write_token(APTokenTypes.WRITE, fly_name_address + j, struct.pack("<B", b))
 
 
