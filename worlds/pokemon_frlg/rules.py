@@ -853,7 +853,7 @@ def set_rules(world: "PokemonFRLGWorld"):
         dark_cave_regions.extend(victory_road_regions)
 
     for region in dark_cave_regions:
-        for entrance in world.get_region(region).entrances:
-            add_rule(entrance, lambda state: can_navigate_dark_caves(state, world))
+        for exit in world.get_region(region).exits:
+            add_rule(exit, lambda state: can_navigate_dark_caves(state, world))
         for location in world.get_region(region).locations:
             add_rule(location, lambda state: can_navigate_dark_caves(state, world))
