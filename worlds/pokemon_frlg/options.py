@@ -306,7 +306,7 @@ class ShuffleTMCase(Toggle):
     display_name = "Shuffle TM Case"
 
 
-class SilphCoCardKey(Choice):
+class CardKey(Choice):
     """
     Sets how the card key that unlocks the doors in Silph Co. is handled. If Split or Progressive, nine new locations
     will be added to Silph Co. in the form of item balls on floors 2 through 11 (except for floor five).
@@ -322,7 +322,7 @@ class SilphCoCardKey(Choice):
     option_progressive = 2
 
 
-class SeviiIslandPasses(Choice):
+class IslandPasses(Choice):
     """
     Sets how the passes that allow you to travel to the Sevii Islands are handled. If Split or Progressive, five new
     locations will be added to events related to the Sevii Islands.
@@ -1271,8 +1271,8 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
-    card_key: SilphCoCardKey
-    island_passes: SeviiIslandPasses
+    card_key: CardKey
+    island_passes: IslandPasses
     split_teas: SplitTeas
     gym_keys: GymKeys
 

@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Dict, List, Set
-from BaseClasses import CollectionState, Location, Region, ItemClassification
+from BaseClasses import CollectionState, Location, LocationProgressType, Region, ItemClassification
 from .data import data, LocationCategory, fly_blacklist_map
+from .groups import location_groups
 from .items import PokemonFRLGItem, get_random_item
 from .options import ShuffleFlyUnlocks, ViridianCityRoadblock
 
@@ -143,6 +144,33 @@ def create_locations_from_categories(world: "PokemonFRLGWorld",
             region.locations.append(location)
 
 
+def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
+    def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
+        for location in locations:
+            location.place_locked_item(PokemonFRLGItem(world.item_id_to_name[location.default_item_id],
+                                                       ItemClassification.progression,
+                                                       None,
+                                                       world.player))
+            location.progress_type = LocationProgressType.DEFAULT
+            location.address = None
+            location.show_in_spoiler = False
+
+    unrandomized_progression_locations = set()
+
+    if world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
+        fly_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Town Visits"]]
+        unrandomized_progression_locations.update(fly_locations)
+    elif world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
+        unrandomized_progression_locations.add(world.get_location("Indigo Plateau - Unlock Fly Destination"))
+
+    if not world.options.shuffle_berry_pouch:
+        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 1"))
+    if not world.options.shuffle_tm_case:
+        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 2"))
+
+    create_events_for_unrandomized_items(unrandomized_progression_locations)
+
+
 def set_free_fly(world: "PokemonFRLGWorld") -> None:
     # Set our free fly location
     world.free_fly_location_id = fly_item_id_map["ITEM_FLY_NONE"]
@@ -151,7 +179,7 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
     if not world.options.free_fly_location and not world.options.town_map_fly_location:
         return
 
-    state = CollectionState(world.multiworld)
+    state = CollectionState(world.multiworld, True)
     regions = world.multiworld.get_regions(world.player)
     events = [loc for loc in world.get_locations() if loc.is_event]
     forbidden_fly_list = list()

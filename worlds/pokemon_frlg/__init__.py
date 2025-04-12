@@ -25,19 +25,17 @@ from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
 from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations_from_categories,
-                        set_free_fly)
-from .logic import (can_evolve, can_cut, can_flash, can_fly, can_rock_smash, can_strength, can_surf, can_waterfall,
-                    has_badge_requirement, has_pokemon, set_allowed_evo_methods)
-from .options import (PokemonFRLGOptions, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle, FlashRequired,
-                      FreeFlyLocation, GameVersion, Goal, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
-                      RandomizeWildPokemon, SeviiIslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
-                      ShuffleRunningShoes, SilphCoCardKey, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
+                        fill_unrandomized_locations, set_free_fly)
+from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
+                      FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon,
+                      RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
+                      ShuffleRunningShoes, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damage_categories, randomize_legendaries,
                       randomize_misc_pokemon, randomize_moves, randomize_move_types, randomize_requested_trade_pokemon,
                       randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves, randomize_trainer_parties,
                       randomize_types, randomize_wild_encounters)
 from .regions import starting_town_map, create_indirect_conditions, create_regions
-from .rules import set_evolution_rules, set_rules
+from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
 from .sanity_check import validate_regions
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
@@ -101,10 +99,10 @@ class PokemonFRLGWorld(World):
     required_client_version = (0, 6, 0)
     origin_region_name = "Title Screen"
 
+    logic: PokemonFRLGLogic
     starting_town: str
     free_fly_location_id: int
     town_map_fly_location_id: int
-    resort_gorgeous_mon: int
     modified_species: Dict[int, SpeciesData]
     modified_maps: Dict[str, MapData]
     modified_starters: Dict[str, StarterData]
@@ -116,8 +114,6 @@ class PokemonFRLGWorld(World):
     modified_tmhm_moves: List[int]
     modified_moves: Dict[str, MoveData]
     modified_type_damage_categories: List[int]
-    hm_compatibility: Dict[str, Set[str]]
-    repeatable_pokemon: List[str]
     per_species_tmhm_moves: Dict[int, List[int]]
     blacklisted_wild_pokemon: Set[int]
     blacklisted_starters: Set[int]
@@ -135,19 +131,16 @@ class PokemonFRLGWorld(World):
     fly_destination_data: Dict[str, FlyData]
     er_placement_state: ERPlacementState | None
     er_spoiler_names: List[str]
-    allowed_evo_methods: List[EvolutionMethodEnum]
     moves_by_type: Dict[int, Set[int]]
-    required_trade_pokemon: Dict[str, str]
-    randomizing_entrances: bool
     shop_locations_by_spheres: List[Set[PokemonFRLGLocation]]
     auth: bytes
 
     def __init__(self, multiworld, player):
         super(PokemonFRLGWorld, self).__init__(multiworld, player)
+        self.logic = PokemonFRLGLogic(player, self.item_id_to_name)
         self.starting_town = "SPAWN_PALLET_TOWN"
         self.free_fly_location_id = 0
         self.town_map_fly_location_id = 0
-        self.resort_gorgeous_mon = frlg_data.constants["SPECIES_PIKACHU"]
         self.modified_species = copy.deepcopy(frlg_data.species)
         self.modified_maps = copy.deepcopy(frlg_data.maps)
         self.modified_starters = copy.deepcopy(frlg_data.starters)
@@ -159,8 +152,6 @@ class PokemonFRLGWorld(World):
         self.modified_tmhm_moves = copy.deepcopy(frlg_data.tmhm_moves)
         self.modified_moves = copy.deepcopy(frlg_data.moves)
         self.modified_type_damage_categories = copy.deepcopy(frlg_data.type_damage_categories)
-        self.hm_compatibility = {}
-        self.repeatable_pokemon = []
         self.per_species_tmhm_moves = {}
         self.trainer_name_level_dict = {}
         self.trainer_name_list = []
@@ -173,10 +164,7 @@ class PokemonFRLGWorld(World):
         self.fly_destination_data = {}
         self.er_placement_state = None
         self.er_spoiler_names = []
-        self.allowed_evo_methods = []
         self.moves_by_type = {}
-        self.required_trade_pokemon = {}
-        self.randomizing_entrances = False
         self.shop_locations_by_spheres = []
         self.finished_level_scaling = threading.Event()
 
@@ -239,25 +227,25 @@ class PokemonFRLGWorld(World):
         not_allowed_pass = []
         not_allowed_tea = []
 
-        if self.options.card_key == SilphCoCardKey.option_vanilla:
+        if self.options.card_key == CardKey.option_vanilla:
             not_allowed_card_key.extend(card_key_split)
             not_allowed_card_key.extend(card_key_progressive)
-        elif self.options.card_key == SilphCoCardKey.option_split:
+        elif self.options.card_key == CardKey.option_split:
             not_allowed_card_key.extend(card_key_vanilla)
             not_allowed_card_key.extend(card_key_progressive)
-        elif self.options.card_key == SilphCoCardKey.option_progressive:
+        elif self.options.card_key == CardKey.option_progressive:
             not_allowed_card_key.extend(card_key_vanilla)
             not_allowed_card_key.extend(card_key_split)
 
         if not self.options.kanto_only:
-            if self.options.island_passes == SeviiIslandPasses.option_vanilla:
+            if self.options.island_passes == IslandPasses.option_vanilla:
                 not_allowed_pass.extend(passes_split)
                 not_allowed_pass.extend(passes_progressive)
-            elif self.options.island_passes == SeviiIslandPasses.option_split:
+            elif self.options.island_passes == IslandPasses.option_split:
                 not_allowed_pass.extend(passes_vanilla)
                 not_allowed_pass.extend(passes_progressive)
-            elif (self.options.island_passes == SeviiIslandPasses.option_progressive or
-                  self.options.island_passes == SeviiIslandPasses.option_progressive_split):
+            elif (self.options.island_passes == IslandPasses.option_progressive or
+                  self.options.island_passes == IslandPasses.option_progressive_split):
                 not_allowed_pass.extend(passes_vanilla)
                 not_allowed_pass.extend(passes_split)
         else:
@@ -289,7 +277,7 @@ class PokemonFRLGWorld(World):
                 not self.options.random_starting_town):
             self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
 
-        set_allowed_evo_methods(self)
+        set_logic_options(self)
         randomize_types(self)
         randomize_abilities(self)
         randomize_move_types(self)
@@ -300,7 +288,7 @@ class PokemonFRLGWorld(World):
         randomize_legendaries(self)
         randomize_misc_pokemon(self)
         randomize_tm_hm_compatibility(self)
-        self.create_hm_compatibility_dict()
+        set_hm_compatible_pokemon(self)
 
     def create_regions(self) -> None:
         regions = create_regions(self)
@@ -314,6 +302,7 @@ class PokemonFRLGWorld(World):
             LocationCategory.STARTING_ITEM,
             LocationCategory.NPC_GIFT
         }
+
         if self.options.shuffle_hidden == ShuffleHiddenItems.option_all:
             categories.update([LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING])
         elif self.options.shuffle_hidden == ShuffleHiddenItems.option_nonrecurring:
@@ -332,10 +321,10 @@ class PokemonFRLGWorld(World):
                 categories.add(LocationCategory.FAMESANITY_POKEMON_REQUEST)
         if self.options.pokemon_request_locations:
             categories.add(LocationCategory.POKEMON_REQUEST)
-        if self.options.card_key != SilphCoCardKey.option_vanilla:
+        if self.options.card_key != CardKey.option_vanilla:
             categories.add(LocationCategory.SPLIT_CARD_KEY)
-        if (self.options.island_passes == SeviiIslandPasses.option_split or
-                self.options.island_passes == SeviiIslandPasses.option_progressive_split):
+        if (self.options.island_passes == IslandPasses.option_split or
+                self.options.island_passes == IslandPasses.option_progressive_split):
             categories.add(LocationCategory.SPLIT_ISLAND_PASS)
         if self.options.split_teas:
             categories.add(LocationCategory.SPLIT_TEA)
@@ -343,19 +332,13 @@ class PokemonFRLGWorld(World):
             categories.add(LocationCategory.RUNNING_SHOES)
         if self.options.gym_keys:
             categories.add(LocationCategory.GYM_KEY)
-        create_locations_from_categories(self, regions, categories)
 
+        create_locations_from_categories(self, regions, categories)
         self.multiworld.regions.extend(regions.values())
 
         create_indirect_conditions(self)
-
-        # Choose Selphy's requested Pokémon among available wild encounters if necessary
-        if self.options.pokemon_request_locations and not self.options.kanto_only:
-            self.resort_gorgeous_mon = NAME_TO_SPECIES_ID[self.random.choice(self.repeatable_pokemon)]
-
         randomize_requested_trade_pokemon(self)
-
-        self.fill_unrandomized_locations()
+        fill_unrandomized_locations(self)
 
         def exclude_locations(locations: List[str]):
             for location in locations:
@@ -411,31 +394,7 @@ class PokemonFRLGWorld(World):
                     "Seven Island Pokemon Center 1F - Bookshelf Info"
                 ])
 
-    def fill_unrandomized_locations(self) -> None:
-        def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
-            for location in locations:
-                location.place_locked_item(PokemonFRLGItem(self.item_id_to_name[location.default_item_id],
-                                                           ItemClassification.progression,
-                                                           None,
-                                                           self.player))
-                location.progress_type = LocationProgressType.DEFAULT
-                location.address = None
-                location.show_in_spoiler = False
-
-        unrandomized_progression_locations = set()
-
-        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
-            fly_locations = [loc for loc in self.get_locations() if loc.name in location_groups["Town Visits"]]
-            unrandomized_progression_locations.update(fly_locations)
-        elif self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-            unrandomized_progression_locations.add(self.get_location("Indigo Plateau - Unlock Fly Destination"))
-
-        if not self.options.shuffle_berry_pouch:
-            unrandomized_progression_locations.add(self.get_location("Title Screen - Starting Item 1"))
-        if not self.options.shuffle_tm_case:
-            unrandomized_progression_locations.add(self.get_location("Title Screen - Starting Item 2"))
-
-        create_events_for_unrandomized_items(unrandomized_progression_locations)
+        set_rules(self)
 
     def create_items(self) -> None:
         item_locations: List[PokemonFRLGLocation] = [
@@ -452,10 +411,10 @@ class PokemonFRLGWorld(World):
             items_to_remove.extend(badge_items)
             self.pre_fill_items.extend(badge_items)
 
-        if self.options.card_key == SilphCoCardKey.option_split:
+        if self.options.card_key == CardKey.option_split:
             items_to_remove.append(self.create_item("Card Key"))
             items_to_add.append(self.create_item("Card Key 3F"))
-        elif self.options.card_key == SilphCoCardKey.option_progressive:
+        elif self.options.card_key == CardKey.option_progressive:
             for item in ["Card Key", "Card Key 2F", "Card Key 4F", "Card Key 5F", "Card Key 6F", "Card Key 7F",
                          "Card Key 8F", "Card Key 9F", "Card Key 10F", "Card Key 11F"]:
                 items_to_remove.append(self.create_item(item))
@@ -463,17 +422,17 @@ class PokemonFRLGWorld(World):
                 items_to_add.append(self.create_item("Progressive Card Key"))
 
         if not self.options.kanto_only:
-            if self.options.island_passes == SeviiIslandPasses.option_progressive:
+            if self.options.island_passes == IslandPasses.option_progressive:
                 for item in ["Tri Pass", "Rainbow Pass"]:
                     items_to_remove.append(self.create_item(item))
                 for _ in range(2):
                     items_to_add.append(self.create_item("Progressive Pass"))
-            elif self.options.island_passes == SeviiIslandPasses.option_split:
+            elif self.options.island_passes == IslandPasses.option_split:
                 for item in ["Tri Pass", "Rainbow Pass"]:
                     items_to_remove.append(self.create_item(item))
                 for item in ["Three Pass", "Four Pass"]:
                     items_to_add.append(self.create_item(item))
-            elif self.options.island_passes == SeviiIslandPasses.option_progressive_split:
+            elif self.options.island_passes == IslandPasses.option_progressive_split:
                 for item in ["Tri Pass", "One Pass", "Two Pass", "Rainbow Pass", "Five Pass", "Six Pass", "Seven Pass"]:
                     items_to_remove.append(self.create_item(item))
                 for _ in range(7):
@@ -528,9 +487,6 @@ class PokemonFRLGWorld(World):
                     self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
                     removed_items_count -= 1
 
-        # Set evolution rules now, so we can know what evolutions are impossible in an all state
-        set_evolution_rules(self)
-
         state = self.get_world_collection_state()
         filler_items = [item for item in self.itempool if item.classification == ItemClassification.filler and
                         item.name not in item_groups["Unique Items"]]
@@ -539,8 +495,7 @@ class PokemonFRLGWorld(World):
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
         for location in evolution_region.locations.copy():
-            pokemon = location.name.split(" - ")[1].strip()
-            if not can_evolve(state, self, pokemon):
+            if not state.can_reach(location, self.player):
                 evolution_region.locations.remove(location)
 
         # Delete trainersanity locations if there are more than the amount specified in the settings
@@ -566,11 +521,9 @@ class PokemonFRLGWorld(World):
 
         if self.options.dexsanity != Dexsanity.special_range_names["none"]:
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
-            evos_allowed = "Dexsanity" in self.options.evolutions_required.value
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                pokemon = location.name.split(" - ")[1].strip()
-                if not has_pokemon(state, self, evos_allowed, pokemon):
+                if state.can_reach(location, self.player):
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop(0))
 
@@ -592,17 +545,14 @@ class PokemonFRLGWorld(World):
 
         self.multiworld.itempool += self.itempool
 
-    def set_rules(self) -> None:
-        set_rules(self)
-
     def connect_entrances(self) -> None:
-        self.verify_hm_accessibility()
+        verify_hm_accessibility(self)
         set_free_fly(self)
         if not self.options.shuffle_badges:
             self.shuffle_badges()
         if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
             shuffle_entrances(self)
-            self.verify_hm_accessibility()
+            verify_hm_accessibility(self)
 
     def shuffle_badges(self) -> None:
         badge_items = list()
@@ -637,7 +587,7 @@ class PokemonFRLGWorld(World):
                 break
         else:
             raise FillError(f"Failed to place badges for player {self.player}")
-        self.verify_hm_accessibility()
+        verify_hm_accessibility(self)
 
     def generate_basic(self) -> None:
         # Create auth
@@ -891,47 +841,3 @@ class PokemonFRLGWorld(World):
 
     def get_pre_fill_items(self):
         return self.pre_fill_items
-
-    def create_hm_compatibility_dict(self):
-        hms = frozenset({"Cut", "Fly", "Surf", "Strength", "Flash", "Rock Smash", "Waterfall"})
-        for hm in hms:
-            self.hm_compatibility[hm] = set()
-            for species in self.modified_species.values():
-                combatibility_array = int_to_bool_array(species.tm_hm_compatibility)
-                if combatibility_array[HM_TO_COMPATIBILITY_ID[hm]] == 1:
-                    self.hm_compatibility[hm].add(species.name)
-
-    def verify_hm_accessibility(self):
-        def can_use_hm(state: CollectionState, hm: str):
-            if hm == "Cut":
-                return can_cut(state, self)
-            elif hm == "Fly":
-                return can_fly(state, self)
-            elif hm == "Surf":
-                return can_surf(state, self)
-            elif hm == "Strength":
-                return can_strength(state, self)
-            elif hm == "Flash":
-                return can_flash(state, self)
-            elif hm == "Rock Smash":
-                return can_rock_smash(state, self)
-            elif hm == "Waterfall":
-                return can_waterfall(state, self)
-
-        hms: List[str] = ["Cut", "Fly", "Surf", "Strength", "Flash", "Rock Smash", "Waterfall"]
-        self.random.shuffle(hms)
-        last_hm_verified = None
-        while len(hms) > 0:
-            hm_to_verify = hms[0]
-            state = self.get_world_collection_state()
-            if (not can_use_hm(state, hm_to_verify) and
-                    has_badge_requirement(state, self, hm_to_verify)):
-                if hm_to_verify == last_hm_verified:
-                    raise Exception(f"Failed to ensure access to {hm_to_verify} for player {self.player}")
-                last_hm_verified = hm_to_verify
-                valid_mons = [mon for mon in self.repeatable_pokemon if state.has(mon, self.player)]
-                mon = self.random.choice(valid_mons)
-                add_hm_compatability(self, mon, hm_to_verify)
-                self.hm_compatibility[hm_to_verify].add(mon)
-            else:
-                hms.pop(0)

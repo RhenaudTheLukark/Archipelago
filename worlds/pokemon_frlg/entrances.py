@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, List, Set
 from BaseClasses import Entrance, EntranceType
 from entrance_rando import (ERPlacementState, EntranceRandomizationError, disconnect_entrance_for_randomization,
                             randomize_entrances)
-from worlds.generic.Rules import set_rule
 from .options import DungeonEntranceShuffle
 
 if TYPE_CHECKING:
@@ -144,13 +143,13 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
         available_shuffle_types.add(EntranceGroups.MULTI_DUNGEON_ENTRANCE)
         available_shuffle_types.add(EntranceGroups.MULTI_DUNGEON_EXIT)
 
-    world.randomizing_entrances = True
+    world.logic.randomizing_entrances = True
     for i in range(MAX_GER_ATTEMPTS):
         try:
             world.er_placement_state = randomize_entrances(world, True, dungeon_group_lookup,
                                                            on_connect=connect_simple_entrances)
             world.er_spoiler_names.extend(single_dungeon_entrances + multi_dungeon_entrances)
-            world.randomizing_entrances = False
+            world.logic.randomizing_entrances = False
             # Make the Pokemon Mansion other exit match the shuffled exit
             cinnabar_region = world.get_region("Cinnabar Island")
             mansion_shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit")

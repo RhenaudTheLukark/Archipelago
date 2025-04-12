@@ -10,11 +10,11 @@ from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTok
 from settings import get_settings
 from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
-from .options import (Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, ItemfinderRequired,
-                      HmCompatibility, LevelScaling, RandomizeDamageCategories, RandomizeLegendaryPokemon,
-                      RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters, RandomizeTrainerParties,
-                      RandomizeWildPokemon, SeviiIslandPasses, ShopPrices, ShuffleFlyUnlocks, ShuffleHiddenItems,
-                      SilphCoCardKey, TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
+from .options import (CardKey, Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, IslandPasses,
+                      ItemfinderRequired, HmCompatibility, LevelScaling, RandomizeDamageCategories,
+                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters,
+                      RandomizeTrainerParties, RandomizeWildPokemon, ShopPrices, ShuffleFlyUnlocks, ShuffleHiddenItems,
+                      TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -695,13 +695,13 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x40, struct.pack("<B", additional_dark_caves))
 
     # Set passes split
-    passes_split = 1 if world.options.island_passes.value in [SeviiIslandPasses.option_split,
-                                                              SeviiIslandPasses.option_progressive_split] else 0
+    passes_split = 1 if world.options.island_passes.value in {IslandPasses.option_split,
+                                                              IslandPasses.option_progressive_split} else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x41, struct.pack("<B", passes_split))
 
     # Set card keys split
-    card_keys_split = 1 if world.options.card_key.value in [SilphCoCardKey.option_split,
-                                                            SilphCoCardKey.option_progressive] else 0
+    card_keys_split = 1 if world.options.card_key.value in {CardKey.option_split,
+                                                            CardKey.option_progressive} else 0
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x42, struct.pack("<B", card_keys_split))
 
     # Set teas split
@@ -719,7 +719,8 @@ def get_tokens(world: "PokemonFRLGWorld", game_revision: int) -> APTokenMixin:
     tokens.write_token(APTokenTypes.WRITE, options_address + 0x46, struct.pack("<B", world.town_map_fly_location_id))
 
     # Set resort gorgeous mon
-    tokens.write_token(APTokenTypes.WRITE, options_address + 0x47, struct.pack("<H", world.resort_gorgeous_mon))
+    tokens.write_token(APTokenTypes.WRITE, options_address + 0x47, struct.pack("<H",
+                                                                               world.logic.resort_gorgeous_pokemon))
 
     # Set intro species
     species_id = world.random.choice(list(data.species.keys()))
