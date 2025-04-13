@@ -36,7 +36,7 @@ from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damag
                       randomize_types, randomize_wild_encounters)
 from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
-from .rom import get_tokens, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch
+from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
 from .sanity_check import validate_regions
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
@@ -100,6 +100,7 @@ class PokemonFRLGWorld(World):
     origin_region_name = "Title Screen"
 
     logic: PokemonFRLGLogic
+    patch_data: PokemonFRLGPatchData
     starting_town: str
     free_fly_location_id: int
     town_map_fly_location_id: int
@@ -138,6 +139,7 @@ class PokemonFRLGWorld(World):
     def __init__(self, multiworld, player):
         super(PokemonFRLGWorld, self).__init__(multiworld, player)
         self.logic = PokemonFRLGLogic(player, self.item_id_to_name)
+        self.patch_data = PokemonFRLGPatchData()
         self.starting_town = "SPAWN_PALLET_TOWN"
         self.free_fly_location_id = 0
         self.town_map_fly_location_id = 0
@@ -655,11 +657,11 @@ class PokemonFRLGWorld(World):
             patch.write_file("base_patch_rev1.bsdiff4",
                              pkgutil.get_data(__name__, "data/base_patch_leafgreen_rev1.bsdiff4"))
 
-        tokens_rev0 = get_tokens(self, 0)
-        tokens_rev1 = get_tokens(self, 1)
-
-        patch.write_file("token_data_rev0.bin", tokens_rev0.get_token_binary())
-        patch.write_file("token_data_rev1.bin", tokens_rev1.get_token_binary())
+        game_version = self.options.game_version.current_key
+        self.patch_data.set_game_version(game_version)
+        write_tokens(self)
+        patch.write_file("token_data_rev0.bin", self.patch_data.get_rev_token_bytes(game_version))
+        patch.write_file("token_data_rev1.bin", self.patch_data.get_rev_token_bytes(f"{game_version}_rev1"))
 
         # Write output
         out_file_name = self.multiworld.get_out_file_name_base(self.player)

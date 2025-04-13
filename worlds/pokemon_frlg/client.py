@@ -210,7 +210,7 @@ class PokemonFRLGClient(BizHawkClient):
     async def set_auth(self, ctx: "BizHawkClientContext") -> None:
         import base64
         auth_raw = (await bizhawk.read(ctx.bizhawk_ctx,
-                                       [(data.rom_addresses[self.game_version]["gArchipelagoInfo"], 16, "ROM")]))[0]
+                                       [(data.rom_addresses["gArchipelagoInfo"][self.game_version], 16, "ROM")]))[0]
         ctx.auth = base64.b64encode(auth_raw).decode("utf-8")
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
@@ -227,8 +227,8 @@ class PokemonFRLGClient(BizHawkClient):
 
             # Checks that the player is in the overworld
             guards["IN OVERWORLD"] = (
-                data.ram_addresses[self.game_version]["gMain"] + 4,
-                (data.ram_addresses[self.game_version]["CB2_Overworld"] + 1).to_bytes(4, "little"),
+                data.ram_addresses["gMain"][self.game_version] + 4,
+                (data.ram_addresses["CB2_Overworld"][self.game_version] + 1).to_bytes(4, "little"),
                 "System Bus"
             )
 
@@ -236,15 +236,15 @@ class PokemonFRLGClient(BizHawkClient):
             read_result = await bizhawk.read(
                 ctx.bizhawk_ctx,
                 [
-                    (data.ram_addresses[self.game_version]["gSaveBlock1Ptr"], 4, "System Bus"),
-                    (data.ram_addresses[self.game_version]["gSaveBlock2Ptr"], 4, "System Bus")
+                    (data.ram_addresses["gSaveBlock1Ptr"][self.game_version], 4, "System Bus"),
+                    (data.ram_addresses["gSaveBlock2Ptr"][self.game_version], 4, "System Bus")
                 ]
             )
 
             # Check that the save data hasn't moved
-            guards["SAVE BLOCK 1"] = (data.ram_addresses[self.game_version]["gSaveBlock1Ptr"],
+            guards["SAVE BLOCK 1"] = (data.ram_addresses["gSaveBlock1Ptr"][self.game_version],
                                       read_result[0], "System Bus")
-            guards["SAVE BLOCK 2"] = (data.ram_addresses[self.game_version]["gSaveBlock2Ptr"],
+            guards["SAVE BLOCK 2"] = (data.ram_addresses["gSaveBlock2Ptr"][self.game_version],
                                       read_result[1], "System Bus")
 
             sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
@@ -475,7 +475,7 @@ class PokemonFRLGClient(BizHawkClient):
         Checks the index of the most recently received item and whether the item queue is full. Writes the next item
         into the game if necessary.
         """
-        received_item_address = data.ram_addresses[self.game_version]["gArchipelagoReceivedItem"]
+        received_item_address = data.ram_addresses["gArchipelagoReceivedItem"][self.game_version]
 
         sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
 
