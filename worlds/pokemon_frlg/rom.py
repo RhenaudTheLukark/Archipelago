@@ -229,7 +229,6 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
             try:
                 location = world.get_location(data.locations[f"TRAINER_{trainer}_BULBASAUR_REWARD"].name)
                 alternates = [f"TRAINER_{trainer}_CHARMANDER", f"TRAINER_{trainer}_SQUIRTLE"]
-
                 location_info.extend(
                     (
                         data.constants["TRAINER_FLAGS_START"] + data.constants[alternate],
@@ -238,6 +237,26 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
                     ) for alternate in alternates)
             except KeyError:
                 continue
+
+    if world.options.shopsanity and not world.options.kanto_only:
+        two_island_shop_items = {
+            "SHOP_TWO_ISLAND_EXPANDED3_1": ["FLAG_TWO_ISLAND_SHOP_INITIAL_1", "FLAG_TWO_ISLAND_SHOP_EXPANDED1_1",
+                                            "FLAG_TWO_ISLAND_SHOP_EXPANDED2_1"],
+            "SHOP_TWO_ISLAND_EXPANDED3_2": ["FLAG_TWO_ISLAND_SHOP_EXPANDED1_2", "FLAG_TWO_ISLAND_SHOP_EXPANDED2_2"],
+            "SHOP_TWO_ISLAND_EXPANDED3_5": ["FLAG_TWO_ISLAND_SHOP_EXPANDED2_3"],
+            "SHOP_TWO_ISLAND_EXPANDED3_6": ["FLAG_TWO_ISLAND_SHOP_EXPANDED1_3", "FLAG_TWO_ISLAND_SHOP_EXPANDED2_4"],
+            "SHOP_TWO_ISLAND_EXPANDED3_7": ["FLAG_TWO_ISLAND_SHOP_INITIAL_2", "FLAG_TWO_ISLAND_SHOP_EXPANDED1_4",
+                                            "FLAG_TWO_ISLAND_SHOP_EXPANDED2_5"],
+            "SHOP_TWO_ISLAND_EXPANDED3_8": ["FLAG_TWO_ISLAND_SHOP_EXPANDED2_6"]
+        }
+        for location_id, shop_flags in two_island_shop_items.items():
+            location = world.get_location(data.locations[location_id].name)
+            location_info.extend(
+                (
+                    data.constants[flag],
+                    location.item.player,
+                    location.item.name
+                ) for flag in shop_flags)
 
     player_name_ids: Dict[str, int] = {world.player_name: 0}
     item_name_offsets: Dict[str, int] = {}
