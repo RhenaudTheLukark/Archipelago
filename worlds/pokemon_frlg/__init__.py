@@ -215,58 +215,6 @@ class PokemonFRLGWorld(World):
                                 self.player, self.player_name)
                 self.options.cerulean_cave_requirement.value = CeruleanCaveRequirement.option_champion
 
-        # Remove items from start inventory that are incompatible with certain settings
-        card_key_vanilla = ["Card Key"]
-        card_key_split = ["Card Key 2F", "Card Key 3F", "Card Key 4F", "Card Key 5F", "Card Key 6F",
-                          "Card Key 7F", "Card Key 8F", "Card Key 9F", "Card Key 10F", "Card Key 11F"]
-        card_key_progressive = ["Progressive Card Key"]
-        passes_vanilla = ["Tri Pass", "Rainbow Pass"]
-        passes_split = ["One Pass", "Two Pass", "Three Pass", "Four Pass", "Five Pass", "Six Pass", "Seven Pass"]
-        passes_progressive = ["Progressive Pass"]
-        tea_vanilla = ["Tea"]
-        tea_split = ["Blue Tea", "Green Tea", "Purple Tea", "Red Tea"]
-        not_allowed_card_key = []
-        not_allowed_pass = []
-        not_allowed_tea = []
-
-        if self.options.card_key == CardKey.option_vanilla:
-            not_allowed_card_key.extend(card_key_split)
-            not_allowed_card_key.extend(card_key_progressive)
-        elif self.options.card_key == CardKey.option_split:
-            not_allowed_card_key.extend(card_key_vanilla)
-            not_allowed_card_key.extend(card_key_progressive)
-        elif self.options.card_key == CardKey.option_progressive:
-            not_allowed_card_key.extend(card_key_vanilla)
-            not_allowed_card_key.extend(card_key_split)
-
-        if not self.options.kanto_only:
-            if self.options.island_passes == IslandPasses.option_vanilla:
-                not_allowed_pass.extend(passes_split)
-                not_allowed_pass.extend(passes_progressive)
-            elif self.options.island_passes == IslandPasses.option_split:
-                not_allowed_pass.extend(passes_vanilla)
-                not_allowed_pass.extend(passes_progressive)
-            elif (self.options.island_passes == IslandPasses.option_progressive or
-                  self.options.island_passes == IslandPasses.option_progressive_split):
-                not_allowed_pass.extend(passes_vanilla)
-                not_allowed_pass.extend(passes_split)
-        else:
-            not_allowed_pass.extend(passes_vanilla)
-            not_allowed_pass.extend(passes_split)
-            not_allowed_pass.extend(passes_progressive)
-
-        if self.options.split_teas:
-            not_allowed_tea.extend(tea_vanilla)
-        else:
-            not_allowed_tea.extend(tea_split)
-
-        self.options.start_inventory.value = {k: v for k, v in self.options.start_inventory.value.items()
-                                              if k not in not_allowed_card_key}
-        self.options.start_inventory.value = {k: v for k, v in self.options.start_inventory.value.items()
-                                              if k not in not_allowed_pass}
-        self.options.start_inventory.value = {k: v for k, v in self.options.start_inventory.value.items()
-                                              if k not in not_allowed_tea}
-
         # Remove badges from non-local items if they are shuffled among gyms
         if not self.options.shuffle_badges:
             self.options.local_items.value.update(item_groups["Badges"])
