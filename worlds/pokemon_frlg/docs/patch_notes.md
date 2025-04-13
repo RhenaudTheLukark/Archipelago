@@ -1,5 +1,6 @@
 # 0.9.0
 ## Updates
++ New icons for several AP exclusive items and new damage type icons (credit to kattnip)
 + The Berry Pouch and TM Case are now given to the player at the start of the game instead of when the first berry and HM/TM are obtained
 + If a gym door is locked, such as the Cinnabar or Viridian Gym, then you now need to interact with the door to unlock it
 + When you receive a fly unlock it will now tell you what location it allows you to fly to
@@ -11,6 +12,8 @@
   + Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons will connect to the same dungeon
   + Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons do not need to lead to the same dungeon
   + Full: All dungeon entrances are shuffled together
++ Updated option `fly_destination_plando`
+  + Can now specify the specific warp to set a fly destination to. A list of valid warps can be found [here](https://github.com/vyneras/Archipelago/blob/frlg-dev/worlds/pokemon_frlg/docs/fly_plando.md)
 + New option `shopsanity`
   + Shuffles shop items into the item pool. The Celadon Department Store 4F Held Item Shop is not shuffled
 + New option `shop_prices`
