@@ -13,6 +13,7 @@ from pkg_resources import resource_listdir, resource_isdir
 from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
 
+APWORLD_VERSION = "0.9.0"
 NUM_REAL_SPECIES = 386
 
 
@@ -1255,6 +1256,7 @@ starting_town_blacklist_map = {
     "Cinnabar Island": "SPAWN_CINNABAR_ISLAND",
     "Saffron City": "SPAWN_SAFFRON_CITY",
     "Route 4": "SPAWN_ROUTE4",
+    "Route 10": "SPAWN_ROUTE10",
     "One Island": "SPAWN_ONE_ISLAND",
     "Two Island": "SPAWN_TWO_ISLAND",
     "Three Island": "SPAWN_THREE_ISLAND",
@@ -1700,7 +1702,7 @@ move_name_map = {j: data.constants[i] for i, j in [
     ("MOVE_PSYCHO_BOOST", "Psycho Boost")
 ]}
 
-kanto_fly_destinations = {
+kanto_fly_destinations: Dict[str, Dict[str, List[FlyData]]] = {
     "Pallet Town": {
         "Pallet Town": [
             FlyData("Player's House", "PALLET TOWN", 3, 0, 6, 8, 1, 246),
@@ -2006,7 +2008,7 @@ kanto_fly_destinations = {
     }
 }
 
-sevii_fly_destinations = {
+sevii_fly_destinations: Dict[str, Dict[str, List[FlyData]]] = {
     "One Island": {
         "One Island Town": [
             FlyData("One Island Pokemon Center", "ONE ISLAND", 3, 12, 14, 6, 2, 177),

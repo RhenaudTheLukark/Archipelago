@@ -17,7 +17,7 @@ from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
-from .data import (data as frlg_data, ability_name_map, ALL_SPECIES, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
+from .data import (data, ability_name_map, ALL_SPECIES, APWORLD_VERSION, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
                    LocationCategory, EventData, EvolutionMethodEnum, FlyData, MapData, MiscPokemonData, MoveData,
                    move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
@@ -143,17 +143,17 @@ class PokemonFRLGWorld(World):
         self.starting_town = "SPAWN_PALLET_TOWN"
         self.free_fly_location_id = 0
         self.town_map_fly_location_id = 0
-        self.modified_species = copy.deepcopy(frlg_data.species)
-        self.modified_maps = copy.deepcopy(frlg_data.maps)
-        self.modified_starters = copy.deepcopy(frlg_data.starters)
-        self.modified_events = copy.deepcopy(frlg_data.events)
-        self.modified_legendary_pokemon = copy.deepcopy(frlg_data.legendary_pokemon)
-        self.modified_misc_pokemon = copy.deepcopy(frlg_data.misc_pokemon)
-        self.modified_trade_pokemon = copy.deepcopy(frlg_data.trade_pokemon)
-        self.modified_trainers = copy.deepcopy(frlg_data.trainers)
-        self.modified_tmhm_moves = copy.deepcopy(frlg_data.tmhm_moves)
-        self.modified_moves = copy.deepcopy(frlg_data.moves)
-        self.modified_type_damage_categories = copy.deepcopy(frlg_data.type_damage_categories)
+        self.modified_species = copy.deepcopy(data.species)
+        self.modified_maps = copy.deepcopy(data.maps)
+        self.modified_starters = copy.deepcopy(data.starters)
+        self.modified_events = copy.deepcopy(data.events)
+        self.modified_legendary_pokemon = copy.deepcopy(data.legendary_pokemon)
+        self.modified_misc_pokemon = copy.deepcopy(data.misc_pokemon)
+        self.modified_trade_pokemon = copy.deepcopy(data.trade_pokemon)
+        self.modified_trainers = copy.deepcopy(data.trainers)
+        self.modified_tmhm_moves = copy.deepcopy(data.tmhm_moves)
+        self.modified_moves = copy.deepcopy(data.moves)
+        self.modified_type_damage_categories = copy.deepcopy(data.type_damage_categories)
         self.per_species_tmhm_moves = {}
         self.trainer_name_level_dict = {}
         self.trainer_name_list = []
@@ -517,7 +517,7 @@ class PokemonFRLGWorld(World):
             # Try to place badges with current Pokemon and HM access
             # If it can't, try with all Pokemon collected and fix the HM access after
             if attempt > 1:
-                for species in frlg_data.species.values():
+                for species in data.species.values():
                     state.collect(PokemonFRLGItem(species.name,
                                                       ItemClassification.progression_skip_balancing,
                                                       None,
@@ -548,7 +548,7 @@ class PokemonFRLGWorld(World):
         # Change all but one instance of a Pokémon in each sphere to useful classification
         # This cuts down on time calculating the playthrough
         found_mons = set()
-        pokemon = {species.name for species in frlg_data.species.values()}
+        pokemon = {species.name for species in data.species.values()}
         shop_locations: Dict[int, List[Set[PokemonFRLGLocation]]] = defaultdict(list)
         for sphere in multiworld.get_spheres():
             mon_locations_in_sphere = defaultdict(list)
@@ -754,7 +754,7 @@ class PokemonFRLGWorld(World):
         )
         slot_data["trainersanity"] = 1 if self.options.trainersanity != Trainersanity.special_range_names["none"] else 0
         slot_data["elite_four_rematch_requirement"] = self.options.elite_four_requirement.value
-        slot_data["starting_town"] = frlg_data.constants[self.starting_town]
+        slot_data["starting_town"] = data.constants[self.starting_town]
         slot_data["free_fly_location_id"] = self.free_fly_location_id
         slot_data["town_map_fly_location_id"] = self.town_map_fly_location_id
         if self.options.randomize_fly_destinations:
@@ -765,6 +765,14 @@ class PokemonFRLGWorld(World):
             slot_data["dungeon_entrance_shuffle"] = {}
             for source, dest in self.er_placement_state.pairings:
                 slot_data["dungeon_entrance_shuffle"][source] = dest
+        slot_data["wild_encounters"] = {}
+        for location in self.get_locations():
+            assert isinstance(location, PokemonFRLGLocation)
+            if location.category == LocationCategory.EVENT_WILD_POKEMON:
+                if NAME_TO_SPECIES_ID[location.item.name] not in slot_data["wild_encounters"]:
+                    slot_data["wild_encounters"][NAME_TO_SPECIES_ID[location.item.name]] = []
+                slot_data["wild_encounters"][NAME_TO_SPECIES_ID[location.item.name]].append(location.name)
+        slot_data["apworld_version"] = APWORLD_VERSION
         return slot_data
 
     def create_item(self, name: str) -> "PokemonFRLGItem":

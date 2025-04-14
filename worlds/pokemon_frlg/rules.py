@@ -1091,12 +1091,12 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Oak's Parcel", player))
     add_rule_safe("Professor Oak's Lab - Oak Gift (Deliver Parcel)",
                   lambda state: state.has("Oak's Parcel", player))
+    add_rule_safe("Professor Oak's Lab - Oak Info",
+                  lambda state: state.has("Oak's Parcel", player))
     add_rule_safe("Professor Oak's Lab - Oak Gift (Post Route 22 Rival)",
                   lambda state: state.has("Defeat Route 22 Rival", player))
     if "Early Gossipers" not in options.modify_world_state.value:
         add_rule_safe("Professor Oak's Lab - Oak's Aide M Info (Right)",
-                      lambda state: state.has("Defeat Champion", player))
-        add_rule_safe("Professor Oak's Lab - Oak Info",
                       lambda state: state.has("Defeat Champion", player))
         add_rule_safe("Professor Oak's Lab - Oak's Aide M Info (Left)",
                       lambda state: state.has("Defeat Champion", player))

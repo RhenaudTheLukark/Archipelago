@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Dict, List, Tuple
 
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
-from .data import data, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
+from .data import data, APWORLD_VERSION, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (CardKey, Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, IslandPasses,
                       ItemfinderRequired, HmCompatibility, LevelScaling, RandomizeDamageCategories,
@@ -779,6 +779,9 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
 
     # Set slot auth
     patch.write_token(data.rom_addresses["gArchipelagoInfo"], 0, world.auth)
+
+    # Set apworld version
+    patch.write_token(data.rom_addresses["gArchipelagoVersion"], 0, APWORLD_VERSION.encode("ascii"))
 
 
 def _set_shuffled_entrances(world: "PokemonFRLGWorld") -> None:

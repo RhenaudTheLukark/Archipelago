@@ -261,18 +261,19 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
     def exclude_scaling(scaling_id: str):
         elite_four_ids = [
-            "TRAINER_SCALING_POKEMON_LEAGUE_ELITE_FOUR/MAIN", "TRAINER_SCALING_POKEMON_LEAGUE_ELITE_FOUR_REMATCH/MAIN"
+            "TRAINER_SCALING_POKEMON_LEAGUE_ELITE_FOUR/MAIN",
+            "TRAINER_SCALING_POKEMON_LEAGUE_ELITE_FOUR_REMATCH/MAIN"
+        ]
+        champion_ids = [
+            "TRAINER_SCALING_POKEMON_LEAGUE_CHAMPIONS_ROOM/MAIN",
+            "TRAINER_SCALING_POKEMON_LEAGUE_CHAMPIONS_ROOM_REMATCH/MAIN"
         ]
 
         if world.options.kanto_only and not data.scaling[scaling_id].kanto:
             return True
         if world.options.skip_elite_four and scaling_id in elite_four_ids:
             return True
-        if ("Block Tower" in world.options.modify_world_state.value and
-                scaling_id == "STATIC_SCALING_POKEMON_TOWER_6F/MAIN"):
-            return True
-        if ("Block Tower" not in world.options.modify_world_state.value and
-                scaling_id == "STATIC_SCALING_POKEMON_TOWER_1F/MAIN"):
+        if not world.options.skip_elite_four and scaling_id in champion_ids:
             return True
         return False
 
@@ -522,7 +523,9 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         world.encounter_level_list = [i[1] for i in encounter_name_level_list]
 
     if world.options.random_starting_town:
-        forbidden_starting_towns = ["SPAWN_INDIGO_PLATEAU", "SPAWN_ROUTE10"]
+        forbidden_starting_towns = ["SPAWN_INDIGO_PLATEAU"]
+        if not world.options.shuffle_badges:
+            forbidden_starting_towns.append("SPAWN_ROUTE10")
         if world.options.kanto_only:
             forbidden_starting_towns.extend(["SPAWN_ONE_ISLAND", "SPAWN_TWO_ISLAND", "SPAWN_THREE_ISLAND",
                                              "SPAWN_FOUR_ISLAND", "SPAWN_FIVE_ISLAND", "SPAWN_SIX_ISLAND",
