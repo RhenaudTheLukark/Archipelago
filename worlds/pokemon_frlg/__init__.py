@@ -473,7 +473,7 @@ class PokemonFRLGWorld(World):
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                if state.can_reach(location, self.player):
+                if not state.can_reach(location, self.player):
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop(0))
 
