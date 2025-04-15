@@ -134,8 +134,8 @@ class PokemonFRLGClient(BizHawkClient):
     local_set_events: Dict[str, bool]
     local_set_fly_unlocks: Dict[str, bool]
     local_hints: List[str]
-    caught_pokemon: Set[int]
-    caught_pokemon_count: int
+    pokemon: Dict[str, Set[int]]
+    pokemon_count: int
     current_map: Tuple[int, int]
 
     def __init__(self) -> None:
@@ -146,8 +146,8 @@ class PokemonFRLGClient(BizHawkClient):
         self.local_set_events = dict()
         self.local_set_fly_unlocks = dict()
         self.local_hints = list()
-        self.caught_pokemon = set()
-        self.caught_pokemon_count = 0
+        self.pokemon = {"seen": set(), "caught": set()}
+        self.pokemon_count = 0
         self.current_map = (0, 0)
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
@@ -314,7 +314,7 @@ class PokemonFRLGClient(BizHawkClient):
 
             # Read pokedex flags
             pokemon_caught_bytes = bytes(0)
-            pokedex_read_status = False
+            pokemon_caught_read_status = False
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx,
                 [(sb2_address + 0x028, 0x34, "System Bus")],  # Caught Pokémon
@@ -323,15 +323,27 @@ class PokemonFRLGClient(BizHawkClient):
 
             if read_result is not None:
                 pokemon_caught_bytes = read_result[0]
-                pokedex_read_status = True
+                pokemon_caught_read_status = True
+
+            pokemon_seen_bytes = bytes(0)
+            pokemon_seen_read_status = False
+            read_result = await bizhawk.guarded_read(
+                ctx.bizhawk_ctx,
+                [(sb2_address + 0x05C, 0x34, "System Bus")],  # Seen Pokémon
+                [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
+            )
+
+            if read_result is not None:
+                pokemon_seen_bytes = read_result[0]
+                pokemon_seen_read_status = True
 
             game_clear = False
             local_set_events = {flag_name: False for flag_name in TRACKER_EVENT_FLAGS}
             local_set_fly_unlocks = {flag_name: False for flag_name in TRACKER_FLY_UNLOCK_FLAGS}
             local_hints = {flag_name: False for flag_name in HINT_FLAGS.keys()}
             local_checked_locations: Set[int] = set()
-            caught_pokemon: Set[int] = set()
-            caught_pokemon_count = 0
+            pokemon: Dict[str, Set[int]] = {"caught": set(), "seen": set()}
+            pokemon_count = 0
 
             # Check set flags
             for byte_i, byte in enumerate(flag_bytes):
@@ -375,8 +387,8 @@ class PokemonFRLGClient(BizHawkClient):
                             if location_id in ctx.server_locations:
                                 local_checked_locations.add(location_id)
 
-            # Get caught Pokémon count
-            if pokedex_read_status:
+            # Check caught Pokémon
+            if pokemon_caught_read_status:
                 for byte_i, byte in enumerate(pokemon_caught_bytes):
                     for i in range(8):
                         if byte & (1 << i) != 0:
@@ -384,8 +396,16 @@ class PokemonFRLGClient(BizHawkClient):
                             location_id = DEXSANITY_OFFSET + dex_number - 1
                             if location_id in ctx.server_locations:
                                 local_checked_locations.add(location_id)
-                            caught_pokemon.add(dex_number)
-                            caught_pokemon_count += 1
+                            pokemon["caught"].add(dex_number)
+                            pokemon_count += 1
+
+            # Check seen Pokémon
+            if pokemon_seen_read_status:
+                for byte_i, byte in enumerate(pokemon_seen_bytes):
+                    for i in range(8):
+                        if byte & (1 << i) != 0:
+                            dex_number = byte_i * 8 + i + 1
+                            pokemon["seen"].add(dex_number)
 
             # Send locations
             if local_checked_locations != self.local_checked_locations:
@@ -434,29 +454,29 @@ class PokemonFRLGClient(BizHawkClient):
                 }])
                 self.local_set_fly_unlocks = local_set_fly_unlocks
 
-            # Send caught Pokémon
-            if pokedex_read_status:
-                if caught_pokemon != self.caught_pokemon and ctx.slot is not None:
+            # Send Pokémon
+            if pokemon_caught_read_status:
+                if pokemon != self.pokemon and ctx.slot is not None:
                     await ctx.send_msgs([{
                         "cmd": "Set",
                         "key": f"pokemon_frlg_pokemon_{ctx.team}_{ctx.slot}",
                         "default": {},
                         "want_reply": False,
-                        "operations": [{"operation": "replace", "value": caught_pokemon}, ]
+                        "operations": [{"operation": "replace", "value": pokemon}, ]
                     }])
-                    self.caught_pokemon = caught_pokemon
+                    self.pokemon = pokemon
 
             # Send caught Pokémon amount
-            if pokedex_read_status:
-                if caught_pokemon_count != self.caught_pokemon_count and ctx.slot is not None:
+            if pokemon_caught_read_status:
+                if pokemon_count != self.pokemon_count and ctx.slot is not None:
                     await ctx.send_msgs([{
                         "cmd": "Set",
                         "key": f"pokemon_frlg_pokedex_{ctx.team}_{ctx.slot}",
                         "default": 0,
                         "want_reply": False,
-                        "operations": [{"operation": "replace", "value": caught_pokemon_count},]
+                        "operations": [{"operation": "replace", "value": pokemon_count},]
                     }])
-                    self.caught_pokemon_count = caught_pokemon_count
+                    self.pokemon_count = pokemon_count
 
             # Send AP Hints
             if ctx.slot_data["provide_hints"]:

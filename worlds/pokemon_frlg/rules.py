@@ -374,6 +374,8 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     # Route 2
     add_rule_safe("Route 2 Southwest Cuttable Trees",
                   lambda state: logic.can_cut(state))
+    add_rule_safe("Route 2 Southeast Cuttable Trees",
+                  lambda state: logic.can_cut(state))
     add_rule_safe("Route 2 East Cuttable Tree",
                   lambda state: logic.can_cut(state))
     if "Modify Route 2" in options.modify_world_state.value:

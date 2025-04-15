@@ -1617,13 +1617,13 @@
     }
   },
   "WILD_SCALING_SEVEN_ISLAND_TANOBY_RUINS_VIAPOIS_CHAMBER/LAND_ENCOUNTERS": {
-    "region": "Viapos Chamber Land Encounters",
+    "region": "Viapois Chamber Land Encounters",
     "kanto": false,
     "connections": [],
     "type": "Land",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
-      "Viapos Chamber Land Scaling": [
+      "Viapois Chamber Land Scaling": [
         "MAP_SEVEN_ISLAND_TANOBY_RUINS_VIAPOIS_CHAMBER"
       ]
     }

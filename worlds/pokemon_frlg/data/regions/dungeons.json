@@ -4324,7 +4324,7 @@
   "REGION_SEVEN_ISLAND_TANOBY_RUINS_VIAPOIS_CHAMBER/MAIN": {
     "parent_map": "MAP_SEVEN_ISLAND_TANOBY_RUINS_VIAPOIS_CHAMBER",
     "name": "Viapois Chamber",
-    "encounter_region": "Viapos Chamber",
+    "encounter_region": "Viapois Chamber",
     "has_land": true,
     "has_water": false,
     "has_fishing": false,

@@ -766,9 +766,10 @@ class PokemonFRLGWorld(World):
         for location in self.get_locations():
             assert isinstance(location, PokemonFRLGLocation)
             if location.category == LocationCategory.EVENT_WILD_POKEMON:
-                if NAME_TO_SPECIES_ID[location.item.name] not in slot_data["wild_encounters"]:
-                    slot_data["wild_encounters"][NAME_TO_SPECIES_ID[location.item.name]] = []
-                slot_data["wild_encounters"][NAME_TO_SPECIES_ID[location.item.name]].append(location.name)
+                national_dex_id = data.species[NAME_TO_SPECIES_ID[location.item.name]].national_dex_number
+                if national_dex_id not in slot_data["wild_encounters"]:
+                    slot_data["wild_encounters"][national_dex_id] = []
+                slot_data["wild_encounters"][national_dex_id].append(location.name)
         slot_data["apworld_version"] = APWORLD_VERSION
         return slot_data
 
