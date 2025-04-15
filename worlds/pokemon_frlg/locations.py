@@ -180,8 +180,6 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         return
 
     state = CollectionState(world.multiworld, True)
-    regions = world.multiworld.get_regions(world.player)
-    events = [loc for loc in world.get_locations() if loc.is_event]
     forbidden_fly_list = list()
 
     if world.options.kanto_only:
@@ -191,30 +189,19 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
 
     if (not world.options.randomize_fly_destinations and
             world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off):
-        if (world.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
-                not world.options.random_starting_town):
-            item = PokemonFRLGItem("Oak's Parcel", ItemClassification.progression, None, world.player)
+        flys_to_remove = []
+        locations = world.get_locations()
+
+        for item_name in world.multiworld.local_early_items[world.player].keys():
+            item = world.create_item(item_name)
             state.collect(item, True)
 
-        found_event = True
-        collected_events = set()
-        flys_to_remove = list()
-        while found_event:
-            found_event = False
-            for event in events:
-                if state.can_reach(event) and event not in collected_events:
-                    state.collect(event.item, True, event)
-                    collected_events.add(event)
-                    found_event = True
-
-        reachable_regions = set()
-        for region in regions:
-            if region.can_reach(state):
-                reachable_regions.add(region.name)
+        state.sweep_for_advancements(locations)
+        reachable_regions = state.reachable_regions[world.player]
 
         for region in reachable_regions:
-            if region in fly_item_map.keys():
-                flys_to_remove.append(fly_item_map[region])
+            if region.name in fly_item_map.keys():
+                flys_to_remove.append(fly_item_map[region.name])
 
         forbidden_fly_list.extend(flys_to_remove)
 

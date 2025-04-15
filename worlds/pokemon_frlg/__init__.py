@@ -293,7 +293,7 @@ class PokemonFRLGWorld(World):
         def exclude_locations(locations: List[str]):
             for location in locations:
                 try:
-                    self.multiworld.get_location(location, self.player).progress_type = LocationProgressType.EXCLUDED
+                    self.get_location(location).progress_type = LocationProgressType.EXCLUDED
                 except KeyError:
                     continue
 
@@ -420,7 +420,7 @@ class PokemonFRLGWorld(World):
             items_to_add = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
             for item_name in items_to_add:
                 self.itempool.append(self.create_item(item_name))
-                self.itempool.remove(filler_items.pop(0))
+                self.itempool.remove(filler_items.pop())
 
         # Remove copies of unique and progressive items based on how many are in the start inventory
         for item_name, quantity in self.options.start_inventory.value.items():
@@ -438,9 +438,6 @@ class PokemonFRLGWorld(World):
                     removed_items_count -= 1
 
         state = self.get_world_collection_state()
-        filler_items = [item for item in self.itempool if item.classification == ItemClassification.filler and
-                        item.name not in item_groups["Unique Items"]]
-        self.random.shuffle(filler_items)
 
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
@@ -464,7 +461,7 @@ class PokemonFRLGWorld(World):
                 for location in trainer_locations:
                     region = location.parent_region
                     region.locations.remove(location)
-                    self.itempool.remove(filler_items.pop(0))
+                    self.itempool.remove(filler_items.pop())
                     locs_to_remove -= 1
                     if locs_to_remove <= 0:
                         break
@@ -475,7 +472,7 @@ class PokemonFRLGWorld(World):
             for location in pokedex_region.locations.copy():
                 if not state.can_reach(location, self.player):
                     pokedex_region.locations.remove(location)
-                    self.itempool.remove(filler_items.pop(0))
+                    self.itempool.remove(filler_items.pop())
 
             # Delete dexsanity locations if there are more than the amount specified in the settings
             if len(pokedex_region.locations) > self.options.dexsanity.value:
@@ -489,7 +486,7 @@ class PokemonFRLGWorld(World):
                 pokedex_locations = non_priority_pokedex_locations + priority_pokedex_locations
                 for location in pokedex_locations:
                     pokedex_region.locations.remove(location)
-                    self.itempool.remove(filler_items.pop(0))
+                    self.itempool.remove(filler_items.pop())
                     if len(pokedex_region.locations) <= self.options.dexsanity.value:
                         break
 
@@ -505,7 +502,7 @@ class PokemonFRLGWorld(World):
             verify_hm_accessibility(self)
 
     def shuffle_badges(self) -> None:
-        badge_items = list()
+        badge_items = []
         badge_items.extend(self.get_pre_fill_items())
         self.pre_fill_items.clear()
         locations: List[PokemonFRLGLocation] = self.get_locations()

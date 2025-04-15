@@ -622,9 +622,10 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
 
                             new_species_id = world.random.choice(candidates).species_id
 
-                            if not placed_priority_species:
-                                for priority_species_id in priority_species:
-                                    if priority_species_id in [species.species_id for species in candidates]:
+                            if not placed_priority_species and len(priority_species) > 0:
+                                candidate_ids = [species.species_id for species in candidates]
+                                for priority_species_id in list(sorted(priority_species.copy())):
+                                    if priority_species_id in candidate_ids:
                                         new_species_id = priority_species_id
                                         priority_species.remove(priority_species_id)
                                         placed_priority_species = True
