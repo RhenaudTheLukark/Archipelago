@@ -1024,7 +1024,7 @@ def _set_trainer_parties(world: "PokemonFRLGWorld") -> None:
     if (world.options.level_scaling == LevelScaling.option_off and
             world.options.trainers == RandomizeTrainerParties.option_vanilla and
             world.options.starters == RandomizeStarters.option_vanilla and
-            world.options.modify_trainer_levels.value == 0):
+            world.options.modify_trainer_levels.value == 100):
         return
 
     patch = world.patch_data
@@ -1039,7 +1039,7 @@ def _set_trainer_parties(world: "PokemonFRLGWorld") -> None:
 
         for i, pokemon in enumerate(trainer.party.pokemon):
             pokemon_offset = (i * pokemon_data_size)
-            level = round(pokemon.level + (pokemon.level * (world.options.modify_trainer_levels.value / 100)))
+            level = round(pokemon.level * (world.options.modify_trainer_levels.value / 100))
             level = bound(level, 1, 100)
             species_id = pokemon.species_id
 

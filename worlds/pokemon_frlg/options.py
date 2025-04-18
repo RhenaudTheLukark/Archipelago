@@ -727,9 +727,9 @@ class ModifyTrainerLevels(Range):
     Modifies the level of all Trainer's Pokemon by the specified percentage.
     """
     display_name = "Modify Trainer Levels"
-    default = 0
-    range_start = -100
-    range_end = 100
+    default = 100
+    range_start = 0
+    range_end = 200
 
 
 class ForceFullyEvolved(NamedRange):
