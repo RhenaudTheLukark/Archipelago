@@ -18,8 +18,8 @@ from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
 from .data import (data, ability_name_map, ALL_SPECIES, APWORLD_VERSION, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
-                   LocationCategory, EventData, EvolutionMethodEnum, FlyData, MapData, MiscPokemonData, MoveData,
-                   move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
+                   POPTRACKER_CHECKSUM, LocationCategory, EventData, EvolutionMethodEnum, FlyData, MapData,
+                   MiscPokemonData, MoveData, move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
@@ -771,6 +771,7 @@ class PokemonFRLGWorld(World):
                     slot_data["wild_encounters"][national_dex_id] = []
                 slot_data["wild_encounters"][national_dex_id].append(location.name)
         slot_data["apworld_version"] = APWORLD_VERSION
+        slot_data["poptracker_checksum"] = POPTRACKER_CHECKSUM
         return slot_data
 
     def create_item(self, name: str) -> "PokemonFRLGItem":

@@ -14,6 +14,7 @@ from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
 
 APWORLD_VERSION = "0.9.0"
+POPTRACKER_CHECKSUM = 0xF6935E73
 NUM_REAL_SPECIES = 386
 
 
