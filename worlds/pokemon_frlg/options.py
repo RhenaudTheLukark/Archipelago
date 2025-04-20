@@ -95,8 +95,12 @@ class RandomizeFlyDestinations(Toggle):
 class FlyDestinationPlando(OptionDict):
     """
     Plando what warp certain fly unlocks will take you to.
+
     For example \"Pallet Town Fly Destination\": \"Player's House\" will make it so that unlocking the Pallet Town fly
     point will let you fly to in front of the Player's House.
+
+    A full list of supported warps can be found at:
+    https://github.com/vyneras/Archipelago/blob/frlg-stable/worlds/pokemon_frlg/docs/fly_plando.md
 
     Has no effect if fly destinations aren't randomized.
     """

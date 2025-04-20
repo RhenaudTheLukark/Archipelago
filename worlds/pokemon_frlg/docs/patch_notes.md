@@ -1,11 +1,14 @@
 # 0.9.0
 ## Updates
-+ New icons for several AP exclusive items and new damage type icons (credit to kattnip)
++ New icons for several AP exclusive items and new damage type icons (credit to [kattnip](https://github.com/Invader07))
 + The Berry Pouch and TM Case are now given to the player at the start of the game instead of when the first berry and HM/TM are obtained
 + If a gym door is locked, such as the Cinnabar or Viridian Gym, then you now need to interact with the door to unlock it
 + When you receive a fly unlock it will now tell you what location it allows you to fly to
 + Interacting with the Receptionist on the far right of the 2F of Pokémon Centers will allow you to purchase various consumable items that you have already obtained
 + The species that is requested for in-game trades are now randomized. Dex info will be given for the requested species after talking to the trade NPC
++ Added a new page to Pokémon's Dex entries that lists out the areas where they can be found and what they can evolve into
++ Added a new Pokédex list when `dexsanity` is on that only shows Pokémon who have a check
++ Sailing and flying to the Sevii Islands is now impossible in `kanto only` even if you have the means to do so
 + New option `skip_elite_four`
   + Makes it so that entering the Pokémon League takes the player directly to the Champion battle. Any location checks that would require fighting the Elite Four will not exist
 + New option `dungeon_entrance_shuffle`
@@ -13,7 +16,7 @@
   + Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons do not need to lead to the same dungeon
   + Full: All dungeon entrances are shuffled together
 + Updated option `fly_destination_plando`
-  + Can now specify the specific warp to set a fly destination to. A list of valid warps can be found [here](https://github.com/vyneras/Archipelago/blob/frlg-dev/worlds/pokemon_frlg/docs/fly_plando.md)
+  + Can now specify the specific warp to set a fly destination to. A list of valid warps can be found [here](https://github.com/vyneras/Archipelago/blob/frlg-stable/worlds/pokemon_frlg/docs/fly_plando.md)
 + New option `shopsanity`
   + Shuffles shop items into the item pool. The Celadon Department Store 4F Held Item Shop is not shuffled
 + New option `shop_prices`
@@ -37,9 +40,12 @@
 + New option `damage_categories`
   + Randomizes the damage category for each move/type. Will randomized the damage category of the moves individually or by each type depending on if the `physical_special_split` option is on
 + Changed the warps in the Lost Cave item rooms to return you to the previous room instead of back to the start
++ Improved client connection error handling
 
 ## Bug Fixes
 + Fixed a few typos in the game
 + Fixed an issue where setting the in-game Experience option to NONE still gave 1 exp
 + Fixed an issue where catching the Snorlax on Route 12 & 16 showed the text saying they returned to the mountains
++ Fixed and issue where you could receive the item from Lostelle in her house repeatedly 
 + Fixed an issue where a fly point randomized to take you in front of the Pewter Museum east entrance actually placed you to the left of the Pewter Pokémon Center
++ Fixed dark cave logic applying to the entrances to dark caves instead of the exits from dark caves
