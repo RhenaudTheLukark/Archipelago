@@ -157,6 +157,11 @@ class PokemonFRLGClient(BizHawkClient):
             # Check rom name and patch version
             rom_name_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0x108, 32, "ROM")]))[0]
             rom_name = bytes([byte for byte in rom_name_bytes if byte != 0]).decode("ascii")
+
+            if (not rom_name.startswith(BASE_ROM_NAME["firered"]) and
+                    not rom_name.startswith(BASE_ROM_NAME["leafgreen"])):
+                return False
+
             game_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0x100, 4, "ROM")]))[0]
             game_version = int.from_bytes(game_version_bytes, "little")
             game_revision_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0xBC, 1, "ROM")]))[0]
