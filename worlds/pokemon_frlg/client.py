@@ -196,8 +196,7 @@ class PokemonFRLGClient(BizHawkClient):
                             "Launcher.")
                 return False
             if data.rom_checksum != rom_checksum:
-                ap_version_address = data.rom_addresses["gArchipelagoVersion"][self.game_version]
-                ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(ap_version_address, 16, "ROM")]))[0]
+                ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0x178, 16, "ROM")]))[0]
                 ap_version = bytes([byte for byte in ap_version_bytes if byte != 0]).decode("ascii")
                 generator_checksum = "{0:x}".format(rom_checksum).upper() if rom_checksum != 0 else "Undefined"
                 client_checksum = "{0:x}".format(data.rom_checksum).upper() if data.rom_checksum != 0 else "Undefined"

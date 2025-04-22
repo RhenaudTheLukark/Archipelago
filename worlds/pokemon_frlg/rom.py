@@ -781,7 +781,10 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     patch.write_token(data.rom_addresses["gArchipelagoInfo"], 0, world.auth)
 
     # Set apworld version
-    patch.write_token(data.rom_addresses["gArchipelagoVersion"], 0, APWORLD_VERSION.encode("ascii"))
+    apworld_version_address = {}
+    for key in patch.revision_keys:
+        apworld_version_address[key] = 0x178
+    patch.write_token(apworld_version_address, 0, APWORLD_VERSION.encode("ascii"))
 
 
 def _set_shuffled_entrances(world: "PokemonFRLGWorld") -> None:
