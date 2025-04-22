@@ -186,22 +186,19 @@ class PokemonFRLGClient(BizHawkClient):
             else:
                 return False
 
-            ap_version_address = data.rom_addresses["gArchipelagoVersion"][self.game_version]
-            ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(ap_version_address, 16, "ROM")]))[0]
-            ap_version = bytes([byte for byte in ap_version_bytes if byte != 0]).decode("ascii")
-
             if rom_name == BASE_ROM_NAME[self.game_version]:
                 logger.info("ERROR: You appear to be running an unpatched version of Pokemon FireRed or LeafGreen."
                             "You need to generate a patch file and use it to create a patched ROM.")
-                logger.info(f"Client Apworld Version: {APWORLD_VERSION}, Generator Apworld Version: {ap_version}")
                 return False
             if rom_name != data.rom_names[self.game_version]:
                 logger.info("ERROR: You appear to be running a version of Pokemon FireRed or LeafGreen that wasn't "
                             "patched using Archipelago. You need to create a patched ROM using the Archipelago "
                             "Launcher.")
-                logger.info(f"Client Apworld Version: {APWORLD_VERSION}, Generator Apworld Version: {ap_version}")
                 return False
             if data.rom_checksum != rom_checksum:
+                ap_version_address = data.rom_addresses["gArchipelagoVersion"][self.game_version]
+                ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(ap_version_address, 16, "ROM")]))[0]
+                ap_version = bytes([byte for byte in ap_version_bytes if byte != 0]).decode("ascii")
                 generator_checksum = "{0:x}".format(rom_checksum).upper() if rom_checksum != 0 else "Undefined"
                 client_checksum = "{0:x}".format(data.rom_checksum).upper() if data.rom_checksum != 0 else "Undefined"
                 logger.info("ERROR: The patch file used to create this ROM is not compatible with "
