@@ -972,7 +972,7 @@
 
   "ITEM_HEART_SCALE": {
     "name": "Heart Scale",
-    "classification": "FILLER",
+    "classification": "USEFUL",
     "tags": ["Held Items", "Evolution Items"]
   },
 

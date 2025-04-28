@@ -662,6 +662,11 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                       lambda state: logic.can_rock_smash(state))
         add_rule_safe("Route 16 Center Smashable Rock",
                       lambda state: logic.can_rock_smash(state))
+    else:
+        add_rule_safe("Route 16 Northeast Smashable Rock",
+                      lambda state: False)
+        add_rule_safe("Route 16 Center Smashable Rock",
+                      lambda state: False)
     add_rule_safe("Route 16 Center Play Poke Flute",
                   lambda state: state.has("Poke Flute", player)),
     add_rule_safe("Route 16 Gate 1F Southeast Bike Checkpoint",

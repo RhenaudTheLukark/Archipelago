@@ -32,8 +32,7 @@ class Goal(Choice):
 
 class SkipEliteFour(Toggle):
     """
-    Set whether to skip the Elite Four fights and go straight to the Champion fight when entering the
-    Pokemon League.
+    Set whether to skip the Elite Four fights and go straight to the Champion fight when entering the Pokemon League.
     """
     display_name = "Skip Elite Four"
 
@@ -41,16 +40,14 @@ class SkipEliteFour(Toggle):
 class KantoOnly(Toggle):
     """
     Excludes all the Sevii Island locations. Navel Rock and Birth Island are still included.
-    The Rock Smash and Waterfall HMs will still be in the item pool and their vanilla locations will have a random
-    filler item.
+    HM06 Rock Smash, HM07 Waterfall, and the Sun Stone will still be in the item pool.
     """
     display_name = "Kanto Only"
 
 
 class RandomStartingTown(Toggle):
     """
-    Randomizes the town that you start in. This includes any area that has a Pokemon Center except for Route 10 and
-    Indigo Plateau.
+    Randomizes the town that you start in. This includes any area that has a Pokemon Center except for Indigo Plateau.
     """
     display_name = "Random Starting Town"
 
@@ -69,12 +66,10 @@ class DungeonEntranceShuffle(Choice):
     """
     Shuffles dungeon entrances.
 
-    Off: Dungeon entrances are not shuffled
-    Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both
-            entrances for multi entrance dungeons will connect to the same dungeon
-    Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both
-                entrances for multi entrance dungeons do not need to lead to the same dungeon
-    Full: All dungeon entrances are shuffled together
+    - Off: Dungeon entrances are not shuffled
+    - Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons will connect to the same dungeon
+    - Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons do not need to lead to the same dungeon
+    - Full: All dungeon entrances are shuffled together
     """
     display_name = "Dungeon Entrance Shuffle"
     default = 0
@@ -332,11 +327,9 @@ class IslandPasses(Choice):
     locations will be added to events related to the Sevii Islands.
 
     - Vanilla: The Tri Pass and Rainbow Pass are two separate items in the pool and can be found in any order
-    - Progressive: There are two Progressive Passes in the pool. You will always obtain the Tri Pass before the Rainbow
-                   Pass
+    - Progressive: There are two Progressive Passes in the pool. You will always obtain the Tri Pass before the Rainbow Pass
     - Split: The Tri Pass and Rainbow Pass are split into seven items, one for each island
-    - Progressive Split: The Tri Pass and Rainbow Pass are split into seven items, and you will always obtain the Passes
-                         in order from the First Pass to the Seventh Pass
+    - Progressive Split: The Tri Pass and Rainbow Pass are split into seven items, and you will always obtain the Passes in order from the First Pass to the Seventh Pass
     """
     display_name = "Sevii Island Passes"
     default = 0
@@ -440,8 +433,7 @@ class ViridianCityRoadblock(Choice):
     Sets the requirement for passing the Viridian City Roadblock.
 
     - Vanilla: The Old Man moves out of the way after delivering Oak's Parcel
-    - Early Parcel: Same as Vanilla but Oak's Parcel will be available at the beginning of your game. This option will
-                    have no effect and be treated as Vanilla if Random Starting Town is on
+    - Early Parcel: Same as Vanilla but Oak's Parcel will be available at the beginning of your game. This option will have no effect and be treated as Vanilla if Random Starting Town is on
     - Open: The Old Man is moved out of the way at the start of the game
     """
     display_name = "Viridian City Roadblock"
@@ -1024,10 +1016,8 @@ class RandomizeDamageCategories(Choice):
     by each type depending on if the Physical/Special Split option is on.
 
     - Vanilla: Damage Categories are unchanged
-    - Shuffle: Damage Categories for moves/types are shuffled so the amount of physical and special moves/types will
-               remain the same
-    - Completely Random: Each moves/types damage category is chosen at random with no regard to maintaining the same
-                         amount of physical and special moves/types
+    - Shuffle: Damage Categories for moves/types are shuffled so the amount of physical and special moves/types will remain the same
+    - Completely Random: Each moves/types damage category is chosen at random with no regard to maintaining the same amount of physical and special moves/types
     """
     display_name = "Randomize Damage Categories"
     default = 0
