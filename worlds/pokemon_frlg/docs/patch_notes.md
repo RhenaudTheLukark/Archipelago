@@ -1,4 +1,9 @@
-# 0.9.0
+# 0.9.2
+## Bug Fixes
++ A logic issue involving the `Modify Route 16` setting has been fixed
++ The leader of the Saffron Dojo and the second Team Rocker Admin in the Rocket Warehouse will now trigger their battles when you walk past them even if `Blind Trainers` is on
+
+# 0.9.1
 ## Updates
 + New icons for several AP exclusive items and new damage type icons (credit to [kattnip](https://github.com/Invader07))
 + The Berry Pouch and TM Case are now given to the player at the start of the game instead of when the first berry and HM/TM are obtained
