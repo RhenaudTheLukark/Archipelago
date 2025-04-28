@@ -1,7 +1,7 @@
 # 0.9.2
 ## Bug Fixes
 + A logic issue involving the `Modify Route 16` setting has been fixed
-+ The leader of the Saffron Dojo and the second Team Rocker Admin in the Rocket Warehouse will now trigger their battles when you walk past them even if `Blind Trainers` is on
++ The leader of the Saffron Dojo and the second Team Rocket Admin in the Rocket Warehouse will now trigger their battles when you walk past them even if `Blind Trainers` is on
 
 # 0.9.1
 ## Updates
