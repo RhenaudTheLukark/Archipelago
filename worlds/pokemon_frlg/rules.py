@@ -132,14 +132,14 @@ class PokemonFRLGLogic:
                 self.can_teach_hm(state, "Waterfall"))
 
     def has_n_badges(self, state: CollectionState, n: int) -> bool:
-        badges = ["Boulder Badge", "Cascade Badge", "Thunder Badge", "Rainbow Badge",
-                  "Soul Badge", "Marsh Badge", "Volcano Badge", "Earth Badge"]
-        return sum([state.has(badge, self.player) for badge in badges]) >= n
+        badges = ("Boulder Badge", "Cascade Badge", "Thunder Badge", "Rainbow Badge",
+                  "Soul Badge", "Marsh Badge", "Volcano Badge", "Earth Badge")
+        return state.has_from_list_unique(badges, self.player, n)
 
     def has_n_gyms(self, state: CollectionState, n: int) -> bool:
-        gyms = ["Defeat Brock", "Defeat Misty", "Defeat Lt. Surge", "Defeat Erika",
-                "Defeat Koga", "Defeat Sabrina", "Defeat Blaine", "Defeat Giovanni"]
-        return sum([state.has(gym, self.player) for gym in gyms]) >= n
+        gyms = ("Defeat Brock", "Defeat Misty", "Defeat Lt. Surge", "Defeat Erika",
+                "Defeat Koga", "Defeat Sabrina", "Defeat Blaine", "Defeat Giovanni")
+        return state.has_from_list_unique(gyms, self.player, n)
 
     def has_pokemon(self, state: CollectionState, pokemon: str) -> bool:
         if self.dexsanity_requires_evos:
