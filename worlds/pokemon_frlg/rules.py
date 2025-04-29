@@ -45,6 +45,8 @@ EVO_METHODS_WURMPLE_LEVEL = {
     EvolutionMethodEnum.LEVEL_CASCOON
 }
 
+EVO_METHODS_LEVEL_ANY = {*EVO_METHODS_LEVEL, *EVO_METHODS_TYROGUE_LEVEL, *EVO_METHODS_WURMPLE_LEVEL}
+
 EVO_METHODS_ITEM = {
     EvolutionMethodEnum.ITEM
 }
@@ -166,7 +168,7 @@ class PokemonFRLGLogic:
                 return state.has_all((self.world_item_id_map[evo_data.param],
                                       self.world_item_id_map[evo_data.param2]),
                                      self.player)
-            elif evo_data.method in EVO_METHODS_LEVEL | EVO_METHODS_TYROGUE_LEVEL | EVO_METHODS_WURMPLE_LEVEL:
+            elif evo_data.method in EVO_METHODS_LEVEL_ANY:
                 return self.has_n_gyms(state, evo_data.param / 7)
             elif evo_data.method in EVO_METHODS_FRIENDSHIP:
                 return True
