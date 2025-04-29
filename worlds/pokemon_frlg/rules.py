@@ -97,37 +97,37 @@ class PokemonFRLGLogic:
         return False
 
     def can_cut(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM01 Cut", "TM Case"}, self.player) and
+        return (state.has_all(("HM01 Cut", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Cut") and
                 self.can_teach_hm(state, "Cut"))
 
     def can_fly(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM02 Fly", "TM Case"}, self.player) and
+        return (state.has_all(("HM02 Fly", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Fly") and
                 self.can_teach_hm(state, "Fly"))
 
     def can_surf(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM03 Surf", "TM Case"}, self.player) and
+        return (state.has_all(("HM03 Surf", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Surf") and
                 self.can_teach_hm(state, "Surf"))
 
     def can_strength(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM04 Strength", "TM Case"}, self.player) and
+        return (state.has_all(("HM04 Strength", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Strength") and
                 self.can_teach_hm(state, "Strength"))
 
     def can_flash(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM05 Flash", "TM Case"}, self.player) and
+        return (state.has_all(("HM05 Flash", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Flash") and
                 self.can_teach_hm(state, "Flash"))
 
     def can_rock_smash(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM06 Rock Smash", "TM Case"}, self.player) and
+        return (state.has_all(("HM06 Rock Smash", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Rock Smash") and
                 self.can_teach_hm(state, "Rock Smash"))
 
     def can_waterfall(self, state: CollectionState) -> bool:
-        return (state.has_all({"HM07 Waterfall", "TM Case"}, self.player) and
+        return (state.has_all(("HM07 Waterfall", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Waterfall") and
                 self.can_teach_hm(state, "Waterfall"))
 
@@ -143,13 +143,13 @@ class PokemonFRLGLogic:
 
     def has_pokemon(self, state: CollectionState, pokemon: str) -> bool:
         if self.dexsanity_requires_evos:
-            return state.has_any({pokemon, f"Static {pokemon}", f"Evolved {pokemon}"}, self.player)
-        return state.has_any({pokemon, f"Static {pokemon}"}, self.player)
+            return state.has_any((pokemon, f"Static {pokemon}", f"Evolved {pokemon}"), self.player)
+        return state.has_any((pokemon, f"Static {pokemon}"), self.player)
 
     def has_n_pokemon(self, state: CollectionState, n: int) -> bool:
         count = 0
         for species in data.species.values():
-            if state.has_any({species.name, f"Static {species.name}"}, self.player):
+            if state.has_any((species.name, f"Static {species.name}"), self.player):
                 count += 1
             elif self.oaks_aides_require_evos and state.has(f"Evolved {species.name}", self.player):
                 count += 1
@@ -160,12 +160,12 @@ class PokemonFRLGLogic:
     def can_evolve(self, state: CollectionState, pokemon: str) -> bool:
         evo_data = data.evolutions[pokemon]
         pokemon = re.sub(r' \d+', '', pokemon)
-        if state.has_any({pokemon, f"Evolved {pokemon}"}, self.player) and evo_data.method in self.evo_methods_required:
+        if state.has_any((pokemon, f"Evolved {pokemon}"), self.player) and evo_data.method in self.evo_methods_required:
             if evo_data.method in EVO_METHODS_ITEM:
                 return state.has(self.world_item_id_map[evo_data.param], self.player)
             elif evo_data.method in EVO_METHODS_HELD_ITEM:
-                return state.has_all({self.world_item_id_map[evo_data.param],
-                                      self.world_item_id_map[evo_data.param2]},
+                return state.has_all((self.world_item_id_map[evo_data.param],
+                                      self.world_item_id_map[evo_data.param2]),
                                      self.player)
             elif evo_data.method in EVO_METHODS_LEVEL | EVO_METHODS_TYROGUE_LEVEL | EVO_METHODS_WURMPLE_LEVEL:
                 return self.has_n_gyms(state, evo_data.param / 7)
@@ -177,7 +177,7 @@ class PokemonFRLGLogic:
         return state.has(self.required_trade_pokemon[location_name], self.player)
 
     def can_show_selphy_pokemon(self, state: CollectionState) -> bool:
-        return state.has_all({"Rescue Selphy", data.species[self.resort_gorgeous_pokemon].name}, self.player)
+        return state.has_all(("Rescue Selphy", data.species[self.resort_gorgeous_pokemon].name), self.player)
 
     def has_island_pass(self, state: CollectionState, group: int) -> bool:
         passes = ["Tri Pass", "Rainbow Pass"]
@@ -188,7 +188,7 @@ class PokemonFRLGLogic:
         return state.has(passes[island - 1], self.player) or state.has("Progressive Pass", self.player, island)
 
     def has_card_key(self, state: CollectionState, floor: int) -> bool:
-        return (state.has_any({"Card Key", f"Card Key {floor}F"}, self.player) or
+        return (state.has_any(("Card Key", f"Card Key {floor}F"), self.player) or
                 state.has("Progressive Card Key", self.player, floor - 1))
 
     def can_stop_seafoam_b3f_current(self, state) -> bool:
@@ -198,24 +198,24 @@ class PokemonFRLGLogic:
         return self.can_strength(state) and state.can_reach_region("Seafoam Islands B3F Southwest", self.player)
 
     def can_turn_in_meteorite(self, state: CollectionState) -> bool:
-        return state.has_all({"Rescue Lostelle", "Meteorite"}, self.player)
+        return state.has_all(("Rescue Lostelle", "Meteorite"), self.player)
 
     def can_turn_in_ruby(self, state: CollectionState) -> bool:
-        return state.has_all({"Deliver Meteorite", "Ruby"}, self.player)
+        return state.has_all(("Deliver Meteorite", "Ruby"), self.player)
 
     def can_turn_in_sapphire(self, state: CollectionState) -> bool:
-        return state.has_all({"Deliver Meteorite", "Ruby", "Free Captured Pokemon", "Sapphire"}, self.player)
+        return state.has_all(("Deliver Meteorite", "Ruby", "Free Captured Pokemon", "Sapphire"), self.player)
 
     def has_lorelei_returned(self, state: CollectionState) -> bool:
-        return state.has_all({"Defeat Champion", "Restore Pokemon Network Machine"}, self.player)
+        return state.has_all(("Defeat Champion", "Restore Pokemon Network Machine"), self.player)
 
     def two_island_stall_expansion(self, state: CollectionState, expansion_level: int) -> bool:
         if expansion_level == 1:
             return state.has("Rescue Lostelle", self.player)
         elif expansion_level == 2:
-            return state.has_all({"Rescue Lostelle", "Defeat Champion"}, self.player)
+            return state.has_all(("Rescue Lostelle", "Defeat Champion"), self.player)
         elif expansion_level == 3:
-            return state.has_all({"Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"}, self.player)
+            return state.has_all(("Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"), self.player)
         return False
 
 
