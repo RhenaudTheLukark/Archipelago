@@ -159,21 +159,6 @@ class PokemonFRLGLogic:
                 return True
         return False
 
-    def can_evolve(self, state: CollectionState, pokemon: str, item_names: tuple[str, ...]) -> bool:
-        evo_data = data.evolutions[pokemon]
-        if state.has_any(item_names, self.player):
-            if evo_data.method in EVO_METHODS_ITEM:
-                return state.has(self.world_item_id_map[evo_data.param], self.player)
-            elif evo_data.method in EVO_METHODS_HELD_ITEM:
-                return state.has_all((self.world_item_id_map[evo_data.param],
-                                      self.world_item_id_map[evo_data.param2]),
-                                     self.player)
-            elif evo_data.method in EVO_METHODS_LEVEL_ANY:
-                return self.has_n_gyms(state, evo_data.param / 7)
-            elif evo_data.method in EVO_METHODS_FRIENDSHIP:
-                return True
-        return False
-
     def has_trade_pokemon(self, state: CollectionState, location_name: str) -> bool:
         return state.has(self.required_trade_pokemon[location_name], self.player)
 
@@ -1618,6 +1603,30 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Itemfinder", player))
 
 
+def _add_evolution_rule(world: "PokemonFRLGWorld", location: PokemonFRLGLocation):
+    pokemon = location.name.split(" - ")[1].strip()
+    pokemon_item_base_name = re.sub(r' \d+', '', pokemon)
+    pokemon_item_names = (pokemon_item_base_name, f"Evolved {pokemon_item_base_name}")
+    evo_data = data.evolutions[pokemon]
+    evo_method = evo_data.method
+    player = world.player
+    logic = world.logic
+    if evo_method in EVO_METHODS_ITEM:
+        use_item = logic.world_item_id_map[evo_data.param]
+        add_rule(location, lambda state: state.has_any(pokemon_item_names, player) and state.has(use_item, player))
+    elif evo_method in EVO_METHODS_HELD_ITEM:
+        items = (logic.world_item_id_map[evo_data.param], logic.world_item_id_map[evo_data.param2])
+        add_rule(location, lambda state: state.has_any(pokemon_item_names, player) and state.has_all(items, player))
+    elif evo_method in EVO_METHODS_LEVEL_ANY:
+        gyms_requirement = evo_data.param / 7
+        add_rule(location, lambda state: (state.has_any(pokemon_item_names, player)
+                                          and logic.has_n_gyms(state, gyms_requirement)))
+    elif evo_method in EVO_METHODS_FRIENDSHIP:
+        add_rule(location, lambda state: state.has_any(pokemon_item_names, player))
+    else:
+        raise RuntimeError(f"Unexpected evo method: {evo_method}")
+
+
 def set_rules(world: "PokemonFRLGWorld") -> None:
     logic = world.logic
     player = world.player
@@ -1647,10 +1656,7 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
             name = location.name.split(" - ")[1].strip()
             add_rule(location, lambda state, pokemon=name: logic.has_pokemon(state, pokemon))
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
-            name = location.name.split(" - ")[1].strip()
-            item_name = re.sub(r' \d+', '', name)
-            item_names = (item_name, f"Evolved {item_name}")
-            add_rule(location, lambda state, pokemon=name, item_names_=item_names: logic.can_evolve(state, pokemon, item_names_))
+            _add_evolution_rule(world, location)
 
     # Add dark cave logic
     if options.flash_required != FlashRequired.option_off:
