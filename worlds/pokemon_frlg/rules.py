@@ -157,10 +157,9 @@ class PokemonFRLGLogic:
                 return True
         return False
 
-    def can_evolve(self, state: CollectionState, pokemon: str) -> bool:
+    def can_evolve(self, state: CollectionState, pokemon: str, item_names: tuple[str, ...]) -> bool:
         evo_data = data.evolutions[pokemon]
-        pokemon = re.sub(r' \d+', '', pokemon)
-        if state.has_any((pokemon, f"Evolved {pokemon}"), self.player) and evo_data.method in self.evo_methods_required:
+        if state.has_any(item_names, self.player) and evo_data.method in self.evo_methods_required:
             if evo_data.method in EVO_METHODS_ITEM:
                 return state.has(self.world_item_id_map[evo_data.param], self.player)
             elif evo_data.method in EVO_METHODS_HELD_ITEM:
@@ -1647,7 +1646,9 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
             add_rule(location, lambda state, pokemon=name: logic.has_pokemon(state, pokemon))
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             name = location.name.split(" - ")[1].strip()
-            add_rule(location, lambda state, pokemon=name: logic.can_evolve(state, pokemon))
+            item_name = re.sub(r' \d+', '', name)
+            item_names = (item_name, f"Evolved {item_name}")
+            add_rule(location, lambda state, pokemon=name, item_names_=item_names: logic.can_evolve(state, pokemon, item_names_))
 
     # Add dark cave logic
     if options.flash_required != FlashRequired.option_off:
