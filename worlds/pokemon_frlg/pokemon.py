@@ -443,7 +443,8 @@ def randomize_moves(world: "PokemonFRLGWorld") -> None:
         while move_index < len(old_learnset):
             if move_index == 3:
                 new_move = _get_random_damaging_move(world,
-                                                     [{move.move_id for move in new_learnset}],
+                                                     [{move.move_id for move in new_learnset},
+                                                      world.blacklisted_moves],
                                                      True,
                                                      species.types)
             else:
