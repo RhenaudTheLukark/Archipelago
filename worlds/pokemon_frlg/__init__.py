@@ -437,6 +437,7 @@ class PokemonFRLGWorld(World):
                     self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
                     removed_items_count -= 1
 
+        verify_hm_accessibility(self)
         state = self.get_world_collection_state()
 
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
@@ -493,7 +494,6 @@ class PokemonFRLGWorld(World):
         self.multiworld.itempool += self.itempool
 
     def connect_entrances(self) -> None:
-        verify_hm_accessibility(self)
         set_free_fly(self)
         if not self.options.shuffle_badges:
             self.shuffle_badges()
