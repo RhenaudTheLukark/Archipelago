@@ -75,6 +75,7 @@ class PokemonFRLGLogic:
     randomizing_entrances: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
+    pokemon_hm_use: Dict[str, List[str]]
 
     def __init__(self, player: int, item_id_to_name: Dict[int, str]) -> None:
         self.player = player
@@ -92,55 +93,60 @@ class PokemonFRLGLogic:
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
 
+    def update_hm_compatible_pokemon(self):
+        pokemon_hm_use = defaultdict(list)
+        for hm, species_list in self.compatible_hm_pokemon.items():
+            hm_logic_name = f"can_teach_hm_{hm}"
+            for species in species_list:
+                pokemon_hm_use[species].append(hm_logic_name)
+                if self.hms_require_evos:
+                    pokemon_hm_use[f"Evolved {species}"].append(hm_logic_name)
+        self.pokemon_hm_use = pokemon_hm_use
+
+    def add_hm_compatible_pokemon(self, hm: str, species: str):
+        self.compatible_hm_pokemon[hm].append(species)
+        hm_logic_name = f"can_teach_hm_{hm}"
+        self.pokemon_hm_use.setdefault(species, []).append(hm_logic_name)
+        if self.hms_require_evos:
+            self.pokemon_hm_use.setdefault(f"Evolved {species}", []).append(hm_logic_name)
+
     def has_badge_requirement(self, state: CollectionState, hm: str) -> bool:
         return not self.badge_required[hm] or state.has(BADGE_REQUIREMENTS[hm], self.player)
-
-    def can_teach_hm(self, state: CollectionState, hm: str) -> bool:
-        player = self.player
-        if self.hms_require_evos:
-            for species in self.compatible_hm_pokemon[hm]:
-                if state.has_any((species, f"Evolved {species}"), player):
-                    return True
-        else:
-            for species in self.compatible_hm_pokemon[hm]:
-                if state.has(species, player):
-                    return True
-        return False
 
     def can_cut(self, state: CollectionState) -> bool:
         return (state.has_all(("HM01 Cut", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Cut") and
-                self.can_teach_hm(state, "Cut"))
+                state.has(f"can_teach_hm_Cut", self.player))
 
     def can_fly(self, state: CollectionState) -> bool:
         return (state.has_all(("HM02 Fly", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Fly") and
-                self.can_teach_hm(state, "Fly"))
+                state.has(f"can_teach_hm_Fly", self.player))
 
     def can_surf(self, state: CollectionState) -> bool:
         return (state.has_all(("HM03 Surf", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Surf") and
-                self.can_teach_hm(state, "Surf"))
+                state.has(f"can_teach_hm_Surf", self.player))
 
     def can_strength(self, state: CollectionState) -> bool:
         return (state.has_all(("HM04 Strength", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Strength") and
-                self.can_teach_hm(state, "Strength"))
+                state.has(f"can_teach_hm_Strength", self.player))
 
     def can_flash(self, state: CollectionState) -> bool:
         return (state.has_all(("HM05 Flash", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Flash") and
-                self.can_teach_hm(state, "Flash"))
+                state.has(f"can_teach_hm_Flash", self.player))
 
     def can_rock_smash(self, state: CollectionState) -> bool:
         return (state.has_all(("HM06 Rock Smash", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Rock Smash") and
-                self.can_teach_hm(state, "Rock Smash"))
+                state.has(f"can_teach_hm_Rock Smash", self.player))
 
     def can_waterfall(self, state: CollectionState) -> bool:
         return (state.has_all(("HM07 Waterfall", "TM Case"), self.player) and
                 self.has_badge_requirement(state, "Waterfall") and
-                self.can_teach_hm(state, "Waterfall"))
+                state.has(f"can_teach_hm_Waterfall", self.player))
 
     def has_n_badges(self, state: CollectionState, n: int) -> bool:
         badges = ("Boulder Badge", "Cascade Badge", "Thunder Badge", "Rainbow Badge",
@@ -1784,6 +1790,7 @@ def set_hm_compatible_pokemon(world: "PokemonFRLGWorld") -> None:
             combatibility_array = int_to_bool_array(species.tm_hm_compatibility)
             if combatibility_array[HM_TO_COMPATIBILITY_ID[hm]] == 1:
                 logic.compatible_hm_pokemon[hm].append(species.name)
+    logic.update_hm_compatible_pokemon()
 
 
 def verify_hm_accessibility(world: "PokemonFRLGWorld") -> None:
@@ -1820,6 +1827,7 @@ def verify_hm_accessibility(world: "PokemonFRLGWorld") -> None:
                              and mon not in logic.compatible_hm_pokemon[hm_to_verify]]
             pokemon = world.random.choice(valid_pokemon)
             add_hm_compatability(world, pokemon, hm_to_verify)
-            logic.compatible_hm_pokemon[hm_to_verify].append(pokemon)
+            logic.add_hm_compatible_pokemon(hm_to_verify, pokemon)
         else:
             hms.pop(0)
+    logic.update_hm_compatible_pokemon()

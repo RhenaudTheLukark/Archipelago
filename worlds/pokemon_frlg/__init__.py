@@ -12,7 +12,7 @@ import threading
 from collections import defaultdict
 from typing import Any, ClassVar, Dict, List, Set, TextIO
 
-from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
+from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial, Item
 from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
@@ -801,3 +801,25 @@ class PokemonFRLGWorld(World):
 
     def get_pre_fill_items(self):
         return self.pre_fill_items
+
+    def collect(self, state: "CollectionState", item: "Item") -> bool:
+        changed = super().collect(state, item)
+        if changed:
+            item_name = item.name
+            if item_name in self.logic.pokemon_hm_use:
+                state.prog_items[self.player].update(self.logic.pokemon_hm_use[item_name])
+            return True
+        else:
+            return False
+
+    def remove(self, state: "CollectionState", item: "Item") -> bool:
+        changed = super().remove(state, item)
+        if changed:
+            item_name = item.name
+            if item_name in self.logic.pokemon_hm_use:
+                state.prog_items[self.player].subtract(self.logic.pokemon_hm_use[item_name])
+            return True
+        else:
+            return False
+
+
