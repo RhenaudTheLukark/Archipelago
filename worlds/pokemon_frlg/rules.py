@@ -3,7 +3,7 @@ Logic rule definitions for Pokémon FireRed and LeafGreen
 """
 import re
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, List, Set
+from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 from BaseClasses import CollectionState
 from worlds.generic.Rules import CollectionRule, add_rule
 from .data import data, NAME_TO_SPECIES_ID, EvolutionMethodEnum, LocationCategory
@@ -73,6 +73,7 @@ class PokemonFRLGLogic:
     hms_require_evos: bool
     oaks_aides_require_evos: bool
     randomizing_entrances: bool
+    dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
 
     def __init__(self, player: int, item_id_to_name: Dict[int, str]) -> None:
         self.player = player
@@ -87,6 +88,7 @@ class PokemonFRLGLogic:
         self.hms_require_evos = False
         self.oaks_aides_require_evos = False
         self.randomizing_entrances = False
+        self.dexsanity_state_item_names_lookup = {}
 
     def has_badge_requirement(self, state: CollectionState, hm: str) -> bool:
         return not self.badge_required[hm] or state.has(BADGE_REQUIREMENTS[hm], self.player)
@@ -144,9 +146,7 @@ class PokemonFRLGLogic:
         return state.has_from_list_unique(gyms, self.player, n)
 
     def has_pokemon(self, state: CollectionState, pokemon: str) -> bool:
-        if self.dexsanity_requires_evos:
-            return state.has_any((pokemon, f"Static {pokemon}", f"Evolved {pokemon}"), self.player)
-        return state.has_any((pokemon, f"Static {pokemon}"), self.player)
+        return state.has_any(self.dexsanity_state_item_names_lookup[pokemon], self.player)
 
     def has_n_pokemon(self, state: CollectionState, n: int) -> bool:
         count = 0
@@ -214,6 +214,16 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.dexsanity_requires_evos = "Dexsanity" in world.options.evolutions_required.value
     logic.hms_require_evos = "HM Requirement" in world.options.evolutions_required.value
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
+
+    dexsanity_state_item_names = {}
+    for species in data.species.values():
+        species_name = species.name
+        if logic.dexsanity_requires_evos:
+            state_item_names = (species_name, f"Static {species_name}", f"Evolved {species_name}")
+        else:
+            state_item_names = (species_name, f"Static {species_name}")
+        dexsanity_state_item_names[species_name] = state_item_names
+    logic.dexsanity_state_item_names_lookup.update(dexsanity_state_item_names)
 
     if "Level" in world.options.evolution_methods_required.value:
         logic.evo_methods_required.update(EVO_METHODS_LEVEL)
