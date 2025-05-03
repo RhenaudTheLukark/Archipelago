@@ -208,7 +208,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
 
         item_address = location.item_address
 
-        if location.item.player == world.player:
+        if not world.options.remote_items and location.item.player == world.player:
             item_id = location.item.code
         else:
             item_id = data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]
@@ -259,8 +259,15 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
                 ) for flag in shop_flags)
 
     player_name_ids: Dict[str, int] = {world.player_name: 0}
+    player_name_address = data.rom_addresses["gArchipelagoPlayerNames"]
+    for j, b in enumerate(encode_string(world.player_name, 17)):
+        patch.write_token(player_name_address,
+                          j,
+                          struct.pack("<B", b))
     item_name_offsets: Dict[str, int] = {}
+    item_name_address = data.rom_addresses["gArchipelagoItemNames"]
     next_item_name_offset = 0
+    name_table_address = data.rom_addresses["gArchipelagoNameTable"]
     for i, (flag, item_player, item_name) in enumerate(sorted(location_info, key=lambda t: t[0])):
         player_name = world.multiworld.get_player_name(item_player)
 
@@ -270,7 +277,6 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
                 continue
 
             player_name_ids[player_name] = len(player_name_ids)
-            player_name_address = data.rom_addresses["gArchipelagoPlayerNames"]
             for j, b in enumerate(encode_string(player_name, 17)):
                 patch.write_token(player_name_address,
                                   (player_name_ids[player_name] * 17) + j,
@@ -286,11 +292,9 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
 
             item_name_offsets[item_name] = next_item_name_offset
             next_item_name_offset += len(item_name) + 1
-            item_name_address = data.rom_addresses["gArchipelagoItemNames"]
             patch.write_token(item_name_address, item_name_offsets[item_name], encode_string(item_name) + b"\xFF")
 
         # There should always be enough space for one entry per location
-        name_table_address = data.rom_addresses["gArchipelagoNameTable"]
         patch.write_token(name_table_address, (i * 5) + 0, struct.pack("<H", flag))
         patch.write_token(name_table_address, (i * 5) + 2, struct.pack("<H", item_name_offsets[item_name]))
         patch.write_token(name_table_address, (i * 5) + 4, struct.pack("<B", player_name_ids[player_name]))
@@ -453,6 +457,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x47 */ u16 resortGorgeousMon;
     # /* 0x49 */ u16 introSpecies;
     # /* 0x4B */ u16 pcItemId;
+    # /* 0x4D */ bool8 remoteItems;
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -729,11 +734,15 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
 
     # Set PC item ID
     pc_item_location = world.get_location("Player's PC - PC Item")
-    if pc_item_location.item.player == world.player:
+    if not world.options.remote_items and pc_item_location.item.player == world.player:
         item_id = pc_item_location.item.code
     else:
         item_id = data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]
     patch.write_token(options_address, 0x4B, struct.pack("<H", item_id))
+
+    # Set remote items
+    remote_items = 1 if world.options.remote_items else 0
+    patch.write_token(options_address, 0x4D, struct.pack("<B", remote_items))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:

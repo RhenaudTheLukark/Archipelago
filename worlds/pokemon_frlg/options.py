@@ -1162,6 +1162,17 @@ class TownMapFlyBlacklist(OptionSet):
     valid_keys = list(fly_blacklist_map.keys())
 
 
+class RemoteItems(Toggle):
+    """
+    Instead of placing your own items directly into the ROM, all items are received from the server, including items you find for yourself.
+
+    This enables co-op of a single slot and recovering more items after a lost save file (if you're so unlucky).
+
+    But it changes pickup behavior slightly and requires connection to the server to receive any items.
+    """
+    display_name = "Remote Items"
+
+
 class RandomizeMusic(Toggle):
     """
     Shuffles music played in any situation where it loops.
@@ -1337,6 +1348,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     town_map_fly_location: TownMapFlyLocation
     town_map_fly_blacklist: TownMapFlyBlacklist
 
+    remote_items: RemoteItems
     randomize_music: RandomizeMusic
     randomize_fanfares: RandomizeFanfares
     game_options: GameOptions

@@ -1,9 +1,10 @@
 from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 from NetUtils import ClientStatus
+import Utils
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
 from .data import data, APWORLD_VERSION
-from .options import Goal
+from .options import Goal, RemoteItems
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -206,13 +207,17 @@ class PokemonFRLGClient(BizHawkClient):
                 logger.info(f"Client Apworld Version: {APWORLD_VERSION}, Generator Apworld Version: {ap_version}")
                 logger.info(f"Client ROM checksum: {client_checksum}, Generator ROM checksum: {generator_checksum}")
                 return False
+
+            options_address = data.rom_addresses["gArchipelagoOptions"][self.game_version]
+            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x4D, 1, "ROM")]))[0]
+            remote_items = int.from_bytes(remote_items_bytes, "little")
         except UnicodeDecodeError:
             return False
         except bizhawk.RequestFailedError:
             return False  # Should verify on the next pass
 
         ctx.game = self.game
-        ctx.items_handling = 0b001
+        ctx.items_handling = 0b011 if remote_items else 0b001
         ctx.want_slot_data = True
         ctx.watcher_timeout = 0.125
 
