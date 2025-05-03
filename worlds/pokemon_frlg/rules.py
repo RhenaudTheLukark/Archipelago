@@ -218,7 +218,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     dexsanity_state_item_names = {}
     for species in data.species.values():
         species_name = species.name
-        if logic.dexsanity_requires_evos:
+        if logic.dexsanity_requires_evos and species.pre_evolution is not None:
             state_item_names = (species_name, f"Static {species_name}", f"Evolved {species_name}")
         else:
             state_item_names = (species_name, f"Static {species_name}")
