@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 from NetUtils import ClientStatus
-import Utils
+from Options import Toggle
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
 from .data import data, APWORLD_VERSION
-from .options import Goal, RemoteItems
+from .options import Goal
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -137,6 +137,9 @@ class PokemonFRLGClient(BizHawkClient):
     local_hints: List[str]
     local_pokemon: Dict[str, List[int]]
     local_pokemon_count: int
+    death_counter: int | None
+    previous_death_link: float
+    ignore_next_death_link: bool
     current_map: Tuple[int, int]
 
     def __init__(self) -> None:
@@ -149,6 +152,9 @@ class PokemonFRLGClient(BizHawkClient):
         self.local_hints = list()
         self.local_pokemon = {"seen": list(), "caught": list()}
         self.local_pokemon_count = 0
+        self.death_counter = None
+        self.previous_death_link = 0
+        self.ignore_next_death_link = False
         self.current_map = (0, 0)
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
@@ -266,8 +272,9 @@ class PokemonFRLGClient(BizHawkClient):
             sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
             sb2_address = int.from_bytes(guards["SAVE BLOCK 2"][1], "little")
 
-            await self.handle_received_items(ctx, guards)
             await self.handle_map_update(ctx, guards)
+            await self.handle_death_link(ctx, guards)
+            await self.handle_received_items(ctx, guards)
 
             # Read flags in 2 chunks
             read_result = await bizhawk.guarded_read(
@@ -543,6 +550,13 @@ class PokemonFRLGClient(BizHawkClient):
         """
         Sends updates to the tracker about which map the player is currently in.
         """
+        def get_map_section(x_pos: int, y_pos: int, map_section_edges: List[Tuple[int, int]]) -> int:
+            section_id = 0
+            for edge_coords in map_section_edges:
+                if x_pos > edge_coords[0] or y_pos > edge_coords[1]:
+                    section_id += 1
+            return section_id
+
         sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
 
         read_result = await bizhawk.guarded_read(
@@ -577,10 +591,52 @@ class PokemonFRLGClient(BizHawkClient):
                 }
             }])
 
+    async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
+        """
+        Checks whether the player has died while connected and sends a death link if so. Queues a death link in the game
+        if a new one has been received.
+        """
+        if ctx.slot_data.get("death_link", Toggle.option_false) == Toggle.option_true:
+            if "DeathLink" not in ctx.tags:
+                await ctx.update_death_link(True)
+                self.previous_death_link = ctx.last_death_link
 
-def get_map_section(x_pos: int, y_pos: int, map_section_edges: List[Tuple[int, int]]) -> int:
-    section_id = 0
-    for edge_coords in map_section_edges:
-        if x_pos > edge_coords[0] or y_pos > edge_coords[1]:
-            section_id += 1
-    return section_id
+            sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
+            sb2_address = int.from_bytes(guards["SAVE BLOCK 2"][1], "little")
+
+            read_result = await bizhawk.guarded_read(
+                ctx.bizhawk_ctx, [
+                    (sb1_address + 0x1450 + (52 * 4), 4, "System Bus"),  # White out stat
+                    (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused stat
+                    (sb2_address + 0xF20, 4, "System Bus"),  # Encryption key
+                ],
+                [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
+            )
+
+            if read_result is None:  # Save block moved
+                return
+
+            encryption_key = int.from_bytes(read_result[2], "little")
+            times_whited_out = int.from_bytes(read_result[0], "little") ^ encryption_key
+            unused = int.from_bytes(read_result[1], "little") ^ encryption_key
+
+            # Skip all deathlink code if save is not yet loaded (encryption key is zero) or white out stat not yet
+            # initialized (starts at 100 as a safety for subtracting values from an unsigned int).
+            if unused == 0 and encryption_key != 0 and times_whited_out >= 100:
+                if self.previous_death_link != ctx.last_death_link:
+                    self.previous_death_link = ctx.last_death_link
+                    if self.ignore_next_death_link:
+                        self.ignore_next_death_link = False
+                    else:
+                        await bizhawk.write(
+                            ctx.bizhawk_ctx,
+                            [(data.ram_addresses["gArchipelagoDeathLinkQueued"][self.game_version], [1], "System Bus")]
+                        )
+
+                if self.death_counter is None:
+                    self.death_counter = times_whited_out
+                elif times_whited_out > self.death_counter:
+                    await ctx.send_death(f"{ctx.player_names[ctx.slot]} is out of usable POKéMON! "
+                                         f"{ctx.player_names[ctx.slot]} whited out!")
+                    self.ignore_next_death_link = True
+                    self.death_counter = times_whited_out
