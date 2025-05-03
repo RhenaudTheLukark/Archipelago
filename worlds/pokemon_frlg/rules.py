@@ -85,6 +85,7 @@ class PokemonFRLGLogic:
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
     pokemon_hm_use: Dict[str, List[str]]
+    evolution_state_item_names_lookup: Dict[str, List[str]]
 
     def __init__(self, player: int, item_id_to_name: Dict[int, str]) -> None:
         self.player = player
@@ -101,6 +102,7 @@ class PokemonFRLGLogic:
         self.randomizing_entrances = False
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
+        self.evolution_state_item_names_lookup = {}
 
     def update_hm_compatible_pokemon(self):
         pokemon_hm_use = defaultdict(list)
@@ -158,6 +160,9 @@ class PokemonFRLGLogic:
 
     def has_pokemon(self, state: CollectionState, pokemon: str) -> bool:
         return state.has_any(self.dexsanity_state_item_names_lookup[pokemon], self.player)
+
+    def has_pokemon_for_evolution(self, state: CollectionState, pokemon: str) -> bool:
+        return state.has_any(self.evolution_state_item_names_lookup[pokemon], self.player)
 
     def has_n_pokemon(self, state: CollectionState, n: int) -> bool:
         if n <= 0:
@@ -252,8 +257,11 @@ class PokemonFRLGLogic:
         else:
             dexsanity_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist}
 
+        evolution_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist}
+
         oaks_aides_species_item_names = []
         dexsanity_state_item_names = {}
+        evolution_state_item_names = {}
         for species in data.species.values():
             species_name = species.name
             static_species_name = f"Static {species_name}"
@@ -272,8 +280,16 @@ class PokemonFRLGLogic:
 
             dexsanity_state_item_names[species_name] = tuple(dexsanity_item_names)
 
+            evolution_item_names = []
+            for name in (species_name, evolved_species_name):
+                if name in evolution_relevant_pokemon_event_names:
+                    evolution_item_names.append(name)
+
+            evolution_state_item_names[species_name] = tuple(evolution_item_names)
+
         self.oaks_aides_species_item_names[:] = oaks_aides_species_item_names
         self.dexsanity_state_item_names_lookup.update(dexsanity_state_item_names)
+        self.evolution_state_item_names_lookup.update(evolution_state_item_names)
 
 
 def set_logic_options(world: "PokemonFRLGWorld") -> None:
@@ -289,6 +305,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     # Until locations have been created, assume all pokemon species are present in the world.
     dexsanity_state_item_names = {}
     oaks_aides_species_item_names = []
+    evolution_state_item_names = {}
     for species in data.species.values():
         species_name = species.name
 
@@ -303,8 +320,13 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
         else:
             oaks_aide_item_names = (species_name, f"Static {species_name}")
         oaks_aides_species_item_names.append(oaks_aide_item_names)
+
+        evolution_item_names = (species_name, f"Evolved {species_name}")
+        evolution_state_item_names[species_name] = evolution_item_names
+
     logic.dexsanity_state_item_names_lookup.update(dexsanity_state_item_names)
     logic.oaks_aides_species_item_names[:] = oaks_aides_species_item_names
+    logic.evolution_state_item_names_lookup.update(evolution_state_item_names)
 
     if "Level" in world.options.evolution_methods_required.value:
         logic.evo_methods_required.update(EVO_METHODS_LEVEL)
@@ -1696,24 +1718,25 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
 def _add_evolution_rule(world: "PokemonFRLGWorld", location: PokemonFRLGLocation):
     pokemon = location.name.split(" - ")[1].strip()
-    pokemon_item_base_name = re.sub(r' \d+', '', pokemon)
-    pokemon_item_names = (pokemon_item_base_name, f"Evolved {pokemon_item_base_name}")
+    pokemon_species_name = re.sub(r' \d+', '', pokemon)
     evo_data = data.evolutions[pokemon]
     evo_method = evo_data.method
     player = world.player
     logic = world.logic
     if evo_method in EVO_METHODS_ITEM:
         use_item = logic.world_item_id_map[evo_data.param]
-        add_rule(location, lambda state: state.has_any(pokemon_item_names, player) and state.has(use_item, player))
+        add_rule(location, lambda state: (logic.has_pokemon_for_evolution(state, pokemon_species_name)
+                                          and state.has(use_item, player)))
     elif evo_method in EVO_METHODS_HELD_ITEM:
         items = (logic.world_item_id_map[evo_data.param], logic.world_item_id_map[evo_data.param2])
-        add_rule(location, lambda state: state.has_any(pokemon_item_names, player) and state.has_all(items, player))
+        add_rule(location, lambda state: (logic.has_pokemon_for_evolution(state, pokemon_species_name)
+                                          and state.has_all(items, player)))
     elif evo_method in EVO_METHODS_LEVEL_ANY:
         gyms_requirement = evo_data.param / 7
-        add_rule(location, lambda state: (state.has_any(pokemon_item_names, player)
+        add_rule(location, lambda state: (logic.has_pokemon_for_evolution(state, pokemon_species_name)
                                           and logic.has_n_gyms(state, gyms_requirement)))
     elif evo_method in EVO_METHODS_FRIENDSHIP:
-        add_rule(location, lambda state: state.has_any(pokemon_item_names, player))
+        add_rule(location, lambda state: logic.has_pokemon_for_evolution(state, pokemon_species_name))
     else:
         raise RuntimeError(f"Unexpected evo method: {evo_method}")
 
