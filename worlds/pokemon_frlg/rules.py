@@ -60,6 +60,15 @@ EVO_METHODS_FRIENDSHIP = {
 }
 
 
+ISLAND_PASSES = ("Tri Pass", "Rainbow Pass")
+SPLIT_ISLAND_PASSES = ("One Pass", "Two Pass", "Three Pass", "Four Pass", "Five Pass", "Six Pass", "Seven Pass")
+CARD_KEYS_PER_FLOOR = {floor: ("Card Key", f"Card Key {floor}F") for floor in range(1, 12)}
+BADGES = ("Boulder Badge", "Cascade Badge", "Thunder Badge", "Rainbow Badge", "Soul Badge", "Marsh Badge",
+          "Volcano Badge", "Earth Badge")
+GYMS = ("Defeat Brock", "Defeat Misty", "Defeat Lt. Surge", "Defeat Erika", "Defeat Koga", "Defeat Sabrina",
+        "Defeat Blaine", "Defeat Giovanni")
+
+
 class PokemonFRLGLogic:
     player: int
     compatible_hm_pokemon: Dict[str, List[str]]
@@ -149,14 +158,10 @@ class PokemonFRLGLogic:
                 state.has(f"can_teach_hm_Waterfall", self.player))
 
     def has_n_badges(self, state: CollectionState, n: int) -> bool:
-        badges = ("Boulder Badge", "Cascade Badge", "Thunder Badge", "Rainbow Badge",
-                  "Soul Badge", "Marsh Badge", "Volcano Badge", "Earth Badge")
-        return state.has_from_list_unique(badges, self.player, n)
+        return state.has_from_list_unique(BADGES, self.player, n)
 
     def has_n_gyms(self, state: CollectionState, n: int) -> bool:
-        gyms = ("Defeat Brock", "Defeat Misty", "Defeat Lt. Surge", "Defeat Erika",
-                "Defeat Koga", "Defeat Sabrina", "Defeat Blaine", "Defeat Giovanni")
-        return state.has_from_list_unique(gyms, self.player, n)
+        return state.has_from_list_unique(GYMS, self.player, n)
 
     def has_pokemon(self, state: CollectionState, pokemon: str) -> bool:
         return state.has_any(self.dexsanity_state_item_names_lookup[pokemon], self.player)
@@ -184,15 +189,14 @@ class PokemonFRLGLogic:
         return state.has_all(("Rescue Selphy", data.species[self.resort_gorgeous_pokemon].name), self.player)
 
     def has_island_pass(self, state: CollectionState, group: int) -> bool:
-        passes = ["Tri Pass", "Rainbow Pass"]
-        return state.has(passes[group - 1], self.player) or state.has("Progressive Pass", self.player, group)
+        return state.has(ISLAND_PASSES[group - 1], self.player) or state.has("Progressive Pass", self.player, group)
 
     def has_split_island_pass(self, state: CollectionState, island: int) -> bool:
-        passes = ["One Pass", "Two Pass", "Three Pass", "Four Pass", "Five Pass", "Six Pass", "Seven Pass"]
-        return state.has(passes[island - 1], self.player) or state.has("Progressive Pass", self.player, island)
+        return (state.has(SPLIT_ISLAND_PASSES[island - 1], self.player)
+                or state.has("Progressive Pass", self.player, island))
 
     def has_card_key(self, state: CollectionState, floor: int) -> bool:
-        return (state.has_any(("Card Key", f"Card Key {floor}F"), self.player) or
+        return (state.has_any(CARD_KEYS_PER_FLOOR[floor], self.player) or
                 state.has("Progressive Card Key", self.player, floor - 1))
 
     def can_stop_seafoam_b3f_current(self, state) -> bool:
