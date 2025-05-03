@@ -96,10 +96,15 @@ class PokemonFRLGLogic:
         return not self.badge_required[hm] or state.has(BADGE_REQUIREMENTS[hm], self.player)
 
     def can_teach_hm(self, state: CollectionState, hm: str) -> bool:
-        for species in self.compatible_hm_pokemon[hm]:
-            if (state.has(species, self.player) or
-                    (state.has(f"Evolved {species}", self.player) and self.hms_require_evos)):
-                return True
+        player = self.player
+        if self.hms_require_evos:
+            for species in self.compatible_hm_pokemon[hm]:
+                if state.has_any((species, f"Evolved {species}"), player):
+                    return True
+        else:
+            for species in self.compatible_hm_pokemon[hm]:
+                if state.has(species, player):
+                    return True
         return False
 
     def can_cut(self, state: CollectionState) -> bool:
