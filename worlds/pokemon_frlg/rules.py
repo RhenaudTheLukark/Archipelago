@@ -74,6 +74,7 @@ class PokemonFRLGLogic:
     oaks_aides_require_evos: bool
     randomizing_entrances: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
+    oaks_aides_species_item_names: List[Tuple[str, ...]]
 
     def __init__(self, player: int, item_id_to_name: Dict[int, str]) -> None:
         self.player = player
@@ -89,6 +90,7 @@ class PokemonFRLGLogic:
         self.oaks_aides_require_evos = False
         self.randomizing_entrances = False
         self.dexsanity_state_item_names_lookup = {}
+        self.oaks_aides_species_item_names = []
 
     def has_badge_requirement(self, state: CollectionState, hm: str) -> bool:
         return not self.badge_required[hm] or state.has(BADGE_REQUIREMENTS[hm], self.player)
@@ -150,10 +152,8 @@ class PokemonFRLGLogic:
 
     def has_n_pokemon(self, state: CollectionState, n: int) -> bool:
         count = 0
-        for species in data.species.values():
-            if state.has_any((species.name, f"Static {species.name}"), self.player):
-                count += 1
-            elif self.oaks_aides_require_evos and state.has(f"Evolved {species.name}", self.player):
+        for species_item_names in self.oaks_aides_species_item_names:
+            if state.has_any(species_item_names, self.player):
                 count += 1
             if count >= n:
                 return True
@@ -216,14 +216,23 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
 
     dexsanity_state_item_names = {}
+    oaks_aides_species_item_names = []
     for species in data.species.values():
         species_name = species.name
+
         if logic.dexsanity_requires_evos and species.pre_evolution is not None:
             state_item_names = (species_name, f"Static {species_name}", f"Evolved {species_name}")
         else:
             state_item_names = (species_name, f"Static {species_name}")
         dexsanity_state_item_names[species_name] = state_item_names
+
+        if logic.oaks_aides_require_evos and species.pre_evolution is not None:
+            oaks_aide_item_names = (species_name, f"Static {species_name}", f"Evolved {species_name}")
+        else:
+            oaks_aide_item_names = (species_name, f"Static {species_name}")
+        oaks_aides_species_item_names.append(oaks_aide_item_names)
     logic.dexsanity_state_item_names_lookup.update(dexsanity_state_item_names)
+    logic.oaks_aides_species_item_names[:] = oaks_aides_species_item_names
 
     if "Level" in world.options.evolution_methods_required.value:
         logic.evo_methods_required.update(EVO_METHODS_LEVEL)
