@@ -2,6 +2,7 @@
 ## Updates
 + New option `remote_items`
   + All randomized items are sent from the server instead of being patched into your game
++ New option `death_link`
 
 ## Bug Fixes
 + Fixed an issue where sometimes `dexsanity` locations were removed even if they were accessible in the seed

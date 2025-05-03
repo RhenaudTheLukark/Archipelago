@@ -3,7 +3,8 @@ Option definitions for Pokémon FireRed/LeafGreen
 """
 from dataclasses import dataclass
 from schema import Optional, Schema, And, Use
-from Options import Choice, DefaultOnToggle, NamedRange, OptionDict, OptionSet, PerGameCommonOptions, Range, Toggle
+from Options import (Choice, DeathLink, DefaultOnToggle, NamedRange, OptionDict, OptionSet, PerGameCommonOptions, Range,
+                     Toggle)
 from .data import data, ability_name_map, fly_blacklist_map, fly_plando_maps, move_name_map, starting_town_blacklist_map
 
 
@@ -1248,6 +1249,10 @@ class ProvideHints(Toggle):
     display_name = "Provide Hints"
 
 
+class PokemonFRLGDeathLink(DeathLink):
+    __doc__ = DeathLink.__doc__ + "\n\n    In Pokemon FireRed/LeafGreen, whiting out sends a death and receiving a death causes you to white out."
+
+
 @dataclass
 class PokemonFRLGOptions(PerGameCommonOptions):
     game_version: GameVersion
@@ -1353,3 +1358,5 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     randomize_fanfares: RandomizeFanfares
     game_options: GameOptions
     provide_hints: ProvideHints
+
+    death_link: PokemonFRLGDeathLink
