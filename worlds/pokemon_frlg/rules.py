@@ -123,39 +123,32 @@ class PokemonFRLGLogic:
         return not self.badge_required[hm] or state.has(BADGE_REQUIREMENTS[hm], self.player)
 
     def can_cut(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM01 Cut", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Cut") and
-                state.has(f"can_teach_hm_Cut", self.player))
+        return (state.has_all(("HM01 Cut", "TM Case", "can_teach_hm_Cut"), self.player) and
+                self.has_badge_requirement(state, "Cut"))
 
     def can_fly(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM02 Fly", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Fly") and
-                state.has(f"can_teach_hm_Fly", self.player))
+        return (state.has_all(("HM02 Fly", "TM Case", "can_teach_hm_Fly"), self.player) and
+                self.has_badge_requirement(state, "Fly"))
 
     def can_surf(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM03 Surf", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Surf") and
-                state.has(f"can_teach_hm_Surf", self.player))
+        return (state.has_all(("HM03 Surf", "TM Case", "can_teach_hm_Surf"), self.player) and
+                self.has_badge_requirement(state, "Surf"))
 
     def can_strength(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM04 Strength", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Strength") and
-                state.has(f"can_teach_hm_Strength", self.player))
+        return (state.has_all(("HM04 Strength", "TM Case", "can_teach_hm_Strength"), self.player) and
+                self.has_badge_requirement(state, "Strength"))
 
     def can_flash(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM05 Flash", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Flash") and
-                state.has(f"can_teach_hm_Flash", self.player))
+        return (state.has_all(("HM05 Flash", "TM Case", "can_teach_hm_Flash"), self.player) and
+                self.has_badge_requirement(state, "Flash"))
 
     def can_rock_smash(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM06 Rock Smash", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Rock Smash") and
-                state.has(f"can_teach_hm_Rock Smash", self.player))
+        return (state.has_all(("HM06 Rock Smash", "TM Case", "can_teach_hm_Rock Smash"), self.player) and
+                self.has_badge_requirement(state, "Rock Smash"))
 
     def can_waterfall(self, state: CollectionState) -> bool:
-        return (state.has_all(("HM07 Waterfall", "TM Case"), self.player) and
-                self.has_badge_requirement(state, "Waterfall") and
-                state.has(f"can_teach_hm_Waterfall", self.player))
+        return (state.has_all(("HM07 Waterfall", "TM Case", "can_teach_hm_Waterfall"), self.player) and
+                self.has_badge_requirement(state, "Waterfall"))
 
     def has_n_badges(self, state: CollectionState, n: int) -> bool:
         return state.has_from_list_unique(BADGES, self.player, n)
