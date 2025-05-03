@@ -151,12 +151,19 @@ class PokemonFRLGLogic:
         return state.has_any(self.dexsanity_state_item_names_lookup[pokemon], self.player)
 
     def has_n_pokemon(self, state: CollectionState, n: int) -> bool:
-        count = 0
+        if n <= 0:
+            return True
+        player = self.player
         for species_item_names in self.oaks_aides_species_item_names:
-            if state.has_any(species_item_names, self.player):
-                count += 1
-            if count >= n:
-                return True
+            # There are multiple item names for a species that can provide pokedex progress for that species.
+            if state.has_any(species_item_names, player):
+                # Subtraction is used to make use of a common programming performance 'trick' where, comparing two
+                # variables, e.g. `if count == n`, can be replaced with comparing a variable and a constant, e.g.
+                # `if n == 0`.
+                n -= 1
+                # Further minor optimisation of `if n == 0` -> `if not n`
+                if not n:
+                    return True
         return False
 
     def has_trade_pokemon(self, state: CollectionState, location_name: str) -> bool:
