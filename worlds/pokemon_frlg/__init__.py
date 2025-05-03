@@ -492,6 +492,8 @@ class PokemonFRLGWorld(World):
                         break
 
         self.multiworld.itempool += self.itempool
+        # Any unreachable evolutions have been removed, so update the species items oak's aides and dexsanity check for.
+        self.logic.update_species(self)
 
     def connect_entrances(self) -> None:
         set_free_fly(self)

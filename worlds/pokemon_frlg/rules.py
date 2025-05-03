@@ -3,7 +3,7 @@ Logic rule definitions for Pokémon FireRed and LeafGreen
 """
 import re
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, List, Set, Tuple
+from typing import TYPE_CHECKING, Dict, List, Set, Tuple, cast, Iterable
 from BaseClasses import CollectionState
 from worlds.generic.Rules import CollectionRule, add_rule
 from .data import data, NAME_TO_SPECIES_ID, EvolutionMethodEnum, LocationCategory
@@ -216,6 +216,62 @@ class PokemonFRLGLogic:
             return state.has_all(("Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"), self.player)
         return False
 
+    def update_species(self, world: "PokemonFRLGWorld"):
+        """
+        Update available species items used in logic for oak's aide, dexsanity and pokemon request locations, for the
+        wild/static/legendary/evolution pokemon events that exist in the world.
+        """
+        pokemon_event_categories = {
+            LocationCategory.EVENT_WILD_POKEMON,
+            LocationCategory.EVENT_STATIC_POKEMON,
+            LocationCategory.EVENT_LEGENDARY_POKEMON,
+            LocationCategory.EVENT_EVOLUTION_POKEMON,
+        }
+
+        pokemon_events_that_exist = [location for location
+                                     in cast(Iterable[PokemonFRLGLocation], world.get_locations())
+                                     if location.category in pokemon_event_categories and location.advancement]
+        assert pokemon_events_that_exist
+
+        if not self.oaks_aides_require_evos:
+            # Filter out evolutions.
+            evolution_category = LocationCategory.EVENT_EVOLUTION_POKEMON
+            oaks_aide_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist
+                                                      if location.category is not evolution_category}
+        else:
+            oaks_aide_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist}
+
+        if not self.dexsanity_requires_evos:
+            # Filter out evolutions.
+            evolution_category = LocationCategory.EVENT_EVOLUTION_POKEMON
+            dexsanity_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist
+                                                      if location.category is not evolution_category}
+        else:
+            dexsanity_relevant_pokemon_event_names = {location.item.name for location in pokemon_events_that_exist}
+
+        oaks_aides_species_item_names = []
+        dexsanity_state_item_names = {}
+        for species in data.species.values():
+            species_name = species.name
+            static_species_name = f"Static {species_name}"
+            evolved_species_name = f"Evolved {species_name}"
+
+            oaks_aide_item_names = []
+            dexsanity_item_names = []
+            for name in (species_name, static_species_name, evolved_species_name):
+                if name in oaks_aide_relevant_pokemon_event_names:
+                    oaks_aide_item_names.append(name)
+                if name in dexsanity_relevant_pokemon_event_names:
+                    dexsanity_item_names.append(name)
+
+            if oaks_aide_item_names:
+                oaks_aides_species_item_names.append(tuple(oaks_aide_item_names))
+
+            dexsanity_state_item_names[species_name] = tuple(dexsanity_item_names)
+
+        self.oaks_aides_species_item_names[:] = oaks_aides_species_item_names
+        self.dexsanity_state_item_names_lookup.update(dexsanity_state_item_names)
+
 
 def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic = world.logic
@@ -227,6 +283,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.hms_require_evos = "HM Requirement" in world.options.evolutions_required.value
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
 
+    # Until locations have been created, assume all pokemon species are present in the world.
     dexsanity_state_item_names = {}
     oaks_aides_species_item_names = []
     for species in data.species.values():
