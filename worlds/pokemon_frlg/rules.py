@@ -159,7 +159,7 @@ class PokemonFRLGLogic:
 
     def can_evolve(self, state: CollectionState, pokemon: str) -> bool:
         evo_data = data.evolutions[pokemon]
-        pokemon = re.sub(r'\d+', '', pokemon)
+        pokemon = re.sub(r' \d+', '', pokemon)
         if state.has_any({pokemon, f"Evolved {pokemon}"}, self.player) and evo_data.method in self.evo_methods_required:
             if evo_data.method in EVO_METHODS_ITEM:
                 return state.has(self.world_item_id_map[evo_data.param], self.player)

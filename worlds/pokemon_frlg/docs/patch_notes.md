@@ -1,3 +1,7 @@
+# 0.9.4
+## Bug Fixes
++ Fixed an issue where pokemon with branching evolutions has their evolved forms never be expected by the logic
+
 # 0.9.3
 ## Updates
 + New option `remote_items`
