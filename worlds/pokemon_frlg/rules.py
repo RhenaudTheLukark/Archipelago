@@ -1732,7 +1732,7 @@ def _add_evolution_rule(world: "PokemonFRLGWorld", location: PokemonFRLGLocation
         add_rule(location, lambda state: (logic.has_pokemon_for_evolution(state, pokemon_species_name)
                                           and state.has_all(items, player)))
     elif evo_method in EVO_METHODS_LEVEL_ANY:
-        gyms_requirement = evo_data.param / 7
+        gyms_requirement = evo_data.param // 7
         add_rule(location, lambda state: (logic.has_pokemon_for_evolution(state, pokemon_species_name)
                                           and logic.has_n_gyms(state, gyms_requirement)))
     elif evo_method in EVO_METHODS_FRIENDSHIP:
