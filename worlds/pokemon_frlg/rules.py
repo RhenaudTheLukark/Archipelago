@@ -556,9 +556,9 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 5
     add_rule_safe("Route 5 Gate North Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Blue Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Blue Tea"), player))
     add_rule_safe("Route 5 Gate South Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Blue Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Blue Tea"), player))
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 5 Smashable Rocks",
                       lambda state: logic.can_rock_smash(state))
@@ -569,9 +569,9 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 6 Surfing Spot",
                   lambda state: logic.can_surf(state))
     add_rule_safe("Route 6 Gate South Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Red Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Red Tea"), player))
     add_rule_safe("Route 6 Gate North Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Red Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Red Tea"), player))
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 6 Smashable Rocks",
                       lambda state: logic.can_rock_smash(state))
@@ -644,9 +644,9 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 8 Cuttable Trees",
                   lambda state: logic.can_cut(state))
     add_rule_safe("Route 8 Gate East Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Purple Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Purple Tea"), player))
     add_rule_safe("Route 8 Gate West Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Purple Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Purple Tea"), player))
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 8 Smashable Rocks",
                       lambda state: logic.can_rock_smash(state))
@@ -655,9 +655,9 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 7
     add_rule_safe("Route 7 Gate West Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Green Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Green Tea"), player))
     add_rule_safe("Route 7 Gate East Guard Checkpoint",
-                  lambda state: state.has_any({"Tea", "Green Tea"}, player))
+                  lambda state: state.has_any(("Tea", "Green Tea"), player))
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 7 Smashable Rocks",
                       lambda state: logic.can_rock_smash(state))
@@ -805,7 +805,7 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if "Remove Saffron Rockets" not in options.modify_world_state.value:
         if "Open Silph" not in options.modify_world_state.value:
             add_rule_safe("Silph Co.",
-                          lambda state: state.has_any({"Rescue Mr. Fuji", "Liberate Silph Co."}, player))
+                          lambda state: state.has_any(("Rescue Mr. Fuji", "Liberate Silph Co."), player))
         add_rule_safe("Copycat's House",
                       lambda state: state.has("Liberate Silph Co.", player))
         add_rule_safe("Saffron Gym",
@@ -1070,7 +1070,7 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Five Isle Meadow Surfing Spot",
                   lambda state: logic.can_surf(state))
     add_rule_safe("Rocket Warehouse",
-                  lambda state: state.has_all({"Learn Goldeen Need Log", "Learn Yes Nah Chansey"}, player))
+                  lambda state: state.has_all(("Learn Goldeen Need Log", "Learn Yes Nah Chansey"), player))
 
     # Resort Gorgeous
     add_rule_safe("Resort Gorgeous Near Resort Surfing Spot",
@@ -1230,9 +1230,9 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 22 Early Rival Scaling",
                   lambda state: state.has("Deliver Oak's Parcel", player))
     add_rule_safe("Route 22 - Late Rival Reward",
-                  lambda state: state.has_all({"Defeat Route 22 Rival", "Defeat Giovanni"}, player))
+                  lambda state: state.has_all(("Defeat Route 22 Rival", "Defeat Giovanni"), player))
     add_rule_safe("Route 22 Late Rival Scaling",
-                  lambda state: state.has_all({"Defeat Route 22 Rival", "Defeat Giovanni"}, player))
+                  lambda state: state.has_all(("Defeat Route 22 Rival", "Defeat Giovanni"), player))
 
     # Route 2
     add_rule_safe("Route 2 Gate - Oak's Aide Gift (Pokedex Progress)",
@@ -1648,7 +1648,7 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Water Labyrinth
     add_rule_safe("Water Labyrinth - Gentleman Info",
-                  lambda state: state.has_all({"Togepi", "Togetic"}, player))
+                  lambda state: state.has_all(("Togepi", "Togetic"), player))
 
     # Resort Gorgeous
     add_rule_safe("Selphy's House - Selphy Gift (Show Pokemon)",
