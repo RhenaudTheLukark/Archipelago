@@ -1648,7 +1648,7 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Water Labyrinth
     add_rule_safe("Water Labyrinth - Gentleman Info",
-                  lambda state: state.has_all(("Togepi", "Togetic"), player))
+                  lambda state: state.has_any(("Togepi", "Togetic"), player))
 
     # Resort Gorgeous
     add_rule_safe("Selphy's House - Selphy Gift (Show Pokemon)",
