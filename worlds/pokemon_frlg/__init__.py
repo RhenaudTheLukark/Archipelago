@@ -443,7 +443,7 @@ class PokemonFRLGWorld(World):
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
         for location in evolution_region.locations.copy():
-            if not state.can_reach(location, self.player):
+            if not location.can_reach(state):
                 evolution_region.locations.remove(location)
 
         # Delete trainersanity locations if there are more than the amount specified in the settings
@@ -471,7 +471,7 @@ class PokemonFRLGWorld(World):
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                if not state.can_reach(location, self.player):
+                if not location.can_reach(state):
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop())
 
