@@ -12,7 +12,7 @@ import threading
 from collections import defaultdict
 from typing import Any, ClassVar, Dict, List, Set, TextIO
 
-from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial
+from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial, Item
 from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
@@ -443,7 +443,7 @@ class PokemonFRLGWorld(World):
         # Delete evolutions that are not in logic in an all state so that the accessibility check doesn't fail
         evolution_region = self.multiworld.get_region("Evolutions", self.player)
         for location in evolution_region.locations.copy():
-            if not state.can_reach(location, self.player):
+            if not location.can_reach(state):
                 evolution_region.locations.remove(location)
 
         # Delete trainersanity locations if there are more than the amount specified in the settings
@@ -471,7 +471,7 @@ class PokemonFRLGWorld(World):
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
-                if not state.can_reach(location, self.player):
+                if not location.can_reach(state):
                     pokedex_region.locations.remove(location)
                     self.itempool.remove(filler_items.pop())
 
@@ -492,6 +492,8 @@ class PokemonFRLGWorld(World):
                         break
 
         self.multiworld.itempool += self.itempool
+        # Any unreachable evolutions have been removed, so update the species items oak's aides and dexsanity check for.
+        self.logic.update_species(self)
 
     def connect_entrances(self) -> None:
         set_free_fly(self)
@@ -799,3 +801,25 @@ class PokemonFRLGWorld(World):
 
     def get_pre_fill_items(self):
         return self.pre_fill_items
+
+    def collect(self, state: "CollectionState", item: "Item") -> bool:
+        changed = super().collect(state, item)
+        if changed:
+            item_name = item.name
+            if item_name in self.logic.pokemon_hm_use:
+                state.prog_items[self.player].update(self.logic.pokemon_hm_use[item_name])
+            return True
+        else:
+            return False
+
+    def remove(self, state: "CollectionState", item: "Item") -> bool:
+        changed = super().remove(state, item)
+        if changed:
+            item_name = item.name
+            if item_name in self.logic.pokemon_hm_use:
+                state.prog_items[self.player].subtract(self.logic.pokemon_hm_use[item_name])
+            return True
+        else:
+            return False
+
+
