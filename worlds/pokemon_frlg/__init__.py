@@ -353,11 +353,11 @@ class PokemonFRLGWorld(World):
 
         self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
 
-        items_to_remove: List[PokemonFRLGItem] = list()
-        items_to_add: List[PokemonFRLGItem] = list()
+        items_to_remove: List[PokemonFRLGItem] = []
+        items_to_add: List[PokemonFRLGItem] = []
 
         if not self.options.shuffle_badges:
-            badge_items = [self.create_item(badge) for badge in item_groups["Badges"]]
+            badge_items = [self.create_item(badge) for badge in sorted(item_groups["Badges"])]
             items_to_remove.extend(badge_items)
             self.pre_fill_items.extend(badge_items)
 
