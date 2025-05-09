@@ -150,7 +150,6 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
                                                            on_connect=connect_simple_entrances)
             world.er_spoiler_names.extend(single_dungeon_entrances + multi_dungeon_entrances)
             world.logic.randomizing_entrances = False
-            world.logic.guaranteed_hm_access = False
             # Make the Pokemon Mansion other exit match the shuffled exit
             cinnabar_region = world.get_region("Cinnabar Island")
             mansion_shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit")
@@ -168,8 +167,6 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
                 raise EntranceRandomizationError(f"Pokemon FRLG: GER failed for player {world.player} "
                                                  f"({world.player_name}) after {MAX_GER_ATTEMPTS} attempts. Final "
                                                  f"error here: \n\n{error}")
-            if i >= MAX_GER_ATTEMPTS / 2:
-                world.logic.guaranteed_hm_access = True
             for region in world.get_regions():
                 for exit in region.get_exits():
                     if (exit.randomization_group in available_shuffle_types and

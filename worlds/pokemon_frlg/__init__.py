@@ -516,7 +516,8 @@ class PokemonFRLGWorld(World):
             # Try to place badges with current Pokemon and HM access
             # If it can't, try with guaranteed HM access and fix it later
             if attempt > 1:
-                self.logic.guaranteed_hm_access = True
+                for hm in ["Cut", "Fly", "Surf", "Strength", "Flash", "Rock Smash", "Waterfall"]:
+                    state.collect(f"Teach {hm}")
             state.sweep_for_advancements()
             self.random.shuffle(badge_items)
             self.random.shuffle(badge_locations)
