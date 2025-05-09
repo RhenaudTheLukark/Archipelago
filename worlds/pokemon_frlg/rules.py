@@ -169,7 +169,7 @@ class PokemonFRLGLogic:
             return True
         player = self.player
         for species_item_names in self.oaks_aides_species_item_names:
-            # There are multiple item names for a species that can provide pokedex progress for that species.
+            # There are multiple item names for a species that can provide Pokédex progress for that species.
             if state.has_any(species_item_names, player):
                 # Subtraction is used to make use of a common programming performance 'trick' where, comparing two
                 # variables, e.g. `if count == n`, can be replaced with comparing a variable and a constant, e.g.
