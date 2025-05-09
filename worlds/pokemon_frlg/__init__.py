@@ -514,13 +514,9 @@ class PokemonFRLGWorld(World):
             ]
             state = self.get_world_collection_state()
             # Try to place badges with current Pokemon and HM access
-            # If it can't, try with all Pokemon collected and fix the HM access after
+            # If it can't, try with guaranteed HM access and fix it later
             if attempt > 1:
-                for species in data.species.values():
-                    state.collect(PokemonFRLGItem(species.name,
-                                                      ItemClassification.progression_skip_balancing,
-                                                      None,
-                                                      self.player))
+                self.logic.guaranteed_hm_access = True
             state.sweep_for_advancements()
             self.random.shuffle(badge_items)
             self.random.shuffle(badge_locations)
@@ -536,6 +532,7 @@ class PokemonFRLGWorld(World):
                 break
         else:
             raise FillError(f"Failed to place badges for player {self.player}")
+        self.logic.guaranteed_hm_access = False
         verify_hm_accessibility(self)
 
     def generate_basic(self) -> None:
@@ -821,5 +818,3 @@ class PokemonFRLGWorld(World):
             return True
         else:
             return False
-
-
