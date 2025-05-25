@@ -82,6 +82,7 @@ class PokemonFRLGLogic:
     hms_require_evos: bool
     oaks_aides_require_evos: bool
     randomizing_entrances: bool
+    guaranteed_hm_access: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
     pokemon_hm_use: Dict[str, List[str]]
@@ -100,6 +101,7 @@ class PokemonFRLGLogic:
         self.hms_require_evos = False
         self.oaks_aides_require_evos = False
         self.randomizing_entrances = False
+        self.guaranteed_hm_access = False
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
         self.evolution_state_item_names_lookup = {}
