@@ -30,7 +30,7 @@ If you want to quickly get into using the adjuster, you can create a sprite pack
 Once you have said pack, modify the sprites in it at your leisure, but feel free to check the specifications for each
 folder if you encounter any problem.
 
-Once a ROM (or AP patch) and a sprite pack is given, you just need to[apply the sprite pack](#applying-the-sprite-pack)
+Once a ROM (or AP patch) and a sprite pack is given, you just need to [apply the sprite pack](#applying-the-sprite-pack)
 and run your adjusted ROM in your emulator of choice, and you're good to go!
 
 ## Sprite Pack
@@ -67,6 +67,9 @@ extract all resources from the ROM with one button press.
 
 Once you press any of the `Extract` buttons, you must select a folder in which either all resources from the
 currently selected object will be extracted, or in which a complete sprite pack will be extracted.
+
+<u>Note:</u> If you try to extract resources in a folder that doesn't exist, the adjuster will create said folders
+first.
 
 ### Pokémon Folder Specifications
 
@@ -105,8 +108,10 @@ the Pokémon sprite used when looking at a Pokémon's status in your team menu
 - `icon-X.png`: Icon used for the Pokémon in the team menu
     - Required sprite size: `32x32px` sprite with `2` frames (`32x64px`)
     - X must be a value between 0 and 2: This number will choose which icon palette to use
-    - Icon palettes: Palette 0, Palette 1, Palette 2
-    - Alternatively, ``
+    - Icon palettes: [Palette 0](./files/icon_palette_0.pal), [Palette 1](./files/icon_palette_1.pal),
+    [Palette 2](./files/icon_palette_2.pal)
+    - Alternatively, `Venusaur` uses Palette 1, `Charizard` uses Palette 0, and `Blastoise` uses Palette 2. You can
+    extract those objects to get icon sprites with the right palettes.
 - `footprint.png`: Pokémon's footprint in the Pokédex
     - Required sprite size: `16x16px` sprite
     - Required palette: Exactly 2 colors: black (0, 0, 0) and white (255, 255, 255)
