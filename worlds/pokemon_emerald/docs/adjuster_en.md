@@ -2,7 +2,7 @@
 
 1) [Introduction](#introduction)
 2) [Quickstart](#quickstart)
-2) [Sprite Pack](#sprite-pack)
+3) [Sprite Pack](#sprite-pack)
     1) [Extracting Resources from the ROM](#extracting-resources-from-the-rom)
     2) [Pokémon Folder Specifications](#pokemon-folder-specifications)
         1) [Pokémon Folder Sprites](#pokemon-folder-sprites)
@@ -11,8 +11,8 @@
         1) [Player Folder Palettes](#player-folder-palettes)
         2) [Player Folder Sprites](#player-folder-sprites)
         3) [Player Folder Sprite Size Override](#player-folder-sprite-size-override)
-3) [Pokémon Data Edition](#pokemon-data-edition)
-3) [Applying the Sprite Pack](#applying-the-sprite-pack)
+4) [Pokémon Data Edition](#pokemon-data-edition)
+5) [Applying the Sprite Pack](#applying-the-sprite-pack)
 
 ## Introduction
 
