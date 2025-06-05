@@ -174,15 +174,33 @@ the same between battle sprites, and between overworld sprites, unless stated ot
 #### Player Folder Palettes
 
 The palettes used for overworld sprites has some restrictions, as elements other than the player uses said palette:
-- The arrow displayed when next to an exit from a sub-area (cave, dungeon) uses the color #10 from the palette,
-- The exclamation mark displayed above trainers when they notice you before battling uses colors #15 and #16 from
-the palette,
-- The Pokémon you surf on in the overworld uses color #6 for its light shade, color #7 for its medium shade, and
-color #16 for its dark shade,
-- The Pokémon you fly on in the overworld uses color #6 for its light shade, color #7 for its medium shade, and
-color #16 for its dark shade,
+- The arrow displayed when next to an exit from a sub-area (cave, dungeon) alternates between color #10 (white) and
+color #11,
+- The exclamation mark emote displayed above trainers when they notice the player before battling uses many colors:
+color #10 (white) for the background, color #11 for the shadow of the box and its colored borders, color #8 for its
+colored border, and color #13 for the exclamation mark's color,
+- The double exclamation mark emote appearing on top of a trainer who wants a refight after using the VS Seeker
+also uses many colors: color #8 for the background, color #6 for the shadow of the colored borders, color #11 for
+the box's shadow, and color #10 (white) for its colored border and the cross,
+- The red cross emote appearing on top of a trainer who doesn't want a refight after using the VS Seeker uses many
+colors as well: color #10 (white) for the background, color #11 for the shadow of the box and its colored borders,
+color #8 for its colored border, and color #7 for the exclamation marks' color,
+- The Pokémon you surf on in the overworld uses color #7 for its body color, color #11 for its eyes, and color #10
+(white) for the waves it makes around itself on the water,
+- The Pokémon you fly on in the overworld uses color #16 (black) for the dark shade of its body, color #7 for the
+light shade of its body, and color #11 for its eyes
 
-For this reason, color #15 of the player's overworld palette must be white (255, 255, 255), and color #16 must be
+As a sum-up:
+
+- Color #6: Border shadow for the VS Seeker fail emote,
+- Color #7: Exclamation marks for the VS Seeker success emote, Surf & Fly Pokémon body color,
+- Color #8: Background for the VS Seeker fail emote, borders for all other emotes,
+- Color #10 (white): One of the arrow's colors, background for most emotes, waves around the Surf Pokémon,
+- Color #11: The other arrow color, border and box shadow for most emotes, Surf and Fly Pokémon eye color,
+- Color #13: Exclamation mark in the emote appearing when a trainer spots the player
+- Color #16 (black): Fly Pokémon dark body color
+
+For this reason, color #10 of the player's overworld palette must be white (255, 255, 255), and color #16 must be
 black (0, 0, 0).
 
 #### Player Folder Sprites
