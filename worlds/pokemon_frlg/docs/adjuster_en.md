@@ -113,8 +113,8 @@ the Pokémon in their status in the team menu
 - `icon-X.png`: Icon used for the Pokémon in the team menu
     - Required sprite size: `32x32px` sprite with `2` frames (`32x64px`)
     - X must be a value between 0 and 2: This number will choose which icon palette to use
-    - Icon palettes: [Palette 0](./files/icon_palette_0.pal), [Palette 1](./files/icon_palette_1.pal),
-    [Palette 2](./files/icon_palette_2.pal)
+    - Icon palettes: [Palette 0](./icon_palette_0.pal), [Palette 1](./icon_palette_1.pal),
+    [Palette 2](./icon_palette_2.pal)
     - Alternatively, `Venusaur` uses Palette 1, `Charizard` uses Palette 0, and `Blastoise` uses Palette 2. You can
     extract those objects to get icon sprites with the right palettes.
 - `footprint.png`: Pokémon's footprint in the Pokédex
