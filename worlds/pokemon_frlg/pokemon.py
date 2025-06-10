@@ -114,7 +114,7 @@ _DUNGEON_GROUPS: Dict[str, str] = {
 }
 
 # The tuple represnts (trainer name, starter index in party, starter evolution stage)
-_RIVAL_STARTER_POKEMON: List[Tuple[str, int, int]] = [
+_RIVAL_STARTER_POKEMON: List[List[Tuple[str, int, int]]] = [
     [
         ("TRAINER_RIVAL_OAKS_LAB_BULBASAUR", 0, 0),
         ("TRAINER_RIVAL_ROUTE22_EARLY_BULBASAUR", 1, 0),
