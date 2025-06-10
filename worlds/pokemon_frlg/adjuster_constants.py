@@ -178,6 +178,9 @@ FIRERED_DATA_ADDRESSES_ORIGINAL = {
     "gTrainerBackAnimsPtrTable": 0x239f74,
     "sBackAnims_Red": 0x239f44,
     "sBackAnims_RSBrendan": 0x239f64,
+    "gObjectEventBaseOam_16x16": 0x3a36f0,
+    "gObjectEventBaseOam_16x32": 0x3a3710,
+    "gObjectEventBaseOam_32x32": 0x3a3718,
     "gObjectEventSpriteOamTables_16x16": 0x3a3748,
     "gObjectEventSpriteOamTables_16x32": 0x3a379c,
     "gObjectEventSpriteOamTables_32x32": 0x3a37f0,
@@ -208,6 +211,9 @@ FIRERED_REV1_DATA_ADDRESSES_ORIGINAL = {
     "gTrainerBackAnimsPtrTable": 0x239fe4,
     "sBackAnims_Red": 0x239fb4,
     "sBackAnims_RSBrendan": 0x239fd4,
+    "gObjectEventBaseOam_16x16": 0x3a3760,
+    "gObjectEventBaseOam_16x32": 0x3a3780,
+    "gObjectEventBaseOam_32x32": 0x3a3788,
     "gObjectEventSpriteOamTables_16x16": 0x3a37b8,
     "gObjectEventSpriteOamTables_16x32": 0x3a380c,
     "gObjectEventSpriteOamTables_32x32": 0x3a3860,
@@ -238,6 +244,9 @@ LEAFGREEN_DATA_ADDRESSES_ORIGINAL = {
     "gTrainerBackAnimsPtrTable": 0x239f50,
     "sBackAnims_Red": 0x239f20,
     "sBackAnims_RSBrendan": 0x239f40,
+    "gObjectEventBaseOam_16x16": 0x3a36d0,
+    "gObjectEventBaseOam_16x32": 0x3a36f0,
+    "gObjectEventBaseOam_32x32": 0x3a36f8,
     "gObjectEventSpriteOamTables_16x16": 0x3a3728,
     "gObjectEventSpriteOamTables_16x32": 0x3a377c,
     "gObjectEventSpriteOamTables_32x32": 0x3a37d0,
@@ -268,6 +277,9 @@ LEAFGREEN_REV1_DATA_ADDRESSES_ORIGINAL = {
     "gTrainerBackAnimsPtrTable": 0x239fc0,
     "sBackAnims_Red": 0x239f90,
     "sBackAnims_RSBrendan": 0x239fb0,
+    "gObjectEventBaseOam_16x16": 0x3a3740,
+    "gObjectEventBaseOam_16x32": 0x3a3760,
+    "gObjectEventBaseOam_32x32": 0x3a3768,
     "gObjectEventSpriteOamTables_16x16": 0x3a3798,
     "gObjectEventSpriteOamTables_16x32": 0x3a37ec,
     "gObjectEventSpriteOamTables_32x32": 0x3a3840,
@@ -308,9 +320,9 @@ FR_LG_DATA_ADDRESS_INFOS: dict[str, int|dict[str, int]] = {
 }
 
 FR_LG_VALID_OVERWORLD_SPRITE_SIZES = [
-    {"width": 16, "height": 16, "data": "gObjectEventSpriteOamTables_16x16"},
-    {"width": 16, "height": 32, "data": "gObjectEventSpriteOamTables_16x32"},
-    {"width": 32, "height": 32, "data": "gObjectEventSpriteOamTables_32x32"},
+    {"width": 16, "height": 16, "data": "gObjectEventSpriteOamTables_16x16", "distrib": 'gObjectEventBaseOam_16x16'},
+    {"width": 16, "height": 32, "data": "gObjectEventSpriteOamTables_16x32", "distrib": 'gObjectEventBaseOam_16x32'},
+    {"width": 32, "height": 32, "data": "gObjectEventSpriteOamTables_32x32", "distrib": 'gObjectEventBaseOam_32x32'},
 ]
 
 FR_LG_POINTER_REFERENCES = {
