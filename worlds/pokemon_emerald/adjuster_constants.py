@@ -169,6 +169,9 @@ EMERALD_DATA_ADDRESSES_ORIGINAL = {
     "gTrainerBackAnimsPtrTable": 0x305d0c,
     "sBackAnims_Brendan": 0x305ccc,
     "sBackAnims_Red": 0x305cdc,
+    "gObjectEventBaseOam_16x16": 0x5094fc,
+    "gObjectEventBaseOam_16x32": 0x509514,
+    "gObjectEventBaseOam_32x32": 0x50951c,
     "sOamTables_16x16": 0x50954c,
     "sOamTables_16x32": 0x5095a0,
     "sOamTables_32x32": 0x5095f4,
@@ -189,9 +192,9 @@ EMERALD_DATA_ADDRESS_INFOS: dict[str, int | dict[str, int]] = {
 }
 
 EMERALD_VALID_OVERWORLD_SPRITE_SIZES: list[dict[str, int | str]] = [
-    {"width": 16, "height": 16, "data": "sOamTables_16x16"},
-    {"width": 16, "height": 32, "data": "sOamTables_16x32"},
-    {"width": 32, "height": 32, "data": "sOamTables_32x32"},
+    {"width": 16, "height": 16, "data": "sOamTables_16x16", "distrib": "gObjectEventBaseOam_16x16"},
+    {"width": 16, "height": 32, "data": "sOamTables_16x32", "distrib": "gObjectEventBaseOam_16x32"},
+    {"width": 32, "height": 32, "data": "sOamTables_32x32", "distrib": "gObjectEventBaseOam_32x32"},
 ]
 
 EMERALD_SPRITES_REQUIREMENTS: dict[str, dict[str, bool | int | list[int]]] = {
