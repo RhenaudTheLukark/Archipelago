@@ -43,7 +43,7 @@ from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 # Try adding the Pokemon Gen 3 Adjuster
 try:
     from worlds._pokemon_gen3_adjuster import __init__
-except:
+except ImportError:
     pass
 
 class PokemonFRLGWebWorld(WebWorld):
@@ -431,8 +431,8 @@ class PokemonFRLGWorld(World):
 
         # Add key items that are relevant in Kanto Only to the itempool
         if self.options.kanto_only:
-            items_to_add = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
-            for item_name in items_to_add:
+            item_names = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
+            for item_name in item_names:
                 self.itempool.append(self.create_item(item_name))
                 self.itempool.remove(filler_items.pop())
 

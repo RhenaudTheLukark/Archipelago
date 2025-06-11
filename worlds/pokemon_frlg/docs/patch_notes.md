@@ -1,9 +1,10 @@
 # 0.9.4
 ## Updates
 + Improvements made to reduce generation time (credit to [Mysteryem](https://github.com/Mysteryem))
++ Compatibility added for the Pokémon Gen III Adjuster (credit to [Rhenny](https://github.com/RhenaudTheLukark))
 
 ## Bug Fixes
-+ Fixed an issue where pokemon with branching evolutions has their evolved forms never be expected by the logic
++ Fixed an issue where Pokémon with branching evolutions has their evolved forms never be expected by the logic
 + Fixed a logic issue with the Water Labyrinth - Gentleman Info location assuming you need both Togepi and Togetic
 + Fixed an issue with the Saffron Dojo Leader and Team Rocket Warehouse Admin where if you lost to them, the trigger that caused them to face you and battle would no longer be triggered
 + Fixed an issue where the `Cerulean City - Rival Gift` location was a part of the "Overworld Items" location group instead of "NPC Gifts"

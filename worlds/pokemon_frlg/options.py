@@ -2,7 +2,7 @@
 Option definitions for Pokémon FireRed/LeafGreen
 """
 from dataclasses import dataclass
-from schema import Optional, Schema, And, Use
+from schema import Optional, Schema, And
 from Options import (Choice, DeathLink, DefaultOnToggle, NamedRange, OptionDict, OptionSet, PerGameCommonOptions, Range,
                      Toggle)
 from .data import data, ability_name_map, fly_blacklist_map, fly_plando_maps, move_name_map, starting_town_blacklist_map
@@ -1223,7 +1223,7 @@ class GameOptions(OptionDict):
         "Turbo A": And(str, lambda s: s in ("Off", "On")),
         "Auto Run": And(str, lambda s: s in ("Off", "On")),
         "Button Mode": And(str, lambda s: s in ("Help", "LR", "L=A")),
-        "Frame": And(Use(int), lambda n: 1 <= n <= 10),
+        "Frame": And(int, lambda n: 1 <= n <= 10),
         "Battle Scene": And(str, lambda s: s in ("Off", "On")),
         "Battle Style": And(str, lambda s: s in ("Shift", "Set")),
         "Show Effectiveness": And(str, lambda s: s in ("Off", "On")),
