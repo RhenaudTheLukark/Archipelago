@@ -217,14 +217,14 @@ class PokemonFRLGLogic:
     def has_lorelei_returned(self, state: CollectionState) -> bool:
         return state.has_all(("Defeat Champion", "Restore Pokemon Network Machine"), self.player)
 
-    def two_island_stall_expansion(self, state: CollectionState, expansion_level: int) -> bool:
-        if expansion_level == 1:
-            return state.has("Rescue Lostelle", self.player)
-        elif expansion_level == 2:
-            return state.has_all(("Rescue Lostelle", "Defeat Champion"), self.player)
-        elif expansion_level == 3:
-            return state.has_all(("Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"), self.player)
-        return False
+    def two_island_expansion_1(self, state: CollectionState) -> bool:
+        return state.has("Rescue Lostelle", self.player)
+
+    def two_island_expansion_2(self, state: CollectionState) -> bool:
+        return state.has_all(("Rescue Lostelle", "Defeat Champion"), self.player)
+
+    def two_island_expansion_3(self, state: CollectionState) -> bool:
+        return state.has_all(("Rescue Lostelle", "Defeat Champion", "Restore Pokemon Network Machine"), self.player)
 
     def update_species(self, world: "PokemonFRLGWorld"):
         """
@@ -1585,21 +1585,21 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Two Island Town - Item Behind Cuttable Tree",
                   lambda state: logic.can_cut(state))
     add_rule_safe("Two Island Town - Market Stall Item 2",
-                  lambda state: logic.two_island_stall_expansion(state, 1))
+                  lambda state: logic.two_island_expansion_1(state))
     add_rule_safe("Two Island Town - Market Stall Item 3",
-                  lambda state: logic.two_island_stall_expansion(state, 3))
+                  lambda state: logic.two_island_expansion_3(state))
     add_rule_safe("Two Island Town - Market Stall Item 4",
-                  lambda state: logic.two_island_stall_expansion(state, 3))
+                  lambda state: logic.two_island_expansion_3(state))
     add_rule_safe("Two Island Town - Market Stall Item 5",
-                  lambda state: logic.two_island_stall_expansion(state, 2))
+                  lambda state: logic.two_island_expansion_2(state))
     add_rule_safe("Two Island Town - Market Stall Item 6",
-                  lambda state: logic.two_island_stall_expansion(state, 1))
+                  lambda state: logic.two_island_expansion_1(state))
     add_rule_safe("Two Island Town - Market Stall Item 8",
-                  lambda state: logic.two_island_stall_expansion(state, 2))
+                  lambda state: logic.two_island_expansion_2(state))
     add_rule_safe("Two Island Town - Market Stall Item 9",
-                  lambda state: logic.two_island_stall_expansion(state, 3))
+                  lambda state: logic.two_island_expansion_3(state))
     add_rule_safe("Two Island Town - Beauty Info",
-                  lambda state: logic.two_island_stall_expansion(state, 2))
+                  lambda state: logic.two_island_expansion_2(state))
     add_rule_safe("Two Island Game Corner - Lostelle's Dad Gift (Deliver Meteorite)",
                   lambda state: logic.can_turn_in_meteorite(state))
     add_rule_safe("Two Island Game Corner - Lostelle's Dad's Delivery",

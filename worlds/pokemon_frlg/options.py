@@ -1240,13 +1240,18 @@ class GameOptions(OptionDict):
     })
 
 
-class ProvideHints(Toggle):
+class ProvideHints(Choice):
     """
     Provides an Archipelago Hint for locations that tell you what item they give once you've gotten the in game hint.
 
-    This includes the Oak's Aides, Bicycle Shop, and Pokemon Request Locations.
+    This includes the Oak's Aides, Bicycle Shop, Shops, and Pokemon Request Locations.
     """
     display_name = "Provide Hints"
+    default = 0
+    option_off = 0
+    option_progression = 1
+    option_progression_and_useful = 2
+    option_all = 3
 
 
 class PokemonFRLGDeathLink(DeathLink):

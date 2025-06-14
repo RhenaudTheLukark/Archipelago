@@ -4,7 +4,7 @@ from Options import Toggle
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
 from .data import data, APWORLD_VERSION
-from .options import Goal
+from .options import Goal, ProvideHints
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -75,16 +75,76 @@ TRACKER_FLY_UNLOCK_FLAGS = [
 FLY_UNLOCK_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in TRACKER_FLY_UNLOCK_FLAGS}
 
 HINT_FLAGS = {
-    "FLAG_HINT_ROUTE_2_OAKS_AIDE": "NPC_GIFT_GOT_HM05",
-    "FLAG_HINT_ROUTE_10_OAKS_AIDE": "NPC_GIFT_GOT_EVERSTONE_FROM_OAKS_AIDE",
-    "FLAG_HINT_ROUTE_11_OAKS_AIDE": "NPC_GIFT_GOT_ITEMFINDER",
-    "FLAG_HINT_ROUTE_16_OAKS_AIDE": "NPC_GIFT_GOT_AMULET_COIN_FROM_OAKS_AIDE",
-    "FLAG_HINT_ROUTE_15_OAKS_AIDE": "NPC_GIFT_GOT_EXP_SHARE_FROM_OAKS_AIDE",
-    "FLAG_HINT_BICYCLE_SHOP": "NPC_GIFT_GOT_BICYCLE",
-    "FLAG_HINT_SHOW_MAGIKARP": "NPC_GIFT_GOT_NET_BALL_FROM_ROUTE12_FISHING_HOUSE",
-    "FLAG_HINT_SHOW_HERACROSS": "NPC_GIFT_GOT_NEST_BALL_FROM_WATER_PATH_HOUSE_1",
-    "FLAG_HINT_SHOW_RESORT_GORGEOUS_MON": "NPC_GIFT_GOT_LUXURY_BALL_FROM_RESORT_GORGEOUS_HOUSE",
-    "FLAG_HINT_SHOW_TOGEPI": "FAME_CHECKER_DAISY_3"
+    "FLAG_HINT_VIRIDIAN_SHOP": ["SHOP_VIRIDIAN_CITY_1", "SHOP_VIRIDIAN_CITY_2", "SHOP_VIRIDIAN_CITY_3",
+                                "SHOP_VIRIDIAN_CITY_4"],
+    "FLAG_HINT_PEWTER_SHOP": ["SHOP_PEWTER_CITY_1", "SHOP_PEWTER_CITY_2", "SHOP_PEWTER_CITY_3", "SHOP_PEWTER_CITY_4",
+                              "SHOP_PEWTER_CITY_5", "SHOP_PEWTER_CITY_6", "SHOP_PEWTER_CITY_7", "SHOP_PEWTER_CITY_8"],
+    "FLAG_HINT_CERULEAN_SHOP": ["SHOP_CERULEAN_CITY_1", "SHOP_CERULEAN_CITY_2", "SHOP_CERULEAN_CITY_3",
+                                "SHOP_CERULEAN_CITY_4", "SHOP_CERULEAN_CITY_5", "SHOP_CERULEAN_CITY_6",
+                                "SHOP_CERULEAN_CITY_7", "SHOP_CERULEAN_CITY_8", "SHOP_CERULEAN_CITY_9"],
+    "FLAG_HINT_VERMILION_SHOP": ["SHOP_VERMILION_CITY_1", "SHOP_VERMILION_CITY_2", "SHOP_VERMILION_CITY_3",
+                                 "SHOP_VERMILION_CITY_4", "SHOP_VERMILION_CITY_5", "SHOP_VERMILION_CITY_6",
+                                 "SHOP_VERMILION_CITY_7"],
+    "FLAG_HINT_LAVENDER_SHOP": ["SHOP_LAVENDER_TOWN_1", "SHOP_LAVENDER_TOWN_2", "SHOP_LAVENDER_TOWN_3",
+                                "SHOP_LAVENDER_TOWN_4", "SHOP_LAVENDER_TOWN_5", "SHOP_LAVENDER_TOWN_6",
+                                "SHOP_LAVENDER_TOWN_7", "SHOP_LAVENDER_TOWN_8", "SHOP_LAVENDER_TOWN_9"],
+    "FLAG_HINT_CELADON_ITEM_SHOP": ["SHOP_CELADON_CITY_DEPT_ITEM_1", "SHOP_CELADON_CITY_DEPT_ITEM_2",
+                                    "SHOP_CELADON_CITY_DEPT_ITEM_3", "SHOP_CELADON_CITY_DEPT_ITEM_4",
+                                    "SHOP_CELADON_CITY_DEPT_ITEM_5", "SHOP_CELADON_CITY_DEPT_ITEM_6",
+                                    "SHOP_CELADON_CITY_DEPT_ITEM_7", "SHOP_CELADON_CITY_DEPT_ITEM_8",
+                                    "SHOP_CELADON_CITY_DEPT_ITEM_9"],
+    "FLAG_HINT_CELADON_TM_SHOP": ["SHOP_CELADON_CITY_DEPT_TM_1", "SHOP_CELADON_CITY_DEPT_TM_2",
+                                  "SHOP_CELADON_CITY_DEPT_TM_3", "SHOP_CELADON_CITY_DEPT_TM_4",
+                                  "SHOP_CELADON_CITY_DEPT_TM_5", "SHOP_CELADON_CITY_DEPT_TM_6"],
+    "FLAG_HINT_CELADON_EVO_SHOP": ["SHOP_CELADON_CITY_DEPT_EVO_1", "SHOP_CELADON_CITY_DEPT_EVO_2",
+                                   "SHOP_CELADON_CITY_DEPT_EVO_3", "SHOP_CELADON_CITY_DEPT_EVO_4",
+                                   "SHOP_CELADON_CITY_DEPT_EVO_5", "SHOP_CELADON_CITY_DEPT_EVO_6"],
+    "FLAG_HINT_CELADON_BATTLE_SHOP": ["SHOP_CELADON_CITY_DEPT_BATTLE_1", "SHOP_CELADON_CITY_DEPT_BATTLE_2",
+                                      "SHOP_CELADON_CITY_DEPT_BATTLE_3", "SHOP_CELADON_CITY_DEPT_BATTLE_4",
+                                      "SHOP_CELADON_CITY_DEPT_BATTLE_5", "SHOP_CELADON_CITY_DEPT_BATTLE_6",
+                                      "SHOP_CELADON_CITY_DEPT_BATTLE_7"],
+    "FLAG_HINT_CELADON_VITAMIN_SHOP": ["SHOP_CELADON_CITY_DEPT_VITAMIN_1", "SHOP_CELADON_CITY_DEPT_VITAMIN_2",
+                                       "SHOP_CELADON_CITY_DEPT_VITAMIN_3", "SHOP_CELADON_CITY_DEPT_VITAMIN_4",
+                                       "SHOP_CELADON_CITY_DEPT_VITAMIN_5", "SHOP_CELADON_CITY_DEPT_VITAMIN_6"],
+    "FLAG_HINT_FUCHSIA_SHOP": ["SHOP_FUCHSIA_CITY_1", "SHOP_FUCHSIA_CITY_2", "SHOP_FUCHSIA_CITY_3",
+                               "SHOP_FUCHSIA_CITY_4", "SHOP_FUCHSIA_CITY_5", "SHOP_FUCHSIA_CITY_6"],
+    "FLAG_HINT_SAFFRON_SHOP": ["SHOP_SAFFRON_CITY_1", "SHOP_SAFFRON_CITY_2", "SHOP_SAFFRON_CITY_3",
+                               "SHOP_SAFFRON_CITY_4", "SHOP_SAFFRON_CITY_5", "SHOP_SAFFRON_CITY_6"],
+    "FLAG_HINT_CINNABAR_SHOP": ["SHOP_CINNABAR_ISLAND_1", "SHOP_CINNABAR_ISLAND_2", "SHOP_CINNABAR_ISLAND_3",
+                                "SHOP_CINNABAR_ISLAND_4", "SHOP_CINNABAR_ISLAND_5", "SHOP_CINNABAR_ISLAND_6",
+                                "SHOP_CINNABAR_ISLAND_7"],
+    "FLAG_HINT_INDIGO_SHOP": ["SHOP_INDIGO_PLATEAU_1", "SHOP_INDIGO_PLATEAU_2", "SHOP_INDIGO_PLATEAU_3",
+                              "SHOP_INDIGO_PLATEAU_4", "SHOP_INDIGO_PLATEAU_5", "SHOP_INDIGO_PLATEAU_6",
+                              "SHOP_INDIGO_PLATEAU_7"],
+    "FLAG_HINT_TWO_ISLAND_INITIAL_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_1", "SHOP_TWO_ISLAND_EXPANDED3_7"],
+    "FLAG_HINT_TWO_ISLAND_EXPANDED_1_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_2", "SHOP_TWO_ISLAND_EXPANDED3_6"],
+    "FLAG_HINT_TWO_ISLAND_EXPANDED_2_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_5", "SHOP_TWO_ISLAND_EXPANDED3_8"],
+    "FLAG_HINT_TWO_ISLAND_EXPANDED_3_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_3", "SHOP_TWO_ISLAND_EXPANDED3_4",
+                                             "SHOP_TWO_ISLAND_EXPANDED3_9"],
+    "FLAG_HINT_THREE_ISLAND_SHOP": ["SHOP_THREE_ISLAND_1", "SHOP_THREE_ISLAND_2", "SHOP_THREE_ISLAND_3",
+                                    "SHOP_THREE_ISLAND_4", "SHOP_THREE_ISLAND_5", "SHOP_THREE_ISLAND_6"],
+    "FLAG_HINT_FOUR_ISLAND_SHOP": ["SHOP_FOUR_ISLAND_1", "SHOP_FOUR_ISLAND_2", "SHOP_FOUR_ISLAND_3",
+                                   "SHOP_FOUR_ISLAND_4", "SHOP_FOUR_ISLAND_5", "SHOP_FOUR_ISLAND_6",
+                                   "SHOP_FOUR_ISLAND_7", "SHOP_FOUR_ISLAND_8"],
+    "FLAG_HINT_SIX_ISLAND_SHOP": ["SHOP_SIX_ISLAND_1", "SHOP_SIX_ISLAND_2", "SHOP_SIX_ISLAND_3",
+                                  "SHOP_SIX_ISLAND_4", "SHOP_SIX_ISLAND_5", "SHOP_SIX_ISLAND_6",
+                                  "SHOP_SIX_ISLAND_7", "SHOP_SIX_ISLAND_8"],
+    "FLAG_HINT_SEVEN_ISLAND_SHOP": ["SHOP_SEVEN_ISLAND_1", "SHOP_SEVEN_ISLAND_2", "SHOP_SEVEN_ISLAND_3",
+                                    "SHOP_SEVEN_ISLAND_4", "SHOP_SEVEN_ISLAND_5", "SHOP_SEVEN_ISLAND_6",
+                                    "SHOP_SEVEN_ISLAND_7", "SHOP_SEVEN_ISLAND_8", "SHOP_SEVEN_ISLAND_9"],
+    "FLAG_HINT_TRAINER_TOWER_SHOP": ["SHOP_TRAINER_TOWER_1", "SHOP_TRAINER_TOWER_2", "SHOP_TRAINER_TOWER_3",
+                                     "SHOP_TRAINER_TOWER_4", "SHOP_TRAINER_TOWER_5", "SHOP_TRAINER_TOWER_6",
+                                     "SHOP_TRAINER_TOWER_7", "SHOP_TRAINER_TOWER_8", "SHOP_TRAINER_TOWER_9"],
+    "FLAG_HINT_ROUTE_2_OAKS_AIDE": ["NPC_GIFT_GOT_HM05"],
+    "FLAG_HINT_ROUTE_10_OAKS_AIDE": ["NPC_GIFT_GOT_EVERSTONE_FROM_OAKS_AIDE"],
+    "FLAG_HINT_ROUTE_11_OAKS_AIDE": ["NPC_GIFT_GOT_ITEMFINDER"],
+    "FLAG_HINT_ROUTE_16_OAKS_AIDE": ["NPC_GIFT_GOT_AMULET_COIN_FROM_OAKS_AIDE"],
+    "FLAG_HINT_ROUTE_15_OAKS_AIDE": ["NPC_GIFT_GOT_EXP_SHARE_FROM_OAKS_AIDE"],
+    "FLAG_HINT_BICYCLE_SHOP": ["NPC_GIFT_GOT_BICYCLE"],
+    "FLAG_HINT_SHOW_MAGIKARP": ["NPC_GIFT_GOT_NET_BALL_FROM_ROUTE12_FISHING_HOUSE"],
+    "FLAG_HINT_SHOW_HERACROSS": ["NPC_GIFT_GOT_NEST_BALL_FROM_WATER_PATH_HOUSE_1"],
+    "FLAG_HINT_SHOW_RESORT_GORGEOUS_MON": ["NPC_GIFT_GOT_LUXURY_BALL_FROM_RESORT_GORGEOUS_HOUSE"],
+    "FLAG_HINT_SHOW_TOGEPI": ["FAME_CHECKER_DAISY_3"]
 }
 HINT_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in HINT_FLAGS.keys()}
 
@@ -129,7 +189,7 @@ class PokemonFRLGClient(BizHawkClient):
     game = "Pokemon FireRed and LeafGreen"
     system = "GBA"
     patch_suffix = (".apfirered", ".apleafgreen")
-    game_version: str
+    game_version: str | None
     goal_flag: int | None
     local_checked_locations: Set[int]
     local_events: Dict[str, bool]
@@ -239,13 +299,26 @@ class PokemonFRLGClient(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
-        if ctx.slot_data["goal"] == Goal.option_champion:
-            self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP"]
-        if ctx.slot_data["goal"] == Goal.option_champion_rematch:
-            self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP_REMATCH"]
+        if self.goal_flag is None:
+            if ctx.slot_data["goal"] == Goal.option_champion:
+                self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP"]
+            if ctx.slot_data["goal"] == Goal.option_champion_rematch:
+                self.goal_flag = data.constants["FLAG_DEFEATED_CHAMP_REMATCH"]
 
         try:
             guards: Dict[str, Tuple[int, bytes, str]] = {}
+
+            # Scout the locations that can be hinted if provide hints is turned on
+            if ctx.slot_data["provide_hints"] != ProvideHints.option_off and ctx.locations_info == {}:
+                hint_ids = []
+                for locations in HINT_FLAGS.values():
+                    hint_ids.extend([data.locations[loc].flag for loc in locations
+                                     if data.locations[loc].flag in ctx.missing_locations])
+                await ctx.send_msgs([{
+                    "cmd": "LocationScouts",
+                    "locations": hint_ids,
+                    "create_as_hint": 0
+                }])
 
             # Checks that the player is in the overworld
             guards["IN OVERWORLD"] = (
@@ -492,20 +565,32 @@ class PokemonFRLGClient(BizHawkClient):
                     self.local_pokemon_count = local_pokemon_count
 
             # Send AP Hints
-            if ctx.slot_data["provide_hints"]:
+            if ctx.slot_data["provide_hints"] != ProvideHints.option_off:
                 hints_locations = []
-                for flag_name, loc_name in HINT_FLAGS.items():
-                    if local_hints[flag_name] and flag_name not in self.local_hints:
-                        hints_locations.append(loc_name)
-                        self.local_hints.append(flag_name)
-                hint_ids = [data.locations[loc].flag for loc in hints_locations
-                            if data.locations[loc].flag in ctx.missing_locations]
-                if hint_ids:
-                    await ctx.send_msgs([{
-                        "cmd": "LocationScouts",
-                        "locations": hint_ids,
-                        "create_as_hint": 2
-                    }])
+                for flag, locations in HINT_FLAGS.items():
+                    if local_hints[flag] and flag not in self.local_hints:
+                        hints_locations.extend(locations)
+                        self.local_hints.append(flag)
+                if hints_locations:
+                    hint_ids = []
+                    for location in hints_locations:
+                        location_id = data.locations[location].flag
+                        if location_id not in ctx.missing_locations or location_id in self.local_checked_locations:
+                            continue
+                        if (ctx.slot_data["provide_hints"] == ProvideHints.option_progression and
+                                ctx.locations_info[location_id].flags & 0b001):
+                            hint_ids.append(location_id)
+                        elif (ctx.slot_data["provide_hints"] == ProvideHints.option_progression_and_useful and
+                              ctx.locations_info[location_id].flags & 0b011):
+                            hint_ids.append(location_id)
+                        elif ctx.slot_data["provide_hints"] == ProvideHints.option_all:
+                            hint_ids.append(location_id)
+                    if hint_ids:
+                        await ctx.send_msgs([{
+                            "cmd": "LocationScouts",
+                            "locations": hint_ids,
+                            "create_as_hint": 2
+                        }])
 
         except bizhawk.RequestFailedError:
             # Exit handler and return to main loop to reconnect
@@ -538,7 +623,7 @@ class PokemonFRLGClient(BizHawkClient):
 
         if num_received_items < len(ctx.items_received) and received_item_is_empty:
             next_item = ctx.items_received[num_received_items]
-            should_display = 1 if next_item.flags & 1 or next_item.player == ctx.slot else 0
+            should_display = 1 if next_item.flags & 0b001 or next_item.player == ctx.slot else 0
             await bizhawk.write(ctx.bizhawk_ctx, [
                 (received_item_address, next_item.item.to_bytes(2, "little"), "System Bus"),
                 (received_item_address + 2, (num_received_items + 1).to_bytes(2, "little"), "System Bus"),
@@ -580,7 +665,7 @@ class PokemonFRLGClient(BizHawkClient):
         else:
             section_id = 0
         if self.current_map[0] != map_id or self.current_map[1] != section_id:
-            self.current_map = [map_id, section_id]
+            self.current_map = (map_id, section_id)
             await ctx.send_msgs([{
                 "cmd": "Bounce",
                 "slots": [ctx.slot],
