@@ -197,7 +197,6 @@ class PokemonFRLGClient(BizHawkClient):
     local_hints: List[str]
     local_pokemon: Dict[str, List[int]]
     local_pokemon_count: int
-    death_counter: int | None
     previous_death_link: float
     ignore_next_death_link: bool
     current_map: Tuple[int, int]
@@ -212,7 +211,6 @@ class PokemonFRLGClient(BizHawkClient):
         self.local_hints = list()
         self.local_pokemon = {"seen": list(), "caught": list()}
         self.local_pokemon_count = 0
-        self.death_counter = None
         self.previous_death_link = 0
         self.ignore_next_death_link = False
         self.current_map = (0, 0)
@@ -691,8 +689,8 @@ class PokemonFRLGClient(BizHawkClient):
 
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx, [
-                    (sb1_address + 0x1450 + (52 * 4), 4, "System Bus"),  # White out stat
-                    (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused stat
+                    (data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], 1, "System Bus"),
+                    (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused game stat
                     (sb2_address + 0xF20, 4, "System Bus"),  # Encryption key
                 ],
                 [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
@@ -701,13 +699,12 @@ class PokemonFRLGClient(BizHawkClient):
             if read_result is None:  # Save block moved
                 return
 
+            death_link_sent = bool.from_bytes(read_result[0], "little")
             encryption_key = int.from_bytes(read_result[2], "little")
-            times_whited_out = int.from_bytes(read_result[0], "little") ^ encryption_key
             unused = int.from_bytes(read_result[1], "little") ^ encryption_key
 
-            # Skip all deathlink code if save is not yet loaded (encryption key is zero) or white out stat not yet
-            # initialized (starts at 100 as a safety for subtracting values from an unsigned int).
-            if unused == 0 and encryption_key != 0 and times_whited_out >= 100:
+            # Skip all deathlink code if save is not yet loaded (encryption key is zero)
+            if unused == 0 and encryption_key != 0:
                 if self.previous_death_link != ctx.last_death_link:
                     self.previous_death_link = ctx.last_death_link
                     if self.ignore_next_death_link:
@@ -715,13 +712,14 @@ class PokemonFRLGClient(BizHawkClient):
                     else:
                         await bizhawk.write(
                             ctx.bizhawk_ctx,
-                            [(data.ram_addresses["gArchipelagoDeathLinkQueued"][self.game_version], [1], "System Bus")]
+                            [(data.ram_addresses["gArchipelagoDeathLinkReceived"][self.game_version], [1], "System Bus")]
                         )
 
-                if self.death_counter is None:
-                    self.death_counter = times_whited_out
-                elif times_whited_out > self.death_counter:
+                if death_link_sent:
                     await ctx.send_death(f"{ctx.player_names[ctx.slot]} is out of usable POKéMON! "
                                          f"{ctx.player_names[ctx.slot]} whited out!")
                     self.ignore_next_death_link = True
-                    self.death_counter = times_whited_out
+                    await bizhawk.write(
+                        ctx.bizhawk_ctx,
+                        [(data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], [0], "System Bus")]
+                    )
