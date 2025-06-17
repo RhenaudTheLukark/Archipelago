@@ -980,9 +980,9 @@ class MoveNormalTypeBias(Range):
 
 class MoveBlacklist(OptionSet):
     """
-    Prevents species from learning these moves via learnsets, TMs, and move tutors.
+    Prevents species from learning these moves via learnsets.
 
-    Has no effect is moves are not randomized.
+    Has no effect if moves are not randomized.
     """
     display_name = "Move Blacklist"
     valid_keys = sorted(move_name_map.keys())
@@ -1066,6 +1066,16 @@ class TmTutorMoves(Toggle):
     Some opponents like gym leaders are allowed to use TMs. This option can affect the moves they know.
     """
     display_name = "Randomize TM/Tutor Moves"
+
+
+class TmTutorMoveBlacklist(OptionSet):
+    """
+    Prevents TMs and move tutors from teaching these moves.
+
+    Has no effect if TM and tutor moves are not randomized.
+    """
+    display_name = "TM/Tutor Moves Blacklist"
+    valid_keys = sorted(move_name_map.keys())
 
 
 class ReusableTmsTutors(Toggle):
@@ -1346,6 +1356,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     hm_compatibility: HmCompatibility
     tm_tutor_compatibility: TmTutorCompatibility
     tm_tutor_moves: TmTutorMoves
+    tm_tutor_moves_blacklist: TmTutorMoveBlacklist
 
     reusable_tm_tutors: ReusableTmsTutors
     min_catch_rate: MinCatchRate

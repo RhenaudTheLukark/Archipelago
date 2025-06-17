@@ -221,7 +221,7 @@ def _get_trainer_pokemon_moves(world: "PokemonFRLGWorld",
         world.per_species_tmhm_moves[species.species_id] = sorted({
             world.modified_tmhm_moves[i]
             for i, is_compatible in enumerate(int_to_bool_array(species.tm_hm_compatibility))
-            if is_compatible and world.modified_tmhm_moves[i] not in world.blacklisted_moves
+            if is_compatible and world.modified_tmhm_moves[i] not in world.blacklisted_tm_tutor_moves
         })
 
     # TMs and HMs compatible with the species
@@ -1002,7 +1002,7 @@ def randomize_tm_moves(world: "PokemonFRLGWorld") -> None:
     new_moves: Set[int] = set()
 
     for i in range(50):
-        new_move = _get_random_move(world, [new_moves, world.blacklisted_moves])
+        new_move = _get_random_move(world, [new_moves, world.blacklisted_tm_tutor_moves])
         new_moves.add(new_move)
         world.modified_tmhm_moves[i] = new_move
 
@@ -1011,7 +1011,7 @@ def randomize_tutor_moves(world: "PokemonFRLGWorld") -> List[int]:
     new_moves = []
 
     for i in range(15):
-        new_move = _get_random_move(world, [set(new_moves), world.blacklisted_moves])
+        new_move = _get_random_move(world, [set(new_moves), world.blacklisted_tm_tutor_moves])
         new_moves.append(new_move)
 
     return new_moves

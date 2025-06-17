@@ -135,6 +135,7 @@ class PokemonFRLGWorld(World):
     blacklisted_trainer_pokemon: Set[int]
     blacklisted_abilities: Set[int]
     blacklisted_moves: Set[int]
+    blacklisted_tm_tutor_moves: Set[int]
     trainer_name_level_dict: Dict[str, int]
     trainer_name_list: List[str]
     trainer_level_list: List[int]
@@ -215,6 +216,7 @@ class PokemonFRLGWorld(World):
 
         self.blacklisted_abilities = {ability_name_map[name] for name in self.options.ability_blacklist.value}
         self.blacklisted_moves = {move_name_map[name] for name in self.options.move_blacklist.value}
+        self.blacklisted_tm_tutor_moves = {move_name_map[name] for name in self.options.tm_tutor_moves_blacklist.value}
 
         # Modify options that are incompatible with each other
         if self.options.kanto_only:

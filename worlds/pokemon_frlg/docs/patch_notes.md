@@ -2,11 +2,13 @@
 ## Updates
 + Improvements made to reduce generation time (credit to [Mysteryem](https://github.com/Mysteryem))
 + Compatibility added for the Pokémon Gen III Adjuster (credit to [Rhenny](https://github.com/RhenaudTheLukark))
++ If `randomize_fly_destinations` is on, the game will state what destination a fly unlock goes to regardless of if fly unlocks are shuffled
++ Updated the client to send entrance data to the tracker for auto entrance tracking
 + Updated option `provide_hints`
   + Will now also hint `shopsanity` locations
   + Can now specify whether it should hint progression, progression and useful, or all items.
-+ If `randomize_fly_destinations` is on, the game will state what destination a fly unlock goes to regardless of if fly unlocks are shuffled
-+ Updated the client to send entrance data to the tracker for auto entrance tracking
++ New option `tm_tutor_moves_blacklist`
+  + Allows you to blacklist the moves that can be on TMs and move tutors separately from the moves in learnsets
 
 ## Bug Fixes
 + Fixed an issue where Pokémon with branching evolutions has their evolved forms never be expected by the logic
