@@ -197,6 +197,7 @@ class PokemonFRLGClient(BizHawkClient):
     local_hints: List[str]
     local_pokemon: Dict[str, List[int]]
     local_pokemon_count: int
+    local_entrances: List[Tuple[int, int]]
     previous_death_link: float
     ignore_next_death_link: bool
     current_map: Tuple[int, int]
@@ -206,11 +207,12 @@ class PokemonFRLGClient(BizHawkClient):
         self.game_version = None
         self.goal_flag = None
         self.local_checked_locations = set()
-        self.local_events = dict()
-        self.local_fly_unlocks = dict()
-        self.local_hints = list()
-        self.local_pokemon = {"seen": list(), "caught": list()}
+        self.local_events = {}
+        self.local_fly_unlocks = {}
+        self.local_hints = []
+        self.local_pokemon = {"seen": [], "caught": []}
         self.local_pokemon_count = 0
+        self.local_entrances = []
         self.previous_death_link = 0
         self.ignore_next_death_link = False
         self.current_map = (0, 0)
@@ -344,6 +346,7 @@ class PokemonFRLGClient(BizHawkClient):
             sb2_address = int.from_bytes(guards["SAVE BLOCK 2"][1], "little")
 
             await self.handle_map_update(ctx, guards)
+            await self.handle_entrance_updates(ctx, guards)
             await self.handle_death_link(ctx, guards)
             await self.handle_received_items(ctx, guards)
 
@@ -426,7 +429,7 @@ class PokemonFRLGClient(BizHawkClient):
             local_fly_unlocks = {flag_name: False for flag_name in TRACKER_FLY_UNLOCK_FLAGS}
             local_hints = {flag_name: False for flag_name in HINT_FLAGS.keys()}
             local_checked_locations: Set[int] = set()
-            local_pokemon: Dict[str, List[int]] = {"caught": list(), "seen": list()}
+            local_pokemon: Dict[str, List[int]] = {"caught": [], "seen": []}
             local_pokemon_count = 0
 
             # Check set flags
@@ -518,7 +521,7 @@ class PokemonFRLGClient(BizHawkClient):
                     "key": f"pokemon_frlg_events_{ctx.team}_{ctx.slot}",
                     "default": 0,
                     "want_reply": False,
-                    "operations": [{"operation": "or", "value": event_bitfield}],
+                    "operations": [{"operation": "or", "value": event_bitfield}]
                 }])
                 self.local_events = local_events
 
@@ -534,7 +537,7 @@ class PokemonFRLGClient(BizHawkClient):
                     "key": f"pokemon_frlg_fly_unlocks_{ctx.team}_{ctx.slot}",
                     "default": 0,
                     "want_reply": False,
-                    "operations": [{"operation": "or", "value": event_bitfield}],
+                    "operations": [{"operation": "or", "value": event_bitfield}]
                 }])
                 self.local_fly_unlocks = local_fly_unlocks
 
@@ -546,7 +549,7 @@ class PokemonFRLGClient(BizHawkClient):
                         "key": f"pokemon_frlg_pokemon_{ctx.team}_{ctx.slot}",
                         "default": {},
                         "want_reply": False,
-                        "operations": [{"operation": "replace", "value": local_pokemon}, ]
+                        "operations": [{"operation": "replace", "value": local_pokemon}]
                     }])
                     self.local_pokemon = local_pokemon
 
@@ -558,7 +561,7 @@ class PokemonFRLGClient(BizHawkClient):
                         "key": f"pokemon_frlg_pokedex_{ctx.team}_{ctx.slot}",
                         "default": 0,
                         "want_reply": False,
-                        "operations": [{"operation": "replace", "value": local_pokemon_count},]
+                        "operations": [{"operation": "replace", "value": local_pokemon_count}]
                     }])
                     self.local_pokemon_count = local_pokemon_count
 
@@ -673,6 +676,47 @@ class PokemonFRLGClient(BizHawkClient):
                     "sectionId": section_id
                 }
             }])
+
+    async def handle_entrance_updates(self,
+                                      ctx: "BizHawkClientContext",
+                                      guards: Dict[str, Tuple[int, bytes, str]]) -> None:
+        """
+        Reads the last warp that the player took, adds it to the list of entrances found, and sends the updated list to
+        the tracker.
+        """
+        sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
+
+        read_result = await bizhawk.guarded_read(
+            ctx.bizhawk_ctx,
+            [
+                (sb1_address + 0x87C, 2, "System Bus"),
+                (sb1_address + 0x87E, 1, "System Bus"),
+                (sb1_address + 0x3DA4, 2, "System Bus"),
+                (sb1_address + 0x3DA6, 1, "System Bus")
+            ],
+            [guards["SAVE BLOCK 1"]]
+        )
+
+        if read_result is None:  # Save block moved
+            return
+
+        entrance_map_id = int.from_bytes(read_result[0], "big")
+        entrance_warp_id = int.from_bytes(read_result[1], "little")
+        exit_map_id = int.from_bytes(read_result[2], "big")
+        exit_warp_id = int.from_bytes(read_result[3], "little")
+        entrance_id = (entrance_map_id, entrance_warp_id)
+        exit_id = (exit_map_id, exit_warp_id)
+        if ctx.slot is not None:
+            if entrance_map_id != 0 and entrance_id not in self.local_entrances:
+                self.local_entrances.append(entrance_id)
+                self.local_entrances.append(exit_id)
+                await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
+                    "default": [],
+                    "want_reply": False,
+                    "operations": [{"operation": "update", "value": self.local_entrances}]
+                }])
 
     async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
         """
