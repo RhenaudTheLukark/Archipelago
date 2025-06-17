@@ -6,6 +6,7 @@
   + Will now also hint `shopsanity` locations
   + Can now specify whether it should hint progression, progression and useful, or all items.
 + If `randomize_fly_destinations` is on, the game will state what destination a fly unlock goes to regardless of if fly unlocks are shuffled
++ Updated the client to send entrance data to the tracker for auto entrance tracking
 
 ## Bug Fixes
 + Fixed an issue where Pokémon with branching evolutions has their evolved forms never be expected by the logic
