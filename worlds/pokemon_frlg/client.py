@@ -74,6 +74,41 @@ TRACKER_FLY_UNLOCK_FLAGS = [
 ]
 FLY_UNLOCK_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in TRACKER_FLY_UNLOCK_FLAGS}
 
+TRACKER_STATIC_POKEMON_FLAGS = [
+    "FLAG_TALKED_TO_MAGIKARP_SALESMAN",
+    "FLAG_VIEWED_ZYNX_TRADE", # Jynx Trade
+    "FLAG_VIEWED_MS_NIDO_TRADE", # Nidoran M/F Trade
+    "FLAG_VIEWED_CH_DING_TRADE", # Farfetch'd Trade
+    "FLAG_VIEWED_MIMIEN_TRADE", # Mr. Mime Trade
+    "FLAG_VIEWED_NINA_TRADE", # Nidorino/Nidorina Trade,
+    "FLAG_FOUGHT_POWER_PLANT_ELECTRODE_1",
+    "FLAG_FOUGHT_POWER_PLANT_ELECTRODE_2",
+    "FLAG_FOUGHT_ZAPDOS",
+    "FLAG_VIEWED_PRIZE_POKEMON",
+    "FLAG_GOT_EEVEE",
+    "FLAG_FOUGHT_ROUTE_12_SNORLAX",
+    "FLAG_FOUGHT_ROUTE_16_SNORLAX",
+    "FLAG_VIEWED_MARC_TRADE", # Lickitung Trade
+    "FLAG_VIEWED_HITMONLEE_FROM_DOJO",
+    "FLAG_VIEWED_HITMONCHAN_FROM_DOJO",
+    "FLAG_GOT_LAPRAS_FROM_SILPH",
+    "FLAG_FOUGHT_ARTICUNO",
+    "FLAG_VIEWED_ESPHERE_TRADE", # Electrode Trade
+    "FLAG_VIEWED_TANGENY_TRADE", # Tangela Trade
+    "FLAG_VIEWED_SEELOR_TRADE", # Seel Trade
+    "FLAG_REVIVED_DOME",
+    "FLAG_REVIVED_HELIX",
+    "FLAG_REVIVED_AMBER",
+    "FLAG_FOUGHT_MOLTRES",
+    "FLAG_FOUGHT_BERRY_FOREST_HYPNO",
+    "FLAG_GOT_TOGEPI_EGG",
+    "FLAG_FOUGHT_MEWTWO",
+    "FLAG_FOUGHT_HO_OH",
+    "FLAG_FOUGHT_LUGIA",
+    "FLAG_FOUGHT_DEOXYS"
+]
+STATIC_POKEMON_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in TRACKER_STATIC_POKEMON_FLAGS}
+
 HINT_FLAGS = {
     "FLAG_HINT_VIRIDIAN_SHOP": ["SHOP_VIRIDIAN_CITY_1", "SHOP_VIRIDIAN_CITY_2", "SHOP_VIRIDIAN_CITY_3",
                                 "SHOP_VIRIDIAN_CITY_4"],
@@ -194,10 +229,11 @@ class PokemonFRLGClient(BizHawkClient):
     local_checked_locations: Set[int]
     local_events: Dict[str, bool]
     local_fly_unlocks: Dict[str, bool]
+    local_static_pokemon: Dict[str, bool]
     local_hints: List[str]
     local_pokemon: Dict[str, List[int]]
     local_pokemon_count: int
-    local_entrances: List[Tuple[int, int]]
+    local_entrances: Dict[int, List[int]]
     previous_death_link: float
     ignore_next_death_link: bool
     current_map: Tuple[int, int]
@@ -209,10 +245,12 @@ class PokemonFRLGClient(BizHawkClient):
         self.local_checked_locations = set()
         self.local_events = {}
         self.local_fly_unlocks = {}
+        self.local_static_pokemon = {}
         self.local_hints = []
         self.local_pokemon = {"seen": [], "caught": []}
         self.local_pokemon_count = 0
-        self.local_entrances = []
+        self.local_entrances = {}
+        self.read_entrances = False
         self.previous_death_link = 0
         self.ignore_next_death_link = False
         self.current_map = (0, 0)
@@ -427,6 +465,7 @@ class PokemonFRLGClient(BizHawkClient):
             game_clear = False
             local_events = {flag_name: False for flag_name in TRACKER_EVENT_FLAGS}
             local_fly_unlocks = {flag_name: False for flag_name in TRACKER_FLY_UNLOCK_FLAGS}
+            local_static_pokemon = {flag_name: False for flag_name in TRACKER_STATIC_POKEMON_FLAGS}
             local_hints = {flag_name: False for flag_name in HINT_FLAGS.keys()}
             local_checked_locations: Set[int] = set()
             local_pokemon: Dict[str, List[int]] = {"caught": [], "seen": []}
@@ -449,6 +488,9 @@ class PokemonFRLGClient(BizHawkClient):
 
                         if location_id in FLY_UNLOCK_FLAG_MAP:
                             local_fly_unlocks[FLY_UNLOCK_FLAG_MAP[location_id]] = True
+
+                        if location_id in STATIC_POKEMON_FLAG_MAP:
+                            local_static_pokemon[STATIC_POKEMON_FLAG_MAP[location_id]] = True
 
                         if location_id in HINT_FLAG_MAP:
                             local_hints[HINT_FLAG_MAP[location_id]] = True
@@ -540,6 +582,22 @@ class PokemonFRLGClient(BizHawkClient):
                     "operations": [{"operation": "or", "value": event_bitfield}]
                 }])
                 self.local_fly_unlocks = local_fly_unlocks
+
+            # Send tracker static Pokémon flags
+            if local_static_pokemon != self.local_static_pokemon and ctx.slot is not None:
+                event_bitfield = 0
+                for i, flag_name in enumerate(TRACKER_STATIC_POKEMON_FLAGS):
+                    if local_static_pokemon[flag_name]:
+                        event_bitfield |= 1 << i
+
+                await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"pokemon_frlg_statics_{ctx.team}_{ctx.slot}",
+                    "default": 0,
+                    "want_reply": False,
+                    "operations": [{"operation": "or", "value": event_bitfield}]
+                }])
+                self.local_static_pokemon = local_static_pokemon
 
             # Send Pokémon
             if pokemon_caught_read_status:
@@ -704,19 +762,27 @@ class PokemonFRLGClient(BizHawkClient):
         entrance_warp_id = int.from_bytes(read_result[1], "little")
         exit_map_id = int.from_bytes(read_result[2], "big")
         exit_warp_id = int.from_bytes(read_result[3], "little")
-        entrance_id = (entrance_map_id, entrance_warp_id)
-        exit_id = (exit_map_id, exit_warp_id)
         if ctx.slot is not None:
-            if entrance_map_id != 0 and entrance_id not in self.local_entrances:
-                self.local_entrances.append(entrance_id)
-                self.local_entrances.append(exit_id)
-                await ctx.send_msgs([{
-                    "cmd": "Set",
-                    "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
-                    "default": [],
-                    "want_reply": False,
-                    "operations": [{"operation": "update", "value": self.local_entrances}]
-                }])
+            if entrance_map_id != 0:
+                send_update = False
+                if entrance_map_id not in self.local_entrances.keys():
+                    self.local_entrances[entrance_map_id] = []
+                if exit_map_id not in self.local_entrances.keys():
+                    self.local_entrances[exit_map_id] = []
+                if entrance_warp_id not in self.local_entrances[entrance_map_id]:
+                    self.local_entrances[entrance_map_id].append(entrance_warp_id)
+                    send_update = True
+                if exit_warp_id not in self.local_entrances[exit_map_id]:
+                    self.local_entrances[exit_map_id].append(exit_warp_id)
+                    send_update = True
+                if send_update:
+                    await ctx.send_msgs([{
+                        "cmd": "Set",
+                        "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
+                        "default": {},
+                        "want_reply": False,
+                        "operations": [{"operation": "update", "value": self.local_entrances}]
+                    }])
 
     async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
         """

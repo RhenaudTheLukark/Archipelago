@@ -779,6 +779,7 @@ class PokemonFRLGWorld(World):
             for source, dest in self.er_placement_state.pairings:
                 slot_data["dungeon_entrance_shuffle"][source] = dest
         slot_data["wild_encounters"] = {}
+        slot_data["static_encounters"] = {}
         for location in self.get_locations():
             assert isinstance(location, PokemonFRLGLocation)
             if location.category == LocationCategory.EVENT_WILD_POKEMON:
@@ -786,7 +787,13 @@ class PokemonFRLGWorld(World):
                 if national_dex_id not in slot_data["wild_encounters"]:
                     slot_data["wild_encounters"][national_dex_id] = []
                 slot_data["wild_encounters"][national_dex_id].append(location.name)
-        slot_data["apworld_version"] = APWORLD_VERSION
+            elif location.category in (LocationCategory.EVENT_STATIC_POKEMON,
+                                       LocationCategory.EVENT_LEGENDARY_POKEMON):
+                if location.item.name.startswith("Missable"):
+                    continue
+                pokemon_name = location.item.name.replace("Static ", "")
+                national_dex_id = data.species[NAME_TO_SPECIES_ID[pokemon_name]].national_dex_number
+                slot_data["static_encounters"][location.name] = national_dex_id
         slot_data["poptracker_checksum"] = POPTRACKER_CHECKSUM
         return slot_data
 

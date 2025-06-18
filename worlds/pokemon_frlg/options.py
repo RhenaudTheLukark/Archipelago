@@ -42,6 +42,7 @@ class KantoOnly(Toggle):
     """
     Excludes all the Sevii Island locations. Navel Rock and Birth Island are still included.
     HM06 Rock Smash, HM07 Waterfall, and the Sun Stone will still be in the item pool.
+    The Move Reminder will be moved from Two Island to the Move Deleter's House in Fuchsia City.
     """
     display_name = "Kanto Only"
 
