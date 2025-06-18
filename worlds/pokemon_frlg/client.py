@@ -742,6 +742,9 @@ class PokemonFRLGClient(BizHawkClient):
         Reads the last warp that the player took, adds it to the list of entrances found, and sends the updated list to
         the tracker.
         """
+        if "dungeon_entrance_shuffle" not in ctx.slot_data:
+            return
+
         sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
 
         read_result = await bizhawk.guarded_read(
