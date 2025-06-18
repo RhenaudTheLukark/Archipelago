@@ -775,9 +775,9 @@ class PokemonFRLGWorld(World):
             for exit in self.get_region("Sky").exits:
                 slot_data["randomize_fly_destinations"][exit.name] = exit.connected_region.name
         if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
-            slot_data["dungeon_entrance_shuffle"] = {}
+            slot_data["dungeon_entrance_shuffle"] = []
             for source, dest in self.er_placement_state.pairings:
-                slot_data["dungeon_entrance_shuffle"][source] = dest
+                slot_data["dungeon_entrance_shuffle"].append(source)
         slot_data["wild_encounters"] = {}
         slot_data["static_encounters"] = {}
         for location in self.get_locations():

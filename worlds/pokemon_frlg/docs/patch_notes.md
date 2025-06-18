@@ -1,7 +1,7 @@
 # 0.9.4
 ## Updates
 + Improvements made to reduce generation time (credit to [Mysteryem](https://github.com/Mysteryem))
-+ Compatibility added for the Pokémon Gen III Adjuster (credit to [Rhenny](https://github.com/RhenaudTheLukark))
++ Support added for the Pokémon Gen III Adjuster (credit to [Rhenny](https://github.com/RhenaudTheLukark))
 + If `randomize_fly_destinations` is on, the game will state what destination a fly unlock goes to regardless of if fly unlocks are shuffled
 + Updated the client to send entrance data to the tracker for auto entrance tracking
 + Updated option `provide_hints`
@@ -11,6 +11,7 @@
   + Allows you to blacklist the moves that can be on TMs and move tutors separately from the moves in learnsets
 
 ## Bug Fixes
++ Fixed an issue where the Cinnabar Gym door would be locked again after battling a surfing trainer on Routes 20 or 21
 + Fixed an issue where Pokémon with branching evolutions has their evolved forms never be expected by the logic
 + Fixed a logic issue with the Water Labyrinth - Gentleman Info location assuming you need both Togepi and Togetic
 + Fixed an issue with the Saffron Dojo Leader and Team Rocket Warehouse Admin where if you lost to them, the trigger that caused them to face you and battle would no longer be triggered

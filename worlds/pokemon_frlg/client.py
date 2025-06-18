@@ -233,7 +233,7 @@ class PokemonFRLGClient(BizHawkClient):
     local_hints: List[str]
     local_pokemon: Dict[str, List[int]]
     local_pokemon_count: int
-    local_entrances: Dict[int, List[int]]
+    local_entrances: Dict[str, str]
     previous_death_link: float
     ignore_next_death_link: bool
     current_map: Tuple[int, int]
@@ -762,27 +762,25 @@ class PokemonFRLGClient(BizHawkClient):
         entrance_warp_id = int.from_bytes(read_result[1], "little")
         exit_map_id = int.from_bytes(read_result[2], "big")
         exit_warp_id = int.from_bytes(read_result[3], "little")
-        if ctx.slot is not None:
-            if entrance_map_id != 0:
-                send_update = False
-                if entrance_map_id not in self.local_entrances.keys():
-                    self.local_entrances[entrance_map_id] = []
-                if exit_map_id not in self.local_entrances.keys():
-                    self.local_entrances[exit_map_id] = []
-                if entrance_warp_id not in self.local_entrances[entrance_map_id]:
-                    self.local_entrances[entrance_map_id].append(entrance_warp_id)
-                    send_update = True
-                if exit_warp_id not in self.local_entrances[exit_map_id]:
-                    self.local_entrances[exit_map_id].append(exit_warp_id)
-                    send_update = True
-                if send_update:
-                    await ctx.send_msgs([{
-                        "cmd": "Set",
-                        "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
-                        "default": {},
-                        "want_reply": False,
-                        "operations": [{"operation": "update", "value": self.local_entrances}]
-                    }])
+        if entrance_map_id in data.entrance_name_map and exit_map_id in data.entrance_name_map and ctx.slot is not None:
+            if entrance_warp_id not in data.entrance_name_map[entrance_map_id]:
+                return
+            if exit_warp_id not in data.entrance_name_map[exit_map_id]:
+                return
+            entrance_name = data.entrance_name_map[entrance_map_id][entrance_warp_id]
+            exit_name = data.entrance_name_map[exit_map_id][exit_warp_id]
+            if (entrance_name not in self.local_entrances and
+                    (entrance_name in ctx.slot_data["dungeon_entrance_shuffle"] or
+                     exit_name in ctx.slot_data["dungeon_entrance_shuffle"])):
+                self.local_entrances[entrance_name] = exit_name
+                self.local_entrances[exit_name] = entrance_name
+                await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
+                    "default": {},
+                    "want_reply": False,
+                    "operations": [{"operation": "update", "value": self.local_entrances}]
+                }])
 
     async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
         """
