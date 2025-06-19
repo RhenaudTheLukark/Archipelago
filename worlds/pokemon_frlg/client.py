@@ -600,7 +600,7 @@ class PokemonFRLGClient(BizHawkClient):
                 self.local_static_pokemon = local_static_pokemon
 
             # Send Pokémon
-            if pokemon_caught_read_status:
+            if pokemon_caught_read_status and pokemon_seen_read_status:
                 if local_pokemon != self.local_pokemon and ctx.slot is not None:
                     await ctx.send_msgs([{
                         "cmd": "Set",
