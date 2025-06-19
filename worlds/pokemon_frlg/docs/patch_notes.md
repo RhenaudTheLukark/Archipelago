@@ -4,9 +4,12 @@
 + Support added for the Pokémon Gen III Adjuster (credit to [Rhenny](https://github.com/RhenaudTheLukark))
 + If `randomize_fly_destinations` is on, the game will state what destination a fly unlock goes to regardless of if fly unlocks are shuffled
 + Updated the client to send entrance data to the tracker for auto entrance tracking
++ The fossil Pokémon can be obtained immediately after giving them to the scientist in the Pokémon Lab without needing to reload the map
 + Updated option `provide_hints`
   + Will now also hint `shopsanity` locations
   + Can now specify whether it should hint progression, progression and useful, or all items.
++ New option `legendary_pokemon_blacklist`
++ New option `misc_pokemon_blacklist`
 + New option `tm_tutor_moves_blacklist`
   + Allows you to blacklist the moves that can be on TMs and move tutors separately from the moves in learnsets
 

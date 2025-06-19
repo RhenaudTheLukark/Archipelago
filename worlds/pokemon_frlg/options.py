@@ -878,6 +878,18 @@ class RandomizeLegendaryPokemon(Choice):
     option_completely_random = 5
 
 
+class LegendaryPokemonBlacklist(OptionSet):
+    """
+    Prevents the listed species from appearing as a legenary Pokemon when legendary Pokemon are randomized.
+
+    May be overridden if enforcing other restrictions in combination with this blacklist is impossible.
+
+    Use "Legendaries" as a shortcut for all legendary Pokemon.
+    """
+    display_name = "Legendary Pokemon Blacklist"
+    valid_keys = ["Legendaries"] + sorted([species.name for species in data.species.values()])
+
+
 class RandomizeMiscPokemon(Choice):
     """
     Randomizes misc Pokemon. This includes non-legendary static encounters, gift Pokemon, and trade Pokemon.
@@ -895,6 +907,18 @@ class RandomizeMiscPokemon(Choice):
     option_match_type = 2
     option_match_base_stats_and_type = 3
     option_completely_random = 4
+
+
+class MiscPokemonBlacklist(OptionSet):
+    """
+    Prevents the listed species from appearing as a miscellaneous Pokemon when miscellaneous Pokemon are randomized.
+
+    May be overridden if enforcing other restrictions in combination with this blacklist is impossible.
+
+    Use "Legendaries" as a shortcut for all legendary Pokemon.
+    """
+    display_name = "Misc Pokemon Blacklist"
+    valid_keys = ["Legendaries"] + sorted([species.name for species in data.species.values()])
 
 
 class RandomizeTypes(Choice):
@@ -1343,7 +1367,9 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     trainers: RandomizeTrainerParties
     trainer_blacklist: TrainerPartyBlacklist
     legendary_pokemon: RandomizeLegendaryPokemon
+    legendary_pokemon_blacklist: LegendaryPokemonBlacklist
     misc_pokemon: RandomizeMiscPokemon
+    misc_pokemon_blacklist: MiscPokemonBlacklist
     types: RandomizeTypes
     abilities: RandomizeAbilities
     ability_blacklist: AbilityBlacklist

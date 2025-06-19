@@ -133,6 +133,8 @@ class PokemonFRLGWorld(World):
     blacklisted_wild_pokemon: Set[int]
     blacklisted_starters: Set[int]
     blacklisted_trainer_pokemon: Set[int]
+    blacklisted_legendary_pokemon: Set[int]
+    blacklisted_misc_pokemon: Set[int]
     blacklisted_abilities: Set[int]
     blacklisted_moves: Set[int]
     blacklisted_tm_tutor_moves: Set[int]
@@ -213,6 +215,20 @@ class PokemonFRLGWorld(World):
         }
         if "Legendaries" in self.options.trainer_blacklist.value:
             self.blacklisted_trainer_pokemon |= LEGENDARY_POKEMON
+
+        self.blacklisted_legendary_pokemon = {
+            species.species_id for species in self.modified_species.values()
+            if species.name in self.options.legendary_pokemon_blacklist.value
+        }
+        if "Legendaries" in self.options.legendary_pokemon_blacklist.value:
+            self.blacklisted_legendary_pokemon |= LEGENDARY_POKEMON
+
+        self.blacklisted_misc_pokemon = {
+            species.species_id for species in self.modified_species.values()
+            if species.name in self.options.misc_pokemon_blacklist.value
+        }
+        if "Legendaries" in self.options.misc_pokemon_blacklist.value:
+            self.blacklisted_misc_pokemon |= LEGENDARY_POKEMON
 
         self.blacklisted_abilities = {ability_name_map[name] for name in self.options.ability_blacklist.value}
         self.blacklisted_moves = {move_name_map[name] for name in self.options.move_blacklist.value}
