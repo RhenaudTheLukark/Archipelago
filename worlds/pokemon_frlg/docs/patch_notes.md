@@ -20,6 +20,7 @@
 + Fixed an issue with the Saffron Dojo Leader and Team Rocket Warehouse Admin where if you lost to them, the trigger that caused them to face you and battle would no longer be triggered
 + Fixed an issue where the `Cerulean City - Rival Gift` location was a part of the "Overworld Items" location group instead of "NPC Gifts"
 + Fixed an issue where if Pokémon Request locations weren't randomized then the NPC would say they have an AP ITEM instead of the vanilla item
++ Fixed an issue where the Pewter roadblock boy and Oak's Aide would pop into existence when entering from Route 3
 
 # 0.9.3
 ## Updates
