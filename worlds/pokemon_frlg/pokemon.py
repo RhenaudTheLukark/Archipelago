@@ -882,6 +882,8 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
             # Blacklist Pokémon that have already been placed as a prize Pokémon if necessary
             if "CELADON_PRIZE_POKEMON" in name:
                 blacklists[0].append(prize_pokemon)
+            else:
+                blacklists[0].append(set())
 
             # Blacklist from player's options
             blacklists[1].append(world.blacklisted_misc_pokemon)
@@ -1047,12 +1049,15 @@ def randomize_trainer_parties(world: "PokemonFRLGWorld") -> None:
                 # indicates a more important set of species to avoid.
                 blacklists: Dict[int, List[Set[int]]] = defaultdict(list)
 
+                # Start with an empty blacklist
+                blacklists[0].append(set())
+
                 # Blacklist from player's options
-                blacklists[0].append(world.blacklisted_trainer_pokemon)
+                blacklists[1].append(world.blacklisted_trainer_pokemon)
 
                 # Type matching blacklist
                 if should_match_type:
-                    blacklists[1].append({
+                    blacklists[2].append({
                         species.species_id
                         for species in world.modified_species.values()
                         if not bool(set(species.types) & set(original_species.types))
