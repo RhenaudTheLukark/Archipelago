@@ -3,7 +3,7 @@ from BaseClasses import CollectionState, Location, LocationProgressType, Region,
 from .data import data, LocationCategory, fly_blacklist_map
 from .groups import location_groups
 from .items import PokemonFRLGItem, get_random_item
-from .options import ShuffleFlyUnlocks, ViridianCityRoadblock
+from .options import Goal, ShuffleFlyUnlocks
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -106,8 +106,30 @@ def create_locations_from_categories(world: "PokemonFRLGWorld",
             "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD"
         ]
 
+        post_champion_locations = [
+            "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
+            "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
+            "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD", "FAME_CHECKER_BRUNO_5", "SHOP_TWO_ISLAND_EXPANDED3_3",
+            "SHOP_TWO_ISLAND_EXPANDED3_4", "SHOP_TWO_ISLAND_EXPANDED3_5", "SHOP_TWO_ISLAND_EXPANDED3_8",
+            "SHOP_TWO_ISLAND_EXPANDED3_9"
+        ]
+
+        post_champion_gossiper_locations = [
+            "FAME_CHECKER_DAISY_1", "FAME_CHECKER_OAK_6", "FAME_CHECKER_MISTY_6", "FAME_CHECKER_DAISY_2",
+            "FAME_CHECKER_MRFUJI_4", "FAME_CHECKER_DAISY_5", "FAME_CHECKER_LANCE_4", "FAME_CHECKER_KOGA_4",
+            "FAME_CHECKER_BRUNO_3", "FAME_CHECKER_LANCE_3", "FAME_CHECKER_MRFUJI_6", "FAME_CHECKER_AGATHA_2",
+            "FAME_CHECKER_AGATHA_3", "FAME_CHECKER_LANCE_5", "FAME_CHECKER_LANCE_6", "FAME_CHECKER_BRUNO_4",
+            "FAME_CHECKER_LORELEI_4", "FAME_CHECKER_AGATHA_4"
+        ]
+
         if world.options.kanto_only and location_id in sevii_required_locations:
             return True
+        if not world.options.shuffle_post_goal_locations and world.options.goal == Goal.option_champion:
+            if location_id in post_champion_locations:
+                return True
+            if ("Early Gossipers" not in world.options.modify_world_state.value and
+                    location_id in post_champion_gossiper_locations):
+                return True
         return False
 
     """

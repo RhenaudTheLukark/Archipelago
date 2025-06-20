@@ -307,6 +307,15 @@ class ShuffleTMCase(Toggle):
     display_name = "Shuffle TM Case"
 
 
+class ShufflePostGoalLocations(Toggle):
+    """
+    Shuffles locations into the item pool that are only accessible after your goal is completed.
+
+    If Cerulean Cave access is locked by your goal then Cerulean Cave won't be included in Dungeon Entrance Shuffle.
+    """
+    display_name = "Shuffle Post Goal Locations"
+
+
 class CardKey(Choice):
     """
     Sets how the card key that unlocks the doors in Silph Co. is handled. If Split or Progressive, nine new locations
@@ -1321,6 +1330,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
+    shuffle_post_goal_locations: ShufflePostGoalLocations
     card_key: CardKey
     island_passes: IslandPasses
     split_teas: SplitTeas

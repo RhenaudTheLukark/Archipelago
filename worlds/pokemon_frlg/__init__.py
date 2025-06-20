@@ -151,6 +151,7 @@ class PokemonFRLGWorld(World):
     er_spoiler_names: List[str]
     moves_by_type: Dict[int, Set[int]]
     shop_locations_by_spheres: List[Set[PokemonFRLGLocation]]
+    cerulean_cave_included: bool
     auth: bytes
 
     def __init__(self, multiworld, player):
@@ -185,6 +186,7 @@ class PokemonFRLGWorld(World):
         self.er_spoiler_names = []
         self.moves_by_type = {}
         self.shop_locations_by_spheres = []
+        self.cerulean_cave_included = True
         self.finished_level_scaling = threading.Event()
 
     @classmethod
@@ -246,6 +248,13 @@ class PokemonFRLGWorld(World):
                                 "incompatible with Kanto Only. Setting requirement to Defeat Champion.",
                                 self.player, self.player_name)
                 self.options.cerulean_cave_requirement.value = CeruleanCaveRequirement.option_champion
+
+        # Check if Ceruelan Cave should be included in this world
+        if (not self.options.shuffle_post_goal_locations and
+                self.options.goal == Goal.option_champion and
+                self.options.cerulean_cave_requirement in (CeruleanCaveRequirement.option_vanilla,
+                                                           CeruleanCaveRequirement.option_champion)):
+            self.cerulean_cave_included = False
 
         # Remove badges from non-local items if they are shuffled among gyms
         if not self.options.shuffle_badges:

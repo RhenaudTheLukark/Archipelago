@@ -8,7 +8,7 @@ from .data import (data, LocationCategory, fly_plando_maps, kanto_fly_destinatio
                    starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
-from .options import LevelScaling
+from .options import CeruleanCaveRequirement, Goal, LevelScaling
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -226,9 +226,18 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             "REGION_POKEMON_LEAGUE_AGATHAS_ROOM/MAIN", "REGION_POKEMON_LEAGUE_LANCES_ROOM/MAIN"
         ]
 
+        cerulean_cave_ids = [
+            "REGION_CERULEAN_CAVE_1F/SOUTHEAST", "REGION_CERULEAN_CAVE_1F/WATER", "REGION_CERULEAN_CAVE_1F/NORTHEAST",
+            "REGION_CERULEAN_CAVE_1F/MAIN", "REGION_CERULEAN_CAVE_1F/NORTHWEST", "REGION_CERULEAN_CAVE_2F/NORTHEAST",
+            "REGION_CERULEAN_CAVE_2F/NORTHWEST", "REGION_CERULEAN_CAVE_2F/WEST", "REGION_CERULEAN_CAVE_2F/CENTER",
+            "REGION_CERULEAN_CAVE_2F/MAIN", "REGION_CERULEAN_CAVE_B1F/MAIN", "REGION_CERULEAN_CAVE_B1F/WATER"
+        ]
+
         if world.options.kanto_only and not data.regions[region_id].kanto:
             return True
         if world.options.skip_elite_four and region_id in elite_four_ids:
+            return True
+        if not world.cerulean_cave_included and region_id in cerulean_cave_ids:
             return True
         return False
 
@@ -246,7 +255,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         return False
 
     def exclude_exit(region_id: str, exit_region_id: str):
-        if world.options.kanto_only and not data.regions[exit_region_id].kanto:
+        if exclude_region(exit_region_id):
             return True
         if (not world.options.kanto_only and
                 region_id == "REGION_CINNABAR_ISLAND_POKEMON_CENTER_1F/MAIN" and
@@ -261,7 +270,10 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             return True
         if dest_warp.parent_region_id is None:
             return True
-        if world.options.kanto_only and not data.regions[dest_warp.parent_region_id].kanto:
+        # These two warps need to always be included even if the destination warps parent region isn't
+        if source_warp.name in ("Pokemon League", "Pokemon League Champion's Room Exit (South)"):
+            return False
+        if exclude_region(dest_warp.parent_region_id):
             return True
         return False
 
