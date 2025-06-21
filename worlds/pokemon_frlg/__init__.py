@@ -12,7 +12,7 @@ import threading
 from collections import defaultdict
 from typing import Any, ClassVar, Dict, List, Set, TextIO
 
-from BaseClasses import CollectionState, ItemClassification, LocationProgressType, MultiWorld, Tutorial, Item
+from BaseClasses import CollectionState, ItemClassification, MultiWorld, Tutorial, Item
 from Fill import fill_restrictive, FillError
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
@@ -24,7 +24,7 @@ from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
 from .level_scaling import level_scaling
-from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations_from_categories,
+from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
                         fill_unrandomized_locations, set_free_fly)
 from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
                       FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon,
@@ -283,108 +283,11 @@ class PokemonFRLGWorld(World):
 
     def create_regions(self) -> None:
         regions = create_regions(self)
-
-        categories = {
-            LocationCategory.BADGE,
-            LocationCategory.HM,
-            LocationCategory.KEY_ITEM,
-            LocationCategory.FLY_UNLOCK,
-            LocationCategory.ITEM_BALL,
-            LocationCategory.STARTING_ITEM,
-            LocationCategory.NPC_GIFT
-        }
-
-        if self.options.shuffle_hidden == ShuffleHiddenItems.option_all:
-            categories.update([LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING])
-        elif self.options.shuffle_hidden == ShuffleHiddenItems.option_nonrecurring:
-            categories.add(LocationCategory.HIDDEN_ITEM)
-        if self.options.extra_key_items:
-            categories.add(LocationCategory.EXTRA_KEY_ITEM)
-        if self.options.shopsanity:
-            categories.add(LocationCategory.SHOPSANITY)
-        if self.options.trainersanity != Trainersanity.special_range_names["none"]:
-            categories.add(LocationCategory.TRAINERSANITY)
-        if self.options.dexsanity != Dexsanity.special_range_names["none"]:
-            categories.add(LocationCategory.DEXSANITY)
-        if self.options.famesanity:
-            categories.add(LocationCategory.FAMESANITY)
-            if self.options.pokemon_request_locations:
-                categories.add(LocationCategory.FAMESANITY_POKEMON_REQUEST)
-        if self.options.pokemon_request_locations:
-            categories.add(LocationCategory.POKEMON_REQUEST)
-        if self.options.card_key != CardKey.option_vanilla:
-            categories.add(LocationCategory.SPLIT_CARD_KEY)
-        if (self.options.island_passes == IslandPasses.option_split or
-                self.options.island_passes == IslandPasses.option_progressive_split):
-            categories.add(LocationCategory.SPLIT_ISLAND_PASS)
-        if self.options.split_teas:
-            categories.add(LocationCategory.SPLIT_TEA)
-        if self.options.shuffle_running_shoes != ShuffleRunningShoes.option_vanilla:
-            categories.add(LocationCategory.RUNNING_SHOES)
-        if self.options.gym_keys:
-            categories.add(LocationCategory.GYM_KEY)
-
-        create_locations_from_categories(self, regions, categories)
+        create_locations(self, regions)
         self.multiworld.regions.extend(regions.values())
-
         create_indirect_conditions(self)
         randomize_requested_trade_pokemon(self)
         fill_unrandomized_locations(self)
-
-        def exclude_locations(locations: List[str]):
-            for location in locations:
-                try:
-                    self.get_location(location).progress_type = LocationProgressType.EXCLUDED
-                except KeyError:
-                    continue
-
-        if self.options.goal == Goal.option_champion:
-            exclude_locations([
-                "Lorelei's Room - Elite Four Lorelei Rematch Reward",
-                "Bruno's Room - Elite Four Bruno Rematch Reward",
-                "Agatha's Room - Elite Four Agatha Rematch Reward",
-                "Lance's Room - Elite Four Lance Rematch Reward",
-                "Champion's Room - Champion Rematch Reward",
-                "Two Island Town - Beauty Info"
-            ])
-
-            if ((self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_vanilla
-                    or self.options.cerulean_cave_requirement == CeruleanCaveRequirement.option_champion)
-                    and self.options.dungeon_entrance_shuffle == DungeonEntranceShuffle.option_off):
-                exclude_locations([
-                    "Cerulean Cave 1F - Southwest Item",
-                    "Cerulean Cave 1F - East Plateau Item",
-                    "Cerulean Cave 1F - West Plateau Item",
-                    "Cerulean Cave 2F - East Item",
-                    "Cerulean Cave 2F - West Item",
-                    "Cerulean Cave 2F - Center Item",
-                    "Cerulean Cave B1F - Northeast Item",
-                    "Cerulean Cave B1F - East Plateau Item",
-                    "Cerulean Cave 1F - West Plateau Hidden Item"
-                ])
-
-            if "Early Gossipers" not in self.options.modify_world_state.value:
-                exclude_locations([
-                    "Professor Oak's Lab - Oak's Aide M Info (Right)",
-                    "Professor Oak's Lab - Oak's Aide M Info (Left)",
-                    "Cerulean Pokemon Center 1F - Bookshelf Info",
-                    "Pokemon Fan Club - Worker Info",
-                    "Lavender Pokemon Center 1F - Balding Man Info",
-                    "Celadon Condominiums 1F - Tea Woman Info",
-                    "Celadon Department Store 2F - Woman Info",
-                    "Fuchsia City - Koga's Daughter Info",
-                    "Pokemon Trainer Fan Club - Bookshelf Info",
-                    "Saffron City - Battle Girl Info",
-                    "Cinnabar Pokemon Center 1F - Bookshelf Info",
-                    "Indigo Plateau Pokemon Center 1F - Black Belt Info 1",
-                    "Indigo Plateau Pokemon Center 1F - Black Belt Info 2",
-                    "Indigo Plateau Pokemon Center 1F - Bookshelf Info",
-                    "Indigo Plateau Pokemon Center 1F - Cooltrainer Info",
-                    "Ember Spa - Black Belt Info",
-                    "Five Island Pokemon Center 1F - Bookshelf Info",
-                    "Seven Island Pokemon Center 1F - Bookshelf Info"
-                ])
-
         set_rules(self)
 
     def create_items(self) -> None:
@@ -480,7 +383,7 @@ class PokemonFRLGWorld(World):
         # Delete trainersanity locations if there are more than the amount specified in the settings
         if self.options.trainersanity != Trainersanity.special_range_names["none"]:
             locations: List[PokemonFRLGLocation] = self.get_locations()
-            trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINERSANITY]
+            trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
             locs_to_remove = len(trainer_locations) - self.options.trainersanity.value
             if locs_to_remove > 0:
                 priority_trainer_locations = [loc for loc in trainer_locations
@@ -541,7 +444,7 @@ class PokemonFRLGWorld(World):
         locations: List[PokemonFRLGLocation] = self.get_locations()
         for attempt in range(5):
             badge_locations: List[PokemonFRLGLocation] = [
-                loc for loc in locations if loc.category == LocationCategory.BADGE and loc.item is None
+                loc for loc in locations if loc.name in location_groups["Gym Prizes"] and loc.item is None
             ]
             state = self.get_world_collection_state()
             # Try to place badges with current Pokemon and HM access
@@ -593,7 +496,7 @@ class PokemonFRLGWorld(World):
                             location.item.classification = ItemClassification.useful
                         else:
                             mon_locations_in_sphere[key].append(location)
-                    if location.category == LocationCategory.SHOPSANITY:
+                    if location.category == LocationCategory.SHOP_ITEM:
                         shop_locations_in_sphere[location.player].add(location)
             for key, mon_locations in mon_locations_in_sphere.items():
                 found_mons.add(key)

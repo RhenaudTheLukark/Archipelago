@@ -81,36 +81,23 @@ class ItemData(NamedTuple):
 
 
 class LocationCategory(IntEnum):
-    BADGE = 0
-    HM = 1
-    KEY_ITEM = 2
-    RUNNING_SHOES = 3
-    EXTRA_KEY_ITEM = 4
-    FLY_UNLOCK = 5
-    SPLIT_CARD_KEY = 6
-    SPLIT_ISLAND_PASS = 7
-    SPLIT_TEA = 8
-    GYM_KEY = 9
-    ITEM_BALL = 10
-    HIDDEN_ITEM = 11
-    HIDDEN_ITEM_RECURRING = 12
-    STARTING_ITEM = 13
-    NPC_GIFT = 14
-    POKEMON_REQUEST = 15
-    SHOPSANITY = 16
-    TRAINERSANITY = 17
-    FAMESANITY = 18
-    FAMESANITY_POKEMON_REQUEST = 19
-    DEXSANITY = 20
-    EVENT = 21
-    EVENT_SHOP = 22
-    EVENT_WILD_POKEMON = 23
-    EVENT_STATIC_POKEMON = 24
-    EVENT_LEGENDARY_POKEMON = 25
-    EVENT_EVOLUTION_POKEMON = 26
-    EVENT_TRAINER_SCALING = 27
-    EVENT_WILD_POKEMON_SCALING = 28
-    EVENT_STATIC_POKEMON_SCALING = 29
+    OVERWORLD_ITEM = 0
+    NPC_GIFT = 1
+    HIDDEN_ITEM = 2
+    TOWN_VISIT = 3
+    SHOP_ITEM = 4
+    TRAINER = 5
+    FAME_ENTRY = 6
+    POKEDEX = 7
+    EVENT = 8
+    EVENT_SHOP = 9
+    EVENT_WILD_POKEMON = 10
+    EVENT_STATIC_POKEMON = 11
+    EVENT_LEGENDARY_POKEMON = 12
+    EVENT_EVOLUTION_POKEMON = 13
+    EVENT_TRAINER_SCALING = 14
+    EVENT_WILD_POKEMON_SCALING = 15
+    EVENT_STATIC_POKEMON_SCALING = 16
 
 
 class LocationData(NamedTuple):
@@ -121,6 +108,7 @@ class LocationData(NamedTuple):
     address: Dict[str, int | List[int]]
     flag: int
     category: LocationCategory
+    include: FrozenSet[str]
     tags: FrozenSet[str]
 
 
@@ -925,6 +913,7 @@ def init() -> None:
                     location_address,
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
+                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
             elif "SHOP_TWO_ISLAND" in location_id:
@@ -962,6 +951,7 @@ def init() -> None:
                     location_address,
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
+                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
             else:
@@ -973,6 +963,7 @@ def init() -> None:
                     location_json["address"],
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
+                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
 

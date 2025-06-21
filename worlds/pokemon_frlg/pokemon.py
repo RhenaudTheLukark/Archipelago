@@ -519,7 +519,8 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
         if not map_data.kanto and world.options.kanto_only:
             continue
 
-        if map_name in ("MAP_CERULEAN_CAVE_1F", "MAP_CERULEAN_CAVE_2F", "MAP_CERULEAN_CAVE_B1F") and not world.cerulean_cave_included:
+        if (map_name in ("MAP_CERULEAN_CAVE_1F", "MAP_CERULEAN_CAVE_2F", "MAP_CERULEAN_CAVE_B1F") and
+                not world.cerulean_cave_included):
             continue
 
         new_encounter_slots: List[List[EncounterSpeciesData] | None] = [None, None, None]

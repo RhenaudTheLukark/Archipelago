@@ -1764,11 +1764,11 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
     for location in world.get_locations():
         assert isinstance(location, PokemonFRLGLocation)
         if (options.itemfinder_required != ItemfinderRequired.option_off and
-                location.category in {LocationCategory.HIDDEN_ITEM, LocationCategory.HIDDEN_ITEM_RECURRING}):
+                location.category == LocationCategory.HIDDEN_ITEM):
             add_rule(location, lambda state: state.has("Itemfinder", player))
-        if options.fame_checker_required and location.category == LocationCategory.FAMESANITY:
+        if options.fame_checker_required and location.category == LocationCategory.FAME_ENTRY:
             add_rule(location, lambda state: state.has("Fame Checker", player))
-        if location.category == LocationCategory.DEXSANITY:
+        if location.category == LocationCategory.POKEDEX:
             name = location.name.split(" - ")[1].strip()
             add_rule(location, lambda state, pokemon=name: logic.has_pokemon(state, pokemon))
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
