@@ -3,7 +3,6 @@
     "region": "Route 4 Pokemon Center 1F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Gift Magikarp Scaling": [
@@ -15,7 +14,6 @@
     "region": "Power Plant",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Static Electrode 1 Scaling": [
@@ -33,7 +31,6 @@
     "region": "Pokemon Tower Ghost Encounter",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Static Marowak Scaling": [
@@ -45,7 +42,6 @@
     "region": "Celadon Game Corner Prize Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Prize Pokemon 1 Scaling": [
@@ -69,7 +65,6 @@
     "region": "Celadon Condominiums Roof Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Gift Eevee Scaling": [
@@ -81,7 +76,6 @@
     "region": "Route 12 Snorlax Area",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Static Snorlax 1 Scaling": [
@@ -93,7 +87,6 @@
     "region": "Route 16 Snorlax Area",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Static Snorlax 2 Scaling": [
@@ -105,7 +98,6 @@
     "region": "Saffron Dojo",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Gift Hitmonchan Scaling": [
@@ -120,7 +112,6 @@
     "region": "Silph Co. 7F Northwest Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Gift Lapras Scaling": [
@@ -132,7 +123,6 @@
     "region": "Seafoam Islands B4F Near Articuno",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Articuno Scaling": [
@@ -144,7 +134,6 @@
     "region": "Pokemon Lab Experiment Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Gift Omanyte Scaling": [
@@ -162,7 +151,6 @@
     "region": "Cerulean Cave B1F Water",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Mewtwo Scaling": [
@@ -174,7 +162,6 @@
     "region": "Navel Rock Summit",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Ho-Oh Scaling": [
@@ -186,7 +173,6 @@
     "region": "Navel Rock Base",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Lugia Scaling": [
@@ -198,7 +184,6 @@
     "region": "Birth Island Exterior",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Deoxys Scaling": [
@@ -210,7 +195,6 @@
     "region": "Mt. Ember Summit",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Legendary Moltres Scaling": [
@@ -222,7 +206,6 @@
     "region": "Berry Forest",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_STATIC_POKEMON_SCALING",
     "locations": {
       "Static Hypno Scaling": [

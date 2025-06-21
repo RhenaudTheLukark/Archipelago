@@ -4,8 +4,8 @@ Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/r
 from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
 from BaseClasses import Entrance, Region, CollectionState, ItemClassification
 from entrance_rando import ERPlacementState
-from .data import (data, LocationCategory, fly_plando_maps, kanto_fly_destinations, sevii_fly_destinations,
-                   starting_town_blacklist_map)
+from .data import (data, EncounterType, LocationCategory, fly_plando_maps, kanto_fly_destinations,
+                   sevii_fly_destinations, starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
 from .options import LevelScaling
@@ -134,10 +134,11 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
     # Used in connect_to_map_encounters. Splits encounter categories into "subcategories" and gives them names
     # and rules so the rods can only access their specific slots.
-    encounter_categories: Dict[str, List[Tuple[str | None, range, Callable[[CollectionState], bool] | None]]] = {
-        "Land": [(None, range(0, 12), None)],
-        "Water": [(None, range(0, 5), None)],
-        "Fishing": [
+    encounter_categories: Dict[EncounterType,
+                               List[Tuple[str | None, range, Callable[[CollectionState], bool] | None]]] = {
+        EncounterType.LAND: [(None, range(0, 12), None)],
+        EncounterType.WATER: [(None, range(0, 5), None)],
+        EncounterType.FISHING: [
             ("Old Rod", range(0, 2), lambda state: state.has("Old Rod", world.player)),
             ("Good Rod", range(2, 5), lambda state: state.has("Good Rod", world.player)),
             ("Super Rod", range(5, 10), lambda state: state.has("Super Rod", world.player)),
@@ -161,20 +162,19 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         if True in include_slots and encounter_region_name is None:
             raise AssertionError(f"{region.name} has encounters but does not have an encounter region name")
 
-        for i, encounter_category in enumerate(encounter_categories.items()):
+        for i, (encounter_type, subcategories) in enumerate(encounter_categories.items()):
             if include_slots[i]:
-                region_name = f"{encounter_region_name} {encounter_category[0]} Encounters"
+                region_name = f"{encounter_region_name} {encounter_type.value} Encounters"
 
                 # If the region hasn't been created yet, create it now
                 try:
                     encounter_region = regions[region_name]
                 except KeyError:
                     encounter_region = PokemonFRLGRegion(region_name, world.player, world.multiworld)
-                    encounter_slots = getattr(world.modified_maps[map_name],
-                                              f"{encounter_category[0].lower()}_encounters").slots[game_version]
+                    encounter_slots = world.modified_maps[map_name].encounters[encounter_type].slots[game_version]
 
                     # Subcategory is for splitting fishing rods; land and water only have one subcategory
-                    for subcategory in encounter_category[1]:
+                    for subcategory in subcategories:
                         # Want to create locations per species, not per slot
                         # encounter_categories includes info on which slots belong to which subcategory
                         unique_species = []
@@ -185,17 +185,17 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
                         # Create a location for the species
                         for j, species_id in enumerate(unique_species):
-                            subcategory_name = subcategory[0] if subcategory[0] is not None else encounter_category[0]
+                            type_name = subcategory[0] if subcategory[0] is not None else encounter_type.value
 
                             encounter_location = PokemonFRLGLocation(
                                 world.player,
-                                f"{encounter_region_name} - {subcategory_name} Encounter {j + 1}",
+                                f"{encounter_region_name} - {type_name} Encounter {j + 1}",
                                 None,
                                 LocationCategory.EVENT_WILD_POKEMON,
                                 encounter_region,
                                 None,
                                 None,
-                                spoiler_name=f"{encounter_region_name} ({subcategory_name})",
+                                spoiler_name=f"{encounter_region_name} ({type_name})",
                             )
                             encounter_location.show_in_spoiler = False
 
@@ -218,14 +218,13 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                     regions[region_name] = encounter_region
 
                 # Encounter region exists, just connect to it
-                region.connect(encounter_region, f"{region.name} ({encounter_category[0]} Battle)")
+                region.connect(encounter_region, f"{region.name} ({encounter_type.value} Battle)")
 
     def exclude_region(region_id: str):
         elite_four_ids = [
             "REGION_POKEMON_LEAGUE_LORELEIS_ROOM/MAIN", "REGION_POKEMON_LEAGUE_BRUNOS_ROOM/MAIN",
             "REGION_POKEMON_LEAGUE_AGATHAS_ROOM/MAIN", "REGION_POKEMON_LEAGUE_LANCES_ROOM/MAIN"
         ]
-
         cerulean_cave_ids = [
             "REGION_CERULEAN_CAVE_1F/SOUTHEAST", "REGION_CERULEAN_CAVE_1F/WATER", "REGION_CERULEAN_CAVE_1F/NORTHEAST",
             "REGION_CERULEAN_CAVE_1F/MAIN", "REGION_CERULEAN_CAVE_1F/NORTHWEST", "REGION_CERULEAN_CAVE_2F/NORTHEAST",
@@ -286,12 +285,30 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             "TRAINER_SCALING_POKEMON_LEAGUE_CHAMPIONS_ROOM/MAIN",
             "TRAINER_SCALING_POKEMON_LEAGUE_CHAMPIONS_ROOM_REMATCH/MAIN"
         ]
+        cerulean_cave_ids = [
+            "WILD_SCALING_CERULEAN_CAVE_1F/LAND_ENCOUNTERS", "WILD_SCALING_CERULEAN_CAVE_2F/LAND_ENCOUNTERS",
+            "WILD_SCALING_CERULEAN_CAVE_B1F/LAND_ENCOUNTERS", "WILD_SCALING_CERULEAN_CAVE_1F/WATER_ENCOUNTERS",
+            "WILD_SCALING_CERULEAN_CAVE_B1F/WATER_ENCOUNTERS", "STATIC_SCALING_CERULEAN_CAVE_B1F/WATER"
+        ]
 
         if world.options.kanto_only and not data.scaling[scaling_id].kanto:
             return True
         if world.options.skip_elite_four and scaling_id in elite_four_ids:
             return True
         if not world.options.skip_elite_four and scaling_id in champion_ids:
+            return True
+        if not world.cerulean_cave_included and scaling_id in cerulean_cave_ids:
+            return True
+        return False
+
+    def exclude_scaling_map(map_id: str) -> bool:
+        cerulean_cave_ids = [
+            "MAP_CERULEAN_CAVE_1F", "MAP_CERULEAN_CAVE_2F", "MAP_CERULEAN_CAVE_B1F"
+        ]
+
+        if world.options.kanto_only and not data.maps[map_id].kanto:
+            return True
+        if not world.cerulean_cave_included and map_id in cerulean_cave_ids:
             return True
         return False
 
@@ -454,18 +471,17 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                 elif scaling_data.category == LocationCategory.EVENT_WILD_POKEMON_SCALING:
                     index = 1
                     events: Dict[str, Tuple[str, List[str], Callable[[CollectionState], bool] | None]] = {}
-                    encounter_category_data = encounter_categories[scaling_data.type]
+                    encounter_type = EncounterType(scaling_data.type)
+                    encounter_category_data = encounter_categories[encounter_type]
                     for data_id in data_ids:
-                        map_data = data.maps[data_id]
-                        if world.options.kanto_only and not map_data.kanto:
+                        if exclude_scaling_map(data_id):
                             continue
-                        encounters = (map_data.land_encounters if scaling_data.type == "Land" else
-                                      map_data.water_encounters if scaling_data.type == "Water" else
-                                      map_data.fishing_encounters)
+                        map_data = world.modified_maps[data_id]
+                        encounters = map_data.encounters[encounter_type]
                         for subcategory in encounter_category_data:
                             for i in subcategory[1]:
-                                subcategory_name = subcategory[0] if subcategory[0] is not None else scaling_data.type
-                                species_name = f"{subcategory_name} {encounters.slots[game_version][i].species_id}"
+                                type_name = subcategory[0] if subcategory[0] is not None else encounter_type.value
+                                species_name = f"{type_name} {encounters.slots[game_version][i].species_id}"
                                 if species_name not in events:
                                     encounter_data = (f"{location_name} {index}", [f"{data_id} {i}"], subcategory[2])
                                     events[species_name] = encounter_data
@@ -522,10 +538,10 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
                     for data_id in location.data_ids:
                         data_ids = data_id.split()
-                        map_data = data.maps[data_ids[0]]
-                        encounters = (map_data.land_encounters if "Land" in location.name else
-                                      map_data.water_encounters if "Water" in location.name else
-                                      map_data.fishing_encounters)
+                        map_data = world.modified_maps[data_ids[0]]
+                        encounters = (map_data.encounters[EncounterType.LAND] if "Land" in location.name else
+                                      map_data.encounters[EncounterType.WATER] if "Water" in location.name else
+                                      map_data.encounters[EncounterType.FISHING])
 
                         encounter_max_level = encounters.slots[game_version][int(data_ids[1])].max_level
                         max_level = max(max_level, encounter_max_level)

@@ -3,7 +3,7 @@
     "region": "Route 1 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 1 Land Scaling": [
@@ -15,7 +15,7 @@
     "region": "Route 22 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 22 Land Scaling": [
@@ -27,7 +27,7 @@
     "region": "Route 2 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 2 Land Scaling": [
@@ -39,7 +39,7 @@
     "region": "Viridian Forest Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Viridian Forest Land Scaling": [
@@ -51,7 +51,7 @@
     "region": "Route 3 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 3 Land Scaling": [
@@ -63,7 +63,7 @@
     "region": "Mt. Moon 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Moon 1F Land Scaling": [
@@ -75,7 +75,7 @@
     "region": "Mt. Moon B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Moon B1F Land Scaling": [
@@ -87,7 +87,7 @@
     "region": "Mt. Moon B2F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Moon B2F Land Scaling": [
@@ -99,7 +99,7 @@
     "region": "Route 4 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 4 Land Scaling": [
@@ -111,7 +111,7 @@
     "region": "Route 24 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 24 Land Scaling": [
@@ -123,7 +123,7 @@
     "region": "Route 25 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 25 Land Scaling": [
@@ -135,7 +135,7 @@
     "region": "Route 5 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 5 Land Scaling": [
@@ -147,7 +147,7 @@
     "region": "Route 6 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 6 Land Scaling": [
@@ -159,7 +159,7 @@
     "region": "Route 11 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 11 Land Scaling": [
@@ -171,7 +171,7 @@
     "region": "Diglett's Cave B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Diglett's Cave B1F Land Scaling": [
@@ -183,7 +183,7 @@
     "region": "Route 9 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 9 Land Scaling": [
@@ -195,7 +195,7 @@
     "region": "Route 10 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 10 Land Scaling": [
@@ -207,7 +207,7 @@
     "region": "Rock Tunnel 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Rock Tunnel 1F Land Scaling": [
@@ -219,7 +219,7 @@
     "region": "Rock Tunnel B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Rock Tunnel B1F Land Scaling": [
@@ -231,7 +231,7 @@
     "region": "Power Plant Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Power Plant Land Scaling": [
@@ -243,7 +243,7 @@
     "region": "Pokemon Tower 3F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Tower 3F Land Scaling": [
@@ -255,7 +255,7 @@
     "region": "Pokemon Tower 4F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Tower 4F Land Scaling": [
@@ -267,7 +267,7 @@
     "region": "Pokemon Tower 5F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Tower 5F Land Scaling": [
@@ -279,7 +279,7 @@
     "region": "Pokemon Tower 6F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Tower 6F Land Scaling": [
@@ -291,7 +291,7 @@
     "region": "Pokemon Tower 7F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Tower 7F Land Scaling": [
@@ -303,7 +303,7 @@
     "region": "Route 8 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 8 Land Scaling": [
@@ -315,7 +315,7 @@
     "region": "Route 7 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 7 Land Scaling": [
@@ -327,7 +327,7 @@
     "region": "Route 12 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 12 Land Scaling": [
@@ -339,7 +339,7 @@
     "region": "Route 13 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 13 Land Scaling": [
@@ -351,7 +351,7 @@
     "region": "Route 14 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 14 Land Scaling": [
@@ -363,7 +363,7 @@
     "region": "Route 15 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 15 Land Scaling": [
@@ -375,7 +375,7 @@
     "region": "Route 16 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 16 Land Scaling": [
@@ -387,7 +387,7 @@
     "region": "Route 17 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 17 Land Scaling": [
@@ -399,7 +399,7 @@
     "region": "Route 18 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 18 Land Scaling": [
@@ -411,7 +411,7 @@
     "region": "Safari Zone Center Area Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone Center Area Land Scaling": [
@@ -423,7 +423,7 @@
     "region": "Safari Zone East Area Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone East Area Land Scaling": [
@@ -435,7 +435,7 @@
     "region": "Safari Zone North Area Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone North Area Land Scaling": [
@@ -447,7 +447,7 @@
     "region": "Safari Zone West Area Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone West Area Land Scaling": [
@@ -459,7 +459,7 @@
     "region": "Seafoam Islands 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands 1F Land Scaling": [
@@ -471,7 +471,7 @@
     "region": "Seafoam Islands B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B1F Land Scaling": [
@@ -483,7 +483,7 @@
     "region": "Seafoam Islands B2F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B2F Land Scaling": [
@@ -495,7 +495,7 @@
     "region": "Seafoam Islands B3F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B3F Land Scaling": [
@@ -507,7 +507,7 @@
     "region": "Seafoam Islands B4F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B4F Land Scaling": [
@@ -519,7 +519,7 @@
     "region": "Pokemon Mansion 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Mansion 1F Land Scaling": [
@@ -531,7 +531,7 @@
     "region": "Pokemon Mansion 2F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Mansion 2F Land Scaling": [
@@ -543,7 +543,7 @@
     "region": "Pokemon Mansion 3F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Mansion 3F Land Scaling": [
@@ -555,7 +555,7 @@
     "region": "Pokemon Mansion B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pokemon Mansion B1F Land Scaling": [
@@ -567,7 +567,7 @@
     "region": "Route 21 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 21 Land Scaling": [
@@ -580,7 +580,7 @@
     "region": "Route 23 Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 23 Land Scaling": [
@@ -592,7 +592,7 @@
     "region": "Victory Road 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Victory Road 1F Land Scaling": [
@@ -604,7 +604,7 @@
     "region": "Victory Road 2F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Victory Road 2F Land Scaling": [
@@ -616,7 +616,7 @@
     "region": "Victory Road 3F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Victory Road 3F Land Scaling": [
@@ -628,7 +628,7 @@
     "region": "Cerulean Cave 1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean Cave 1F Land Scaling": [
@@ -640,7 +640,7 @@
     "region": "Cerulean Cave 2F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean Cave 2F Land Scaling": [
@@ -652,7 +652,7 @@
     "region": "Cerulean Cave B1F Land Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean Cave B1F Land Scaling": [
@@ -670,7 +670,7 @@
       "Route 20 Water Encounters",
       "Route 21 Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pallet/Cinnabar/Rt 19,20,21 Water Scaling": [
@@ -690,7 +690,7 @@
       "Viridian City Water Encounters",
       "Route 22 Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Viridian/Rt 22 Water Scaling": [
@@ -707,7 +707,7 @@
       "Route 4 Water Encounters",
       "Route 24 Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean/Rt 4,24 Water Scaling": [
@@ -721,7 +721,7 @@
     "region": "Route 25 Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 25 Water Scaling": [
@@ -733,7 +733,7 @@
     "region": "Route 6 Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 6 Water Scaling": [
@@ -748,7 +748,7 @@
       "Vermilion City Water Encounters",
       "Route 11 Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Vermilion/Rt 11 Water Scaling": [
@@ -761,7 +761,7 @@
     "region": "S.S. Anne Exterior Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "S.S. Anne Exterior Water Scaling": [
@@ -773,7 +773,7 @@
     "region": "Route 10 Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 10 Water Scaling": [
@@ -785,7 +785,7 @@
     "region": "Celadon City Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Celadon City Water Scaling": [
@@ -800,7 +800,7 @@
       "Route 12 Water Encounters",
       "Route 13 Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Rt 12,13 Water Scaling": [
@@ -813,7 +813,7 @@
     "region": "Fuchsia City Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Fuchsia City Water Scaling": [
@@ -825,7 +825,7 @@
     "region": "Safari Zone Center Area Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone Center Area Water Scaling": [
@@ -837,7 +837,7 @@
     "region": "Safari Zone East Area Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone East Area Water Scaling": [
@@ -849,7 +849,7 @@
     "region": "Safari Zone North Area Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone North Area Water Scaling": [
@@ -861,7 +861,7 @@
     "region": "Safari Zone West Area Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Safari Zone West Area Water Scaling": [
@@ -873,7 +873,7 @@
     "region": "Seafoam Islands B3F Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B3F Water Scaling": [
@@ -885,7 +885,7 @@
     "region": "Seafoam Islands B4F Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seafoam Islands B4F Water Scaling": [
@@ -897,7 +897,7 @@
     "region": "Route 23 Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Route 23 Water Scaling": [
@@ -909,7 +909,7 @@
     "region": "Cerulean Cave 1F Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean Cave 1F Water Scaling": [
@@ -921,7 +921,7 @@
     "region": "Cerulean Cave B1F Water Encounters",
     "kanto": true,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cerulean Cave B1F Water Scaling": [
@@ -983,7 +983,7 @@
       "Tanoby Ruins Fishing Encounters",
       "Trainer Tower Exterior Fishing Encounters"
     ],
-    "type": "Fishing",
+    "type": "FISHING",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Fishing Scaling": [
@@ -1044,7 +1044,7 @@
     "region": "Treasure Beach Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Treasure Beach Land Scaling": [
@@ -1056,7 +1056,7 @@
     "region": "Kindle Road Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Kindle Road Land Scaling": [
@@ -1068,7 +1068,7 @@
     "region": "Mt. Ember Exterior Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Exterior Land Scaling": [
@@ -1080,7 +1080,7 @@
     "region": "Mt. Ember Summit Path 1F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Summit Path 1F Land Scaling": [
@@ -1092,7 +1092,7 @@
     "region": "Mt. Ember Summit Path 2F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Summit Path 2F Land Scaling": [
@@ -1104,7 +1104,7 @@
     "region": "Mt. Ember Summit Path 3F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Summit Path 3F Land Scaling": [
@@ -1116,7 +1116,7 @@
     "region": "Mt. Ember Ruby Path 1F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path 1F Land Scaling": [
@@ -1128,7 +1128,7 @@
     "region": "Mt. Ember Ruby Path B1F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path B1F Land Scaling": [
@@ -1140,7 +1140,7 @@
     "region": "Mt. Ember Ruby Path B1F Return Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path B1F Return Land Scaling": [
@@ -1152,7 +1152,7 @@
     "region": "Mt. Ember Ruby Path B2F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path B2F Land Scaling": [
@@ -1164,7 +1164,7 @@
     "region": "Mt. Ember Ruby Path B2F Return Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path B2F Return Land Scaling": [
@@ -1176,7 +1176,7 @@
     "region": "Mt. Ember Ruby Path B3F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Mt. Ember Ruby Path B3F Land Scaling": [
@@ -1188,7 +1188,7 @@
     "region": "Cape Brink Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cape Brink Land Scaling": [
@@ -1200,7 +1200,7 @@
     "region": "Three Isle Port Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Three Isle Port Land Scaling": [
@@ -1212,7 +1212,7 @@
     "region": "Bond Bridge Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Bond Bridge Land Scaling": [
@@ -1224,7 +1224,7 @@
     "region": "Berry Forest Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Berry Forest Land Scaling": [
@@ -1236,7 +1236,7 @@
     "region": "Icefall Cave Front Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave Front Land Scaling": [
@@ -1248,7 +1248,7 @@
     "region": "Icefall Cave 1F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave 1F Land Scaling": [
@@ -1260,7 +1260,7 @@
     "region": "Icefall Cave B1F Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave B1F Land Scaling": [
@@ -1272,7 +1272,7 @@
     "region": "Icefall Cave Back Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave Back Land Scaling": [
@@ -1284,7 +1284,7 @@
     "region": "Five Isle Meadow Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Five Isle Meadow Land Scaling": [
@@ -1296,7 +1296,7 @@
     "region": "Memorial Pillar Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Memorial Pillar Land Scaling": [
@@ -1308,7 +1308,7 @@
     "region": "Lost Cave B1F Room 1 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 1 Land Scaling": [
@@ -1320,7 +1320,7 @@
     "region": "Lost Cave B1F Room 2 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 2 Land Scaling": [
@@ -1332,7 +1332,7 @@
     "region": "Lost Cave B1F Room 3 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 3 Land Scaling": [
@@ -1344,7 +1344,7 @@
     "region": "Lost Cave B1F Room 4 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 4 Land Scaling": [
@@ -1356,7 +1356,7 @@
     "region": "Lost Cave B1F Room 5 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 5 Land Scaling": [
@@ -1368,7 +1368,7 @@
     "region": "Lost Cave B1F Room 6 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 6 Land Scaling": [
@@ -1380,7 +1380,7 @@
     "region": "Lost Cave B1F Room 7 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 7 Land Scaling": [
@@ -1392,7 +1392,7 @@
     "region": "Lost Cave B1F Room 8 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 8 Land Scaling": [
@@ -1404,7 +1404,7 @@
     "region": "Lost Cave B1F Room 9 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 9 Land Scaling": [
@@ -1416,7 +1416,7 @@
     "region": "Lost Cave B1F Room 10 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 10 Land Scaling": [
@@ -1428,7 +1428,7 @@
     "region": "Lost Cave B1F Room 11 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 11 Land Scaling": [
@@ -1440,7 +1440,7 @@
     "region": "Lost Cave B1F Room 12 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 12 Land Scaling": [
@@ -1452,7 +1452,7 @@
     "region": "Lost Cave B1F Room 13 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 13 Land Scaling": [
@@ -1464,7 +1464,7 @@
     "region": "Lost Cave B1F Room 14 Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Lost Cave Room 14 Land Scaling": [
@@ -1476,7 +1476,7 @@
     "region": "Water Path Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Water Path Land Scaling": [
@@ -1488,7 +1488,7 @@
     "region": "Ruin Valley Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Ruin Valley Land Scaling": [
@@ -1500,7 +1500,7 @@
     "region": "Pattern Bush Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Pattern Bush Land Scaling": [
@@ -1512,7 +1512,7 @@
     "region": "Altering Cave Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Altering Cave Land Scaling": [
@@ -1524,7 +1524,7 @@
     "region": "Canyon Entrance Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Canyon Entrance Land Scaling": [
@@ -1536,7 +1536,7 @@
     "region": "Sevault Canyon Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Sevault Canyon Land Scaling": [
@@ -1548,7 +1548,7 @@
     "region": "Monean Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Monean Chamber Land Scaling": [
@@ -1560,7 +1560,7 @@
     "region": "Liptoo Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Liptoo Chamber Land Scaling": [
@@ -1572,7 +1572,7 @@
     "region": "Weepth Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Weepth Chamber Land Scaling": [
@@ -1584,7 +1584,7 @@
     "region": "Dilford Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Dilford Chamber Land Scaling": [
@@ -1596,7 +1596,7 @@
     "region": "Scufib Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Scufib Chamber Land Scaling": [
@@ -1608,7 +1608,7 @@
     "region": "Rixy Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Rixy Chamber Land Scaling": [
@@ -1620,7 +1620,7 @@
     "region": "Viapois Chamber Land Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Land",
+    "type": "LAND",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Viapois Chamber Land Scaling": [
@@ -1636,7 +1636,7 @@
       "Treasure Beach Water Encounters",
       "Kindle Road Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "One Island Water Scaling": [
@@ -1650,7 +1650,7 @@
     "region": "Cape Brink Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Cape Brink Water Scaling": [
@@ -1662,7 +1662,7 @@
     "region": "Bond Bridge Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Bond Bridge Water Scaling": [
@@ -1674,7 +1674,7 @@
     "region": "Berry Forest Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Berry Forest Water Scaling": [
@@ -1686,7 +1686,7 @@
     "region": "Four Island Town Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Four Island Town Water Scaling": [
@@ -1698,7 +1698,7 @@
     "region": "Icefall Cave Front Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave Front Water Scaling": [
@@ -1710,7 +1710,7 @@
     "region": "Icefall Cave Back Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Icefall Cave Back Water Scaling": [
@@ -1728,7 +1728,7 @@
       "Water Labyrinth Water Encounters",
       "Resort Gorgeous Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Five Island Water Scaling": [
@@ -1744,7 +1744,7 @@
     "region": "Water Path Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Water Path Water Scaling": [
@@ -1756,7 +1756,7 @@
     "region": "Ruin Valley Water Encounters",
     "kanto": false,
     "connections": [],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Ruin Valley Water Scaling": [
@@ -1771,7 +1771,7 @@
       "Green Path Water Encounters",
       "Outcast Island Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Six Island Water Scaling": [
@@ -1787,7 +1787,7 @@
       "Tanoby Ruins Water Encounters",
       "Trainer Tower Exterior Water Encounters"
     ],
-    "type": "Water",
+    "type": "WATER",
     "category": "EVENT_WILD_POKEMON_SCALING",
     "locations": {
       "Seven Island Water Scaling": [

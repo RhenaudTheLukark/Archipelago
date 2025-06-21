@@ -8,7 +8,7 @@ import orjson
 import pkgutil
 from collections import defaultdict
 from dataclasses import dataclass
-from enum import IntEnum
+from enum import Enum, IntEnum
 from pkg_resources import resource_listdir, resource_isdir
 from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
@@ -124,14 +124,18 @@ class EncounterTableData(NamedTuple):
     address: Dict[str, int]
 
 
+class EncounterType(Enum):
+    LAND = "Land"
+    WATER = "Water"
+    FISHING = "Fishing"
+
+
 @dataclass
 class MapData:
     name: str
     header_address: Dict[str, int]
     warp_table_address: Dict[str, int]
-    land_encounters: EncounterTableData | None
-    water_encounters: EncounterTableData | None
-    fishing_encounters: EncounterTableData | None
+    encounters: Dict[EncounterType, EncounterTableData]
     kanto: bool
 
 
@@ -305,7 +309,7 @@ class ScalingData:
     region: str
     kanto: bool
     connections: List[str]
-    type: str | None
+    type: EncounterType | None
     category: LocationCategory
     locations: Dict[str, List[str]]
 
@@ -786,10 +790,7 @@ def init() -> None:
 
     # Create map data
     for map_name, map_json in extracted_data["maps"].items():
-        land_encounters = None
-        water_encounters = None
-        fishing_encounters = None
-
+        encounter_tables: Dict[EncounterType, EncounterTableData] = {}
         if "land_encounters" in map_json:
             land_slots: Dict[str, List[EncounterSpeciesData]] = {}
             for version, slots in map_json["land_encounters"]["slots"].items():
@@ -801,7 +802,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 land_slots[version] = version_slots
-            land_encounters = EncounterTableData(
+            encounter_tables[EncounterType.LAND] = EncounterTableData(
                 land_slots,
                 map_json["land_encounters"]["address"]
             )
@@ -816,7 +817,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 water_slots[version] = version_slots
-            water_encounters = EncounterTableData(
+            encounter_tables[EncounterType.WATER] = EncounterTableData(
                 water_slots,
                 map_json["water_encounters"]["address"]
             )
@@ -831,7 +832,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 fishing_slots[version] = version_slots
-            fishing_encounters = EncounterTableData(
+            encounter_tables[EncounterType.FISHING] = EncounterTableData(
                 fishing_slots,
                 map_json["fishing_encounters"]["address"]
             )
@@ -840,9 +841,7 @@ def init() -> None:
             map_name,
             map_json["header_address"],
             map_json["warp_table_address"],
-            land_encounters,
-            water_encounters,
-            fishing_encounters,
+            encounter_tables,
             True
         )
 
@@ -1185,7 +1184,7 @@ def init() -> None:
             scaling_json["region"],
             scaling_json["kanto"],
             scaling_json["connections"],
-            scaling_json["type"],
+            EncounterType[scaling_json["type"]] if "type" in scaling_json else None,
             LocationCategory[scaling_json["category"]],
             scaling_json["locations"]
         )

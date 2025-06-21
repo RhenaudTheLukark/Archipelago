@@ -3,8 +3,8 @@ import math
 from collections import defaultdict
 from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 
-from .data import (data, LEGENDARY_POKEMON, NUM_REAL_SPECIES, NAME_TO_SPECIES_ID, EncounterSpeciesData, EventData,
-                   LearnsetMove, SpeciesData, TrainerPokemonData)
+from .data import (data, LEGENDARY_POKEMON, NUM_REAL_SPECIES, NAME_TO_SPECIES_ID, EncounterSpeciesData,
+                   EncounterTableData, EncounterType, EventData, LearnsetMove, SpeciesData, TrainerPokemonData)
 from .options import (Dexsanity, HmCompatibility, RandomizeAbilities, RandomizeDamageCategories,
                       RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeMoves, RandomizeMoveTypes,
                       RandomizeStarters, RandomizeTrainerParties, RandomizeTypes, RandomizeWildPokemon,
@@ -466,7 +466,7 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
         # If Famesanity and Pokémon Request locations are on, we need to place Togepi somewhere
         if world.options.famesanity and world.options.pokemon_request_locations and not world.options.kanto_only:
             map_data = world.modified_maps["MAP_FIVE_ISLAND_MEMORIAL_PILLAR"]
-            slots = map_data.land_encounters.slots[game_version]
+            slots = map_data.encounters[EncounterType.LAND].slots[game_version]
             for slot in slots:
                 slot.species_id = data.constants["SPECIES_TOGEPI"]
         return
@@ -494,7 +494,7 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
 
     # Route 21 is split into a North and South Map. We'll set this after we randomize one of them
     # in order to ensure that both maps have the same encounters
-    route_21_randomized = False
+    route_21_encounters = None
 
     placed_species = set()
     priority_species = set()
@@ -523,161 +523,143 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
                 not world.cerulean_cave_included):
             continue
 
-        new_encounter_slots: List[List[EncounterSpeciesData] | None] = [None, None, None]
-        old_encounters = [map_data.land_encounters, map_data.water_encounters, map_data.fishing_encounters]
+        new_encounters: Dict[EncounterType, EncounterTableData] = {}
 
         # Check if the current map is a Route 21 map and the other one has already been randomized.
         # If so, set the encounters of the current map based on the other Route 21 map.
-        if map_name == "MAP_ROUTE21_NORTH" and route_21_randomized:
-            map_data.land_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_SOUTH"].land_encounters.slots[game_version])
-            map_data.water_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_SOUTH"].water_encounters.slots[game_version])
-            map_data.fishing_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_SOUTH"].fishing_encounters.slots[game_version])
-            continue
-        elif map_name == "MAP_ROUTE21_SOUTH" and route_21_randomized:
-            map_data.land_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_NORTH"].land_encounters.slots[game_version])
-            map_data.water_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_NORTH"].water_encounters.slots[game_version])
-            map_data.fishing_encounters.slots[game_version] = \
-                copy.deepcopy(world.modified_maps["MAP_ROUTE21_NORTH"].fishing_encounters.slots[game_version])
+        if map_name in ("MAP_ROUTE21_NORTH", "MAP_ROUTE21_SOUTH") and route_21_encounters is not None:
+            for encounter_type, encounter_table in route_21_encounters.items():
+                map_data.encounters[encounter_type] = EncounterTableData(encounter_table.slots,
+                                                                         map_data.encounters[encounter_type].address)
             continue
 
-        if map_name == "MAP_ROUTE21_NORTH" or map_name == "MAP_ROUTE21_SOUTH":
-            route_21_randomized = True
+        for encounter_type, table in map_data.encounters.items():
+            # Create a map from the original species to new species
+            # instead of just randomizing every slot.
+            # Force area 1-to-1 mapping, in other words.
+            species_old_to_new_map: Dict[int, int] = {}
+            for species_data in table.slots[game_version]:
+                species_id = species_data.species_id
+                if species_id not in species_old_to_new_map:
+                    original_species = data.species[species_id]
+                    if (world.options.wild_pokemon_groups == WildPokemonGroups.option_species and
+                            species_id in species_map):
+                        new_species_id = species_map[species_id]
+                    elif (world.options.wild_pokemon_groups == WildPokemonGroups.option_dungeons and
+                          map_name in _DUNGEON_GROUPS and
+                          species_id in dungeon_species_map[_DUNGEON_GROUPS[map_name]]):
+                        new_species_id = dungeon_species_map[_DUNGEON_GROUPS[map_name]][species_id]
+                    else:
+                        # Construct progressive tiers of blacklists that can be peeled back if they
+                        # collectively cover too much of the Pokédex. A lower index in `blacklists`
+                        # indicates a more important set of species to avoid.
+                        blacklists: Dict[int, List[Set[int]]] = defaultdict(list)
 
-        for i, table in enumerate(old_encounters):
-            if table is not None:
-                # Create a map from the original species to new species
-                # instead of just randomizing every slot.
-                # Force area 1-to-1 mapping, in other words.
-                species_old_to_new_map: Dict[int, int] = {}
-                for species_data in table.slots[game_version]:
-                    species_id = species_data.species_id
-                    if species_id not in species_old_to_new_map:
-                        original_species = data.species[species_id]
-                        if (world.options.wild_pokemon_groups == WildPokemonGroups.option_species and
-                                species_id in species_map):
-                            new_species_id = species_map[species_id]
+                        # Blacklist Pokémon already on this table
+                        blacklists[0].append(set(species_old_to_new_map.values()))
+
+                        # If we are randomizing by groups, blacklist any species that is
+                        # already a part of this group
+                        if world.options.wild_pokemon_groups == WildPokemonGroups.option_species:
+                            blacklists[0].append(set(species_map.values()))
                         elif (world.options.wild_pokemon_groups == WildPokemonGroups.option_dungeons and
-                              map_name in _DUNGEON_GROUPS and
-                              species_id in dungeon_species_map[_DUNGEON_GROUPS[map_name]]):
-                            new_species_id = dungeon_species_map[_DUNGEON_GROUPS[map_name]][species_id]
-                        else:
-                            # Construct progressive tiers of blacklists that can be peeled back if they
-                            # collectively cover too much of the Pokédex. A lower index in `blacklists`
-                            # indicates a more important set of species to avoid.
-                            blacklists: Dict[int, List[Set[int]]] = defaultdict(list)
+                              map_name in _DUNGEON_GROUPS):
+                            blacklists[0].append(set(dungeon_species_map[_DUNGEON_GROUPS[map_name]].values()))
 
-                            # Blacklist Pokémon already on this table
-                            blacklists[0].append(set(species_old_to_new_map.values()))
+                        # If we haven't placed enough species for Oak's Aides yet, blacklist
+                        # species that have already been placed until we reach that number
+                        if len(placed_species) < aide_pokemon_needed:
+                            blacklists[1].append(placed_species)
 
-                            # If we are randomizing by groups, blacklist any species that is
-                            # already a part of this group
-                            if world.options.wild_pokemon_groups == WildPokemonGroups.option_species:
-                                blacklists[0].append(set(species_map.values()))
-                            elif (world.options.wild_pokemon_groups == WildPokemonGroups.option_dungeons and
-                                  map_name in _DUNGEON_GROUPS):
-                                blacklists[0].append(set(dungeon_species_map[_DUNGEON_GROUPS[map_name]].values()))
+                        # Blacklist from player's options
+                        blacklists[2].append(world.blacklisted_wild_pokemon)
 
-                            # If we haven't placed enough species for Oak's Aides yet, blacklist
-                            # species that have already been placed until we reach that number
-                            if len(placed_species) < aide_pokemon_needed:
-                                blacklists[1].append(placed_species)
+                        # Type matching blacklist
+                        if should_match_type:
+                            blacklists[3].append({
+                                species.species_id
+                                for species in world.modified_species.values()
+                                if not bool(set(species.types) & set(original_species.types))
+                            })
 
-                            # Blacklist from player's options
-                            blacklists[2].append(world.blacklisted_wild_pokemon)
+                        # If we haven't placed enough species for dexsanity yet, blacklist species
+                        # that have already been places until we reach that number
+                        if len(placed_species) < dexsanity_pokemon_needed:
+                            blacklists[4].append(placed_species)
 
-                            # Type matching blacklist
-                            if should_match_type:
-                                blacklists[3].append({
-                                    species.species_id
-                                    for species in world.modified_species.values()
-                                    if not bool(set(species.types) & set(original_species.types))
-                                })
+                        merged_blacklist: Set[int] = set()
+                        for max_priority in reversed(sorted(blacklists.keys())):
+                            merged_blacklist = set()
+                            for priority in blacklists.keys():
+                                if priority <= max_priority:
+                                    for blacklist in blacklists[priority]:
+                                        merged_blacklist |= blacklist
 
-                            # If we haven't placed enough species for dexsanity yet, blacklist species
-                            # that have already been places until we reach that number
-                            if len(placed_species) < dexsanity_pokemon_needed:
-                                blacklists[4].append(placed_species)
+                            if len(merged_blacklist) < NUM_REAL_SPECIES:
+                                break
 
-                            merged_blacklist: Set[int] = set()
-                            for max_priority in reversed(sorted(blacklists.keys())):
-                                merged_blacklist = set()
-                                for priority in blacklists.keys():
-                                    if priority <= max_priority:
-                                        for blacklist in blacklists[priority]:
-                                            merged_blacklist |= blacklist
+                        candidates = [
+                            species for species in world.modified_species.values() if
+                            species.species_id not in merged_blacklist
+                        ]
 
-                                if len(merged_blacklist) < NUM_REAL_SPECIES:
+                        if should_match_bst:
+                            candidates = _filter_species_by_nearby_bst(candidates,
+                                                                       sum(original_species.base_stats))
+
+                        new_species_id = world.random.choice(candidates).species_id
+
+                        if not placed_priority_species and len(priority_species) > 0:
+                            candidate_ids = [species.species_id for species in candidates]
+                            for priority_species_id in list(sorted(priority_species.copy())):
+                                if priority_species_id in candidate_ids:
+                                    new_species_id = priority_species_id
+                                    priority_species.remove(priority_species_id)
+                                    placed_priority_species = True
                                     break
 
-                            candidates = [
-                                species for species in world.modified_species.values() if
-                                species.species_id not in merged_blacklist
-                            ]
+                        if world.options.wild_pokemon_groups == WildPokemonGroups.option_species:
+                            species_map[original_species.species_id] = new_species_id
+                        elif (world.options.wild_pokemon_groups == WildPokemonGroups.option_dungeons and
+                              map_name in _DUNGEON_GROUPS):
+                            dungeon_species_map[_DUNGEON_GROUPS[map_name]][original_species.species_id] = \
+                                new_species_id
 
-                            if should_match_bst:
-                                candidates = _filter_species_by_nearby_bst(candidates,
-                                                                           sum(original_species.base_stats))
+                    species_old_to_new_map[species_id] = new_species_id
+                    placed_species.add(new_species_id)
 
-                            new_species_id = world.random.choice(candidates).species_id
+            # Actually create the new list of slots and encounter table
+            new_slots: Dict[str, List[EncounterSpeciesData]] = copy.deepcopy(table.slots)
+            new_slots[game_version].clear()
+            for species_data in table.slots[game_version]:
+                new_slots[game_version].append(EncounterSpeciesData(
+                    species_old_to_new_map[species_data.species_id],
+                    species_data.min_level,
+                    species_data.max_level
+                ))
 
-                            if not placed_priority_species and len(priority_species) > 0:
-                                candidate_ids = [species.species_id for species in candidates]
-                                for priority_species_id in list(sorted(priority_species.copy())):
-                                    if priority_species_id in candidate_ids:
-                                        new_species_id = priority_species_id
-                                        priority_species.remove(priority_species_id)
-                                        placed_priority_species = True
-                                        break
+            new_encounters[encounter_type] = EncounterTableData(new_slots, table.address)
 
-                            if world.options.wild_pokemon_groups == WildPokemonGroups.option_species:
-                                species_map[original_species.species_id] = new_species_id
-                            elif (world.options.wild_pokemon_groups == WildPokemonGroups.option_dungeons and
-                                  map_name in _DUNGEON_GROUPS):
-                                dungeon_species_map[_DUNGEON_GROUPS[map_name]][original_species.species_id] = \
-                                    new_species_id
-
-                        species_old_to_new_map[species_id] = new_species_id
-                        placed_species.add(new_species_id)
-
-                # Actually create the new list of slots and encounter table
-                new_slots: List[EncounterSpeciesData] = []
-                for species_data in table.slots[game_version]:
-                    new_slots.append(EncounterSpeciesData(
-                        species_old_to_new_map[species_data.species_id],
-                        species_data.min_level,
-                        species_data.max_level
-                    ))
-
-                new_encounter_slots[i] = new_slots
-
-        if map_data.land_encounters is not None:
-            map_data.land_encounters.slots[game_version] = new_encounter_slots[0]
-        if map_data.water_encounters is not None:
-            map_data.water_encounters.slots[game_version] = new_encounter_slots[1]
-        if map_data.fishing_encounters is not None:
-            map_data.fishing_encounters.slots[game_version] = new_encounter_slots[2]
+        map_data.encounters = new_encounters
+        if map_name == "MAP_ROUTE21_NORTH" or map_name == "MAP_ROUTE21_SOUTH":
+            route_21_encounters = new_encounters
 
     # If we failed to place Magikarp, Heracross, and/or Togepi put them in their vanilla spots
     if data.constants["SPECIES_MAGIKARP"] in priority_species:
         map_data = world.modified_maps["MAP_PALLET_TOWN"]
-        slots = map_data.fishing_encounters.slots[game_version]
+        slots = map_data.encounters[EncounterType.FISHING].slots[game_version]
         for i in [0, 1, 3]:
             slots[i].species_id = data.constants["SPECIES_MAGIKARP"]
 
     if data.constants["SPECIES_HERACROSS"] in priority_species:
         map_data = world.modified_maps["MAP_SIX_ISLAND_PATTERN_BUSH"]
-        slots = map_data.land_encounters.slots[game_version]
+        slots = map_data.encounters[EncounterType.LAND].slots[game_version]
         for i in [5, 7, 9, 11]:
             slots[i].species_id = data.constants["SPECIES_HERACROSS"]
 
     if data.constants["SPECIES_TOGEPI"] in priority_species:
         map_data = world.modified_maps["MAP_FIVE_ISLAND_MEMORIAL_PILLAR"]
-        slots = map_data.land_encounters.slots[game_version]
+        slots = map_data.encounters[EncounterType.LAND].slots[game_version]
         for slot in slots:
             slot.species_id = data.constants["SPECIES_TOGEPI"]
 

@@ -977,10 +977,7 @@ def _set_wild_encounters(world: "PokemonFRLGWorld") -> None:
 
     patch = world.patch_data
     for map_data in world.modified_maps.values():
-        tables = [map_data.land_encounters,
-                  map_data.water_encounters,
-                  map_data.fishing_encounters]
-        for table in tables:
+        for table in map_data.encounters.values():
             if table is not None:
                 for i, species_data in enumerate(table.slots[patch.game_version]):
                     address = table.address

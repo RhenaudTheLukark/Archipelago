@@ -3,7 +3,6 @@
     "region": "Professor Oak's Lab",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Professor Oak's Lab Rival Scaling": [
@@ -17,7 +16,6 @@
     "region": "Route 22",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Route 22 Early Rival Scaling": [
@@ -36,7 +34,6 @@
     "region": "Viridian Forest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bug Catcher Rick Scaling": [
@@ -60,7 +57,6 @@
     "region": "Pewter Gym",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Pewter Gym Trainers Scaling": [
@@ -73,7 +69,6 @@
     "region": "Route 3",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lass Janice Scaling": [
@@ -106,7 +101,6 @@
     "region": "Mt. Moon 1F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bug Catcher Kent Scaling": [
@@ -136,7 +130,6 @@
     "region": "Mt. Moon B2F South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 2 Scaling": [
@@ -148,7 +141,6 @@
     "region": "Mt. Moon B2F Northeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 3 Scaling": [
@@ -160,7 +152,6 @@
     "region": "Mt. Moon B2F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 1 Scaling": [
@@ -178,7 +169,6 @@
     "region": "Route 4 Northeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lass Crissy Scaling": [
@@ -190,7 +180,6 @@
     "region": "Cerulean City",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cerulean City Rival Scaling": [
@@ -204,7 +193,6 @@
     "region": "Cerulean City Outskirts",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 5 Scaling": [
@@ -216,7 +204,6 @@
     "region": "Cerulean Gym",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cerulean Gym Trainers Scaling": [
@@ -230,7 +217,6 @@
     "region": "Route 24",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bug Catcher Cale Scaling": [
@@ -260,7 +246,6 @@
     "region": "Route 25",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Hiker Franklin Scaling": [
@@ -296,7 +281,6 @@
     "region": "Route 6",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bug Catcher Keigo Scaling": [
@@ -323,7 +307,6 @@
     "region": "Route 11 West",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Youngster Eddie Scaling": [
@@ -362,7 +345,6 @@
     "region": "S.S. Anne 1F Room 2",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lass Ann Scaling": [
@@ -377,7 +359,6 @@
     "region": "S.S. Anne 1F Room 5",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Gentleman Arthur Scaling": [
@@ -389,7 +370,6 @@
     "region": "S.S. Anne 1F Room 7",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Gentleman Thomas Scaling": [
@@ -401,7 +381,6 @@
     "region": "S.S. Anne B1F Room 1",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Fisherman Barny Scaling": [
@@ -416,7 +395,6 @@
     "region": "S.S. Anne B1F Room 2",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Sailor Huey Scaling": [
@@ -428,7 +406,6 @@
     "region": "S.S. Anne B1F Room 3",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Sailor Dylan Scaling": [
@@ -440,7 +417,6 @@
     "region": "S.S. Anne B1F Room 4",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Sailor Duncan Scaling": [
@@ -455,7 +431,6 @@
     "region": "S.S. Anne 2F Corridor",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "S.S. Anne Rival Scaling": [
@@ -469,7 +444,6 @@
     "region": "S.S. Anne 2F Room 2",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Fisherman Dale Scaling": [
@@ -484,7 +458,6 @@
     "region": "S.S. Anne 2F Room 4",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lass Dawn Scaling": [
@@ -499,7 +472,6 @@
     "region": "S.S. Anne Deck",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Sailor Trevor Scaling": [
@@ -514,7 +486,6 @@
     "region": "Vermilion Gym",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Vermilion Gym Trainers Scaling": [
@@ -529,7 +500,6 @@
     "region": "Route 9",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Alicia Scaling": [
@@ -565,7 +535,6 @@
     "region": "Route 10 North",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Heidi Scaling": [
@@ -577,7 +546,6 @@
     "region": "Route 10 South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Carol Scaling": [
@@ -598,7 +566,6 @@
     "region": "Route 10 Near Power Plant",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "PokeManiac Mark Scaling": [
@@ -610,7 +577,6 @@
     "region": "Rock Tunnel 1F Northeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "PokeManiac Ashton Scaling": [
@@ -622,7 +588,6 @@
     "region": "Rock Tunnel 1F Northwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Hiker Lenny Scaling": [
@@ -640,7 +605,6 @@
     "region": "Rock Tunnel 1F South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Leah Scaling": [
@@ -658,7 +622,6 @@
     "region": "Rock Tunnel B1F Southeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "PokeManiac Winston Scaling": [
@@ -682,7 +645,6 @@
     "region": "Rock Tunnel B1F Northwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Sofia Scaling": [
@@ -700,7 +662,6 @@
     "region": "Pokemon Tower 2F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Pokemon Tower Rival Scaling": [
@@ -714,7 +675,6 @@
     "region": "Pokemon Tower 3F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Channeler Hope Scaling": [
@@ -732,7 +692,6 @@
     "region": "Pokemon Tower 4F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Channeler Laurel Scaling": [
@@ -750,7 +709,6 @@
     "region": "Pokemon Tower 5F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Channeler Ruth Scaling": [
@@ -771,7 +729,6 @@
     "region": "Pokemon Tower 6F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Channeler Angelica Scaling": [
@@ -789,7 +746,6 @@
     "region": "Pokemon Tower 7F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 19 Scaling": [
@@ -807,7 +763,6 @@
     "region": "Route 8",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lass Julia Scaling": [
@@ -852,7 +807,6 @@
     "region": "Celadon Game Corner",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 7 Scaling": [
@@ -864,7 +818,6 @@
     "region": "Rocket Hideout B1F North",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 8 Scaling": [
@@ -879,7 +832,6 @@
     "region": "Rocket Hideout B1F Southwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 10 Scaling": [
@@ -894,7 +846,6 @@
     "region": "Rocket Hideout B1F Southeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 12 Scaling": [
@@ -906,7 +857,6 @@
     "region": "Rocket Hideout B2F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 13 Scaling": [
@@ -918,7 +868,6 @@
     "region": "Rocket Hideout B3F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 14 Scaling": [
@@ -933,7 +882,6 @@
     "region": "Rocket Hideout B4F West",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 18 Scaling": [
@@ -945,7 +893,6 @@
     "region": "Rocket Hideout B4F East",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 16 Scaling": [
@@ -966,7 +913,6 @@
       "Celadon Gym",
       "Celadon Gym Behind Trees"
     ],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Celadon Gym Trainers Scaling": [
@@ -985,7 +931,6 @@
     "region": "Route 12 Center",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Fisherman Ned Scaling": [
@@ -1009,7 +954,6 @@
     "region": "Route 12 South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Rocker Luca Scaling": [
@@ -1024,7 +968,6 @@
     "region": "Route 12 Behind North Tree",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Camper Justin Scaling": [
@@ -1036,7 +979,6 @@
     "region": "Route 13",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Alma Scaling": [
@@ -1075,7 +1017,6 @@
     "region": "Route 14",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bird Keeper Carter Scaling": [
@@ -1117,7 +1058,6 @@
     "region": "Route 15 South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Biker Ernest Scaling": [
@@ -1150,7 +1090,6 @@
     "region": "Route 15 North",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Becky Scaling": [
@@ -1168,7 +1107,6 @@
     "region": "Route 16 Northeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Young Couple Lea & Jed Scaling": [
@@ -1180,7 +1118,6 @@
     "region": "Route 16 Southwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Biker Lao Scaling": [
@@ -1207,7 +1144,6 @@
     "region": "Route 17",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cue Ball Isaiah Scaling": [
@@ -1246,7 +1182,6 @@
     "region": "Route 18 East",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bird Keeper Jacob Scaling": [
@@ -1264,7 +1199,6 @@
     "region": "Route 18 East",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Fuchsia Gym Trainers Scaling": [
@@ -1282,7 +1216,6 @@
     "region": "Silph Co. 2F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 23 Scaling": [
@@ -1300,7 +1233,6 @@
     "region": "Silph Co. 2F Southwest Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Scientist Connor Scaling": [
@@ -1312,7 +1244,6 @@
     "region": "Silph Co. 3F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 25 Scaling": [
@@ -1324,7 +1255,6 @@
     "region": "Silph Co. 3F West Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Scientist Jose Scaling": [
@@ -1336,7 +1266,6 @@
     "region": "Silph Co. 4F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 26 Scaling": [
@@ -1351,7 +1280,6 @@
     "region": "Silph Co. 4F North Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Scientist Rodney Scaling": [
@@ -1363,7 +1291,6 @@
     "region": "Silph Co. 5F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 28 Scaling": [
@@ -1384,7 +1311,6 @@
     "region": "Silph Co. 6F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 30 Scaling": [
@@ -1402,7 +1328,6 @@
     "region": "Silph Co. 7F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 33 Scaling": [
@@ -1420,7 +1345,6 @@
     "region": "Silph Co. 7F Southeast Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 34 Scaling": [
@@ -1432,7 +1356,6 @@
     "region": "Silph Co. 7F Northwest Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Silph Co. Rival Scaling": [
@@ -1446,7 +1369,6 @@
     "region": "Silph Co. 8F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 32 Scaling": [
@@ -1464,7 +1386,6 @@
     "region": "Silph Co. 9F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 38 Scaling": [
@@ -1479,7 +1400,6 @@
     "region": "Silph Co. 9F Northwest Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 37 Scaling": [
@@ -1491,7 +1411,6 @@
     "region": "Silph Co. 10F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 39 Scaling": [
@@ -1506,7 +1425,6 @@
     "region": "Silph Co. 11F East",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 40 Scaling": [
@@ -1518,7 +1436,6 @@
     "region": "Silph Co. 11F West",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 41 Scaling": [
@@ -1530,7 +1447,6 @@
     "region": "Silph Co. 11F President's Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Boss Giovanni 2 Scaling": [
@@ -1542,7 +1458,6 @@
     "region": "Saffron Dojo",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Black Belt Hideki Scaling": [
@@ -1575,7 +1490,6 @@
       "Saffron Gym Southwest",
       "Saffron Gym Southeast"
     ],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Saffron Gym Trainers Scaling": [
@@ -1594,7 +1508,6 @@
     "region": "Route 19",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Richard Scaling": [
@@ -1609,7 +1522,6 @@
     "region": "Route 19 Water",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Tony Scaling": [
@@ -1645,7 +1557,6 @@
     "region": "Route 20 East",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Barry Scaling": [
@@ -1666,7 +1577,6 @@
     "region": "Route 20 Near South Cave",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Irene Scaling": [
@@ -1678,7 +1588,6 @@
     "region": "Route 20 West",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bird Keeper Roger Scaling": [
@@ -1702,7 +1611,6 @@
     "region": "Pokemon Mansion 1F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Youngster Johnson Scaling": [
@@ -1714,7 +1622,6 @@
     "region": "Pokemon Mansion 1F South",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Scientist Ted Scaling": [
@@ -1726,7 +1633,6 @@
     "region": "Pokemon Mansion 2F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Burglar Arnie Scaling": [
@@ -1738,7 +1644,6 @@
     "region": "Pokemon Mansion 3F Southwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Burglar Simon Scaling": [
@@ -1750,7 +1655,6 @@
     "region": "Pokemon Mansion 3F Southeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Scientist Braydon Scaling": [
@@ -1762,7 +1666,6 @@
     "region": "Pokemon Mansion B1F",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Burglar Lewis Scaling": [
@@ -1777,7 +1680,6 @@
     "region": "Cinnabar Gym",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cinnabar Gym Trainers Scaling": [
@@ -1796,7 +1698,6 @@
     "region": "Route 21",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Fisherman Wade Scaling": [
@@ -1832,7 +1733,6 @@
     "region": "Viridian Gym",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Viridian Gym Trainers Scaling": [
@@ -1852,7 +1752,6 @@
     "region": "Victory Road 1F North",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cooltrainer Naomi Scaling": [
@@ -1867,7 +1766,6 @@
     "region": "Victory Road 2F Center",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Black Belt Daisuke Scaling": [
@@ -1888,7 +1786,6 @@
     "region": "Victory Road 2F Northwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "PokeManiac Dawson Scaling": [
@@ -1900,7 +1797,6 @@
     "region": "Victory Road 3F North",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cooltrainer George Scaling": [
@@ -1915,7 +1811,6 @@
     "region": "Victory Road 3F Southwest",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cooltrainer Colby Scaling": [
@@ -1930,7 +1825,6 @@
     "region": "Victory Road 3F Southeast",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cool Couple Ray & Tyra Scaling": [
@@ -1948,7 +1842,6 @@
       "Pokemon League Lance's Room",
       "Pokemon League Champion's Room"
     ],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Elite Four Scaling": [
@@ -1966,7 +1859,6 @@
     "region": "Pokemon League Champion's Room",
     "kanto": true,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Champion Scaling": [
@@ -1980,7 +1872,6 @@
     "region": "Treasure Beach Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Amara Scaling": [
@@ -1992,7 +1883,6 @@
     "region": "Kindle Road South Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Abigail Scaling": [
@@ -2004,7 +1894,6 @@
     "region": "Kindle Road Center",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Claire Scaling": [
@@ -2037,7 +1926,6 @@
     "region": "Kindle Road North Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Finn Scaling": [
@@ -2055,7 +1943,6 @@
     "region": "Mt. Ember Exterior South",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 43 Scaling": [
@@ -2070,7 +1957,6 @@
     "region": "Mt. Ember Exterior Center",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Pokemon Ranger Beth Scaling": [
@@ -2088,7 +1974,6 @@
     "region": "Three Island Town South",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Biker Goon 1 Scaling": [
@@ -2109,7 +1994,6 @@
     "region": "Bond Bridge",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Twins Joy & Meg Scaling": [
@@ -2133,7 +2017,6 @@
     "region": "Bond Bridge Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Tisha Scaling": [
@@ -2145,7 +2028,6 @@
     "region": "Icefall Cave Back",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 45 Scaling": [
@@ -2157,7 +2039,6 @@
     "region": "Five Isle Meadow",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 49 Scaling": [
@@ -2175,7 +2056,6 @@
     "region": "Rocket Warehouse",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 42 Scaling": [
@@ -2202,7 +2082,6 @@
     "region": "Memorial Pillar",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Bird Keeper Milo Scaling": [
@@ -2220,7 +2099,6 @@
     "region": "Water Labyrinth",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Pokemon Breeder Alize Scaling": [
@@ -2232,7 +2110,6 @@
     "region": "Resort Gorgeous Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Painter Rayna Scaling": [
@@ -2247,7 +2124,6 @@
     "region": "Resort Gorgeous Near Resort",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lady Jacki Scaling": [
@@ -2271,7 +2147,6 @@
     "region": "Lost Cave B1F Room 1",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Ruin Maniac Lawson Scaling": [
@@ -2283,7 +2158,6 @@
     "region": "Lost Cave B1F Room 2",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Psychic Laura Scaling": [
@@ -2295,7 +2169,6 @@
     "region": "Lost Cave B1F Room 10",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Lady Selphy Scaling": [
@@ -2307,7 +2180,6 @@
     "region": "Water Path South",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Juggler Edward Scaling": [
@@ -2322,7 +2194,6 @@
     "region": "Water Path South Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Denise Scaling": [
@@ -2337,7 +2208,6 @@
     "region": "Water Path North",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Twins Miu & Mia Scaling": [
@@ -2352,7 +2222,6 @@
     "region": "Ruin Valley",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Hiker Daryl Scaling": [
@@ -2376,7 +2245,6 @@
     "region": "Pattern Bush",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Youngster Cordell Scaling": [
@@ -2421,7 +2289,6 @@
     "region": "Green Path Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Psychic Jaclyn Scaling": [
@@ -2433,7 +2300,6 @@
     "region": "Outcast Island Water",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Swimmer Nicole Scaling": [
@@ -2454,7 +2320,6 @@
     "region": "Outcast Island",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Team Rocket Grunt 46 Scaling": [
@@ -2466,7 +2331,6 @@
     "region": "Canyon Entrance",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Aroma Lady Miah Scaling": [
@@ -2490,7 +2354,6 @@
     "region": "Sevault Canyon",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Cool Couple Lex & Nya Scaling": [
@@ -2520,7 +2383,6 @@
     "region": "Tanoby Ruins Scufib Island",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Ruin Maniac Brandon Scaling": [
@@ -2532,7 +2394,6 @@
     "region": "Tanoby Ruins Weepth Island",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Gentleman Clifford Scaling": [
@@ -2547,7 +2408,6 @@
     "region": "Tanoby Ruins Monean Island",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Ruin Maniac Benjamin Scaling": [
@@ -2559,7 +2419,6 @@
     "region": "Trainer Tower Exterior South",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Psychic Rodette Scaling": [
@@ -2580,7 +2439,6 @@
       "Pokemon League Lance's Room",
       "Pokemon League Champion's Room"
     ],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Elite Four Rematch Scaling": [
@@ -2598,7 +2456,6 @@
     "region": "Pokemon League Champion's Room",
     "kanto": false,
     "connections": [],
-    "type": null,
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Champion Rematch Scaling": [
