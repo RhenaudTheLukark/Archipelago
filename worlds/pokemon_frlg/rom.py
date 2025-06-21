@@ -958,6 +958,12 @@ def _set_species_info(world: "PokemonFRLGWorld") -> None:
     patch = world.patch_data
     for species in world.modified_species.values():
         address = species.address
+        patch.write_token(address, 0x00, struct.pack("<B", species.base_stats[0]))
+        patch.write_token(address, 0x01, struct.pack("<B", species.base_stats[1]))
+        patch.write_token(address, 0x02, struct.pack("<B", species.base_stats[2]))
+        patch.write_token(address, 0x03, struct.pack("<B", species.base_stats[3]))
+        patch.write_token(address, 0x04, struct.pack("<B", species.base_stats[4]))
+        patch.write_token(address, 0x05, struct.pack("<B", species.base_stats[5]))
         patch.write_token(address, 0x06, struct.pack("<B", species.types[0]))
         patch.write_token(address, 0x07, struct.pack("<B", species.types[1]))
         patch.write_token(address, 0x08, struct.pack("<B", species.catch_rate))

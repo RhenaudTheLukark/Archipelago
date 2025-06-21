@@ -30,10 +30,10 @@ from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexs
                       FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon,
                       RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
                       ShuffleRunningShoes, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
-from .pokemon import (add_hm_compatability, randomize_abilities, randomize_damage_categories, randomize_legendaries,
-                      randomize_misc_pokemon, randomize_moves, randomize_move_types, randomize_requested_trade_pokemon,
-                      randomize_starters, randomize_tm_hm_compatibility, randomize_tm_moves, randomize_trainer_parties,
-                      randomize_types, randomize_wild_encounters)
+from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_stats, randomize_damage_categories,
+                      randomize_legendaries, randomize_misc_pokemon, randomize_moves, randomize_move_types,
+                      randomize_requested_trade_pokemon, randomize_starters, randomize_tm_hm_compatibility,
+                      randomize_tm_moves, randomize_trainer_parties, randomize_types, randomize_wild_encounters)
 from .regions import starting_town_map, create_indirect_conditions, create_regions
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
@@ -274,6 +274,7 @@ class PokemonFRLGWorld(World):
         randomize_move_types(self)
         randomize_damage_categories(self)
         randomize_moves(self)
+        randomize_base_stats(self)
         randomize_wild_encounters(self)
         randomize_starters(self)
         randomize_legendaries(self)

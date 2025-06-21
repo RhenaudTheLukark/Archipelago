@@ -1022,6 +1022,23 @@ class MoveBlacklist(OptionSet):
     valid_keys = sorted(move_name_map.keys())
 
 
+class RandomizeBaseStats(Choice):
+    """
+    Randomize the base stats for every species.
+
+    - Vanilla: Base stats are unchanged
+    - Shuffle: Base stats are shuffled amongst each other
+    - Keep BST: Random base stats, but base stat total is preserved
+    - Completely Random: Random base stats and base stat total
+    """
+    display_name = "Randomize Base Stats"
+    default = 0
+    option_vanilla = 0
+    option_shuffle = 1
+    option_keep_bst = 2
+    option_completely_random = 3
+
+
 class PhysicalSpecialSplit(Toggle):
     """
     Changes the damage category that moves use to match the categories since the Gen IV physical/special split instead
@@ -1387,6 +1404,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     move_match_type_bias: MoveMatchTypeBias
     move_normal_type_bias: MoveNormalTypeBias
     move_blacklist: MoveBlacklist
+    base_stats: RandomizeBaseStats
     physical_special_split: PhysicalSpecialSplit
     move_types: RandomizeMoveTypes
     damage_categories: RandomizeDamageCategories

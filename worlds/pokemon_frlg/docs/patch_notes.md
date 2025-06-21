@@ -2,6 +2,11 @@
 ## Updates
 + New option `shuffle_post_goal_locations`
   + Sets whether locations that are locked behind completing your goal are included
++ New option `base_stats`
+  + Vanilla: Base stats are unchanged
+  + Shuffle: Base stats are shuffled amongst each other
+  + Keep BST: Random base stats, but base stat total is preserved
+  + Completely Random: Random base stats and base stat total
 
 # 0.9.4
 ## Updates

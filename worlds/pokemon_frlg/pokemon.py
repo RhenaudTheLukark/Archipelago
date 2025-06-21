@@ -3,13 +3,13 @@ import math
 from collections import defaultdict
 from typing import TYPE_CHECKING, Dict, List, Set, Tuple
 
-from .data import (data, LEGENDARY_POKEMON, NUM_REAL_SPECIES, NAME_TO_SPECIES_ID, EncounterSpeciesData,
+from .data import (data, LEGENDARY_POKEMON, NUM_REAL_SPECIES, NAME_TO_SPECIES_ID, BaseStats, EncounterSpeciesData,
                    EncounterTableData, EncounterType, EventData, LearnsetMove, SpeciesData, TrainerPokemonData)
-from .options import (Dexsanity, HmCompatibility, RandomizeAbilities, RandomizeDamageCategories,
+from .options import (Dexsanity, HmCompatibility, RandomizeAbilities, RandomizeBaseStats, RandomizeDamageCategories,
                       RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeMoves, RandomizeMoveTypes,
                       RandomizeStarters, RandomizeTrainerParties, RandomizeTypes, RandomizeWildPokemon,
                       TmTutorCompatibility, WildPokemonGroups)
-from .util import bool_array_to_int, int_to_bool_array, HM_TO_COMPATIBILITY_ID
+from .util import bool_array_to_int, bound, int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 if TYPE_CHECKING:
     from random import Random
@@ -198,6 +198,15 @@ def _get_random_damaging_move(world: "PokemonFRLGWorld",
     non_damage_blacklist = {i for i in range(data.constants["MOVES_COUNT"]) if i not in _DAMAGING_MOVES}
     blacklists.insert(0, non_damage_blacklist)
     return _get_random_move(world, blacklists, use_bias, types)
+
+
+def _get_random_base_stats(world: "PokemonFRLGWorld", min_bst: int = 180, bst: int = None) -> List[int]:
+    if bst is None:
+        bst = world.random.randint(min_bst, 680)
+    stats = [world.random.random() for _ in range(6)]
+    total = sum(stats)
+    base_stats = [bound(int(round((stat * bst) / total)), 1, 255) for stat in stats]
+    return base_stats
 
 
 def _filter_species_by_nearby_bst(species: List[SpeciesData], target_bst: int) -> List[SpeciesData]:
@@ -457,6 +466,61 @@ def randomize_moves(world: "PokemonFRLGWorld") -> None:
             move_index += 1
 
         species.learnset = new_learnset
+
+
+def randomize_base_stats(world: "PokemonFRLGWorld") -> None:
+    if world.options.base_stats == RandomizeBaseStats.option_vanilla:
+        return
+
+    already_randomized = set()
+
+    for species in world.modified_species.values():
+        if species.species_id in already_randomized:
+            continue
+        elif species.pre_evolution is not None:
+            continue
+
+        if world.options.base_stats == RandomizeBaseStats.option_shuffle:
+            base_stats = list(species.base_stats)
+            world.random.shuffle(base_stats)
+        elif world.options.base_stats == RandomizeBaseStats.option_keep_bst:
+            base_stats = _get_random_base_stats(world, bst=sum(species.base_stats))
+        else:
+            base_stats = _get_random_base_stats(world)
+
+        species.base_stats = BaseStats(base_stats[0],
+                                       base_stats[1],
+                                       base_stats[2],
+                                       base_stats[3],
+                                       base_stats[4],
+                                       base_stats[5])
+        already_randomized.add(species.species_id)
+
+        # If BST is completely random, we don't want a Pokémon's BST to decrease when they evolve
+        if world.options.base_stats == RandomizeBaseStats.option_completely_random:
+            evolutions = [world.modified_species[evo.species_id] for evo in species.evolutions]
+            min_bst = min(680, sum(species.base_stats))
+            next_min_bst = 680
+            randomized_evolutions = set()
+            while len(evolutions) > 0:
+                evolution = evolutions.pop()
+                base_stats = _get_random_base_stats(world, min_bst=min_bst)
+                evolution.base_stats = BaseStats(base_stats[0],
+                                                 base_stats[1],
+                                                 base_stats[2],
+                                                 base_stats[3],
+                                                 base_stats[4],
+                                                 base_stats[5])
+                next_min_bst = min(next_min_bst, sum(evolution.base_stats))
+                randomized_evolutions.add(evolution.species_id)
+                if len(evolutions) == 0:
+                    min_bst = next_min_bst
+                    next_min_bst = 680
+                    for species_id in sorted(randomized_evolutions):
+                        evolutions += [world.modified_species[evo.species_id]
+                                       for evo in world.modified_species[species_id].evolutions]
+                    already_randomized |= randomized_evolutions
+                    randomized_evolutions.clear()
 
 
 def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
