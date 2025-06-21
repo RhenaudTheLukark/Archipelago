@@ -793,7 +793,7 @@ def randomize_legendaries(world: "PokemonFRLGWorld") -> None:
             # Blacklist all Pokémon except legendaries if necessary
             if world.options.legendary_pokemon == RandomizeLegendaryPokemon.option_legendaries:
                 blacklists[0].append(set(species.species_id for species in world.modified_species.values()
-                                         if species.species_id in LEGENDARY_POKEMON))
+                                         if species.species_id not in LEGENDARY_POKEMON))
 
             # Blacklist from player's options
             blacklists[1].append(world.blacklisted_legendary_pokemon)
