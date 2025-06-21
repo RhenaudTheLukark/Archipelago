@@ -250,13 +250,16 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
             "SHOP_TWO_ISLAND_EXPANDED3_8": ["FLAG_TWO_ISLAND_SHOP_EXPANDED2_6"]
         }
         for location_id, shop_flags in two_island_shop_items.items():
-            location = world.get_location(data.locations[location_id].name)
-            location_info.extend(
-                (
-                    data.constants[flag],
-                    location.item.player,
-                    location.item.name
-                ) for flag in shop_flags)
+            try:
+                location = world.get_location(data.locations[location_id].name)
+                location_info.extend(
+                    (
+                        data.constants[flag],
+                        location.item.player,
+                        location.item.name
+                    ) for flag in shop_flags)
+            except KeyError:
+                pass
 
     player_name_ids: Dict[str, int] = {world.player_name: 0}
     player_name_address = data.rom_addresses["gArchipelagoPlayerNames"]
@@ -308,7 +311,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
             quantity = 1
         if quantity > 999:
             quantity = 999
-        starting_items.append([item, quantity])
+        starting_items.append((item, quantity))
 
     for i, starting_item in enumerate(starting_items, 1):
         item_address = data.rom_addresses["gArchipelagoStartingItems"]
@@ -338,10 +341,10 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # Set legendaries
     _set_legendaries(world)
 
-    # Set misc pokemon
+    # Set misc Pokémon
     _set_misc_pokemon(world)
 
-    # Set trade pokemon
+    # Set trade Pokémon
     _set_trade_pokemon(world)
 
     # Set trainer parties

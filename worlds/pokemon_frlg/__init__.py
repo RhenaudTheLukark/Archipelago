@@ -442,16 +442,6 @@ class PokemonFRLGWorld(World):
         for item in items_to_add:
             self.itempool.append(item)
 
-        # Remove duplicates of unique items from the itempool
-        unique_items = set()
-        for item in self.itempool.copy():
-            if item.name in item_groups["Unique Items"]:
-                if item in unique_items:
-                    self.itempool.remove(item)
-                    self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
-                else:
-                    unique_items.add(item)
-
         filler_items = [item for item in self.itempool if item.classification == ItemClassification.filler and
                         item.name not in item_groups["Unique Items"]]
         self.random.shuffle(filler_items)

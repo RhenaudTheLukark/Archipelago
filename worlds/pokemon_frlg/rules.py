@@ -228,8 +228,8 @@ class PokemonFRLGLogic:
 
     def update_species(self, world: "PokemonFRLGWorld"):
         """
-        Update available species items used in logic for oak's aide, dexsanity and pokemon request locations, for the
-        wild/static/legendary/evolution pokemon events that exist in the world.
+        Update available species items used in logic for oak's aide, dexsanity and Pokémon request locations, for the
+        wild/static/legendary/evolution Pokémon events that exist in the world.
         """
         pokemon_event_categories = {
             LocationCategory.EVENT_WILD_POKEMON,
@@ -304,7 +304,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.hms_require_evos = "HM Requirement" in world.options.evolutions_required.value
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
 
-    # Until locations have been created, assume all pokemon species are present in the world.
+    # Until locations have been created, assume all Pokémon species are present in the world.
     dexsanity_state_item_names = {}
     oaks_aides_species_item_names = []
     evolution_state_item_names = {}

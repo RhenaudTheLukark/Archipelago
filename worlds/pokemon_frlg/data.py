@@ -248,7 +248,7 @@ class StarterData:
 @dataclass
 class MiscPokemonData:
     species_id: Dict[str, int]
-    level: [str, int]
+    level: Dict[str, int]
     address: Dict[str, int]
     level_address: Dict[str, int]
 

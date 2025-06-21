@@ -8,7 +8,7 @@ from .data import (data, LocationCategory, fly_plando_maps, kanto_fly_destinatio
                    starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
-from .options import CeruleanCaveRequirement, Goal, LevelScaling
+from .options import LevelScaling
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
