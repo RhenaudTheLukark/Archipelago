@@ -179,7 +179,7 @@ class RegionData:
         self.has_water = has_water
         self.has_fishing = has_fishing
         self.kanto = kanto
-        self.exits = []
+        self.exits = {}
         self.warps = []
         self.locations = []
         self.events = []
@@ -1123,7 +1123,7 @@ def init() -> None:
             misc_data["level_address"]
         )
 
-    # Create trade pokemon data
+    # Create trade Pokémon data
     for name, trade_pokemon in extracted_data["trade_pokemon"].items():
         data.trade_pokemon[name] = TradePokemonData(
             trade_pokemon["species"],

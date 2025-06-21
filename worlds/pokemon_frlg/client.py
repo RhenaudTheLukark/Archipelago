@@ -823,7 +823,9 @@ class PokemonFRLGClient(BizHawkClient):
                     else:
                         await bizhawk.write(
                             ctx.bizhawk_ctx,
-                            [(data.ram_addresses["gArchipelagoDeathLinkReceived"][self.game_version], [1], "System Bus")]
+                            [(data.ram_addresses["gArchipelagoDeathLinkReceived"][self.game_version],
+                              [1],
+                              "System Bus")]
                         )
 
                 if death_link_sent:

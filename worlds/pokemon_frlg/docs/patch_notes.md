@@ -1,3 +1,8 @@
+# 1.0.0
+## Updates
++ New option `shuffle_post_goal_locations`
+  + Sets whether locations that are locked behind completing your goal are included
+
 # 0.9.4
 ## Updates
 + Improvements made to reduce generation time (credit to [Mysteryem](https://github.com/Mysteryem))
