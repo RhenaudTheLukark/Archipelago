@@ -307,13 +307,13 @@ class ShuffleTMCase(Toggle):
     display_name = "Shuffle TM Case"
 
 
-class ShufflePostGoalLocations(Toggle):
+class PostGoalLocations(Toggle):
     """
     Shuffles locations into the item pool that are only accessible after your goal is completed.
 
     If Cerulean Cave access is locked by your goal then Cerulean Cave won't be included in Dungeon Entrance Shuffle.
     """
-    display_name = "Shuffle Post Goal Locations"
+    display_name = "Post Goal Locations"
 
 
 class CardKey(Choice):
@@ -348,6 +348,19 @@ class IslandPasses(Choice):
     option_progressive = 1
     option_split = 2
     option_progressive_split = 3
+
+
+class FishingRods(Choice):
+    """
+    Sets how the fishing rods are handled.
+
+    - Vanilla: The fishing rods are all separate items in the pool and can be found in any order
+    - Progressive: There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
+    """
+    display_name = "Fishing Rods"
+    default = 0
+    option_vanilla = 0
+    option_progressive = 1
 
 
 class SplitTeas(Toggle):
@@ -1347,9 +1360,10 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
-    shuffle_post_goal_locations: ShufflePostGoalLocations
+    post_goal_locations: PostGoalLocations
     card_key: CardKey
     island_passes: IslandPasses
+    fishing_rods: FishingRods
     split_teas: SplitTeas
     gym_keys: GymKeys
 

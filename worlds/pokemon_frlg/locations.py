@@ -127,7 +127,7 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
 
         if world.options.kanto_only and location_id in sevii_required_locations:
             return True
-        if not world.options.shuffle_post_goal_locations and world.options.goal == Goal.option_champion:
+        if not world.options.post_goal_locations and world.options.goal == Goal.option_champion:
             if location_id in post_champion_locations:
                 return True
             if ("Early Gossipers" not in world.options.modify_world_state.value and

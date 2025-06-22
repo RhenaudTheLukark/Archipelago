@@ -321,6 +321,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Island Passes", "Progressive Items"]
   },
+  "ITEM_PROG_ROD": {
+    "name": "Progressive Rod",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Rods", "Progressive Items"]
+  },
   "ITEM_PURPLE_TEA": {
     "name": "Purple Tea",
     "classification": "PROGRESSION",

@@ -1,6 +1,6 @@
 # 1.0.0
 ## Updates
-+ New option `shuffle_post_goal_locations`
++ New option `post_goal_locations`
   + Sets whether locations that are locked behind completing your goal are included
 + New option `base_stats`
   + Vanilla: Base stats are unchanged

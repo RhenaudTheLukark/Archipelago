@@ -27,9 +27,10 @@ from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
                         fill_unrandomized_locations, set_free_fly)
 from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
-                      FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon,
-                      RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleFlyUnlocks, ShuffleHiddenItems, ShuffleBadges,
-                      ShuffleRunningShoes, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
+                      FishingRods, FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses,
+                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleFlyUnlocks,
+                      ShuffleHiddenItems, ShuffleBadges, ShuffleRunningShoes, TownMapFlyLocation, Trainersanity,
+                      ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_stats, randomize_damage_categories,
                       randomize_legendaries, randomize_misc_pokemon, randomize_moves, randomize_move_types,
                       randomize_requested_trade_pokemon, randomize_starters, randomize_tm_hm_compatibility,
@@ -250,7 +251,7 @@ class PokemonFRLGWorld(World):
                 self.options.cerulean_cave_requirement.value = CeruleanCaveRequirement.option_champion
 
         # Check if Ceruelan Cave should be included in this world
-        if (not self.options.shuffle_post_goal_locations and
+        if (not self.options.post_goal_locations and
                 self.options.goal == Goal.option_champion and
                 self.options.cerulean_cave_requirement in (CeruleanCaveRequirement.option_vanilla,
                                                            CeruleanCaveRequirement.option_champion)):
@@ -332,6 +333,12 @@ class PokemonFRLGWorld(World):
                     items_to_remove.append(self.create_item(item))
                 for _ in range(7):
                     items_to_add.append(self.create_item("Progressive Pass"))
+
+        if self.options.fishing_rods == FishingRods.option_progressive:
+            for item in ["Old Rod", "Good Rod", "Super Rod"]:
+                items_to_remove.append(self.create_item(item))
+            for _ in range(3):
+                items_to_add.append(self.create_item("Progressive Rod"))
 
         if self.options.split_teas:
             items_to_remove.append(self.create_item("Tea"))
@@ -657,6 +664,7 @@ class PokemonFRLGWorld(World):
             "island_passes",
             "split_teas",
             "gym_keys",
+            "post_goal_locations",
             "itemfinder_required",
             "flash_required",
             "fame_checker_required",

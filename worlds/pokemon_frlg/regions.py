@@ -139,9 +139,9 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         EncounterType.LAND: [(None, range(0, 12), None)],
         EncounterType.WATER: [(None, range(0, 5), None)],
         EncounterType.FISHING: [
-            ("Old Rod", range(0, 2), lambda state: state.has("Old Rod", world.player)),
-            ("Good Rod", range(2, 5), lambda state: state.has("Good Rod", world.player)),
-            ("Super Rod", range(5, 10), lambda state: state.has("Super Rod", world.player)),
+            ("Old Rod", range(0, 2), lambda state: world.logic.has_old_rod(state)),
+            ("Good Rod", range(2, 5), lambda state: world.logic.has_good_rod(state)),
+            ("Super Rod", range(5, 10), lambda state: world.logic.has_super_rod(state)),
         ],
     }
 

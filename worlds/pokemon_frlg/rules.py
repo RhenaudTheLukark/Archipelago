@@ -199,6 +199,15 @@ class PokemonFRLGLogic:
         return (state.has_any(CARD_KEYS_PER_FLOOR[floor], self.player) or
                 state.has("Progressive Card Key", self.player, floor - 1))
 
+    def has_old_rod(self, state: CollectionState) -> bool:
+        return state.has("Old Rod", self.player) or state.has("Progressive Rod", self.player, 1)
+
+    def has_good_rod(self, state: CollectionState) -> bool:
+        return state.has("Good Rod", self.player) or state.has("Progressive Rod", self.player, 2)
+
+    def has_super_rod(self, state: CollectionState) -> bool:
+        return state.has("Super Rod", self.player) or state.has("Progressive Rod", self.player, 3)
+
     def can_stop_seafoam_b3f_current(self, state) -> bool:
         return self.can_strength(state) and state.can_reach_region("Seafoam Islands 1F", self.player)
 
