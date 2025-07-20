@@ -295,11 +295,6 @@ class PokemonFRLGClient(BizHawkClient):
                 logger.info("ERROR: You appear to be running an unpatched version of Pokemon FireRed or LeafGreen."
                             "You need to generate a patch file and use it to create a patched ROM.")
                 return False
-            if rom_name != data.rom_names[self.game_version]:
-                logger.info("ERROR: You appear to be running a version of Pokemon FireRed or LeafGreen that wasn't "
-                            "patched using Archipelago. You need to create a patched ROM using the Archipelago "
-                            "Launcher.")
-                return False
             if data.rom_checksum != rom_checksum:
                 ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0x178, 16, "ROM")]))[0]
                 ap_version = bytes([byte for byte in ap_version_bytes if byte != 0]).decode("ascii")
