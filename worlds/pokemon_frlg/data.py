@@ -8,7 +8,7 @@ import orjson
 import pkgutil
 from collections import defaultdict
 from dataclasses import dataclass
-from enum import Enum, IntEnum
+from enum import IntEnum
 from pkg_resources import resource_listdir, resource_isdir
 from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
@@ -81,23 +81,36 @@ class ItemData(NamedTuple):
 
 
 class LocationCategory(IntEnum):
-    OVERWORLD_ITEM = 0
-    NPC_GIFT = 1
-    HIDDEN_ITEM = 2
-    TOWN_VISIT = 3
-    SHOP_ITEM = 4
-    TRAINER = 5
-    FAME_ENTRY = 6
-    POKEDEX = 7
-    EVENT = 8
-    EVENT_SHOP = 9
-    EVENT_WILD_POKEMON = 10
-    EVENT_STATIC_POKEMON = 11
-    EVENT_LEGENDARY_POKEMON = 12
-    EVENT_EVOLUTION_POKEMON = 13
-    EVENT_TRAINER_SCALING = 14
-    EVENT_WILD_POKEMON_SCALING = 15
-    EVENT_STATIC_POKEMON_SCALING = 16
+    BADGE = 0
+    HM = 1
+    KEY_ITEM = 2
+    RUNNING_SHOES = 3
+    EXTRA_KEY_ITEM = 4
+    FLY_UNLOCK = 5
+    SPLIT_CARD_KEY = 6
+    SPLIT_ISLAND_PASS = 7
+    SPLIT_TEA = 8
+    GYM_KEY = 9
+    ITEM_BALL = 10
+    HIDDEN_ITEM = 11
+    HIDDEN_ITEM_RECURRING = 12
+    STARTING_ITEM = 13
+    NPC_GIFT = 14
+    POKEMON_REQUEST = 15
+    SHOPSANITY = 16
+    TRAINERSANITY = 17
+    FAMESANITY = 18
+    FAMESANITY_POKEMON_REQUEST = 19
+    DEXSANITY = 20
+    EVENT = 21
+    EVENT_SHOP = 22
+    EVENT_WILD_POKEMON = 23
+    EVENT_STATIC_POKEMON = 24
+    EVENT_LEGENDARY_POKEMON = 25
+    EVENT_EVOLUTION_POKEMON = 26
+    EVENT_TRAINER_SCALING = 27
+    EVENT_WILD_POKEMON_SCALING = 28
+    EVENT_STATIC_POKEMON_SCALING = 29
 
 
 class LocationData(NamedTuple):
@@ -108,7 +121,6 @@ class LocationData(NamedTuple):
     address: Dict[str, int | List[int]]
     flag: int
     category: LocationCategory
-    include: FrozenSet[str]
     tags: FrozenSet[str]
 
 
@@ -124,18 +136,14 @@ class EncounterTableData(NamedTuple):
     address: Dict[str, int]
 
 
-class EncounterType(Enum):
-    LAND = "Land"
-    WATER = "Water"
-    FISHING = "Fishing"
-
-
 @dataclass
 class MapData:
     name: str
     header_address: Dict[str, int]
     warp_table_address: Dict[str, int]
-    encounters: Dict[EncounterType, EncounterTableData]
+    land_encounters: EncounterTableData | None
+    water_encounters: EncounterTableData | None
+    fishing_encounters: EncounterTableData | None
     kanto: bool
 
 
@@ -171,7 +179,7 @@ class RegionData:
         self.has_water = has_water
         self.has_fishing = has_fishing
         self.kanto = kanto
-        self.exits = {}
+        self.exits = []
         self.warps = []
         self.locations = []
         self.events = []
@@ -240,7 +248,7 @@ class StarterData:
 @dataclass
 class MiscPokemonData:
     species_id: Dict[str, int]
-    level: Dict[str, int]
+    level: [str, int]
     address: Dict[str, int]
     level_address: Dict[str, int]
 
@@ -309,7 +317,7 @@ class ScalingData:
     region: str
     kanto: bool
     connections: List[str]
-    type: EncounterType | None
+    type: str | None
     category: LocationCategory
     locations: Dict[str, List[str]]
 
@@ -790,7 +798,10 @@ def init() -> None:
 
     # Create map data
     for map_name, map_json in extracted_data["maps"].items():
-        encounter_tables: Dict[EncounterType, EncounterTableData] = {}
+        land_encounters = None
+        water_encounters = None
+        fishing_encounters = None
+
         if "land_encounters" in map_json:
             land_slots: Dict[str, List[EncounterSpeciesData]] = {}
             for version, slots in map_json["land_encounters"]["slots"].items():
@@ -802,7 +813,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 land_slots[version] = version_slots
-            encounter_tables[EncounterType.LAND] = EncounterTableData(
+            land_encounters = EncounterTableData(
                 land_slots,
                 map_json["land_encounters"]["address"]
             )
@@ -817,7 +828,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 water_slots[version] = version_slots
-            encounter_tables[EncounterType.WATER] = EncounterTableData(
+            water_encounters = EncounterTableData(
                 water_slots,
                 map_json["water_encounters"]["address"]
             )
@@ -832,7 +843,7 @@ def init() -> None:
                         slot_data["max_level"]
                     ))
                 fishing_slots[version] = version_slots
-            encounter_tables[EncounterType.FISHING] = EncounterTableData(
+            fishing_encounters = EncounterTableData(
                 fishing_slots,
                 map_json["fishing_encounters"]["address"]
             )
@@ -841,7 +852,9 @@ def init() -> None:
             map_name,
             map_json["header_address"],
             map_json["warp_table_address"],
-            encounter_tables,
+            land_encounters,
+            water_encounters,
+            fishing_encounters,
             True
         )
 
@@ -912,7 +925,6 @@ def init() -> None:
                     location_address,
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
-                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
             elif "SHOP_TWO_ISLAND" in location_id:
@@ -950,7 +962,6 @@ def init() -> None:
                     location_address,
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
-                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
             else:
@@ -962,7 +973,6 @@ def init() -> None:
                     location_json["address"],
                     location_json["flag"],
                     LocationCategory[location_data[location_id]["category"]],
-                    frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
 
@@ -1113,7 +1123,7 @@ def init() -> None:
             misc_data["level_address"]
         )
 
-    # Create trade Pokémon data
+    # Create trade pokemon data
     for name, trade_pokemon in extracted_data["trade_pokemon"].items():
         data.trade_pokemon[name] = TradePokemonData(
             trade_pokemon["species"],
@@ -1184,7 +1194,7 @@ def init() -> None:
             scaling_json["region"],
             scaling_json["kanto"],
             scaling_json["connections"],
-            EncounterType[scaling_json["type"]] if "type" in scaling_json else None,
+            scaling_json["type"],
             LocationCategory[scaling_json["category"]],
             scaling_json["locations"]
         )
