@@ -174,7 +174,7 @@ def _get_random_move(world: "PokemonFRLGWorld",
         if bias < type_bias:
             moves_by_type.update(world.moves_by_type[types[0]])
             if types[0] != types[1]:
-                moves_by_type |= world.moves_by_type[types[1]]
+                moves_by_type.update(world.moves_by_type[types[1]])
             blacklists.append({move for move in range(data.constants["MOVES_COUNT"])
                                if move not in moves_by_type})
         elif bias < type_bias + ((100 - type_bias) * (normal_bias / 100)):
@@ -889,8 +889,6 @@ def randomize_legendaries(world: "PokemonFRLGWorld") -> None:
 
         if item.startswith("Static"):
             item = f"Static {species.name}"
-        elif item.startswith("Missable"):
-            item = f"Missable {species.name}"
         else:
             item = species.name
 
@@ -1027,8 +1025,6 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
 
         if item.startswith("Static"):
             item = f"Static {species.name}"
-        elif item.startswith("Missable"):
-            item = f"Missable {species.name}"
         else:
             item = species.name
 
@@ -1051,8 +1047,6 @@ def randomize_misc_pokemon(world: "PokemonFRLGWorld") -> None:
 
         if item.startswith("Static"):
             item = f"Static {species.name}"
-        elif item.startswith("Missable"):
-            item = f"Missable {species.name}"
         else:
             item = species.name
 

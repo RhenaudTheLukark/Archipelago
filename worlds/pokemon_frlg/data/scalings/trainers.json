@@ -13,7 +13,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE22/MAIN": {
-    "region": "Route 22",
+    "region": "Route 22 (East)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -83,9 +83,6 @@
       "Bug Catcher Greg Scaling": [
         "TRAINER_BUG_CATCHER_GREG"
       ],
-      "Youngster Calvin Scaling": [
-        "TRAINER_YOUNGSTER_CALVIN"
-      ],
       "Lass Sally Scaling": [
         "TRAINER_LASS_SALLY"
       ],
@@ -94,6 +91,17 @@
       ],
       "Lass Robin Scaling": [
         "TRAINER_LASS_ROBIN"
+      ]
+    }
+  },
+  "TRAINER_SCALING_ROUTE3/BETWEEN_LEDGES": {
+    "region": "Route 3 (Between Ledges)",
+    "kanto": true,
+    "connections": [],
+    "category": "EVENT_TRAINER_SCALING",
+    "locations": {
+      "Youngster Calvin Scaling": [
+        "TRAINER_YOUNGSTER_CALVIN"
       ]
     }
   },
@@ -127,7 +135,7 @@
     }
   },
   "TRAINER_SCALING_MT_MOON_B2F/SOUTH": {
-    "region": "Mt. Moon B2F South",
+    "region": "Mt. Moon B2F (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -138,7 +146,7 @@
     }
   },
   "TRAINER_SCALING_MT_MOON_B2F/NORTHEAST": {
-    "region": "Mt. Moon B2F Northeast",
+    "region": "Mt. Moon B2F (Northeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -166,7 +174,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE4/NORTHEAST": {
-    "region": "Route 4 Northeast",
+    "region": "Route 4 (Northeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -190,7 +198,7 @@
     }
   },
   "TRAINER_SCALING_CERULEAN_CITY/OUTSKIRTS": {
-    "region": "Cerulean City Outskirts",
+    "region": "Cerulean City (Outskirts)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -304,7 +312,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE11/WEST": {
-    "region": "Route 11 West",
+    "region": "Route 11 (West)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -496,15 +504,23 @@
       ]
     }
   },
-  "TRAINER_SCALING_ROUTE9/MAIN": {
-    "region": "Route 9",
+  "TRAINER_SCALING_ROUTE9/WEST": {
+    "region": "Route 9 (West)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
       "Picnicker Alicia Scaling": [
         "TRAINER_PICNICKER_ALICIA"
-      ],
+      ]
+    }
+  },
+  "TRAINER_SCALING_ROUTE9/MAIN": {
+    "region": "Route 9",
+    "kanto": true,
+    "connections": [],
+    "category": "EVENT_TRAINER_SCALING",
+    "locations": {
       "Hiker Jeremy Scaling": [
         "TRAINER_HIKER_JEREMY"
       ],
@@ -525,14 +541,22 @@
       ],
       "Hiker Brice Scaling": [
         "TRAINER_HIKER_BRICE"
-      ],
+      ]
+    }
+  },
+  "TRAINER_SCALING_ROUTE9/EAST": {
+    "region": "Route 9 (East)",
+    "kanto": true,
+    "connections": [],
+    "category": "EVENT_TRAINER_SCALING",
+    "locations": {
       "Picnicker Caitlin Scaling": [
         "TRAINER_PICNICKER_CAITLIN"
       ]
     }
   },
   "TRAINER_SCALING_ROUTE10/NORTH": {
-    "region": "Route 10 North",
+    "region": "Route 10 (North)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -543,7 +567,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE10/SOUTH": {
-    "region": "Route 10 South",
+    "region": "Route 10 (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -563,7 +587,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE10/NEAR_POWER_PLANT": {
-    "region": "Route 10 Near Power Plant",
+    "region": "Route 10 (Near Power Plant)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -574,7 +598,7 @@
     }
   },
   "TRAINER_SCALING_ROCK_TUNNEL_1F/NORTHEAST": {
-    "region": "Rock Tunnel 1F Northeast",
+    "region": "Rock Tunnel 1F (Northeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -585,7 +609,7 @@
     }
   },
   "TRAINER_SCALING_ROCK_TUNNEL_1F/NORTHWEST": {
-    "region": "Rock Tunnel 1F Northwest",
+    "region": "Rock Tunnel 1F (Northwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -602,7 +626,7 @@
     }
   },
   "TRAINER_SCALING_ROCK_TUNNEL_1F/SOUTH": {
-    "region": "Rock Tunnel 1F South",
+    "region": "Rock Tunnel 1F (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -619,7 +643,7 @@
     }
   },
   "TRAINER_SCALING_ROCK_TUNNEL_B1F/SOUTHEAST": {
-    "region": "Rock Tunnel B1F Southeast",
+    "region": "Rock Tunnel B1F (Southeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -642,7 +666,7 @@
     }
   },
   "TRAINER_SCALING_ROCK_TUNNEL_B1F/NORTHWEST": {
-    "region": "Rock Tunnel B1F Northwest",
+    "region": "Rock Tunnel B1F (Northwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -815,7 +839,7 @@
     }
   },
   "TRAINER_SCALING_ROCKET_HIDEOUT_B1F/NORTH": {
-    "region": "Rocket Hideout B1F North",
+    "region": "Rocket Hideout B1F (North)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -829,7 +853,7 @@
     }
   },
   "TRAINER_SCALING_ROCKET_HIDEOUT_B1F/SOUTHWEST": {
-    "region": "Rocket Hideout B1F Southwest",
+    "region": "Rocket Hideout B1F (Southwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -843,7 +867,7 @@
     }
   },
   "TRAINER_SCALING_ROCKET_HIDEOUT_B1F/SOUTHEAST": {
-    "region": "Rocket Hideout B1F Southeast",
+    "region": "Rocket Hideout B1F (Southeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -879,7 +903,7 @@
     }
   },
   "TRAINER_SCALING_ROCKET_HIDEOUT_B4F/WEST": {
-    "region": "Rocket Hideout B4F West",
+    "region": "Rocket Hideout B4F (West)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -890,7 +914,7 @@
     }
   },
   "TRAINER_SCALING_ROCKET_HIDEOUT_B4F/EAST": {
-    "region": "Rocket Hideout B4F East",
+    "region": "Rocket Hideout B4F (East)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -907,11 +931,11 @@
     }
   },
   "TRAINER_SCALING_CELADON_CITY_GYM/TRAINERS": {
-    "region": "Celadon Gym Trainers",
+    "region": "Celadon Gym (Trainers)",
     "kanto": true,
     "connections": [
       "Celadon Gym",
-      "Celadon Gym Behind Trees"
+      "Celadon Gym (Behind Trees)"
     ],
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
@@ -928,7 +952,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE12/CENTER": {
-    "region": "Route 12 Center",
+    "region": "Route 12 (Center)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -951,7 +975,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE12/SOUTH": {
-    "region": "Route 12 South",
+    "region": "Route 12 (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -965,7 +989,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE12/BEHIND_NORTH_TREE": {
-    "region": "Route 12 Behind North Tree",
+    "region": "Route 12 (Behind North Tree)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1055,7 +1079,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE15/SOUTH": {
-    "region": "Route 15 South",
+    "region": "Route 15 (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1087,7 +1111,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE15/NORTH": {
-    "region": "Route 15 North",
+    "region": "Route 15 (North)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1104,7 +1128,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE16/NORTHEAST": {
-    "region": "Route 16 Northeast",
+    "region": "Route 16 (Northeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1115,7 +1139,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE16/SOUTHWEST": {
-    "region": "Route 16 Southwest",
+    "region": "Route 16 (Southwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1179,7 +1203,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE18/EAST": {
-    "region": "Route 18 East",
+    "region": "Route 18 (East)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1196,7 +1220,7 @@
     }
   },
   "TRAINER_SCALING_FUCHSIA_CITY_GYM/MAIN": {
-    "region": "Route 18 East",
+    "region": "Fuchsia Gym",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1230,7 +1254,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_2F/SOUTHWEST": {
-    "region": "Silph Co. 2F Southwest Room",
+    "region": "Silph Co. 2F (Southwest Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1252,7 +1276,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_3F/WEST": {
-    "region": "Silph Co. 3F West Room",
+    "region": "Silph Co. 3F (West Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1277,7 +1301,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_4F/NORTH": {
-    "region": "Silph Co. 4F North Room",
+    "region": "Silph Co. 4F (North Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1342,7 +1366,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_7F/SOUTHEAST": {
-    "region": "Silph Co. 7F Southeast Room",
+    "region": "Silph Co. 7F (Southeast Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1353,7 +1377,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_7F/NORTHWEST": {
-    "region": "Silph Co. 7F Northwest Room",
+    "region": "Silph Co. 7F (Northwest Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1397,7 +1421,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_9F/NORTHWEST": {
-    "region": "Silph Co. 9F Northwest Room",
+    "region": "Silph Co. 9F (Northwest Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1422,7 +1446,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_11F/EAST": {
-    "region": "Silph Co. 11F East",
+    "region": "Silph Co. 11F (East)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1433,7 +1457,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_11F/WEST": {
-    "region": "Silph Co. 11F West",
+    "region": "Silph Co. 11F (West)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1444,7 +1468,7 @@
     }
   },
   "TRAINER_SCALING_SILPH_CO_11F/PRESIDENTS_ROOM": {
-    "region": "Silph Co. 11F President's Room",
+    "region": "Silph Co. 11F (President's Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1478,17 +1502,17 @@
     }
   },
   "TRAINER_SCALING_SAFFRON_CITY_GYM/TRAINERS": {
-    "region": "Saffron Gym Trainers",
+    "region": "Saffron Gym (Trainers)",
     "kanto": true,
     "connections": [
-      "Saffron Gym Northwest",
-      "Saffron Gym North",
-      "Saffron Gym Northeast",
-      "Saffron Gym West",
-      "Saffron Gym Center",
-      "Saffron Gym East",
-      "Saffron Gym Southwest",
-      "Saffron Gym Southeast"
+      "Saffron Gym (Northwest)",
+      "Saffron Gym (North)",
+      "Saffron Gym (Northeast)",
+      "Saffron Gym (West)",
+      "Saffron Gym (Center)",
+      "Saffron Gym (East)",
+      "Saffron Gym (Southwest)",
+      "Saffron Gym (Southeast)"
     ],
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
@@ -1519,7 +1543,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE19/WATER": {
-    "region": "Route 19 Water",
+    "region": "Route 19 (Water)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1554,7 +1578,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE20/EAST": {
-    "region": "Route 20 East",
+    "region": "Route 20 (East)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1574,7 +1598,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE20/NEAR_SOUTH_CAVE": {
-    "region": "Route 20 Near South Cave",
+    "region": "Route 20 (Near South Cave)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1585,7 +1609,7 @@
     }
   },
   "TRAINER_SCALING_ROUTE20/WEST": {
-    "region": "Route 20 West",
+    "region": "Route 20 (West)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1619,7 +1643,7 @@
     }
   },
   "TRAINER_SCALING_POKEMON_MANSION_1F/SOUTH": {
-    "region": "Pokemon Mansion 1F South",
+    "region": "Pokemon Mansion 1F (South)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1641,7 +1665,7 @@
     }
   },
   "TRAINER_SCALING_POKEMON_MANSION_3F/SOUTHWEST": {
-    "region": "Pokemon Mansion 3F Southwest",
+    "region": "Pokemon Mansion 3F (Southwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1652,7 +1676,7 @@
     }
   },
   "TRAINER_SCALING_POKEMON_MANSION_3F/SOUTHEAST": {
-    "region": "Pokemon Mansion 3F Southeast",
+    "region": "Pokemon Mansion 3F (Southeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1749,7 +1773,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_1F/NORTH": {
-    "region": "Victory Road 1F North",
+    "region": "Victory Road 1F (North)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1763,7 +1787,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_2F/CENTER": {
-    "region": "Victory Road 2F Center",
+    "region": "Victory Road 2F (Center)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1783,7 +1807,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_2F/NORTHWEST": {
-    "region": "Victory Road 2F Northwest",
+    "region": "Victory Road 2F (Northwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1794,7 +1818,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_3F/NORTH": {
-    "region": "Victory Road 3F North",
+    "region": "Victory Road 3F (North)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1808,7 +1832,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_3F/SOUTHWEST": {
-    "region": "Victory Road 3F Southwest",
+    "region": "Victory Road 3F (Southwest)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1822,7 +1846,7 @@
     }
   },
   "TRAINER_SCALING_VICTORY_ROAD_3F/SOUTHEAST": {
-    "region": "Victory Road 3F Southeast",
+    "region": "Victory Road 3F (Southeast)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1869,7 +1893,7 @@
     }
   },
   "TRAINER_SCALING_ONE_ISLAND_TREASURE_BEACH/WATER": {
-    "region": "Treasure Beach Water",
+    "region": "Treasure Beach (Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1880,7 +1904,7 @@
     }
   },
   "TRAINER_SCALING_ONE_ISLAND_KINDLE_ROAD/SOUTH_WATER": {
-    "region": "Kindle Road South Water",
+    "region": "Kindle Road (South Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1891,7 +1915,7 @@
     }
   },
   "TRAINER_SCALING_ONE_ISLAND_KINDLE_ROAD/CENTER": {
-    "region": "Kindle Road Center",
+    "region": "Kindle Road (Center)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1923,7 +1947,7 @@
     }
   },
   "TRAINER_SCALING_ONE_ISLAND_KINDLE_ROAD/NORTH_WATER": {
-    "region": "Kindle Road North Water",
+    "region": "Kindle Road (North Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1940,7 +1964,7 @@
     }
   },
   "TRAINER_SCALING_MT_EMBER_EXTERIOR/SOUTH": {
-    "region": "Mt. Ember Exterior South",
+    "region": "Mt. Ember Exterior (South)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1954,7 +1978,7 @@
     }
   },
   "TRAINER_SCALING_MT_EMBER_EXTERIOR/CENTER": {
-    "region": "Mt. Ember Exterior Center",
+    "region": "Mt. Ember Exterior (Center)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -1971,7 +1995,7 @@
     }
   },
   "TRAINER_SCALING_THREE_ISLAND/SOUTH": {
-    "region": "Three Island Town South",
+    "region": "Three Island Town (South)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2014,7 +2038,7 @@
     }
   },
   "TRAINER_SCALING_THREE_ISLAND_BOND_BRIDGE/WATER": {
-    "region": "Bond Bridge Water",
+    "region": "Bond Bridge (Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2107,7 +2131,7 @@
     }
   },
   "TRAINER_SCALING_FIVE_ISLAND_RESORT_GORGEOUS/WATER": {
-    "region": "Resort Gorgeous Water",
+    "region": "Resort Gorgeous (Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2121,7 +2145,7 @@
     }
   },
   "TRAINER_SCALING_FIVE_ISLAND_RESORT_GORGEOUS/NEAR_RESORT": {
-    "region": "Resort Gorgeous Near Resort",
+    "region": "Resort Gorgeous (Near Resort)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2177,7 +2201,7 @@
     }
   },
   "TRAINER_SCALING_SIX_ISLAND_WATER_PATH/SOUTH": {
-    "region": "Water Path South",
+    "region": "Water Path (South)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2191,7 +2215,7 @@
     }
   },
   "TRAINER_SCALING_SIX_ISLAND_WATER_PATH/SOUTH_WATER": {
-    "region": "Water Path South Water",
+    "region": "Water Path (South Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2205,7 +2229,7 @@
     }
   },
   "TRAINER_SCALING_SIX_ISLAND_WATER_PATH/NORTH": {
-    "region": "Water Path North",
+    "region": "Water Path (North)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2286,7 +2310,7 @@
     }
   },
   "TRAINER_SCALING_SIX_ISLAND_GREEN_PATH/WATER": {
-    "region": "Green Path Water",
+    "region": "Green Path (Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2297,7 +2321,7 @@
     }
   },
   "TRAINER_SCALING_SIX_ISLAND_OUTCAST_ISLAND/WATER": {
-    "region": "Outcast Island Water",
+    "region": "Outcast Island (Water)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2379,19 +2403,19 @@
       ]
     }
   },
-  "TRAINER_SCALING_SEVEN_ISLAND_TANOBY_RUINS/SCUFIB_ISLAND": {
-    "region": "Tanoby Ruins Scufib Island",
+  "TRAINER_SCALING_SEVEN_ISLAND_TANOBY_RUINS/MONEAN_ISLAND": {
+    "region": "Tanoby Ruins (Monean Island)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
-      "Ruin Maniac Brandon Scaling": [
-        "TRAINER_RUIN_MANIAC_BRANDON"
+      "Ruin Maniac Benjamin Scaling": [
+        "TRAINER_RUIN_MANIAC_BENJAMIN"
       ]
     }
   },
   "TRAINER_SCALING_SEVEN_ISLAND_TANOBY_RUINS/WEEPTH_ISLAND": {
-    "region": "Tanoby Ruins Weepth Island",
+    "region": "Tanoby Ruins (Weepth Island)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
@@ -2404,19 +2428,19 @@
       ]
     }
   },
-  "TRAINER_SCALING_SEVEN_ISLAND_TANOBY_RUINS/MONEAN_ISLAND": {
-    "region": "Tanoby Ruins Monean Island",
+  "TRAINER_SCALING_SEVEN_ISLAND_TANOBY_RUINS/SCUFIB_ISLAND": {
+    "region": "Tanoby Ruins (Scufib Island)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",
     "locations": {
-      "Ruin Maniac Benjamin Scaling": [
-        "TRAINER_RUIN_MANIAC_BENJAMIN"
+      "Ruin Maniac Brandon Scaling": [
+        "TRAINER_RUIN_MANIAC_BRANDON"
       ]
     }
   },
   "TRAINER_SCALING_SEVEN_ISLAND_TRAINER_TOWER/SOUTH": {
-    "region": "Trainer Tower Exterior South",
+    "region": "Trainer Tower Exterior (South)",
     "kanto": false,
     "connections": [],
     "category": "EVENT_TRAINER_SCALING",

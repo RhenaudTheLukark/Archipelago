@@ -1,12 +1,21 @@
 # 1.0.0
 ## Updates
++ New option `shuffle_ledge_jump`
+  + Shuffles the ability to jump down ledges into the item pool. If not shuffled then you will start with it
 + New option `post_goal_locations`
   + Sets whether locations that are locked behind completing your goal are included
++ New option `fishing_rods`
+  + Vanilla: The fishing rods are all separate items in the pool and can be found in any order
+  + There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
 + New option `base_stats`
   + Vanilla: Base stats are unchanged
   + Shuffle: Base stats are shuffled amongst each other
   + Keep BST: Random base stats, but base stat total is preserved
   + Completely Random: Random base stats and base stat total
+
+# 0.9.6
+# Bug Fixes
++ Fixed an issue where trying to generate a seed with `dungeon_entrance_shuffle` on using Archipelago 0.6.3 would fail
 
 # 0.9.5
 ## Bug Fixes

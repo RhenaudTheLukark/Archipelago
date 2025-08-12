@@ -16,10 +16,10 @@ SINGLE_DUNGEON_ENTRANCES = ["Vermilion Harbor", "Pokemon Tower", "Rocket Hideout
                             "Viapois Chamber", "Rixy Chamber", "Scufib Chamber", "Dilford Chamber", "Weepth Chamber",
                             "Liptoo Chamber", "Monean Chamber"]
 
-SINGLE_DUNGEON_EXITS = ["Vermilion Harbor Exit", "Pokemon Tower 1F Exit", "Rocket Hideout B1F North Stairs (West)",
-                        "Safari Zone Entrance Exit", "Silph Co. 1F Exit", "Pokemon Mansion 1F Exit",
-                        "Cerulean Cave 1F Southeast Exit", "Navel Rock 1F Exit", "Mt. Ember Exterior South Exit",
-                        "Berry Forest Exit", "Icefall Cave Front Exit", "Rocket Warehouse Exit", "Lost Cave 1F Exit",
+SINGLE_DUNGEON_EXITS = ["S.S. Anne Exterior Exit", "Pokemon Tower 1F Exit", "Rocket Hideout B1F Northwest Stairs",
+                        "Safari Zone Entrance Exit", "Silph Co. 1F Exit", "Pokemon Mansion 1F Exit (West)",
+                        "Cerulean Cave 1F Exit", "Navel Rock 1F Exit", "Mt. Ember Exterior Exit", "Berry Forest Exit",
+                        "Icefall Cave Front Exit (South)", "Rocket Warehouse Exit", "Lost Cave 1F Exit",
                         "Dotted Hole 1F Exit", "Altering Cave Exit", "Viapois Chamber Exit", "Rixy Chamber Exit",
                         "Scufib Chamber Exit", "Dilford Chamber Exit", "Weepth Chamber Exit", "Liptoo Chamber Exit",
                         "Monean Chamber Exit"]
@@ -32,11 +32,11 @@ MULTI_DUNGEON_ENTRANCES = ["Viridian Forest South Gate Exit (North)", "Viridian 
                            "Pattern Bush (West)", "Pattern Bush (East)"]
 
 MULTI_DUNGEON_EXITS = ["Viridian Forest Exit (South)", "Viridian Forest Exit (North)", "Mt. Moon 1F Exit",
-                       "Mt. Moon B1F Fourth Tunnel Ladder (East)", "Diglett's Cave North Entrance Exit",
-                       "Diglett's Cave South Entrance Exit", "Rock Tunnel 1F Northeast Ladder (Northwest)",
-                       "Rock Tunnel 1F South Exit", "Power Plant Exit (Front)", "Power Plant Exit (Back)",
-                       "Seafoam Islands 1F Exit", "Seafoam Islands 1F Southeast Exit", "Victory Road 1F South Exit",
-                       "Victory Road 2F East Exit", "Pattern Bush Exit (West)", "Pattern Bush Exit (East)"]
+                       "Mt. Moon B1F (Fourth Tunnel) East Ladder", "Diglett's Cave North Entrance Exit",
+                       "Diglett's Cave South Entrance Exit", "Rock Tunnel 1F North Ladder", "Rock Tunnel 1F Exit",
+                       "Power Plant Exit (Front)", "Power Plant Exit (Back)", "Seafoam Islands 1F Exit (West)",
+                       "Seafoam Islands 1F Exit (East)", "Victory Road 1F Exit", "Victory Road 2F Exit",
+                       "Pattern Bush Exit (West)", "Pattern Bush Exit (East)"]
 
 MULTI_DUNGEON_PAIRS = {
     "Viridian Forest South Gate Exit (North)": "Viridian Forest North Gate Exit (South)",
@@ -48,12 +48,12 @@ MULTI_DUNGEON_PAIRS = {
     "Victory Road (West)": "Victory Road (East)",
     "Pattern Bush (West)": "Pattern Bush (East)",
     "Viridian Forest Exit (South)": "Viridian Forest Exit (North)",
-    "Mt. Moon 1F Exit": "Mt. Moon B1F Fourth Tunnel Ladder (East)",
+    "Mt. Moon 1F Exit": "Mt. Moon B1F (Fourth Tunnel) East Ladder",
     "Diglett's Cave North Entrance Exit": "Diglett's Cave South Entrance Exit",
-    "Rock Tunnel 1F Northeast Ladder (Northwest)": "Rock Tunnel 1F South Exit",
+    "Rock Tunnel 1F North Ladder": "Rock Tunnel 1F Exit",
     "Power Plant Exit (Front)": "Power Plant Exit (Back)",
-    "Seafoam Islands 1F Exit": "Seafoam Islands 1F Southeast Exit",
-    "Victory Road 1F South Exit": "Victory Road 2F East Exit",
+    "Seafoam Islands 1F Exit (West)": "Seafoam Islands 1F Exit (East)",
+    "Victory Road 1F Exit": "Victory Road 2F Exit",
     "Pattern Bush Exit (West)": "Pattern Bush Exit (East)"
 }
 MULTI_DUNGEON_PAIRS_REVERSE = {k: v for v, k in MULTI_DUNGEON_PAIRS.items()}
@@ -152,13 +152,13 @@ def shuffle_entrances(world: "PokemonFRLGWorld"):
             world.logic.guaranteed_hm_access = False
             # Make the Pokemon Mansion other exit match the shuffled exit
             cinnabar_region = world.get_region("Cinnabar Island")
-            mansion_shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit")
-            mansion_other_entrance = world.get_entrance("Pokemon Mansion 1F Southeast Exit")
+            mansion_shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit (West)")
+            mansion_other_entrance = world.get_entrance("Pokemon Mansion 1F Exit (East)")
             cinnabar_region.entrances.remove(mansion_other_entrance)
             mansion_other_entrance.connected_region = mansion_shuffled_entrance.connected_region
             mansion_shuffled_entrance.connected_region.entrances.append(mansion_other_entrance)
             for source, dest in world.er_placement_state.pairings:
-                if source == "Pokemon Mansion 1F Exit":
+                if source == "Pokemon Mansion 1F Exit (West)":
                     world.er_placement_state.pairings.append((mansion_other_entrance.name, dest))
                     break
             break

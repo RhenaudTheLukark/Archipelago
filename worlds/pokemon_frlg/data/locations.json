@@ -2657,18 +2657,6 @@
     "include": ["Hidden Items"]
   },
 
-  "STARTING_ITEM_BERRY_POUCH": {
-    "name": "Title Screen - Starting Item 1",
-    "tags": ["Starting Items"],
-    "category": "NPC_GIFT",
-    "include": []
-  },
-  "STARTING_ITEM_TM_CASE": {
-    "name": "Title Screen - Starting Item 2",
-    "tags": ["Starting Items"],
-    "category": "NPC_GIFT",
-    "include": []
-  },
   "PC_ITEM_POTION": {
     "name": "Player's PC - PC Item",
     "tags": ["Starting Items"],

@@ -22,7 +22,8 @@ from .data import (data, ability_name_map, ALL_SPECIES, APWORLD_VERSION, LEGENDA
                    MiscPokemonData, MoveData, move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
-from .items import PokemonFRLGItem, create_item_name_to_id_map, get_random_item, get_item_classification
+from .items import (PokemonFRLGItem, add_starting_items, create_item_name_to_id_map, get_random_item,
+                    get_item_classification)
 from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
                         fill_unrandomized_locations, set_free_fly)
@@ -261,10 +262,6 @@ class PokemonFRLGWorld(World):
         if not self.options.shuffle_badges:
             self.options.local_items.value.update(item_groups["Badges"])
 
-        # Add starting items from settings
-        if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
-            self.options.start_inventory.value["Running Shoes"] = 1
-
         if (self.options.viridian_city_roadblock == ViridianCityRoadblock.option_early_parcel and
                 not self.options.random_starting_town):
             self.multiworld.local_early_items[self.player]["Oak's Parcel"] = 1
@@ -297,6 +294,8 @@ class PokemonFRLGWorld(World):
             location for location in self.get_locations() if location.address is not None
         ]
 
+        add_starting_items(self)
+
         self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
 
         items_to_remove: List[PokemonFRLGItem] = []
@@ -306,6 +305,12 @@ class PokemonFRLGWorld(World):
             badge_items = [self.create_item(badge) for badge in sorted(item_groups["Badges"])]
             items_to_remove.extend(badge_items)
             self.pre_fill_items.extend(badge_items)
+
+        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
+            items_to_remove.append(self.create_item("Fly Unlock (Indigo Plateau)"))
+
+        if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
+            items_to_remove.append(self.create_item("Running Shoes"))
 
         if self.options.card_key == CardKey.option_split:
             items_to_remove.append(self.create_item("Card Key"))
@@ -357,6 +362,17 @@ class PokemonFRLGWorld(World):
                         item.name not in item_groups["Unique Items"]]
         self.random.shuffle(filler_items)
 
+        # Add progression items that should replace filler items
+        if self.options.shuffle_berry_pouch:
+            self.itempool.append(self.create_item("Berry Pouch"))
+            self.itempool.remove(filler_items.pop())
+        if self.options.shuffle_tm_case:
+            self.itempool.append(self.create_item("TM Case"))
+            self.itempool.remove(filler_items.pop())
+        if self.options.shuffle_ledge_jump:
+            self.itempool.append(self.create_item("Ledge Jump"))
+            self.itempool.remove(filler_items.pop())
+
         # Add key items that are relevant in Kanto Only to the itempool
         if self.options.kanto_only:
             item_names = ["HM06 Rock Smash", "HM07 Waterfall", "Sun Stone"]
@@ -364,9 +380,12 @@ class PokemonFRLGWorld(World):
                 self.itempool.append(self.create_item(item_name))
                 self.itempool.remove(filler_items.pop())
 
-        # Remove copies of unique and progressive items based on how many are in the start inventory
+        # Remove copies unique items based on how many are in the start inventory
+        unique_items: Set[str] = set(item_groups["Unique Items"] |
+                                     item_groups["Progressive Items"] |
+                                     item_groups["Abilities"])
         for item_name, quantity in self.options.start_inventory.value.items():
-            if item_name in item_groups["Unique Items"] or item_name in item_groups["Progressive Items"]:
+            if item_name in unique_items:
                 removed_items_count = 0
                 for _ in range(quantity):
                     try:
@@ -568,8 +587,8 @@ class PokemonFRLGWorld(World):
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.random_starting_town:
             starting_town = starting_town_map[self.starting_town]
-            if starting_town == "Viridian City South" or starting_town == "Three Island Town South":
-                starting_town = starting_town[:-6]
+            if starting_town == "Viridian City (South)" or starting_town == "Three Island Town (South)":
+                starting_town = starting_town[:-8]
             spoiler_handle.write(f"Starting Town:                   {starting_town}\n")
         if self.options.free_fly_location:
             free_fly_location = self.multiworld.get_location("Free Fly Location", self.player)
@@ -610,8 +629,6 @@ class PokemonFRLGWorld(World):
                          location.category == LocationCategory.EVENT_STATIC_POKEMON) or
                         (legendary_pokemon_randomized and
                          location.category == LocationCategory.EVENT_LEGENDARY_POKEMON)):
-                    if location.item.name.startswith("Missable"):
-                        continue
                     pokemon_name = location.item.name.replace("Static ", "")
                     species_locations[pokemon_name].add(location.spoiler_name)
 
@@ -630,8 +647,6 @@ class PokemonFRLGWorld(World):
                 if location.category in [LocationCategory.EVENT_WILD_POKEMON,
                                          LocationCategory.EVENT_STATIC_POKEMON,
                                          LocationCategory.EVENT_LEGENDARY_POKEMON]:
-                    if location.item.name.startswith("Missable"):
-                        continue
                     pokemon_name = location.item.name.replace("Static ", "")
                     species_locations[pokemon_name].add(location.spoiler_name)
 
@@ -657,9 +672,6 @@ class PokemonFRLGWorld(World):
             "famesanity",
             "shuffle_fly_unlocks",
             "pokemon_request_locations",
-            "shuffle_running_shoes",
-            "shuffle_berry_pouch",
-            "shuffle_tm_case",
             "card_key",
             "island_passes",
             "split_teas",
@@ -716,8 +728,6 @@ class PokemonFRLGWorld(World):
                 slot_data["wild_encounters"][national_dex_id].append(location.name)
             elif location.category in (LocationCategory.EVENT_STATIC_POKEMON,
                                        LocationCategory.EVENT_LEGENDARY_POKEMON):
-                if location.item.name.startswith("Missable"):
-                    continue
                 pokemon_name = location.item.name.replace("Static ", "")
                 national_dex_id = data.species[NAME_TO_SPECIES_ID[pokemon_name]].national_dex_number
                 slot_data["static_encounters"][location.name] = national_dex_id

@@ -27,8 +27,19 @@
       ]
     }
   },
-  "STATIC_SCALING_POKEMON_TOWER_GHOST/MAIN": {
-    "region": "Pokemon Tower Ghost Encounter",
+  "STATIC_SCALING_POKEMON_TOWER_1F/MAIN": {
+    "region": "Pokemon Tower 1F",
+    "kanto": true,
+    "connections": [],
+    "category": "EVENT_STATIC_POKEMON_SCALING",
+    "locations": {
+      "Static Marowak Scaling": [
+        "STATIC_POKEMON_MAROWAK"
+      ]
+    }
+  },
+  "STATIC_SCALING_POKEMON_TOWER_6F/MAIN": {
+    "region": "Pokemon Tower 6F",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",
@@ -73,7 +84,7 @@
     }
   },
   "STATIC_SCALING_ROUTE12/SNORLAX_AREA": {
-    "region": "Route 12 Snorlax Area",
+    "region": "Route 12 (Snorlax Area)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",
@@ -84,7 +95,7 @@
     }
   },
   "STATIC_SCALING_ROUTE16/SNORLAX_AREA": {
-    "region": "Route 16 Snorlax Area",
+    "region": "Route 16 (Snorlax Area)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",
@@ -109,7 +120,7 @@
     }
   },
   "STATIC_SCALING_SILPH_CO_7F/NORTHWEST": {
-    "region": "Silph Co. 7F Northwest Room",
+    "region": "Silph Co. 7F (Northwest Room)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",
@@ -120,7 +131,7 @@
     }
   },
   "STATIC_SCALING_SEAFOAM_ISLANDS_B4F/NEAR_ARTICUNO": {
-    "region": "Seafoam Islands B4F Near Articuno",
+    "region": "Seafoam Islands B4F (Near Articuno)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",
@@ -148,7 +159,7 @@
     }
   },
   "STATIC_SCALING_CERULEAN_CAVE_B1F/WATER": {
-    "region": "Cerulean Cave B1F Water",
+    "region": "Cerulean Cave B1F (Water)",
     "kanto": true,
     "connections": [],
     "category": "EVENT_STATIC_POKEMON_SCALING",

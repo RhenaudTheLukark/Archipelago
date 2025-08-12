@@ -461,6 +461,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x49 */ u16 introSpecies;
     # /* 0x4B */ u16 pcItemId;
     # /* 0x4D */ bool8 remoteItems;
+    # /* 0x4E */ bool8 randomized;
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -747,6 +748,9 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # Set remote items
     remote_items = 1 if world.options.remote_items else 0
     patch.write_token(options_address, 0x4D, struct.pack("<B", remote_items))
+
+    # Set that the game has been randomized
+    patch.write_token(options_address, 0x4E, struct.pack("<B", 1))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:

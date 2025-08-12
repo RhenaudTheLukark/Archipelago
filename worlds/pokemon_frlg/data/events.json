@@ -231,11 +231,6 @@
     "item": "Static Pokemon",
     "category": "EVENT_LEGENDARY_POKEMON"
   },
-  "STATIC_POKEMON_MAROWAK": {
-    "name": "Pokemon Tower - Ghost Pokemon",
-    "item": "Missable Pokemon",
-    "category": "EVENT_STATIC_POKEMON"
-  },
   "CELADON_PRIZE_POKEMON_1": {
     "name": "Celadon Game Corner Prize Room - Prize Pokemon 1",
     "item": "Pokemon",

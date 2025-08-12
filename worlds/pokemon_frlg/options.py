@@ -307,6 +307,13 @@ class ShuffleTMCase(Toggle):
     display_name = "Shuffle TM Case"
 
 
+class ShuffleLedgeJump(Toggle):
+    """
+    Shuffles the ability to jump down ledges into the item pool. If not shuffled then you will start with it.
+    """
+    display_name = "Shuffle Ledge Jump"
+
+
 class PostGoalLocations(Toggle):
     """
     Shuffles locations into the item pool that are only accessible after your goal is completed.
@@ -1360,6 +1367,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
+    shuffle_ledge_jump: ShuffleLedgeJump
     post_goal_locations: PostGoalLocations
     card_key: CardKey
     island_passes: IslandPasses

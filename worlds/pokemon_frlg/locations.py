@@ -35,7 +35,7 @@ fly_item_id_map = {
 
 fly_item_map = {
     "Pallet Town": "ITEM_FLY_PALLET",
-    "Viridian City South": "ITEM_FLY_VIRIDIAN",
+    "Viridian City (South)": "ITEM_FLY_VIRIDIAN",
     "Pewter City": "ITEM_FLY_PEWTER",
     "Cerulean City": "ITEM_FLY_CERULEAN",
     "Lavender Town": "ITEM_FLY_LAVENDER",
@@ -47,7 +47,7 @@ fly_item_map = {
     "Saffron City": "ITEM_FLY_SAFFRON",
     "One Island Town": "ITEM_FLY_ONE_ISLAND",
     "Two Island Town": "ITEM_FLY_TWO_ISLAND",
-    "Three Island Town South": "ITEM_FLY_THREE_ISLAND",
+    "Three Island Town (South)": "ITEM_FLY_THREE_ISLAND",
     "Four Island Town": "ITEM_FLY_FOUR_ISLAND",
     "Five Island Town": "ITEM_FLY_FIVE_ISLAND",
     "Six Island Town": "ITEM_FLY_SIX_ISLAND",
@@ -194,32 +194,26 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
 
 
 def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
-    def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
-        for location in locations:
-            location.place_locked_item(PokemonFRLGItem(world.item_id_to_name[location.default_item_id],
-                                                       ItemClassification.progression,
-                                                       None,
-                                                       world.player))
-            location.progress_type = LocationProgressType.DEFAULT
+    def create_event_for_unrandomized_items(location: Location,
+                                            as_event: bool) -> None:
+        assert isinstance(location, PokemonFRLGLocation)
+        item = world.create_item_by_id(location.default_item_id)
+        if as_event:
+            item.code = None
             location.address = None
             location.show_in_spoiler = False
-
-    unrandomized_progression_locations = set()
+        location.place_locked_item(item)
+        location.progress_type = LocationProgressType.DEFAULT
 
     if world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
         fly_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Town Visits"]]
-        unrandomized_progression_locations.update(fly_locations)
+        for location in fly_locations:
+            create_event_for_unrandomized_items(location, True)
     elif world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-        unrandomized_progression_locations.add(world.get_location("Indigo Plateau - Unlock Fly Destination"))
+        create_event_for_unrandomized_items(world.get_location("Indigo Plateau - Unlock Fly Destination"), False)
 
-    if not world.options.shuffle_berry_pouch:
-        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 1"))
-    if not world.options.shuffle_tm_case:
-        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 2"))
     if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
-        unrandomized_progression_locations.add(world.get_location("Pewter City - Gift from Mom"))
-
-    create_events_for_unrandomized_items(unrandomized_progression_locations)
+        create_event_for_unrandomized_items(world.get_location("Pewter City - Gift from Mom"), False)
 
 
 def set_free_fly(world: "PokemonFRLGWorld") -> None:

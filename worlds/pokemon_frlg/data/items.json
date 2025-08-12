@@ -467,6 +467,12 @@
     "tags": ["Key Items", "Evolution Items"]
   },
 
+  "ITEM_LEDGE_JUMP": {
+    "name": "Ledge Jump",
+    "classification": "PROGRESSION",
+    "tags": ["Abilities"]
+  },
+
   "ITEM_FLY_PALLET": {
     "name": "Fly Unlock (Pallet Town)",
     "classification": "PROGRESSION",
