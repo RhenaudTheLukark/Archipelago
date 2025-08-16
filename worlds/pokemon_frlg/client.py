@@ -431,6 +431,19 @@ class PokemonFRLGClient(BizHawkClient):
                     shop_bytes = read_result[0]
                     shop_read_status = True
 
+            # Read dexsanity flags
+            dexsanity_bytes = bytes(0)
+            dexsanity_read_status = False
+            read_result = await bizhawk.guarded_read(
+                ctx.bizhawk_ctx,
+                [(sb1_address + 0x0848, 0x34, "System Bus")],  # Dexsanity Flags
+                [guards["IN OVERWORLD"], guards["SAVE BLOCK 1"]]
+            )
+
+            if read_result is not None:
+                dexsanity_bytes = read_result[0]
+                dexsanity_read_status = True
+
             # Read pokedex flags
             pokemon_caught_bytes = bytes(0)
             pokemon_caught_read_status = False
@@ -501,6 +514,16 @@ class PokemonFRLGClient(BizHawkClient):
                                     local_checked_locations.add(location_id)
                             fame_checker_index += 1
 
+            # Check dexsanity flags
+            if dexsanity_read_status:
+                for byte_i, byte in enumerate(dexsanity_bytes):
+                    for i in range(8):
+                        if byte & (1 << i) != 0:
+                            dex_number = byte_i * 8 + i + 1
+                            location_id = DEXSANITY_OFFSET + dex_number - 1
+                            if location_id in ctx.server_locations:
+                                local_checked_locations.add(location_id)
+
             # Check set shop flags
             if shop_read_status:
                 for byte_i, byte in enumerate(shop_bytes):
@@ -516,9 +539,6 @@ class PokemonFRLGClient(BizHawkClient):
                     for i in range(8):
                         if byte & (1 << i) != 0:
                             dex_number = byte_i * 8 + i + 1
-                            location_id = DEXSANITY_OFFSET + dex_number - 1
-                            if location_id in ctx.server_locations:
-                                local_checked_locations.add(location_id)
                             local_pokemon["caught"].append(dex_number)
                             local_pokemon_count += 1
 

@@ -306,6 +306,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
+  "ITEM_POKEDEX": {
+    "name": "Pokedex",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_POWDER_JAR": {
     "name": "Powder Jar",
     "classification": "FILLER",

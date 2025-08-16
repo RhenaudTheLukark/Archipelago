@@ -29,9 +29,9 @@ from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, cre
                         fill_unrandomized_locations, set_free_fly)
 from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
                       FishingRods, FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses,
-                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleFlyUnlocks,
-                      ShuffleHiddenItems, ShuffleBadges, ShuffleRunningShoes, TownMapFlyLocation, Trainersanity,
-                      ViridianCityRoadblock)
+                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleBadges,
+                      ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex, ShuffleRunningShoes, TownMapFlyLocation,
+                      Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_stats, randomize_damage_categories,
                       randomize_legendaries, randomize_misc_pokemon, randomize_moves, randomize_move_types,
                       randomize_requested_trade_pokemon, randomize_starters, randomize_tm_hm_compatibility,
@@ -309,6 +309,9 @@ class PokemonFRLGWorld(World):
         if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
             items_to_remove.append(self.create_item("Fly Unlock (Indigo Plateau)"))
 
+        if self.options.shuffle_pokedex == ShufflePokedex.option_vanilla:
+            items_to_remove.append(self.create_item("Pokedex"))
+
         if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
             items_to_remove.append(self.create_item("Running Shoes"))
 
@@ -384,19 +387,14 @@ class PokemonFRLGWorld(World):
         unique_items: Set[str] = set(item_groups["Unique Items"] |
                                      item_groups["Progressive Items"] |
                                      item_groups["Abilities"])
-        for item_name, quantity in self.options.start_inventory.value.items():
-            if item_name in unique_items:
-                removed_items_count = 0
-                for _ in range(quantity):
-                    try:
-                        item_to_remove = next(i for i in self.itempool if i.name == item_name)
-                        self.itempool.remove(item_to_remove)
-                        removed_items_count += 1
-                    except StopIteration:
-                        break
-                while removed_items_count > 0:
+        for item in self.multiworld.precollected_items[self.player]:
+            assert isinstance(item, PokemonFRLGItem)
+            if item.name in unique_items:
+                try:
+                    self.itempool.remove(item)
                     self.itempool.append(self.create_item(get_random_item(self, ItemClassification.filler)))
-                    removed_items_count -= 1
+                except ValueError:
+                    continue
 
         verify_hm_accessibility(self)
         state = self.get_world_collection_state()

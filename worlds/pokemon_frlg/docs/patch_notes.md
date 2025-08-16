@@ -1,5 +1,9 @@
 # 1.0.0
 ## Updates
++ New option `shuffle_pokedex`
+  + Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
+  + Shuffle: The Pokédex is shuffled into the item pool
+  + Start With: You start with the Pokédex
 + New option `shuffle_ledge_jump`
   + Shuffles the ability to jump down ledges into the item pool. If not shuffled then you will start with it
 + New option `post_goal_locations`
@@ -12,6 +16,7 @@
   + Shuffle: Base stats are shuffled amongst each other
   + Keep BST: Random base stats, but base stat total is preserved
   + Completely Random: Random base stats and base stat total
++ The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
 
 # 0.9.6
 # Bug Fixes

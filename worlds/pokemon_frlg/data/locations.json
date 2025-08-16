@@ -2712,8 +2712,14 @@
     "category": "NPC_GIFT",
     "include": []
   },
+  "NPC_GIFT_GOT_POKEDEX": {
+    "name": "Professor Oak's Lab - Oak Gift 1 (Deliver Parcel)",
+    "tags": ["NPC Gifts", "Kanto", "Pallet Town"],
+    "category": "NPC_GIFT",
+    "include": []
+  },
   "NPC_GIFT_GOT_FIRST_POKEBALLS": {
-    "name": "Professor Oak's Lab - Oak Gift (Deliver Parcel)",
+    "name": "Professor Oak's Lab - Oak Gift 2 (Deliver Parcel)",
     "tags": ["NPC Gifts", "Kanto", "Pallet Town"],
     "category": "NPC_GIFT",
     "include": []

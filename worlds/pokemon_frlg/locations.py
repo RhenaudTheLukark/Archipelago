@@ -3,7 +3,7 @@ from BaseClasses import CollectionState, Location, LocationProgressType, Region,
 from .data import data, LocationCategory, fly_blacklist_map
 from .groups import location_groups
 from .items import PokemonFRLGItem, get_random_item
-from .options import (CardKey, Dexsanity, Goal, IslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems,
+from .options import (CardKey, Dexsanity, Goal, IslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex,
                       ShuffleRunningShoes, Trainersanity)
 
 if TYPE_CHECKING:
@@ -194,7 +194,7 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
 
 
 def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
-    def create_event_for_unrandomized_items(location: Location,
+    def fill_unrandomized_location(location: Location,
                                             as_event: bool) -> None:
         assert isinstance(location, PokemonFRLGLocation)
         item = world.create_item_by_id(location.default_item_id)
@@ -208,12 +208,15 @@ def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
     if world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
         fly_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Town Visits"]]
         for location in fly_locations:
-            create_event_for_unrandomized_items(location, True)
+            fill_unrandomized_location(location, True)
     elif world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-        create_event_for_unrandomized_items(world.get_location("Indigo Plateau - Unlock Fly Destination"), False)
+        fill_unrandomized_location(world.get_location("Indigo Plateau - Unlock Fly Destination"), False)
+
+    if world.options.shuffle_pokedex == ShufflePokedex.option_vanilla:
+        fill_unrandomized_location(world.get_location("Professor Oak's Lab - Oak Gift 1 (Deliver Parcel)"), False)
 
     if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
-        create_event_for_unrandomized_items(world.get_location("Pewter City - Gift from Mom"), False)
+        fill_unrandomized_location(world.get_location("Pewter City - Gift from Mom"), False)
 
 
 def set_free_fly(world: "PokemonFRLGWorld") -> None:

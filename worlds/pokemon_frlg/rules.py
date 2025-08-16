@@ -1325,7 +1325,9 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Deliver Oak's Parcel", player))
     add_rule_safe("Professor Oak's Lab - Oak's Delivery",
                   lambda state: state.has("Oak's Parcel", player))
-    add_rule_safe("Professor Oak's Lab - Oak Gift (Deliver Parcel)",
+    add_rule_safe("Professor Oak's Lab - Oak Gift 1 (Deliver Parcel)",
+                  lambda state: state.has("Oak's Parcel", player))
+    add_rule_safe("Professor Oak's Lab - Oak Gift 2 (Deliver Parcel)",
                   lambda state: state.has("Oak's Parcel", player))
     add_rule_safe("Professor Oak's Lab - Oak Info",
                   lambda state: state.has("Oak's Parcel", player))
@@ -1366,9 +1368,11 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 2
     add_rule_safe("Route 2 Gate - Oak's Aide Gift (Pokedex Progress)",
-                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_2.value))
+                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_2.value) and
+                                state.has("Pokedex", player))
     add_rule_safe("Route 2 Trade House - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Route 2 Trade House - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Route 2 Trade House - Trade Pokemon") and
+                                state.has("Pokedex", player))
 
     # Pewter City
     add_rule_safe("Pewter City - Gift from Mom",
@@ -1377,7 +1381,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Cerulean City
     add_rule_safe("Cerulean Trade House - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Cerulean Trade House - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Cerulean Trade House - Trade Pokemon") and
+                                state.has("Pokedex", player))
     if "Early Gossipers" not in options.modify_world_state.value:
         add_rule_safe("Cerulean Pokemon Center 1F - Bookshelf Info",
                       lambda state: state.has("Defeat Champion", player))
@@ -1394,7 +1399,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Underground Path North-South Tunnel
     add_rule_safe("Underground Path North Entrance - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Underground Path North Entrance - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Underground Path North Entrance - Trade Pokemon") and
+                                state.has("Pokedex", player))
 
     # Vermilion City
     add_rule_safe("Vermilion Pokemon Center 1F - Bookshelf Info",
@@ -1403,19 +1409,23 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
         add_rule_safe("Pokemon Fan Club - Worker Info",
                       lambda state: state.has("Defeat Champion", player))
     add_rule_safe("Vermilion Trade House - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Vermilion Trade House - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Vermilion Trade House - Trade Pokemon") and
+                                state.has("Pokedex", player))
 
     # Route 11
     add_rule_safe("Route 11 Gate 2F - Oak's Aide Gift (Pokedex Progress)",
-                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_11.value))
+                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_11.value) and
+                                state.has("Pokedex", player))
     add_rule_safe("Route 11 Gate 2F - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Route 11 Gate 2F - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Route 11 Gate 2F - Trade Pokemon") and
+                                state.has("Pokedex", player))
 
     # Route 10
     add_rule_safe("Route 10 - Hidden Item Behind Cuttable Tree",
                   lambda state: logic.can_cut(state))
     add_rule_safe("Route 10 Pokemon Center 1F - Oak's Aide Gift (Pokedex Progress)",
-                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_10.value))
+                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_10.value) and
+                                state.has("Pokedex", player))
 
     # Lavender Town
     if "Early Gossipers" not in options.modify_world_state.value:
@@ -1509,7 +1519,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 12 - Hidden Item Under Snorlax",
                   lambda state: state.has("Itemfinder", player))
     add_rule_safe("Route 12 Fishing House - Fishing Guru Gift (Show Magikarp)",
-                  lambda state: state.has("Magikarp", player))
+                  lambda state: state.has("Magikarp", player) and
+                                state.has("Pokedex", player))
 
     # Route 14
     add_rule_safe("Route 14 - Twins Kiri & Jan Reward",
@@ -1519,7 +1530,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 15 - Crush Kin Ron & Mya Reward",
                   lambda state: state.has_any(logic.wild_pokemon, player))
     add_rule_safe("Route 15 Gate 2F - Oak's Aide Gift (Pokedex Progress)",
-                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_15.value))
+                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_15.value) and
+                                state.has("Pokedex", player))
 
     # Route 16
     add_rule_safe("Route 16 - Young Couple Lea & Jed Reward",
@@ -1527,11 +1539,13 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Route 16 - Hidden Item Under Snorlax",
                   lambda state: state.has("Itemfinder", player))
     add_rule_safe("Route 16 Gate 2F - Oak's Aide Gift (Pokedex Progress)",
-                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_16.value))
+                  lambda state: logic.has_n_pokemon(state, options.oaks_aide_route_16.value) and
+                                state.has("Pokedex", player))
 
     # Route 18
     add_rule_safe("Route 18 Gate 2F - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Route 18 Gate 2F - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Route 18 Gate 2F - Trade Pokemon") and
+                                state.has("Pokedex", player))
 
     # Fuchsia City
     if "Early Gossipers" not in options.modify_world_state.value:
@@ -1559,11 +1573,14 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Cinnabar Island
     add_rule_safe("Pokemon Lab Lounge - Trade Pokemon 1",
-                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Lounge - Trade Pokemon 1"))
+                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Lounge - Trade Pokemon 1") and
+                                state.has("Pokedex", player))
     add_rule_safe("Pokemon Lab Lounge - Trade Pokemon 2",
-                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Lounge - Trade Pokemon 2"))
+                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Lounge - Trade Pokemon 2") and
+                                state.has("Pokedex", player))
     add_rule_safe("Pokemon Lab Experiment Room - Trade Pokemon",
-                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Experiment Room - Trade Pokemon"))
+                  lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Experiment Room - Trade Pokemon") and
+                                state.has("Pokedex", player))
     add_rule_safe("Pokemon Lab Experiment Room - Revive Helix Fossil",
                   lambda state: state.has("Helix Fossil", player))
     add_rule_safe("Gift Omanyte Scaling",
@@ -1778,17 +1795,20 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Water Labyrinth
     add_rule_safe("Water Labyrinth - Gentleman Info",
-                  lambda state: state.has_any(("Togepi", "Togetic"), player))
+                  lambda state: state.has_any(("Togepi", "Togetic"), player) and
+                                state.has("Pokedex", player))
 
     # Resort Gorgeous
     add_rule_safe("Selphy's House - Selphy Gift (Show Pokemon)",
-                  lambda state: logic.can_show_selphy_pokemon(state))
+                  lambda state: logic.can_show_selphy_pokemon(state) and
+                                state.has("Pokedex", player))
 
     # Water Path
     add_rule_safe("Water Path - Twins Miu & Mia Reward",
                   lambda state: state.has_any(logic.wild_pokemon, player))
     add_rule_safe("Water Path Heracross Woman's House - Woman Gift (Show Heracross)",
-                  lambda state: state.has("Heracross", player))
+                  lambda state: state.has("Heracross", player) and
+                                state.has("Pokedex", player))
 
     # Ruin Valley
     add_rule_safe("Ruin Valley - Plateau Item",
@@ -1898,7 +1918,8 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
             add_rule(location, lambda state: state.has("Fame Checker", player))
         if location.category == LocationCategory.POKEDEX:
             name = location.name.split(" - ")[1].strip()
-            add_rule(location, lambda state, pokemon=name: logic.has_pokemon(state, pokemon))
+            add_rule(location, lambda state, pokemon=name: logic.has_pokemon(state, pokemon)
+                                                           and state.has("Pokedex", player))
         if location.category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             _add_evolution_rule(world, location)
 

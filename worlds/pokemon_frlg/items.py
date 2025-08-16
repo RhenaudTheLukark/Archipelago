@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Dict
 from BaseClasses import Item, ItemClassification
 from .data import data
 from .groups import item_groups
-from .options import ShuffleRunningShoes
+from .options import ShufflePokedex, ShuffleRunningShoes
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -34,19 +34,21 @@ def get_item_classification(item_id: int) -> ItemClassification:
 
 
 def add_starting_items(world: "PokemonFRLGWorld") -> None:
-    start_inventory = world.options.start_inventory.value.copy()
+    if world.options.shuffle_pokedex == ShufflePokedex.option_start_with:
+        world.options.start_inventory.value["Pokedex"] = 1
+        world.multiworld.push_precollected(world.create_item("Pokedex"))
+    if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
+        world.options.start_inventory.value["Running Shoes"] = 1
+        world.multiworld.push_precollected(world.create_item("Running Shoes"))
     if not world.options.shuffle_berry_pouch:
-        start_inventory["Berry Pouch"] = 1
+        world.options.start_inventory.value["Berry Pouch"] = 1
         world.multiworld.push_precollected(world.create_item("Berry Pouch"))
     if not world.options.shuffle_tm_case:
-        start_inventory["TM Case"] = 1
+        world.options.start_inventory.value["TM Case"] = 1
         world.multiworld.push_precollected(world.create_item("TM Case"))
     if not world.options.shuffle_ledge_jump:
-        start_inventory["Ledge Jump"] = 1
+        world.options.start_inventory.value["Ledge Jump"] = 1
         world.multiworld.push_precollected(world.create_item("Ledge Jump"))
-    if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_start_with:
-        start_inventory["Running Shoes"] = 1
-        world.multiworld.push_precollected(world.create_item("Running Shoes"))
 
 def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassification = None) -> str:
     if item_classification is None:

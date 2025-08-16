@@ -282,6 +282,20 @@ class PokemonRequestLocations(Toggle):
     display_name = "Pokemon Request Locations"
 
 
+class ShufflePokedex(Choice):
+    """
+    Shuffle the Pokedex into the item pool, or start with it.
+
+    The Pokedex is hard required for any of the Oak's Aide or Dexsanity locations and is logically required for any of
+    the Pokemon Request Locations and In-Game Trades.
+    """
+    display_name = "Shuffle Pokedex"
+    default = 2
+    option_vanilla = 0
+    option_shuffle = 1
+    option_start_with = 2
+
+
 class ShuffleRunningShoes(Choice):
     """
     Shuffle the running shoes into the item pool, or start with it.
@@ -1364,6 +1378,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     famesanity: Famesanity
     shuffle_fly_unlocks: ShuffleFlyUnlocks
     pokemon_request_locations: PokemonRequestLocations
+    shuffle_pokedex: ShufflePokedex
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
