@@ -81,12 +81,24 @@ class DungeonEntranceShuffle(Choice):
     option_full = 3
 
 
-class RandomizeFlyDestinations(Toggle):
+class RandomizeFlyDestinations(Choice):
     """
     Randomizes where each fly point takes you. The new fly destinations can be almost any outdoor warp point in the
     game with a few exceptions (Cycling Road Gates for example).
+
+    - Off: Fly destinations are not randomized
+    - Area: Fly destinations will be randomized to a location in the same area as its original location (e.g. Vermilion Fly Destination would go to either Vermilion City, Route 6, or Route 11)
+    - Map: Fly destinations will be randomized to a location on the same map as its original location (e.g. One Island Fly Destination would go to either One Island, Two Island, or Three Island)
+    - Region: Fly destinations will be randomized to a location in the same region as its original location (e.g. Sevii fly destinations would go to another location on the Sevii Islands)
+    - Completely Random: Fly destinations are completely random
     """
     display_name = "Randomize Fly Destinations"
+    default = 0
+    option_off = 0
+    option_area = 1
+    option_map = 2
+    option_region = 3
+    option_completely_random = 4
 
 
 class FlyDestinationPlando(OptionDict):

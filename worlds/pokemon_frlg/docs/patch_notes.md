@@ -1,5 +1,11 @@
 # 1.0.0
 ## Updates
++ Updated option `randomize_fly_destinations`
+  + Off: Fly destinations are not randomized
+  + Area: Fly destinations will be randomized to a location in the same area as its original location (e.g. Vermilion Fly Destination would go to either Vermilion City, Route 6, or Route 11)
+  + Map: Fly destinations will be randomized to a location on the same map as its original location (e.g. One Island Fly Destination would go to either One Island, Two Island, or Three Island)
+  + Region: Fly destinations will be randomized to a location in the same region as its original location (e.g. Sevii fly destinations would go to another location on the Sevii Islands)
+  + Completely Random: Fly destinations are completely random
 + New option `shuffle_pokedex`
   + Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
   + Shuffle: The Pokédex is shuffled into the item pool

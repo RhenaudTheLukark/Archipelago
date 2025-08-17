@@ -3,11 +3,11 @@ Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/r
 """
 from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
 from BaseClasses import CollectionState, ItemClassification, Region
-from .data import (data, EncounterType, LocationCategory, fly_plando_maps, kanto_fly_destinations,
-                   sevii_fly_destinations, starting_town_blacklist_map)
+from .data import (data, EncounterType, LocationCategory, fly_destination_areas, fly_destination_maps,
+                   fly_destination_random, fly_destination_regions, fly_plando_maps, starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
-from .options import LevelScaling
+from .options import LevelScaling, RandomizeFlyDestinations
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -531,39 +531,35 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             allowed_starting_towns = [town for town in starting_town_map.keys() if town not in forbidden_starting_towns]
         world.starting_town = world.random.choice(allowed_starting_towns)
 
-    if world.options.randomize_fly_destinations:
-        fly_destinations = kanto_fly_destinations.copy()
-        if not world.options.kanto_only:
-            fly_destinations.update(sevii_fly_destinations)
+    if world.options.randomize_fly_destinations != RandomizeFlyDestinations.option_off:
+        fly_destinations = {}
+        if world.options.randomize_fly_destinations == RandomizeFlyDestinations.option_area:
+            fly_destinations = fly_destination_areas.copy()
+        elif world.options.randomize_fly_destinations == RandomizeFlyDestinations.option_map:
+            fly_destinations = fly_destination_maps.copy()
+        elif world.options.randomize_fly_destinations == RandomizeFlyDestinations.option_region:
+            fly_destinations = fly_destination_regions.copy()
+        elif world.options.randomize_fly_destinations == RandomizeFlyDestinations.option_completely_random:
+            fly_destinations = fly_destination_random.copy()
         maps_already_chosen = set()
-        exit_already_randomized = set()
-        for exit_name, warp_name in world.options.fly_destination_plando.value.items():
-            fly_plando = fly_plando_maps[warp_name]
-            if fly_plando[0] in maps_already_chosen or fly_plando[0] not in fly_destinations.keys():
-                continue
-            exit = world.multiworld.get_entrance(exit_name, world.player)
-            regions[exit.connected_region.name].entrances.remove(exit)
-            exit.connected_region = None
-            maps_already_chosen.add(fly_plando[0])
-            exit_already_randomized.add(exit_name)
-            exit.connected_region = regions[fly_plando[1]]
-            regions[fly_plando[1]].entrances.append(exit)
-            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = fly_plando[2]
         for exit in regions["Sky"].exits:
-            if exit.name in exit_already_randomized:
-                continue
+            use_plando = False
+            fly_data = None
+            allowed_fly_destinations = [fly for fly in fly_destinations[exit.name]
+                                        if fly.map not in maps_already_chosen and fly.region in regions.keys()]
+            if exit.name in world.options.fly_destination_plando.value.keys():
+                fly_plando = fly_plando_maps[world.options.fly_destination_plando.value[exit.name]]
+                if (fly_plando.map not in maps_already_chosen and
+                    fly_plando.region in regions.keys() and
+                    fly_plando in allowed_fly_destinations):
+                    use_plando = True
+                    fly_data = fly_plando
+            if not use_plando:
+                fly_data = world.random.choice(allowed_fly_destinations)
             regions[exit.connected_region.name].entrances.remove(exit)
-            exit.connected_region = None
-            allowed_maps = [k for k in fly_destinations.keys() if k not in maps_already_chosen]
-            map = world.random.choice(allowed_maps)
-            allowed_regions = list(fly_destinations[map].keys())
-            map_region = world.random.choice(allowed_regions)
-            allowed_warps = fly_destinations[map][map_region]
-            map_warp = world.random.choice(allowed_warps)
-            maps_already_chosen.add(map)
-            exit.connected_region = regions[map_region]
-            regions[map_region].entrances.append(exit)
-            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = map_warp
+            exit.connected_region = regions[fly_data.region]
+            regions[fly_data.region].entrances.append(exit)
+            world.fly_destination_data[fly_destination_entrance_map[exit.name]] = fly_data
 
     regions["Title Screen"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
     regions["Title Screen"].connect(regions["Player's PC"], "Use PC")

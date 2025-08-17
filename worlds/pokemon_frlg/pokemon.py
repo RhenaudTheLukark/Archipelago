@@ -647,7 +647,7 @@ def randomize_wild_encounters(world: "PokemonFRLGWorld") -> None:
                             })
 
                         # If we haven't placed enough species for dexsanity yet, blacklist species
-                        # that have already been places until we reach that number
+                        # that have already been placed until we reach that number
                         if len(placed_species) < dexsanity_pokemon_needed:
                             blacklists[4].append(placed_species)
 
