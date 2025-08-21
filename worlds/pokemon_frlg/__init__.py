@@ -678,6 +678,8 @@ class PokemonFRLGWorld(World):
             "itemfinder_required",
             "flash_required",
             "fame_checker_required",
+            "bicycle_requires_ledge_jump",
+            "acrobatic_bicycle",
             "remove_badge_requirement",
             "oaks_aide_route_2",
             "oaks_aide_route_10",

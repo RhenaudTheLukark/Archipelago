@@ -467,6 +467,20 @@ class FameCheckerRequired(DefaultOnToggle):
     display_name = "Fame Checker Required"
 
 
+class BicycleRequiresLedgeJump(DefaultOnToggle):
+    """
+    Sets whether the Bicycle requires you to have the Ledge Jump ability in order to jump ledges.
+    """
+    display_name = "Bicycle Requires Ledge Jump"
+
+
+class AcrobaticBicycle(Toggle):
+    """
+    Sets whether the Bicycle is able to jump up ledges in addition to jumping down ledges. If the Bicycle Requires Ledge
+    Jump setting is on then the Ledge Jump ability is necessary in order to jump up ledges as well.
+    """
+    display_name = "Acrobatic Bicycle"
+
 class EvolutionsRequired(OptionSet):
     """
     Sets which types of locations and/or access rules that evolutions may be logically required for.
@@ -1405,6 +1419,8 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     itemfinder_required: ItemfinderRequired
     flash_required: FlashRequired
     fame_checker_required: FameCheckerRequired
+    bicycle_requires_ledge_jump: BicycleRequiresLedgeJump
+    acrobatic_bicycle: AcrobaticBicycle
     evolutions_required: EvolutionsRequired
     evolution_methods_required: EvolutionMethodsRequired
     viridian_city_roadblock: ViridianCityRoadblock

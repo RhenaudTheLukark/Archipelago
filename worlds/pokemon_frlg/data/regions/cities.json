@@ -156,7 +156,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_VIRIDIAN_CITY/NORTH": ["Viridian City Roadblock (Bottom)", "Viridian City Cuttable Tree (Left)"],
+      "REGION_VIRIDIAN_CITY/NORTH": ["Viridian City Roadblock (Bottom)", "Viridian City Ledge (Bottom)", "Viridian City Cuttable Tree (Left)"],
       "REGION_VIRIDIAN_CITY/WATER": "Viridian City Surfing Spot",
       "REGION_VIRIDIAN_CITY/VISIT": "Visit Viridian City (South)",
       "REGION_ROUTE1/MAIN": "Viridian City Exit (South)",
@@ -164,7 +164,7 @@
     },
     "warps": {
       "MAP_VIRIDIAN_CITY:0/MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F:0": "Viridian Pokemon Center",
-      "MAP_VIRIDIAN_CITY:1/MAP_VIRIDIAN_CITY_HOUSE:0": "Virdian Nickname House",
+      "MAP_VIRIDIAN_CITY:1/MAP_VIRIDIAN_CITY_HOUSE:0": "Viridian Nickname House",
       "MAP_VIRIDIAN_CITY:3/MAP_VIRIDIAN_CITY_SCHOOL:0": "Viridian School",
       "MAP_VIRIDIAN_CITY:4/MAP_VIRIDIAN_CITY_MART:0": "Viridian Poke Mart"
     }
@@ -182,7 +182,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_VIRIDIAN_CITY/SOUTH": ["Viridian City Roadblock (Top)", "Viridian City Ledge", "Viridian City Cuttable Tree (Right)"],
+      "REGION_VIRIDIAN_CITY/SOUTH": ["Viridian City Roadblock (Top)", "Viridian City Ledge (Top)", "Viridian City Cuttable Tree (Right)"],
       "REGION_VIRIDIAN_CITY/VISIT": "Visit Viridian City (North)",
       "REGION_ROUTE2/SOUTHWEST": "Viridian City Exit (North)"
     },
@@ -351,7 +351,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_PEWTER_CITY/NEAR_MUSEUM": "Pewter City Cuttable Tree (Right)",
+      "REGION_PEWTER_CITY/NEAR_MUSEUM": ["Pewter City Ledge (Bottom)", "Pewter City Cuttable Tree (Right)"],
       "REGION_PEWTER_CITY/VISIT": "Visit Pewter City",
       "REGION_ROUTE2/NORTHWEST": "Pewter City Exit (South)",
       "REGION_ROUTE3/MAIN": "Pewter City Exit (East)"
@@ -376,7 +376,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_PEWTER_CITY/MAIN": ["Pewter City Ledge", "Pewter City Cuttable Tree (Left)"],
+      "REGION_PEWTER_CITY/MAIN": ["Pewter City Ledge (Top)", "Pewter City Cuttable Tree (Left)"],
       "REGION_PEWTER_CITY/VISIT": "Visit Pewter City (Near Museum)"
     },
     "warps": {
@@ -573,7 +573,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_CERULEAN_CITY/OUTSKIRTS": "Cerulean City Cuttable Tree (Top)",
+      "REGION_CERULEAN_CITY/OUTSKIRTS": ["Cerulean City Ledge (Bottom)", "Cerulean City Cuttable Tree (Top)"],
       "REGION_CERULEAN_CITY/VISIT": "Visit Cerulean City",
       "REGION_ROUTE4/SOUTHEAST": "Cerulean City Exit (West)",
       "REGION_ROUTE24/MAIN": "Cerulean City Exit (North)"
@@ -623,7 +623,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_CERULEAN_CITY/MAIN": ["Cerulean City Ledge", "Cerulean City Cuttable Tree (Bottom)"],
+      "REGION_CERULEAN_CITY/MAIN": ["Cerulean City Ledge (Top)", "Cerulean City Cuttable Tree (Bottom)"],
       "REGION_CERULEAN_CITY/VISIT": "Visit Cerulean City (Outskirts)",
       "REGION_ROUTE5/MAIN": "Cerulean City Exit (South)",
       "REGION_ROUTE9/MAIN": "Cerulean City Exit (East)"

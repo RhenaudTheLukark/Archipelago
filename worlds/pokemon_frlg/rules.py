@@ -83,6 +83,8 @@ class PokemonFRLGLogic:
     oaks_aides_require_evos: bool
     randomizing_entrances: bool
     guaranteed_hm_access: bool
+    bicycle_requires_ledge_jump: bool
+    acrobatic_bicycle: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
     pokemon_hm_use: Dict[str, List[str]]
@@ -102,6 +104,8 @@ class PokemonFRLGLogic:
         self.oaks_aides_require_evos = False
         self.randomizing_entrances = False
         self.guaranteed_hm_access = False
+        self.bicycle_requires_ledge_jump = True
+        self.acrobatic_bicycle = False
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
         self.evolution_state_item_names_lookup = {}
@@ -187,6 +191,15 @@ class PokemonFRLGLogic:
 
     def can_show_selphy_pokemon(self, state: CollectionState) -> bool:
         return state.has_all(("Rescue Selphy", data.species[self.resort_gorgeous_pokemon].name), self.player)
+
+    def can_jump_down_ledge(self, state: CollectionState) -> bool:
+        return (state.has("Ledge Jump", self.player) or
+                (not self.bicycle_requires_ledge_jump and state.has("Bicycle", self.player)))
+
+    def can_jump_up_ledge(self, state: CollectionState) -> bool:
+        return (self.acrobatic_bicycle and
+                (state.has_all(("Ledge Jump", "Bicycle"), self.player) or
+                 (not self.bicycle_requires_ledge_jump and state.has("Bicycle", self.player))))
 
     def has_island_pass(self, state: CollectionState, group: int) -> bool:
         return state.has(ISLAND_PASSES[group - 1], self.player) or state.has("Progressive Pass", self.player, group)
@@ -312,6 +325,8 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.dexsanity_requires_evos = "Dexsanity" in world.options.evolutions_required.value
     logic.hms_require_evos = "HM Requirement" in world.options.evolutions_required.value
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
+    logic.bicycle_requires_ledge_jump = bool(world.options.bicycle_requires_ledge_jump.value)
+    logic.acrobatic_bicycle = bool(world.options.acrobatic_bicycle.value)
 
     # Until locations have been created, assume all Pokémon species are present in the world.
     dexsanity_state_item_names = {}
@@ -458,10 +473,12 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.viridian_city_roadblock != ViridianCityRoadblock.option_open:
         add_rule_safe("Viridian City Roadblock (Bottom)",
                       lambda state: state.has("Deliver Oak's Parcel", player))
+    add_rule_safe("Viridian City Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
     add_rule_safe("Viridian City Cuttable Tree (Left)",
                   lambda state: logic.can_cut(state))
-    add_rule_safe("Viridian City Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Viridian City Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Viridian City Cuttable Tree (Right)",
                   lambda state: logic.can_cut(state))
     add_rule_safe("Viridian City Surfing Spot",
@@ -521,10 +538,12 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_cut(state))
 
     # Pewter City
+    add_rule_safe("Pewter City Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
     add_rule_safe("Pewter City Cuttable Tree (Right)",
                   lambda state: logic.can_cut(state))
-    add_rule_safe("Pewter City Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Pewter City Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Pewter City Cuttable Tree (Left)",
                   lambda state: logic.can_cut(state))
     if options.pewter_city_roadblock.value == PewterCityRoadblock.option_brock:
@@ -545,15 +564,22 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 3
     add_rule_safe("Route 3 Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state) or
+                                logic.can_jump_up_ledge(state))
 
     # Route 4
-    add_rule_safe("Route 4 Southeast Ledge",
-                  lambda state: state.has("Ledge Jump", player))
-    add_rule_safe("Route 4 Northeast Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Route 4 Southeast Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
+    add_rule_safe("Route 4 Northeast Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Route 4 Southeast Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Route 4 Northeast Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
 
     # Cerulean City
+    add_rule_safe("Cerulean City Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
     add_rule_safe("Cerulean City Cuttable Tree (Top)",
                   lambda state: logic.can_cut(state))
     if "Remove Cerulean Roadblocks" not in options.modify_world_state.value:
@@ -566,6 +592,8 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.gym_keys:
         add_rule_safe("Cerulean Gym",
                       lambda state: state.has("Cerulean Key", player))
+    add_rule_safe("Cerulean City Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Cerulean City Cuttable Tree (Bottom)",
                   lambda state: logic.can_cut(state))
     if "Modify Route 9" in options.modify_world_state.value:
@@ -602,11 +630,11 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 5
     add_rule_safe("Route 5 North Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 5 Center Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 5 South Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 5 Open Path (Top)",
                       lambda state: False)
@@ -712,8 +740,10 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.extra_key_items:
         add_rule_safe("Power Plant (Front)",
                       lambda state: state.has("Machine Part", player))
-    add_rule_safe("Route 10 Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Route 10 Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Route 10 Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
 
     # Lavender Town
     if "Route 12 Boulders" in options.modify_world_state.value:
@@ -844,10 +874,16 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_cut(state))
 
     # Route 14
+    add_rule_safe("Route 14 Ledge",
+                  lambda state: logic.can_jump_up_ledge(state))
     add_rule_safe("Route 14 North Cuttable Tree",
                   lambda state: logic.can_cut(state))
     add_rule_safe("Route 14 South Cuttable Tree",
                   lambda state: logic.can_cut(state))
+
+    # Route 15
+    add_rule_safe("Route 15 Ledge",
+                  lambda state: logic.can_jump_up_ledge(state))
 
     # Route 16
     add_rule_safe("Route 16 Cuttable Tree (Bottom)",
@@ -1121,16 +1157,24 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_surf(state))
 
     # Mt. Ember
-    add_rule_safe("Mt. Ember Exterior South Strength Boulders (Right)",
+    add_rule_safe("Mt. Ember Exterior South Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Mt. Ember Exterior Strength Boulders (Right)",
                   lambda state: logic.can_strength(state))
     add_rule_safe("Mt. Ember Ruby Path",
                   lambda state: state.has("Deliver Meteorite", player))
-    add_rule_safe("Mt. Ember Exterior South Ledge",
-                  lambda state: state.has("Ledge Jump", player))
-    add_rule_safe("Mt. Ember Exterior Center Ledge",
-                  lambda state: state.has("Ledge Jump", player))
-    add_rule_safe("Mt. Ember Ruby Path 1F Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Mt. Ember Exterior South Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
+    add_rule_safe("Mt. Ember Exterior Strength Boulders (Left)",
+                  lambda state: logic.can_strength(state))
+    add_rule_safe("Mt. Ember Exterior Center Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Mt. Ember Exterior Center Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
+    add_rule_safe("Mt. Ember Ruby Path 1F Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Mt. Ember Ruby Path 1F Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Mt. Ember Ruby Path B2F Strength Boulders (Left)",
                   lambda state: logic.can_strength(state))
     add_rule_safe("Mt. Ember Ruby Path B2F Strength Boulders (Right)",
@@ -1179,12 +1223,18 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_surf(state))
     add_rule_safe("Icefall Cave Front (North) Surfing Spot",
                   lambda state: logic.can_surf(state))
-    add_rule_safe("Icefall Cave 1F East Ledge",
-                  lambda state: state.has("Ledge Jump", player))
-    add_rule_safe("Icefall Cave 1F Southeast Ledge",
-                  lambda state: state.has("Ledge Jump", player))
-    add_rule_safe("Icefall Cave 1F West Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Icefall Cave 1F East Ledge (Left)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Icefall Cave 1F Southeast Ledge (Left)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Icefall Cave 1F West Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Icefall Cave 1F East Ledge (Right)",
+                  lambda state: logic.can_jump_down_ledge(state))
+    add_rule_safe("Icefall Cave 1F Southeast Ledge (Right)",
+                  lambda state: logic.can_jump_down_ledge(state))
+    add_rule_safe("Icefall Cave 1F West Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Icefall Cave Back Surfing Spot",
                   lambda state: logic.can_surf(state))
 
@@ -1224,8 +1274,10 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                                 logic.can_cut(state))
 
     # Dotted Hole
-    add_rule_safe("Dotted Hole 1F Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+    add_rule_safe("Dotted Hole 1F Ledge (Bottom)",
+                  lambda state: logic.can_jump_up_ledge(state))
+    add_rule_safe("Dotted Hole 1F Ledge (Top)",
+                  lambda state: logic.can_jump_down_ledge(state))
 
     # Green Path
     add_rule_safe("Green Path Surfing Spot",
@@ -1718,7 +1770,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Deliver Meteorite", player))
     add_rule_safe("Mt. Ember Exterior - Item Near Summit",
                   lambda state: logic.can_strength(state) and
-                                logic.can_rock_smash(state))
+                                (logic.can_rock_smash(state) or
+                                 logic.can_jump_up_ledge(state)))
     add_rule_safe("Mt. Ember Summit - Legendary Pokemon",
                   lambda state: logic.can_strength(state))
     add_rule_safe("Legendary Moltres Scaling",
@@ -1766,7 +1819,7 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Berry Forest
     add_rule_safe("Berry Forest - Item Near North Pond",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Berry Forest - Item Past Southwest Pond",
                   lambda state: logic.can_cut(state))
 

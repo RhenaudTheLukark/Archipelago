@@ -3053,7 +3053,7 @@
       "EVENT_LEARN_ROCKET_WAREHOUSE_PASSWORD"
     ],
     "exits": {
-      "REGION_MT_EMBER_EXTERIOR/CENTER": "Mt. Ember Exterior South Strength Boulders (Right)"
+      "REGION_MT_EMBER_EXTERIOR/CENTER": ["Mt. Ember Exterior South Ledge (Bottom)", "Mt. Ember Exterior Strength Boulders (Right)"]
     },
     "warps": {
       "MAP_MT_EMBER_EXTERIOR:0,1/MAP_ONE_ISLAND_KINDLE_ROAD:0,1": "Mt. Ember Exterior Exit",
@@ -3077,7 +3077,8 @@
     ],
     "events": [],
     "exits": {
-      "REGION_MT_EMBER_EXTERIOR/SOUTH": "Mt. Ember Exterior South Ledge"
+      "REGION_MT_EMBER_EXTERIOR/SOUTH": ["Mt. Ember Exterior South Ledge (Top)", "Mt. Ember Exterior Strength Boulders (Left)"],
+      "REGION_MT_EMBER_EXTERIOR/NORTH": "Mt. Ember Exterior Center Ledge (Bottom)"
     },
     "warps": {
       "MAP_MT_EMBER_EXTERIOR:2/MAP_MT_EMBER_SUMMIT_PATH_1F:0": "Mt. Ember Summit Path (Bottom)"
@@ -3098,7 +3099,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_MT_EMBER_EXTERIOR/CENTER": "Mt. Ember Exterior Center Ledge"
+      "REGION_MT_EMBER_EXTERIOR/CENTER": "Mt. Ember Exterior Center Ledge (Top)"
     },
     "warps": {
       "MAP_MT_EMBER_EXTERIOR:3/MAP_MT_EMBER_SUMMIT_PATH_3F:1": "Mt. Ember Summit Path (Top)",
@@ -3180,7 +3181,9 @@
     "kanto": false,
     "locations": [],
     "events": [],
-    "exits": {},
+    "exits": {
+      "REGION_MT_EMBER_RUBY_PATH_1F/NORTHEAST": "Mt. Ember Ruby Path 1F Ledge (Bottom)"
+    },
     "warps": {
       "MAP_MT_EMBER_RUBY_PATH_1F:0/MAP_MT_EMBER_EXTERIOR:5": "Mt. Ember Ruby Path 1F Exit",
       "MAP_MT_EMBER_RUBY_PATH_1F:1/MAP_MT_EMBER_RUBY_PATH_B1F:0": "Mt. Ember Ruby Path 1F Northwest Ladder"
@@ -3197,7 +3200,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_MT_EMBER_RUBY_PATH_1F/MAIN": "Mt. Ember Ruby Path 1F Ledge"
+      "REGION_MT_EMBER_RUBY_PATH_1F/MAIN": "Mt. Ember Ruby Path 1F Ledge (Top)"
     },
     "warps": {
       "MAP_MT_EMBER_RUBY_PATH_1F:2/MAP_MT_EMBER_RUBY_PATH_B1F_STAIRS:1": "Mt. Ember Ruby Path 1F Northeast Ladder"
@@ -3536,6 +3539,9 @@
     ],
     "events": [],
     "exits": {
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/EAST": "Icefall Cave 1F East Ledge (Left)",
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/SOUTHEAST": "Icefall Cave 1F Southeast Ledge (Left)",
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/NORTHWEST": "Icefall Cave 1F West Ledge (Bottom)",
       "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/WEST": "Icefall Cave 1F Drop (Bottom)",
       "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/NORTH": "Icefall Cave 1F Drop (Top)"
     },
@@ -3554,7 +3560,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F East Ledge"
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F East Ledge (Right)"
     },
     "warps": {
       "MAP_FOUR_ISLAND_ICEFALL_CAVE_1F:2/MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F:0": "Icefall Cave 1F East Ladder"
@@ -3591,7 +3597,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F Southeast Ledge"
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F Southeast Ledge (Right)"
     },
     "warps": {
       "MAP_FOUR_ISLAND_ICEFALL_CAVE_1F:4/MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F:2": "Icefall Cave 1F Southeast Ladder"
@@ -3608,7 +3614,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F West Ledge"
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_1F/MAIN": "Icefall Cave 1F West Ledge (Top)"
     },
     "warps": {
       "MAP_FOUR_ISLAND_ICEFALL_CAVE_1F:1/MAP_FOUR_ISLAND_ICEFALL_CAVE_ENTRANCE:2": "Icefall Cave 1F Northwest Ladder",
@@ -4015,7 +4021,9 @@
     "kanto": false,
     "locations": [],
     "events": [],
-    "exits": {},
+    "exits": {
+      "REGION_SIX_ISLAND_DOTTED_HOLE_1F/EAST": "Dotted Hole 1F Ledge (Bottom)"
+    },
     "warps": {
       "MAP_SIX_ISLAND_DOTTED_HOLE_1F:0/MAP_SIX_ISLAND_RUIN_VALLEY:0": "Dotted Hole 1F Exit",
       "MAP_SIX_ISLAND_DOTTED_HOLE_1F:1/MAP_SIX_ISLAND_DOTTED_HOLE_B1F:0": "Dotted Hole 1F Drop",
@@ -4035,7 +4043,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_SIX_ISLAND_DOTTED_HOLE_1F/MAIN": "Dotted Hole 1F Ledge"
+      "REGION_SIX_ISLAND_DOTTED_HOLE_1F/MAIN": "Dotted Hole 1F Ledge (Top)"
     },
     "warps": {
       "MAP_SIX_ISLAND_DOTTED_HOLE_1F:2/MAP_SIX_ISLAND_DOTTED_HOLE_SAPPHIRE_ROOM:0": "Dotted Hole 1F Ladder"

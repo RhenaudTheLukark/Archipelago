@@ -253,7 +253,8 @@
     ],
     "events": [],
     "exits": {
-      "REGION_ROUTE4/SOUTHEAST": "Route 4 Southeast Ledge"
+      "REGION_ROUTE4/SOUTHEAST": "Route 4 Southeast Ledge (Top)",
+      "REGION_ROUTE4/NORTHEAST": "Route 4 Northeast Ledge (Bottom)"
     },
     "warps": {
       "MAP_ROUTE4:1/MAP_MT_MOON_B1F:7": "Mt. Moon (East)"
@@ -270,6 +271,7 @@
     "locations": [],
     "events": [],
     "exits": {
+      "REGION_ROUTE4/EAST": "Route 4 Southeast Ledge (Bottom)",
       "REGION_CERULEAN_CITY/MAIN": "Route 4 Exit (East)"
     },
     "warps": {}
@@ -300,7 +302,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_ROUTE4/EAST": "Route 4 Northeast Ledge"
+      "REGION_ROUTE4/EAST": "Route 4 Northeast Ledge (Top)"
     },
     "warps": {}
   },
@@ -894,7 +896,8 @@
     ],
     "events": [],
     "exits": {
-      "REGION_ROUTE10/NORTH_WATER": "Route 10 (Near Power Plant) Surfing Spot"
+      "REGION_ROUTE10/NORTH_WATER": "Route 10 (Near Power Plant) Surfing Spot",
+      "REGION_ROUTE10/NEAR_POWER_PLANT_BACK": "Route 10 Ledge (Bottom)"
     },
     "warps": {
       "MAP_ROUTE10:2/MAP_POWER_PLANT:0": "Power Plant (Front)"
@@ -911,7 +914,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_ROUTE10/NEAR_POWER_PLANT": "Route 10 Ledge"
+      "REGION_ROUTE10/NEAR_POWER_PLANT": "Route 10 Ledge (Top)"
     },
     "warps": {
       "MAP_ROUTE10:4/MAP_POWER_PLANT:1": "Power Plant (Back)"
@@ -1385,7 +1388,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_ROUTE14/BEHIND_TREE": "Route 14 North Cuttable Tree",
+      "REGION_ROUTE14/BEHIND_TREE": ["Route 14 Ledge", "Route 14 North Cuttable Tree"],
       "REGION_ROUTE13/MAIN": "Route 14 Exit (East)",
       "REGION_ROUTE15/NORTH": "Route 14 South Cuttable Tree",
       "REGION_ROUTE15/SOUTH": "Route 14 Exit (West)"
@@ -1427,6 +1430,7 @@
     ],
     "events": [],
     "exits": {
+      "REGION_ROUTE15/NORTH": "Route 15 Ledge",
       "REGION_ROUTE14/MAIN": "Route 15 Exit (East)"
     },
     "warps": {

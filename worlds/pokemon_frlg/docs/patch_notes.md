@@ -17,12 +17,21 @@
 + New option `fishing_rods`
   + Vanilla: The fishing rods are all separate items in the pool and can be found in any order
   + There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
++ New option `bicycle_requires_ledge_jump`
+  + Sets whether the ability to jump down ledges is required for the Bicycle to jump down ledges
++ New option `acrobatic_bicycle`
+  + Sets whether the bicycle can be used to jump up ledges. If `bicycle_requires_ledge_jump` is on then you will need to be able to jump down ledges in order to jump up them as well
 + New option `base_stats`
   + Vanilla: Base stats are unchanged
   + Shuffle: Base stats are shuffled amongst each other
   + Keep BST: Random base stats, but base stat total is preserved
   + Completely Random: Random base stats and base stat total
++ The Title Screen locations have been removed. All items that you can start with (e.g. Berry Pouch, TM Case, etc.) will be added to your `start_inventory`
 + The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
++ Restored the triggers for the first Rival battle
+
+## Bug Fixes
+- Fixed an issue with displaying move data in battle during double battles
 
 # 0.9.6
 # Bug Fixes
