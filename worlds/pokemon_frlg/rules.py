@@ -473,6 +473,8 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.viridian_city_roadblock != ViridianCityRoadblock.option_open:
         add_rule_safe("Viridian City Roadblock (Bottom)",
                       lambda state: state.has("Deliver Oak's Parcel", player))
+        add_rule_safe("Viridian City Roadblock (Top)",
+                      lambda state: state.has("Deliver Oak's Parcel", player))
     add_rule_safe("Viridian City Ledge (Bottom)",
                   lambda state: logic.can_jump_up_ledge(state))
     add_rule_safe("Viridian City Cuttable Tree (Left)",
@@ -547,16 +549,24 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Pewter City Cuttable Tree (Left)",
                   lambda state: logic.can_cut(state))
     if options.pewter_city_roadblock.value == PewterCityRoadblock.option_brock:
-        add_rule_safe("Pewter City Exit (East)",
+        add_rule_safe("Pewter City Roadblock (Left)",
+                      lambda state: state.has("Defeat Brock", player))
+        add_rule_safe("Pewter City Roadblock (Right)",
                       lambda state: state.has("Defeat Brock", player))
     elif options.pewter_city_roadblock.value == PewterCityRoadblock.option_any_gym:
-        add_rule_safe("Pewter City Exit (East)",
+        add_rule_safe("Pewter City Roadblock (Left)",
+                      lambda state: logic.has_n_gyms(state, 1))
+        add_rule_safe("Pewter City Roadblock (Right)",
                       lambda state: logic.has_n_gyms(state, 1))
     elif options.pewter_city_roadblock.value == PewterCityRoadblock.option_boulder_badge:
-        add_rule_safe("Pewter City Exit (East)",
+        add_rule_safe("Pewter City Roadblock (Left)",
+                      lambda state: state.has("Boulder Badge", player))
+        add_rule_safe("Pewter City Roadblock (Right)",
                       lambda state: state.has("Boulder Badge", player))
     elif options.pewter_city_roadblock.value == PewterCityRoadblock.option_any_badge:
-        add_rule_safe("Pewter City Exit (East)",
+        add_rule_safe("Pewter City Roadblock (Left)",
+                      lambda state: logic.has_n_badges(state, 1))
+        add_rule_safe("Pewter City Roadblock (Right)",
                       lambda state: logic.has_n_badges(state, 1))
     if options.gym_keys:
         add_rule_safe("Pewter Gym",
@@ -824,13 +834,25 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                       lambda state: state.has("Silph Scope", player))
         add_rule_safe("Pokemon Tower 1F Open Path (Right)",
                       lambda state: False)
+        add_rule_safe("Pokemon Tower 1F Reveal Ghost (Right)",
+                      lambda state: state.has("Silph Scope", player))
+        add_rule_safe("Pokemon Tower 6F Reveal Ghost (Top)",
+                      lambda state: False)
+        add_rule_safe("Pokemon Tower 6F Reveal Ghost (Bottom)",
+                      lambda state: False)
     else:
         add_rule_safe("Pokemon Tower 1F Reveal Ghost (Left)",
                       lambda state: False)
         add_rule_safe("Pokemon Tower 1F Reveal Ghost (Right)",
                       lambda state: False)
-    add_rule_safe("Pokemon Tower 6F Reveal Ghost (Top)",
-                  lambda state: state.has("Silph Scope", player))
+        add_rule_safe("Pokemon Tower 6F Open Path (Top)",
+                      lambda state: False)
+        add_rule_safe("Pokemon Tower 6F Reveal Ghost (Top)",
+                      lambda state: state.has("Silph Scope", player))
+        add_rule_safe("Pokemon Tower 6F Open Path (Bottom)",
+                      lambda state: False)
+        add_rule_safe("Pokemon Tower 6F Reveal Ghost (Bottom)",
+                      lambda state: state.has("Silph Scope", player))
     add_rule_safe("Follow Mr. Fuji",
                   lambda state: state.has("Rescue Mr. Fuji", player))
 
@@ -1104,8 +1126,12 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.route23_guard_requirement.value == Route23GuardRequirement.option_badges:
         add_rule_safe("Route 23 Guard Checkpoint (Bottom)",
                       lambda state: logic.has_n_badges(state, options.route23_guard_count.value))
+        add_rule_safe("Route 23 Guard Checkpoint (Top)",
+                      lambda state: logic.has_n_badges(state, options.route23_guard_count.value))
     elif options.route23_guard_requirement.value == Route23GuardRequirement.option_gyms:
         add_rule_safe("Route 23 Guard Checkpoint (Bottom)",
+                      lambda state: logic.has_n_gyms(state, options.route23_guard_count.value))
+        add_rule_safe("Route 23 Guard Checkpoint (Top)",
                       lambda state: logic.has_n_gyms(state, options.route23_guard_count.value))
 
     # Victory Road
@@ -1428,8 +1454,7 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
 
     # Pewter City
     add_rule_safe("Pewter City - Gift from Mom",
-                  lambda state: state.has("Defeat Brock", player) and
-                                state.can_reach_region("Route 3", player))
+                  lambda state: state.has("Defeat Brock", player))
 
     # Cerulean City
     add_rule_safe("Cerulean Trade House - Trade Pokemon",

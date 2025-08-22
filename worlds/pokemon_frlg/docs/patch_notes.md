@@ -29,6 +29,7 @@
 + The Title Screen locations have been removed. All items that you can start with (e.g. Berry Pouch, TM Case, etc.) will be added to your `start_inventory`
 + The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
 + Restored the triggers for the first Rival battle
++ NPCs and events that block the player will now force the player back the direction they came from (e.g. Pewter City Roadblock, Route 23 Guard, etc.)
 
 ## Bug Fixes
 - Fixed an issue with displaying move data in battle during double battles

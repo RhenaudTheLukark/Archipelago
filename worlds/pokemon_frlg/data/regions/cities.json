@@ -346,15 +346,14 @@
     "locations": [
       "FAME_CHECKER_BROCK_1",
       "FAME_CHECKER_BROCK_3",
-      "HIDDEN_ITEM_PEWTER_CITY_POKE_BALL",
-      "NPC_GIFT_GOT_RUNNING_SHOES"
+      "HIDDEN_ITEM_PEWTER_CITY_POKE_BALL"
     ],
     "events": [],
     "exits": {
+      "REGION_PEWTER_CITY/NEAR_ROADBLOCK": "Pewter City Roadblock (Left)",
       "REGION_PEWTER_CITY/NEAR_MUSEUM": ["Pewter City Ledge (Bottom)", "Pewter City Cuttable Tree (Right)"],
       "REGION_PEWTER_CITY/VISIT": "Visit Pewter City",
-      "REGION_ROUTE2/NORTHWEST": "Pewter City Exit (South)",
-      "REGION_ROUTE3/MAIN": "Pewter City Exit (East)"
+      "REGION_ROUTE2/NORTHWEST": "Pewter City Exit (South)"
     },
     "warps": {
       "MAP_PEWTER_CITY:0/MAP_PEWTER_CITY_MUSEUM_1F:0": "Pewter Museum (West)",
@@ -364,6 +363,24 @@
       "MAP_PEWTER_CITY:5/MAP_PEWTER_CITY_POKEMON_CENTER_1F:0": "Pewter Pokemon Center",
       "MAP_PEWTER_CITY:6/MAP_PEWTER_CITY_HOUSE2:0": "Pewter Info House"
     }
+  },
+  "REGION_PEWTER_CITY/NEAR_ROADBLOCK": {
+    "parent_map": "MAP_PEWTER_CITY",
+    "name": "Pewter City (Near Roadblock)",
+    "encounter_region": null,
+    "has_land": false,
+    "has_water": false,
+    "has_fishing": false,
+    "kanto": true,
+    "locations": [
+      "NPC_GIFT_GOT_RUNNING_SHOES"
+    ],
+    "events": [],
+    "exits": {
+      "REGION_PEWTER_CITY/MAIN": "Pewter City Roadblock (Right)",
+      "REGION_ROUTE3/MAIN": "Pewter City Exit (East)"
+    },
+    "warps": {}
   },
   "REGION_PEWTER_CITY/NEAR_MUSEUM": {
     "parent_map": "MAP_PEWTER_CITY",

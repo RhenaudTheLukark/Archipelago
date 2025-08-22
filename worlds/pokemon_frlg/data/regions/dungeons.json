@@ -1050,7 +1050,7 @@
     ],
     "events": [],
     "exits": {
-      "REGION_POKEMON_TOWER_6F/NEAR_STAIRS": "Pokemon Tower 6F Reveal Ghost (Top)"
+      "REGION_POKEMON_TOWER_6F/NEAR_STAIRS": ["Pokemon Tower 6F Open Path (Top)", "Pokemon Tower 6F Reveal Ghost (Top)"]
     },
     "warps": {
       "MAP_POKEMON_TOWER_6F:1/MAP_POKEMON_TOWER_5F:1": "Pokemon Tower 6F East Stairs"
@@ -1067,7 +1067,7 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_POKEMON_TOWER_6F/MAIN": "Pokemon Tower 6F Reveal Ghost (Bottom)"
+      "REGION_POKEMON_TOWER_6F/MAIN": ["Pokemon Tower 6F Open Path (Bottom)", "Pokemon Tower 6F Reveal Ghost (Bottom)"]
     },
     "warps": {
       "MAP_POKEMON_TOWER_6F:0/MAP_POKEMON_TOWER_7F:0": "Pokemon Tower 6F South Stairs"
