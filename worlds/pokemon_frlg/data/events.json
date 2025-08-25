@@ -60,6 +60,11 @@
     "item": "Deliver Oak's Parcel",
     "category": "EVENT"
   },
+  "EVENT_MIGUEL_TAKES_FOSSIL": {
+    "name": "Mt. Moon B2F - Pickup Fossil",
+    "item": "Miguel Takes Fossil",
+    "category": "EVENT"
+  },
   "EVENT_SAVE_BILL": {
     "name": "Route 25 Sea Cottage - Cell Separation System",
     "item": "Help Bill",

@@ -185,11 +185,12 @@
       "TRAINER_TEAM_ROCKET_GRUNT_REWARD",
       "HIDDEN_ITEM_MT_MOON_B2F_MOON_STONE",
       "TRAINER_SUPER_NERD_MIGUEL_REWARD",
-      "NPC_GIFT_GOT_DOME_FOSSIL",
-      "NPC_GIFT_GOT_HELIX_FOSSIL",
+      "NPC_GIFT_GOT_FOSSIL_FROM_MT_MOON",
       "ITEM_MT_MOON_B2F_ANTIDOTE"
     ],
-    "events": [],
+    "events": [
+      "EVENT_MIGUEL_TAKES_FOSSIL"
+    ],
     "exits": {},
     "warps": {
       "MAP_MT_MOON_B2F:0/MAP_MT_MOON_B1F:3": "Mt. Moon B2F Center Ladder",

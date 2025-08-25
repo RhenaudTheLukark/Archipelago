@@ -686,6 +686,7 @@ class PokemonFRLGWorld(World):
             "oaks_aide_route_11",
             "oaks_aide_route_16",
             "oaks_aide_route_15",
+            "fossil_count",
             "viridian_city_roadblock",
             "pewter_city_roadblock",
             "modify_world_state",

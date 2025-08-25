@@ -115,16 +115,22 @@
     "category": "NPC_GIFT",
     "include": []
   },
-  "NPC_GIFT_GOT_DOME_FOSSIL": {
-    "name": "Mt. Moon B2F - Dome Fossil",
-    "tags": ["Overworld Items", "Kanto", "Mt. Moon"],
-    "category": "OVERWORLD_ITEM",
-    "include": []
-  },
   "NPC_GIFT_GOT_FAME_CHECKER": {
     "name": "Cerulean City - Rival Gift",
     "tags": ["NPC Gifts", "Kanto", "Cerulean City"],
     "category": "NPC_GIFT",
+    "include": []
+  },
+  "NPC_GIFT_GOT_FOSSIL_FROM_CINNABAR": {
+    "name": "Pokemon Lab Experiment Room - Fossil",
+    "tags": ["Overworld Items", "Kanto", "Cinnabar Island"],
+    "category": "OVERWORLD_ITEM",
+    "include": []
+  },
+  "NPC_GIFT_GOT_FOSSIL_FROM_MT_MOON": {
+    "name": "Mt. Moon B2F - Fossil",
+    "tags": ["Overworld Items", "Kanto", "Mt. Moon"],
+    "category": "OVERWORLD_ITEM",
     "include": []
   },
   "NPC_GIFT_GOT_GOOD_ROD": {
@@ -136,12 +142,6 @@
   "ITEM_SAFARI_ZONE_WEST_GOLD_TEETH": {
     "name": "Safari Zone West - Northeast Item",
     "tags": ["Overworld Items", "Kanto", "Safari Zone"],
-    "category": "OVERWORLD_ITEM",
-    "include": []
-  },
-  "NPC_GIFT_GOT_HELIX_FOSSIL": {
-    "name": "Mt. Moon B2F - Helix Fossil",
-    "tags": ["Overworld Items", "Kanto", "Mt. Moon"],
     "category": "OVERWORLD_ITEM",
     "include": []
   },

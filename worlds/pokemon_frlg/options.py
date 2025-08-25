@@ -642,6 +642,16 @@ class OaksAideRoute15(Range):
     range_end = 50
 
 
+class PokemonLabFossilCount(Range):
+    """
+    Sets the number of fossils you need to revive at the Pokemon Lab in order to obtain the second fossil.
+    """
+    display_name = "Pokemon Lab Fossil Count"
+    default = 3
+    range_start = 0
+    range_end = 3
+
+
 class ViridianGymRequirement(Choice):
     """
     Sets the requirement for opening the Viridian Gym.
@@ -1434,6 +1444,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     oaks_aide_route_11: OaksAideRoute11
     oaks_aide_route_16: OaksAideRoute16
     oaks_aide_route_15: OaksAideRoute15
+    fossil_count: PokemonLabFossilCount
 
     viridian_gym_requirement: ViridianGymRequirement
     viridian_gym_count: ViridianGymCount

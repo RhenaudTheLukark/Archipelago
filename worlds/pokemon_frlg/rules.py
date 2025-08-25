@@ -221,6 +221,17 @@ class PokemonFRLGLogic:
     def has_super_rod(self, state: CollectionState) -> bool:
         return state.has("Super Rod", self.player) or state.has("Progressive Rod", self.player, 3)
 
+    def can_take_fossil(self, state: CollectionState, n: int) -> bool:
+        if state.has("Miguel Takes Fossil", self.player):
+            if n <= 0:
+                return True
+            for item in ("Dome Fossil", "Helix Fossil", "Old Amber"):
+                if state.has(item, self.player):
+                    n -= 1
+                    if not n:
+                        return True
+        return False
+
     def can_stop_seafoam_b3f_current(self, state) -> bool:
         return self.can_strength(state) and state.can_reach_region("Seafoam Islands 1F", self.player)
 
@@ -1655,6 +1666,8 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Pokemon Lab Lounge - Trade Pokemon 2",
                   lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Lounge - Trade Pokemon 2") and
                                 state.has("Pokedex", player))
+    add_rule_safe("Pokemon Lab Experiment Room - Fossil",
+                  lambda state: logic.can_take_fossil(state, world.options.fossil_count.value))
     add_rule_safe("Pokemon Lab Experiment Room - Trade Pokemon",
                   lambda state: logic.has_trade_pokemon(state, "Pokemon Lab Experiment Room - Trade Pokemon") and
                                 state.has("Pokedex", player))

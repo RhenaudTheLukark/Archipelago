@@ -1,5 +1,8 @@
 # 1.0.0
 ## Updates
++ Reworked the Fossil checks
+  + You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
+  + The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
 + Updated option `randomize_fly_destinations`
   + Off: Fly destinations are not randomized
   + Area: Fly destinations will be randomized to a location in the same area as its original location (e.g. Vermilion Fly Destination would go to either Vermilion City, Route 6, or Route 11)
@@ -21,6 +24,8 @@
   + Sets whether the ability to jump down ledges is required for the Bicycle to jump down ledges
 + New option `acrobatic_bicycle`
   + Sets whether the bicycle can be used to jump up ledges. If `bicycle_requires_ledge_jump` is on then you will need to be able to jump down ledges in order to jump up them as well
++ New option `fossil_count`
+  + Sets the number of fossils you need to revive in order to get the fossil check in the Pokémon Lab
 + New option `base_stats`
   + Vanilla: Base stats are unchanged
   + Shuffle: Base stats are shuffled amongst each other

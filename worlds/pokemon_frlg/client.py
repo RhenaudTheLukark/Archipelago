@@ -31,6 +31,7 @@ TRACKER_EVENT_FLAGS = [
     "FLAG_DEFEATED_LEADER_GIOVANNI",
     "FLAG_DELIVERED_OAKS_PARCEL",
     "FLAG_DEFEATED_ROUTE22_EARLY_RIVAL",
+    "FLAG_GOT_FOSSIL_FROM_MT_MOON",  # Miguel takes Fossil from Mt. Moon
     "FLAG_GOT_SS_TICKET",  # Saved Bill in the Route 25 Sea Cottage
     "FLAG_RESCUED_MR_FUJI",
     "FLAG_HIDE_SILPH_GIOVANNI",  # Liberated Silph Co.
@@ -307,7 +308,7 @@ class PokemonFRLGClient(BizHawkClient):
                 return False
 
             options_address = data.rom_addresses["gArchipelagoOptions"][self.game_version]
-            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x4F, 1, "ROM")]))[0]
+            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x50, 1, "ROM")]))[0]
             remote_items = int.from_bytes(remote_items_bytes, "little")
         except UnicodeDecodeError:
             return False

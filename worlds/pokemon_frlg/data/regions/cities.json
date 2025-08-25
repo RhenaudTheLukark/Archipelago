@@ -2681,7 +2681,9 @@
     "has_water": false,
     "has_fishing": false,
     "kanto": true,
-    "locations": [],
+    "locations": [
+      "NPC_GIFT_GOT_FOSSIL_FROM_CINNABAR"
+    ],
     "events": [
       "GIFT_POKEMON_OMANYTE",
       "GIFT_POKEMON_KABUTO",
