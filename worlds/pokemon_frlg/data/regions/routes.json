@@ -1959,6 +1959,22 @@
     "parent_map": "MAP_ROUTE21_NORTH",
     "name": "Route 21",
     "encounter_region": "Route 21",
+    "has_land": false,
+    "has_water": false,
+    "has_fishing": true,
+    "kanto": true,
+    "locations": [],
+    "events": [],
+    "exits": {
+      "REGION_ROUTE21/WATER": "Route 21 Surfing Spot",
+      "REGION_CINNABAR_ISLAND/MAIN": "Route 21 Exit (South)"
+    },
+    "warps": {}
+  },
+  "REGION_ROUTE21/WATER": {
+    "parent_map": "MAP_ROUTE21_NORTH",
+    "name": "Route 21 (Water)",
+    "encounter_region": "Route 21",
     "has_land": true,
     "has_water": true,
     "has_fishing": true,
@@ -1977,8 +1993,8 @@
     ],
     "events": [],
     "exits": {
-      "REGION_PALLET_TOWN/WATER": "Route 21 Exit (North)",
-      "REGION_CINNABAR_ISLAND/WATER": "Route 21 Exit (South)"
+      "REGION_ROUTE21/MAIN": "Route 21 Landing Spot",
+      "REGION_PALLET_TOWN/WATER": "Route 21 Exit (North)"
     },
     "warps": {}
   },

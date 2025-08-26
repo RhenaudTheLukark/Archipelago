@@ -2562,7 +2562,8 @@
     "events": [],
     "exits": {
       "REGION_CINNABAR_ISLAND/WATER": "Cinnabar Island Surfing Spot",
-      "REGION_CINNABAR_ISLAND/VISIT": "Visit Cinnabar Island"
+      "REGION_CINNABAR_ISLAND/VISIT": "Visit Cinnabar Island",
+      "REGION_ROUTE21/MAIN": "Cinnabar Island Exit (North)"
     },
     "warps": {
       "MAP_CINNABAR_ISLAND:0/MAP_POKEMON_MANSION_1F:0": "Pokemon Mansion",
@@ -2584,8 +2585,7 @@
     "events": [],
     "exits": {
       "REGION_CINNABAR_ISLAND/MAIN": "Cinnabar Island Landing Spot",
-      "REGION_ROUTE20/WEST": "Cinnabar Island Exit (East)",
-      "REGION_ROUTE21/MAIN": "Cinnabar Island Exit (North)"
+      "REGION_ROUTE20/WEST": "Cinnabar Island Exit (East)"
     },
     "warps": {}
   },

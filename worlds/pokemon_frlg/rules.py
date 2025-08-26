@@ -1105,6 +1105,10 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Pokemon Mansion 1F Exit (East)",
                   lambda state: not logic.randomizing_entrances)
 
+    # Route 21
+    add_rule_safe("Route 21 Surfing Spot",
+                  lambda state: logic.can_surf(state))
+
     # Route 23
     add_rule_safe("Route 23 (South) Surfing Spot",
                   lambda state: logic.can_surf(state))
