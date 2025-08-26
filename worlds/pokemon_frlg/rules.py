@@ -471,10 +471,12 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                       lambda state: logic.has_split_island_pass(state, 7))
     add_rule_safe("Depart Seagallop (Navel Rock)",
                   lambda state: state.has("Mystic Ticket", player) and
-                                state.can_reach_region("Vermilion City", player))
+                                (state.can_reach_region("Vermilion City", player) or
+                                 state.can_reach_region("Vermilion City (Near Harbor)", player)))
     add_rule_safe("Depart Seagallop (Birth Island)",
                   lambda state: state.has("Aurora Ticket", player) and
-                                state.can_reach_region("Vermilion City", player))
+                                (state.can_reach_region("Vermilion City", player) or
+                                 state.can_reach_region("Vermilion City (Near Harbor)", player)))
 
     # Pallet Town
     add_rule_safe("Pallet Town Surfing Spot",
@@ -711,6 +713,8 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if options.gym_keys:
         add_rule_safe("Vermilion Gym",
                       lambda state: state.has("Vermilion Key", player))
+    add_rule_safe("Vermilion City Checkpoint (Bottom)",
+                  lambda state: state.has("S.S. Ticket", player))
 
     # S.S. Anne
     add_rule_safe("S.S. Anne Exterior Surfing Spot",

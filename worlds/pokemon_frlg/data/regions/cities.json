@@ -945,7 +945,8 @@
     "locations": [],
     "events": [],
     "exits": {
-      "REGION_VERMILION_CITY/MAIN": "Vermilion City Checkpoint (Bottom)"
+      "REGION_VERMILION_CITY/MAIN": "Vermilion City Checkpoint (Bottom)",
+      "REGION_SEAGALLOP": "Board Seagallop (Vermilion Harbor)"
     },
     "warps": {
       "MAP_VERMILION_CITY:0/MAP_SSANNE_EXTERIOR:0": "Vermilion Harbor"
