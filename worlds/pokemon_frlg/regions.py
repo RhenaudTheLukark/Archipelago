@@ -560,6 +560,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             exit.connected_region = regions[fly_data.region]
             regions[fly_data.region].entrances.append(exit)
             world.fly_destination_data[fly_destination_entrance_map[exit.name]] = fly_data
+            maps_already_chosen.add(fly_data.map)
 
     regions["Title Screen"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
     regions["Title Screen"].connect(regions["Player's PC"], "Use PC")
