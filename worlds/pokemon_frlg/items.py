@@ -56,3 +56,9 @@ def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassifi
     items = [item for item in data.items.values()
              if item.classification == item_classification and item.name not in item_groups["Unique Items"]]
     return world.random.choice(items).name
+
+def update_renewable_to_progression(item: PokemonFRLGItem) -> None:
+    renewable_progession_items = ("King's Rock", "Metal Coat", "Dragon Scale", "Up-Grade", "Deep Sea Scale",
+                                  "Deep Sea Tooth", "Heart Scale")
+    if item.name in renewable_progession_items:
+        item.classification = ItemClassification.progression

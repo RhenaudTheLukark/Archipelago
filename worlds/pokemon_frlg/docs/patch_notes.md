@@ -9,6 +9,20 @@
   + Map: Fly destinations will be randomized to a location on the same map as its original location (e.g. One Island Fly Destination would go to either One Island, Two Island, or Three Island)
   + Region: Fly destinations will be randomized to a location in the same region as its original location (e.g. Sevii fly destinations would go to another location on the Sevii Islands)
   + Completely Random: Fly destinations are completely random
++ Updated option `shopsanity`
+  + Local non-progression shop items can now be purchased repeatedly 
++ Reworked option `shop_prices`
+  + Changed so that item's prices are determined by their base price
+    + Vanilla: Items cost their base price
+    + Cheap: Items cost 50% of their base price
+    + Affordable: Items cost between 50% - 100% of their base price
+    + Standard: Items cost 50% - 150% of their base price
+    + Expensive: Items cost 100% - 150% of their base price
+  + Changes shop prices even if `shopsanity` isn't on
++ New option `consistent_shop_prices`
+  + Sets whether all instances of an item will cost the same price in every shop (e.g. if a Potion's price in a shop is
+    200 then all Potions in shops will cost 200)
++ Removed options `minimum_shop_price` and `maximum_shop_price`
 + New option `shuffle_pokedex`
   + Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
   + Shuffle: The Pokédex is shuffled into the item pool
@@ -35,9 +49,13 @@
 + The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
 + Restored the triggers for the first Rival battle
 + NPCs and events that block the player will now force the player back the direction they came from (e.g. Pewter City Roadblock, Route 23 Guard, etc.)
++ Increased Trainer money rewards so that they scale based on party size and Pokémon's BST
++ Updated the Two Island Market Stall so that you can view all the items in the shop immediately
++ The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
 
 ## Bug Fixes
 - Fixed an issue with displaying move data in battle during double battles
+- Fixed an issue where Route 21 fishing battles were not in logic unless you could surf
 
 # 0.9.6
 # Bug Fixes

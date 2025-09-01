@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, LocationProgressType, Region, ItemClassification
 from .data import data, LocationCategory, fly_blacklist_map
 from .groups import location_groups
-from .items import PokemonFRLGItem, get_random_item
+from .items import PokemonFRLGItem, get_random_item, update_renewable_to_progression
 from .options import (CardKey, Dexsanity, Goal, IslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex,
                       ShuffleRunningShoes, Trainersanity)
 
@@ -143,8 +143,6 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
         included_types.add("Hidden Items")
     if world.options.extra_key_items:
         included_types.add("Extra Key Items")
-    if world.options.shopsanity:
-        included_types.add("Shopsanity")
     if world.options.trainersanity != Trainersanity.special_range_names["none"]:
         included_types.add("Trainersanity")
     if world.options.dexsanity != Dexsanity.special_range_names["none"]:
@@ -211,6 +209,15 @@ def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
             fill_unrandomized_location(location, True)
     elif world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
         fill_unrandomized_location(world.get_location("Indigo Plateau - Unlock Fly Destination"), False)
+
+    if world.options.shopsanity:
+        shop_locations = [loc for loc in world.get_locations() if "Held Shop Item" in loc.name]
+    else:
+        shop_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"]]
+    for location in shop_locations:
+        fill_unrandomized_location(location, True)
+        assert isinstance(location.item, PokemonFRLGItem)
+        update_renewable_to_progression(location.item)
 
     if world.options.shuffle_pokedex == ShufflePokedex.option_vanilla:
         fill_unrandomized_location(world.get_location("Professor Oak's Lab - Oak Gift 1 (Deliver Parcel)"), False)

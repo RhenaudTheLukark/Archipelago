@@ -152,7 +152,6 @@ class PokemonFRLGWorld(World):
     er_placement_state: ERPlacementState | None
     er_spoiler_names: List[str]
     moves_by_type: Dict[int, Set[int]]
-    shop_locations_by_spheres: List[Set[PokemonFRLGLocation]]
     cerulean_cave_included: bool
     auth: bytes
 
@@ -187,7 +186,6 @@ class PokemonFRLGWorld(World):
         self.er_placement_state = None
         self.er_spoiler_names = []
         self.moves_by_type = {}
-        self.shop_locations_by_spheres = []
         self.cerulean_cave_included = True
         self.finished_level_scaling = threading.Event()
 
@@ -504,10 +502,8 @@ class PokemonFRLGWorld(World):
         # This cuts down on time calculating the playthrough
         found_mons = set()
         pokemon = {species.name for species in data.species.values()}
-        shop_locations: Dict[int, List[Set[PokemonFRLGLocation]]] = defaultdict(list)
         for sphere in multiworld.get_spheres():
             mon_locations_in_sphere = defaultdict(list)
-            shop_locations_in_sphere = defaultdict(set)
             for location in sphere:
                 if location.game == "Pokemon FireRed and LeafGreen":
                     assert isinstance(location, PokemonFRLGLocation)
@@ -521,19 +517,12 @@ class PokemonFRLGWorld(World):
                             location.item.classification = ItemClassification.useful
                         else:
                             mon_locations_in_sphere[key].append(location)
-                    if location.category == LocationCategory.SHOP_ITEM:
-                        shop_locations_in_sphere[location.player].add(location)
             for key, mon_locations in mon_locations_in_sphere.items():
                 found_mons.add(key)
                 if len(mon_locations) > 1:
                     mon_locations.sort()
                     for location in mon_locations[1:]:
                         location.item.classification = ItemClassification.useful
-            for player, locations in shop_locations_in_sphere.items():
-                shop_locations[player].append(locations)
-        for world in multiworld.get_game_worlds("Pokemon FireRed and LeafGreen"):
-            if world.options.shopsanity:
-                world.shop_locations_by_spheres = shop_locations[world.player]
         level_scaling(multiworld)
 
     def generate_output(self, output_directory: str) -> None:

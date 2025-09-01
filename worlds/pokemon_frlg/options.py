@@ -176,45 +176,37 @@ class ExtraKeyItems(Toggle):
 class Shopsanity(Toggle):
     """
     Shuffles shop items into the general item pool. The Celadon Department Store 4F Held Items Shop is not shuffled.
+
+    IMPORTANT NOTE: There is a non-randomized shop on the Pokecenter 2F where you can always buy Poke Balls, Potions, etc.
     """
     display_name = "Shopsanity"
 
 
 class ShopPrices(Choice):
     """
-    Sets how Shop Item's prices are determined when Shopsanity is on.
+    Sets how shop item's prices are randomized.
 
-    - Spheres: Shop prices are determined by sphere access
-    - Classification: Shop prices are determined by item classifications (Progression, Useful, Filler/Trap)
-    - Spheres and Classifications: Shop prices are determined by both sphere access and item classifications
-    - Completely Random: Shop prices will be completely random
+    - Vanilla: Items cost their base price
+    - Cheap: Items cost 50% of their base price
+    - Affordable: Items cost between 50% - 100% of their base price
+    - Standard: Items cost 50% - 150% of their base price
+    - Expensive: Items cost 100% - 150% of their base price
     """
     display_name = "Shop Prices"
-    default = 2
-    option_spheres = 0
-    option_classification = 1
-    option_spheres_and_classification = 2
-    option_completely_random = 3
+    default = 0
+    option_vanilla = 0
+    option_cheap = 1
+    option_affordable = 2
+    option_standard = 3
+    option_expensive = 4
 
 
-class MinimumShopPrice(Range):
+class ConsistentShopPrices(Toggle):
     """
-    Sets the minimum cost of Shop Items when Shopsanity is on.
+    Sets whether all instances of an item will cost the same price in every shop (e.g. if a Potion's price in a shop is
+    200 then all Potions in shops will cost 200).
     """
-    display_name = "Minimum Shop Price"
-    default = 100
-    range_start = 1
-    range_end = 9999
-
-
-class MaximumShopPrice(Range):
-    """
-    Sets the maximum cost of Shop Items when Shopsanity is on.
-    """
-    display_name = "Maximum Shop Price"
-    default = 3000
-    range_start = 1
-    range_end = 9999
+    display_name = "Consistent Shop Prices"
 
 
 class Trainersanity(NamedRange):
@@ -1314,7 +1306,7 @@ class RandomizeMusic(Toggle):
 
 class RandomizeFanfares(Toggle):
     """
-    Shuffles fanfares for item pickups, healing at the pokecenter, etc.
+    Shuffles fanfares for item pickups, healing at the Pokecenter, etc.
     """
     display_name = "Randomize Fanfares"
 
@@ -1407,8 +1399,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     extra_key_items: ExtraKeyItems
     shopsanity: Shopsanity
     shop_prices: ShopPrices
-    minimum_shop_price: MinimumShopPrice
-    maximum_shop_price: MaximumShopPrice
+    consistent_shop_prices: ConsistentShopPrices
     trainersanity: Trainersanity
     dexsanity: Dexsanity
     famesanity: Famesanity

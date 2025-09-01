@@ -234,8 +234,6 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
     def exclude_event(event_id: str):
         if world.options.kanto_only and event_id == "EVENT_DEFEAT_CHAMPION_REMATCH":
             return True
-        if data.events[event_id].category == LocationCategory.EVENT_SHOP and world.options.shopsanity:
-            return True
         if data.events[event_id].category == LocationCategory.EVENT_EVOLUTION_POKEMON:
             # Exclude the event if the evolution method is not required for logic.
             event_data = data.events[event_id]

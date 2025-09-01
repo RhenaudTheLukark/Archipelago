@@ -76,6 +76,7 @@ class Warp:
 class ItemData(NamedTuple):
     name: str
     item_id: int
+    price: int
     classification: ItemClassification
     tags: FrozenSet[str]
 
@@ -90,14 +91,13 @@ class LocationCategory(IntEnum):
     FAME_ENTRY = 6
     POKEDEX = 7
     EVENT = 8
-    EVENT_SHOP = 9
-    EVENT_WILD_POKEMON = 10
-    EVENT_STATIC_POKEMON = 11
-    EVENT_LEGENDARY_POKEMON = 12
-    EVENT_EVOLUTION_POKEMON = 13
-    EVENT_TRAINER_SCALING = 14
-    EVENT_WILD_POKEMON_SCALING = 15
-    EVENT_STATIC_POKEMON_SCALING = 16
+    EVENT_WILD_POKEMON = 9
+    EVENT_STATIC_POKEMON = 10
+    EVENT_LEGENDARY_POKEMON = 11
+    EVENT_EVOLUTION_POKEMON = 12
+    EVENT_TRAINER_SCALING = 13
+    EVENT_WILD_POKEMON_SCALING = 14
+    EVENT_STATIC_POKEMON_SCALING = 15
 
 
 class LocationData(NamedTuple):
@@ -917,44 +917,6 @@ def init() -> None:
                     frozenset(location_data[location_id]["include"]),
                     frozenset(location_data[location_id]["tags"])
                 )
-            elif "SHOP_TWO_ISLAND" in location_id:
-                extra_addresses = {
-                    "SHOP_TWO_ISLAND_EXPANDED3_1": ["SHOP_TWO_ISLAND_INITIAL_1", "SHOP_TWO_ISLAND_EXPANDED1_1",
-                                                    "SHOP_TWO_ISLAND_EXPANDED2_1"],
-                    "SHOP_TWO_ISLAND_EXPANDED3_2": ["SHOP_TWO_ISLAND_EXPANDED1_2", "SHOP_TWO_ISLAND_EXPANDED2_2"],
-                    "SHOP_TWO_ISLAND_EXPANDED3_5": ["SHOP_TWO_ISLAND_EXPANDED2_3"],
-                    "SHOP_TWO_ISLAND_EXPANDED3_6": ["SHOP_TWO_ISLAND_EXPANDED1_3", "SHOP_TWO_ISLAND_EXPANDED2_4"],
-                    "SHOP_TWO_ISLAND_EXPANDED3_7": ["SHOP_TWO_ISLAND_INITIAL_2", "SHOP_TWO_ISLAND_EXPANDED1_4",
-                                                    "SHOP_TWO_ISLAND_EXPANDED2_5"],
-                    "SHOP_TWO_ISLAND_EXPANDED3_8": ["SHOP_TWO_ISLAND_EXPANDED2_6"]
-                }
-
-                alternate_shop_jsons = list()
-                if location_id in extra_addresses:
-                    alternate_shop_jsons = [extracted_data["locations"][alternate]
-                                            for alternate in extra_addresses[location_id]]
-
-                location_address: Dict[str, List[int]] = dict()
-
-                for game_version_revision in location_json["address"].keys():
-                    location_address[game_version_revision] = [location_json["address"][game_version_revision]]
-
-                for game_version_revision in location_address.keys():
-                    for alternate_shop_json in alternate_shop_jsons:
-                        location_address[game_version_revision].append(
-                            alternate_shop_json["address"][game_version_revision])
-
-                new_location = LocationData(
-                    location_id,
-                    location_data[location_id]["name"],
-                    region_id,
-                    location_json["default_item"],
-                    location_address,
-                    location_json["flag"],
-                    LocationCategory[location_data[location_id]["category"]],
-                    frozenset(location_data[location_id]["include"]),
-                    frozenset(location_data[location_id]["tags"])
-                )
             else:
                 new_location = LocationData(
                     location_id,
@@ -1020,6 +982,7 @@ def init() -> None:
         data.items[data.constants[item_id_name]] = ItemData(
             attributes["name"],
             data.constants[item_id_name],
+            extracted_data["item_prices"][item_id_name],
             item_classification,
             frozenset(attributes["tags"])
         )

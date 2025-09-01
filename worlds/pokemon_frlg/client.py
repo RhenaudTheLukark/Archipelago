@@ -151,11 +151,9 @@ HINT_FLAGS = {
     "FLAG_HINT_INDIGO_SHOP": ["SHOP_INDIGO_PLATEAU_1", "SHOP_INDIGO_PLATEAU_2", "SHOP_INDIGO_PLATEAU_3",
                               "SHOP_INDIGO_PLATEAU_4", "SHOP_INDIGO_PLATEAU_5", "SHOP_INDIGO_PLATEAU_6",
                               "SHOP_INDIGO_PLATEAU_7"],
-    "FLAG_HINT_TWO_ISLAND_INITIAL_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_1", "SHOP_TWO_ISLAND_EXPANDED3_7"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_1_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_2", "SHOP_TWO_ISLAND_EXPANDED3_6"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_2_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_5", "SHOP_TWO_ISLAND_EXPANDED3_8"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_3_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_3", "SHOP_TWO_ISLAND_EXPANDED3_4",
-                                             "SHOP_TWO_ISLAND_EXPANDED3_9"],
+    "FLAG_HINT_TWO_ISLAND_SHOP": ["SHOP_TWO_ISLAND_1", "SHOP_TWO_ISLAND_2", "SHOP_TWO_ISLAND_3", "SHOP_TWO_ISLAND_4",
+                                  "SHOP_TWO_ISLAND_5", "SHOP_TWO_ISLAND_6", "SHOP_TWO_ISLAND_7", "SHOP_TWO_ISLAND_8",
+                                  "SHOP_TWO_ISLAND_9"],
     "FLAG_HINT_THREE_ISLAND_SHOP": ["SHOP_THREE_ISLAND_1", "SHOP_THREE_ISLAND_2", "SHOP_THREE_ISLAND_3",
                                     "SHOP_THREE_ISLAND_4", "SHOP_THREE_ISLAND_5", "SHOP_THREE_ISLAND_6"],
     "FLAG_HINT_FOUR_ISLAND_SHOP": ["SHOP_FOUR_ISLAND_1", "SHOP_FOUR_ISLAND_2", "SHOP_FOUR_ISLAND_3",
@@ -424,7 +422,7 @@ class PokemonFRLGClient(BizHawkClient):
             if ctx.slot_data["shopsanity"]:
                 read_result = await bizhawk.guarded_read(
                     ctx.bizhawk_ctx,
-                    [(sb2_address + 0xB20, 0x30, "System Bus")],  # Shop Flags
+                    [(sb2_address + 0xB20, 0x2A, "System Bus")],  # Shop Flags
                     [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
                 )
 

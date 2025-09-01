@@ -2,13 +2,12 @@
 Classes and functions related to creating a ROM patch
 """
 import bsdiff4
-import logging
 import struct
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
-from .data import data, APWORLD_VERSION, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
+from .data import data, APWORLD_VERSION, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
 from .locations import PokemonFRLGLocation
 from .options import (CardKey, Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, IslandPasses,
                       ItemfinderRequired, HmCompatibility, LevelScaling, RandomizeDamageCategories,
@@ -237,29 +236,6 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
                     ) for alternate in alternates)
             except KeyError:
                 continue
-
-    if world.options.shopsanity and not world.options.kanto_only:
-        two_island_shop_items = {
-            "SHOP_TWO_ISLAND_EXPANDED3_1": ["FLAG_TWO_ISLAND_SHOP_INITIAL_1", "FLAG_TWO_ISLAND_SHOP_EXPANDED1_1",
-                                            "FLAG_TWO_ISLAND_SHOP_EXPANDED2_1"],
-            "SHOP_TWO_ISLAND_EXPANDED3_2": ["FLAG_TWO_ISLAND_SHOP_EXPANDED1_2", "FLAG_TWO_ISLAND_SHOP_EXPANDED2_2"],
-            "SHOP_TWO_ISLAND_EXPANDED3_5": ["FLAG_TWO_ISLAND_SHOP_EXPANDED2_3"],
-            "SHOP_TWO_ISLAND_EXPANDED3_6": ["FLAG_TWO_ISLAND_SHOP_EXPANDED1_3", "FLAG_TWO_ISLAND_SHOP_EXPANDED2_4"],
-            "SHOP_TWO_ISLAND_EXPANDED3_7": ["FLAG_TWO_ISLAND_SHOP_INITIAL_2", "FLAG_TWO_ISLAND_SHOP_EXPANDED1_4",
-                                            "FLAG_TWO_ISLAND_SHOP_EXPANDED2_5"],
-            "SHOP_TWO_ISLAND_EXPANDED3_8": ["FLAG_TWO_ISLAND_SHOP_EXPANDED2_6"]
-        }
-        for location_id, shop_flags in two_island_shop_items.items():
-            try:
-                location = world.get_location(data.locations[location_id].name)
-                location_info.extend(
-                    (
-                        data.constants[flag],
-                        location.item.player,
-                        location.item.name
-                    ) for flag in shop_flags)
-            except KeyError:
-                pass
 
     player_name_ids: Dict[str, int] = {world.player_name: 0}
     player_name_address = data.rom_addresses["gArchipelagoPlayerNames"]
@@ -923,53 +899,44 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld") -> None:
 
 
 def _set_shop_data(world: "PokemonFRLGWorld") -> None:
-    if not world.options.shopsanity:
+    if not world.options.shopsanity and world.options.shop_prices == ShopPrices.option_vanilla:
         return
 
     patch = world.patch_data
-    min_shop_price = world.options.minimum_shop_price.value
-    max_shop_price = world.options.maximum_shop_price.value
-    total_shop_spheres = len(world.shop_locations_by_spheres)
-    by_spheres = world.options.shop_prices in {
-        ShopPrices.option_spheres,
-        ShopPrices.option_spheres_and_classification
-    }
-    by_classification = world.options.shop_prices in {
-        ShopPrices.option_classification,
-        ShopPrices.option_spheres_and_classification
-    }
+    shop_locations: List[PokemonFRLGLocation] = [loc for loc in world.get_locations()
+                                                 if loc.category == LocationCategory.SHOP_ITEM]
+    already_set_prices: Dict[str, int] = {}
 
-    if world.options.minimum_shop_price > world.options.maximum_shop_price:
-        logging.info("Pokemon FRLG: Minimum Shop Price for player %s (%s) is greater than Maximum Shop Price.",
-                     world.player, world.player_name)
-        min_shop_price = world.options.maximum_shop_price.value
-        max_shop_price = world.options.minimum_shop_price.value
+    for location in shop_locations:
+        item_address = location.item_address
+        if location.item.player != world.player:
+            price = 2500
+            if location.item.useful:
+                price = round(price * 0.5)
+            elif location.item.filler:
+                price = round(price * 0.1)
+        else:
+            if location.item.name in already_set_prices and world.options.consistent_shop_prices:
+                price = already_set_prices[location.item.name]
+            else:
+                price = data.items[world.item_name_to_id[location.item.name]].price
 
-    for i, locations in enumerate(world.shop_locations_by_spheres):
-        sphere_min_shop_price = min_shop_price
-        sphere_max_shop_price = max_shop_price
-        if by_spheres:
-            base_price = sphere_min_shop_price
-            price_difference = max_shop_price - min_shop_price
-            sphere_min_shop_price = int(round(base_price + ((price_difference / total_shop_spheres) * i)))
-            sphere_max_shop_price = int(round(base_price + ((price_difference / total_shop_spheres) * (i + 1))))
-        for location in locations:
-            item_min_shop_price = sphere_min_shop_price
-            item_max_shop_price = sphere_max_shop_price
-            if by_classification:
-                base_price = item_min_shop_price
-                price_difference = item_max_shop_price - item_min_shop_price
-                if location.item.advancement:
-                    item_min_shop_price = base_price + int(round(price_difference * 0.6))
-                elif location.item.useful:
-                    item_min_shop_price = base_price + int(round(price_difference * 0.2))
-                    item_max_shop_price = base_price + int(round(price_difference * 0.6))
-                else:
-                    item_max_shop_price = base_price + int(round(price_difference * 0.2))
+        if world.options.shop_prices == ShopPrices.option_cheap:
+            price = round(price * 0.5)
+        elif world.options.shop_prices == ShopPrices.option_affordable:
+            price = world.random.randint(round(price * 0.5), price)
+        elif world.options.shop_prices == ShopPrices.option_standard:
+            price = world.random.randint(round(price * 0.5), round(price * 1.5))
+        elif world.options.shop_prices == ShopPrices.option_expensive:
+            price = world.random.randint(price, round(price * 1.5))
 
-            item_address = location.item_address
-            shop_price = world.random.randint(item_min_shop_price, item_max_shop_price)
-            patch.write_token(item_address, 2, struct.pack("<H", shop_price))
+        patch.write_token(item_address, 2, struct.pack("<H", price))
+
+        if location.item.player == world.player:
+            already_set_prices[location.item.name] = price
+
+        if ((location.item.advancement or location.item.player != world.player or world.options.remote_items) and
+                location.address is not None):
             patch.write_token(item_address, 4, struct.pack("<B", 0))
 
 
