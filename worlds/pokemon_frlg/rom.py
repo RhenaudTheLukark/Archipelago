@@ -910,7 +910,7 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
     for location in shop_locations:
         item_address = location.item_address
         if location.item.player != world.player:
-            price = 2500
+            price = 2000
             if location.item.useful:
                 price = round(price * 0.5)
             elif location.item.filler:
