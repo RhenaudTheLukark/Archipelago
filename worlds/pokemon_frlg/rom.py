@@ -899,9 +899,6 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld") -> None:
 
 
 def _set_shop_data(world: "PokemonFRLGWorld") -> None:
-    if not world.options.shopsanity and world.options.shop_prices == ShopPrices.option_vanilla:
-        return
-
     patch = world.patch_data
     shop_locations: List[PokemonFRLGLocation] = [loc for loc in world.get_locations()
                                                  if loc.category == LocationCategory.SHOP_ITEM]
@@ -909,17 +906,21 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
 
     for location in shop_locations:
         item_address = location.item_address
+
         if location.item.player != world.player:
             price = 2000
             if location.item.useful:
                 price = round(price * 0.5)
             elif location.item.filler:
                 price = round(price * 0.1)
+            patch.write_token(item_address, 2, struct.pack("<H", data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]))
         else:
             if location.item.name in already_set_prices and world.options.consistent_shop_prices:
                 price = already_set_prices[location.item.name]
             else:
                 price = data.items[world.item_name_to_id[location.item.name]].price
+            if location.item.code is not None:
+                patch.write_token(item_address, 2, struct.pack("<H", location.item.code))
 
         if world.options.shop_prices == ShopPrices.option_cheap:
             price = round(price * 0.5)
@@ -930,14 +931,13 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
         elif world.options.shop_prices == ShopPrices.option_expensive:
             price = world.random.randint(price, round(price * 1.5))
 
-        patch.write_token(item_address, 2, struct.pack("<H", price))
+        patch.write_token(item_address, 4, struct.pack("<H", price))
 
         if location.item.player == world.player:
             already_set_prices[location.item.name] = price
 
-        if ((location.item.advancement or location.item.player != world.player or world.options.remote_items) and
-                location.address is not None):
-            patch.write_token(item_address, 4, struct.pack("<B", 0))
+        if (location.item.advancement or location.item.player != world.player) and location.address is not None:
+            patch.write_token(item_address, 6, struct.pack("<B", 0))
 
 
 def _set_species_info(world: "PokemonFRLGWorld") -> None:

@@ -320,3 +320,18 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_location.access_rule = lambda state: state.has("Town Map", world.player)
         town_map_fly_location.show_in_spoiler = False
         start_region.locations.append(town_map_fly_location)
+
+
+def place_renewable_items(world: "PokemonFRLGWorld") -> None:
+    if not world.options.shopsanity or world.options.kanto_only:
+        return
+
+    renewable_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"] and
+                           not loc.is_event and loc.progress_type != LocationProgressType.EXCLUDED]
+    if len(renewable_locations) == 0:
+        renewable_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"] and
+                               not loc.is_event]
+    renewable_location = world.random.choice(renewable_locations)
+    item = world.create_item("Lemonade")
+    item.classification = ItemClassification.progression
+    renewable_location.place_locked_item(item)

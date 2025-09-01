@@ -52,6 +52,8 @@
 + Increased Trainer money rewards so that they scale based on party size and Pokémon's BST
 + Updated the Two Island Market Stall so that you can view all the items in the shop immediately
 + The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
++ Local non-progression items are purchasable repeatedly in shops when `shopsanity` is on. This also applies if `remote_items` is on
++ Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
 
 ## Bug Fixes
 - Fixed an issue with displaying move data in battle during double battles
