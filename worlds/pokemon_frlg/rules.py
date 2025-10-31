@@ -661,11 +661,11 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
     if "Block Tunnels" in options.modify_world_state.value:
         add_rule_safe("Route 5 Open Path (Top)",
                       lambda state: False)
-        add_rule_safe("Route 5 Smashable Rock (Top)",
+        add_rule_safe("Route 5 Smashable Rocks (Top)",
                       lambda state: logic.can_rock_smash(state))
         add_rule_safe("Route 5 Open Path (Bottom)",
                       lambda state: False)
-        add_rule_safe("Route 5 Smashable Rock (Bottom)",
+        add_rule_safe("Route 5 Smashable Rocks (Bottom)",
                       lambda state: logic.can_rock_smash(state))
     else:
         add_rule_safe("Route 5 Smashable Rocks (Top)",
