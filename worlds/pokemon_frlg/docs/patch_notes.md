@@ -23,6 +23,8 @@
   - Sets whether all instances of an item will cost the same price in every shop (e.g. if a Potion's price in a shop is
     200 then all Potions in shops will cost 200)
 - Removed options `minimum_shop_price` and `maximum_shop_price`
+- New option `rematchsanity`
+  - Beating each of a trainer's rematches gives you an item. Only the rematches for trainers who have a trainersanity item will give an item for rematchsanity
 - New option `shuffle_pokedex`
   - Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
   - Shuffle: The Pokédex is shuffled into the item pool

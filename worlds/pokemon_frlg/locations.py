@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, LocationProgressType, Region, ItemClassification
-from .data import data, LocationCategory, fly_blacklist_map
+from .data import data, LocationCategory, fly_blacklist_map, TRAINER_REMATCH_MAP
 from .groups import location_groups
 from .items import PokemonFRLGItem, get_random_item, update_renewable_to_progression
 from .options import (CardKey, Dexsanity, Goal, IslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex,
@@ -62,7 +62,8 @@ class PokemonFRLGLocation(Location):
     item_address = Dict[str, int | List[int]] | None
     default_item_id: int | None
     category: LocationCategory
-    data_ids: List[str] | None
+    location_id: str | None
+    scaling_ids: List[str] | None
     spoiler_name: str
 
     def __init__(
@@ -74,13 +75,15 @@ class PokemonFRLGLocation(Location):
             parent: Region | None = None,
             item_address: Dict[str, int | List[int]] | None = None,
             default_item_id: int | None = None,
-            data_ids: List[str] | None = None,
+            location_id: str | None = None,
+            scaling_ids: List[str] | None = None,
             spoiler_name: str | None = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address
         self.category = category
-        self.data_ids = data_ids
+        self.location_id = location_id
+        self.scaling_ids = scaling_ids
         self.spoiler_name = spoiler_name if spoiler_name is not None else name
 
 
@@ -102,7 +105,27 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
     Iterates through region data and adds locations to the multiworld if
     those locations are included in the given categories.
     """
-    def exclude_location(location_id: str):
+    def create_location(location_id: str) -> PokemonFRLGLocation:
+        location_data = data.locations[location_id]
+
+        if location_data.default_item == data.constants["ITEM_NONE"]:
+            default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]
+        else:
+            default_item = location_data.default_item
+        location = PokemonFRLGLocation(
+            world.player,
+            location_data.name,
+            location_data.flag,
+            location_data.category,
+            region,
+            location_data.address,
+            default_item,
+            location_id
+        )
+
+        return location
+
+    def exclude_location(location_id: str) -> bool:
         sevii_required_locations = [
             "NPC_GIFT_GOT_ONE_PASS", "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
             "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
@@ -169,24 +192,36 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
         for location_id in included_locations:
             if exclude_location(location_id):
                 continue
+            region.locations.append(create_location(location_id))
 
-            location_data = data.locations[location_id]
+    # Remove trainersanity locations if there are more than the amount specified in the settings
+    if world.options.trainersanity != Trainersanity.special_range_names["none"]:
+        locations: List[PokemonFRLGLocation] = world.get_locations()
+        trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
+        locs_to_remove = len(trainer_locations) - world.options.trainersanity.value
+        if locs_to_remove > 0:
+            priority_trainer_locations = [loc for loc in trainer_locations
+                                          if loc.name in world.options.priority_locations.value]
+            non_priority_trainer_locations = [loc for loc in trainer_locations
+                                              if loc.name not in world.options.priority_locations.value]
+            world.random.shuffle(priority_trainer_locations)
+            world.random.shuffle(non_priority_trainer_locations)
+            trainer_locations = non_priority_trainer_locations + priority_trainer_locations
+            for location in trainer_locations:
+                region = location.parent_region
+                region.locations.remove(location)
+                locs_to_remove -= 1
+                if locs_to_remove <= 0:
+                    break
 
-            if location_data.default_item == data.constants["ITEM_NONE"]:
-                default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]
-            else:
-                default_item = location_data.default_item
-
-            location = PokemonFRLGLocation(
-                world.player,
-                location_data.name,
-                location_data.flag,
-                location_data.category,
-                region,
-                location_data.address,
-                default_item
-            )
-            region.locations.append(location)
+    # Add rematchsanity locations
+    if world.options.rematchsanity:
+        locations: List[PokemonFRLGLocation] = world.get_locations()
+        trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
+        for location in trainer_locations:
+            if location.location_id in TRAINER_REMATCH_MAP:
+                for location_id in TRAINER_REMATCH_MAP[location.location_id]:
+                    location.parent_region.locations.append(create_location(location_id))
 
 
 def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:

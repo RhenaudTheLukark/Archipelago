@@ -406,27 +406,6 @@ class PokemonFRLGWorld(World):
             if not location.can_reach(state):
                 evolution_region.locations.remove(location)
 
-        # Delete trainersanity locations if there are more than the amount specified in the settings
-        if self.options.trainersanity != Trainersanity.special_range_names["none"]:
-            locations: List[PokemonFRLGLocation] = self.get_locations()
-            trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
-            locs_to_remove = len(trainer_locations) - self.options.trainersanity.value
-            if locs_to_remove > 0:
-                priority_trainer_locations = [loc for loc in trainer_locations
-                                              if loc.name in self.options.priority_locations.value]
-                non_priority_trainer_locations = [loc for loc in trainer_locations
-                                                  if loc.name not in self.options.priority_locations.value]
-                self.random.shuffle(priority_trainer_locations)
-                self.random.shuffle(non_priority_trainer_locations)
-                trainer_locations = non_priority_trainer_locations + priority_trainer_locations
-                for location in trainer_locations:
-                    region = location.parent_region
-                    region.locations.remove(location)
-                    self.itempool.remove(filler_items.pop())
-                    locs_to_remove -= 1
-                    if locs_to_remove <= 0:
-                        break
-
         if self.options.dexsanity != Dexsanity.special_range_names["none"]:
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
@@ -660,6 +639,7 @@ class PokemonFRLGWorld(World):
             "shuffle_hidden",
             "extra_key_items",
             "shopsanity",
+            "rematchsanity",
             "famesanity",
             "shuffle_fly_unlocks",
             "pokemon_request_locations",

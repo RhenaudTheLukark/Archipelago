@@ -211,7 +211,7 @@ class ConsistentShopPrices(Toggle):
 
 class Trainersanity(NamedRange):
     """
-    Defeating a trainer gives you an item.
+    Beating a trainer gives you an item.
 
     You can specify how many Trainers should be a check between 0 and 456. If you have Kanto Only on, the amount of
     Trainer checks might be lower than the amount you specify. Trainers that have checks will periodically have an
@@ -228,6 +228,19 @@ class Trainersanity(NamedRange):
         "all": 456,
     }
 
+
+class Rematchsanity(Toggle):
+    """
+    Beating each of a trainer's rematches gives you an item. Only the rematches for trainers who have a trainersanity
+    item will give an item for rematchsanity.
+
+    Each trainer rematch will add a random filler item into the pool.
+
+    IMPORTANT NOTE: The conditions for triggering trainer rematches has been changed from the vanilla game. The first
+                    rematch is unlocked by obtaining the Vs. Seeker and then subsequent rematches are unlocked for every
+                    2 gyms beaten.
+    """
+    display_name = "Rematchsanity"
 
 class Dexsanity(NamedRange):
     """
@@ -1401,6 +1414,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shop_prices: ShopPrices
     consistent_shop_prices: ConsistentShopPrices
     trainersanity: Trainersanity
+    rematchsanity: Rematchsanity
     dexsanity: Dexsanity
     famesanity: Famesanity
     shuffle_fly_unlocks: ShuffleFlyUnlocks
