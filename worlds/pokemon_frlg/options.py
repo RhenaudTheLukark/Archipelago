@@ -182,6 +182,21 @@ class Shopsanity(Toggle):
     display_name = "Shopsanity"
 
 
+class ShopSlots(NamedRange):
+    """
+    Sets the number of slots per shop that can have progression items when shopsanity is on. Shop slots that cannot be
+    progression items will be filled with a random normal shop item from your world.
+    """
+    display_name = "Shop Slots"
+    default = 9
+    range_start = 0
+    range_end = 9
+    special_range_names = {
+        "none": 0,
+        "all": 9,
+    }
+
+
 class ShopPrices(Choice):
     """
     Sets how shop item's prices are randomized.
@@ -1411,6 +1426,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_hidden: ShuffleHiddenItems
     extra_key_items: ExtraKeyItems
     shopsanity: Shopsanity
+    shop_slots: ShopSlots
     shop_prices: ShopPrices
     consistent_shop_prices: ConsistentShopPrices
     trainersanity: Trainersanity

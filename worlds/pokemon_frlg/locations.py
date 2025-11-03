@@ -224,7 +224,7 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
                     location.parent_region.locations.append(create_location(location_id))
 
 
-def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
+def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:
     def fill_unrandomized_location(location: Location,
                                             as_event: bool) -> None:
         assert isinstance(location, PokemonFRLGLocation)
@@ -235,6 +235,7 @@ def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
             location.show_in_spoiler = False
         location.place_locked_item(item)
         location.progress_type = LocationProgressType.DEFAULT
+        world.itempool.remove(item)
 
     if world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
         fly_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Town Visits"]]
@@ -257,6 +258,50 @@ def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
 
     if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
         fill_unrandomized_location(world.get_location("Pewter City - Gift from Mom"), False)
+
+
+def place_shop_items(world: "PokemonFRLGWorld") -> None:
+    if not world.options.shopsanity:
+        return
+
+    shop_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"] and
+                      loc.item is None]
+    shop_items = [world.create_item_by_id(loc.default_item_id) for loc in shop_locations]
+    non_progression_shop_locations = [loc for loc in shop_locations if
+                                      "Two Island Town - Market Stall Item" not in loc.name and
+                                      int(loc.name[-1]) > world.options.shop_slots.value]
+    world.random.shuffle(shop_items)
+
+    if not world.options.kanto_only:
+        two_island_shop_location_ids = ["SHOP_TWO_ISLAND_1", "SHOP_TWO_ISLAND_7", "SHOP_TWO_ISLAND_2",
+                                        "SHOP_TWO_ISLAND_6",
+                                        "SHOP_TWO_ISLAND_5", "SHOP_TWO_ISLAND_8", "SHOP_TWO_ISLAND_3",
+                                        "SHOP_TWO_ISLAND_4",
+                                        "SHOP_TWO_ISLAND_9"]
+        for index, location_id in enumerate(two_island_shop_location_ids):
+            if index >= world.options.shop_slots.value:
+                non_progression_shop_locations.append(world.get_location(data.locations[location_id].name))
+        renewable_locations = [loc for loc in shop_locations if
+                               loc.progress_type != LocationProgressType.EXCLUDED and
+                               loc not in non_progression_shop_locations]
+        if len(renewable_locations) == 0:
+            renewable_locations = [loc for loc in shop_locations if
+                                   loc not in non_progression_shop_locations]
+        if len(renewable_locations) == 0:
+            renewable_locations = [loc for loc in shop_locations]
+        renewable_location = world.random.choice(renewable_locations)
+        item = world.create_item("Lemonade")
+        item.classification = ItemClassification.progression
+        renewable_location.place_locked_item(item)
+        world.itempool.remove(item)
+        shop_items.remove(item)
+
+    for location in non_progression_shop_locations:
+        if location.item is not None:
+            continue
+        item = shop_items.pop()
+        location.place_locked_item(item)
+        world.itempool.remove(item)
 
 
 def set_free_fly(world: "PokemonFRLGWorld") -> None:
@@ -353,18 +398,3 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_location.access_rule = lambda state: state.has("Town Map", world.player)
         town_map_fly_location.show_in_spoiler = False
         start_region.locations.append(town_map_fly_location)
-
-
-def place_renewable_items(world: "PokemonFRLGWorld") -> None:
-    if not world.options.shopsanity or world.options.kanto_only:
-        return
-
-    renewable_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"] and
-                           not loc.is_event and loc.progress_type != LocationProgressType.EXCLUDED]
-    if len(renewable_locations) == 0:
-        renewable_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Shops"] and
-                               not loc.is_event]
-    renewable_location = world.random.choice(renewable_locations)
-    item = world.create_item("Lemonade")
-    item.classification = ItemClassification.progression
-    renewable_location.place_locked_item(item)

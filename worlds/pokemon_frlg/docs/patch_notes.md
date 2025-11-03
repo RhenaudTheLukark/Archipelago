@@ -10,7 +10,9 @@
   - Region: Fly destinations will be randomized to a location in the same region as its original location (e.g. Sevii fly destinations would go to another location on the Sevii Islands)
   - Completely Random: Fly destinations are completely random
 - Updated option `shopsanity`
-  - Local non-progression shop items can now be purchased repeatedly 
+  - Local non-progression shop items can now be purchased repeatedly
+- New option `shop_slots`
+  - Sets the number of slots per shop that can have multiworld items when shopsanity is on. Shop slots that do not have a multiworld item will be filled with a random normal shop item
 - Reworked option `shop_prices`
   - Changed so that item's prices are determined by their base price
     - Vanilla: Items cost their base price

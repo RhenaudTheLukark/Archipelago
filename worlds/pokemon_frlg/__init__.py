@@ -26,7 +26,7 @@ from .items import (PokemonFRLGItem, add_starting_items, create_item_name_to_id_
                     get_item_classification)
 from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
-                        fill_unrandomized_locations, place_renewable_items, set_free_fly)
+                        place_unrandomized_items, place_shop_items, set_free_fly)
 from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
                       FishingRods, FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses,
                       RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleBadges,
@@ -284,17 +284,15 @@ class PokemonFRLGWorld(World):
         self.multiworld.regions.extend(regions.values())
         create_indirect_conditions(self)
         randomize_requested_trade_pokemon(self)
-        fill_unrandomized_locations(self)
         set_rules(self)
 
     def create_items(self) -> None:
-        item_locations: List[PokemonFRLGLocation] = [
-            location for location in self.get_locations() if location.address is not None
-        ]
+        item_locations = [location for location in self.get_locations() if location.item is None]
+        self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
 
         add_starting_items(self)
-
-        self.itempool = [self.create_item_by_id(location.default_item_id) for location in item_locations]
+        place_unrandomized_items(self)
+        place_shop_items(self)
 
         items_to_remove: List[PokemonFRLGItem] = []
         items_to_add: List[PokemonFRLGItem] = []
@@ -303,18 +301,6 @@ class PokemonFRLGWorld(World):
             badge_items = [self.create_item(badge) for badge in sorted(item_groups["Badges"])]
             items_to_remove.extend(badge_items)
             self.pre_fill_items.extend(badge_items)
-
-        if self.options.shopsanity and not self.options.kanto_only:
-            items_to_remove.append(self.create_item("Lemonade"))
-
-        if self.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-            items_to_remove.append(self.create_item("Fly Unlock (Indigo Plateau)"))
-
-        if self.options.shuffle_pokedex == ShufflePokedex.option_vanilla:
-            items_to_remove.append(self.create_item("Pokedex"))
-
-        if self.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
-            items_to_remove.append(self.create_item("Running Shoes"))
 
         if self.options.card_key == CardKey.option_split:
             items_to_remove.append(self.create_item("Card Key"))
@@ -436,7 +422,6 @@ class PokemonFRLGWorld(World):
 
     def connect_entrances(self) -> None:
         set_free_fly(self)
-        place_renewable_items(self)
         if not self.options.shuffle_badges:
             self.shuffle_badges()
         if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
