@@ -525,11 +525,11 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 22
     add_rule_safe("Route 22 North Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 22 (East) Surfing Spot",
                   lambda state: logic.can_surf(state))
     add_rule_safe("Route 22 South Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 22 (West) Surfing Spot",
                   lambda state: logic.can_surf(state))
     if options.route22_gate_requirement.value == Route22GateRequirement.option_badges:
@@ -744,7 +744,7 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
 
     # Route 9
     add_rule_safe("Route 9 Southwest Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     if "Modify Route 9" in options.modify_world_state.value:
         add_rule_safe("Route 9 Exit (West)",
                       lambda state: logic.can_rock_smash(state))
@@ -752,11 +752,11 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
         add_rule_safe("Route 9 Exit (West)",
                       lambda state: logic.can_cut(state))
     add_rule_safe("Route 9 Northwest Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 9 Northeast Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
     add_rule_safe("Route 9 Southeast Ledge",
-                  lambda state: state.has("Ledge Jump", player))
+                  lambda state: logic.can_jump_down_ledge(state))
 
     # Route 10
     add_rule_safe("Route 10 (North) Surfing Spot",

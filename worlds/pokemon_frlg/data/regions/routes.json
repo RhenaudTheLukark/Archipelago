@@ -848,7 +848,7 @@
     "events": [],
     "exits": {
       "REGION_ROUTE10/NORTH_WATER": "Route 10 (North) Surfing Spot",
-      "REGION_ROUTE9/MAIN": "Route 10 Exit (West)"
+      "REGION_ROUTE9/EAST": "Route 10 Exit (West)"
     },
     "warps": {
       "MAP_ROUTE10:0/MAP_ROCK_TUNNEL_1F:0": "Rock Tunnel (North)",
