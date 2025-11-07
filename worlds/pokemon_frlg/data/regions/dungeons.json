@@ -2273,6 +2273,7 @@
     "locations": [],
     "events": [],
     "exits": {
+      "REGION_SILPH_CO_1F/MAIN": "Silph Co. Elevator 1F Stop",
       "REGION_SILPH_CO_2F/MAIN": "Silph Co. Elevator 2F Stop",
       "REGION_SILPH_CO_3F/MAIN": "Silph Co. Elevator 3F Stop",
       "REGION_SILPH_CO_4F/MAIN": "Silph Co. Elevator 4F Stop",

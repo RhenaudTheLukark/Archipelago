@@ -42,6 +42,8 @@
   * Sets whether the ability to jump down ledges is required for the Bicycle to jump down ledges
 * New option `acrobatic_bicycle`
   * Sets whether the bicycle can be used to jump up ledges. If `bicycle_requires_ledge_jump` is on then you will need to be able to jump down ledges in order to jump up them as well
+* Updated option `modify_world_state`
+  * Added All Elevators Locked: Prevents you from using the elevators in the Celadon Department Store and Silph Co. until you have gotten the Lift Key
 * New option `fossil_count`
   * Sets the number of fossils you need to revive in order to get the fossil check in the Pokémon Lab
 * New option `base_stats`
