@@ -353,8 +353,8 @@ class PokemonFRLGClient(BizHawkClient):
 
             # Checks that the player is in the overworld
             guards["IN OVERWORLD"] = (
-                data.ram_addresses["gMain"][self.game_version] + 4,
-                (data.ram_addresses["CB2_Overworld"][self.game_version] + 1).to_bytes(4, "little"),
+                data.ram_addresses["gMain"][self.game_version] + 0x038,
+                int.to_bytes(1),
                 "System Bus"
             )
 
@@ -422,7 +422,7 @@ class PokemonFRLGClient(BizHawkClient):
             if ctx.slot_data["shopsanity"]:
                 read_result = await bizhawk.guarded_read(
                     ctx.bizhawk_ctx,
-                    [(sb2_address + 0xB20, 0x2A, "System Bus")],  # Shop Flags
+                    [(sb2_address + 0xB24, 0x2A, "System Bus")],  # Shop Flags
                     [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
                 )
 
@@ -448,7 +448,7 @@ class PokemonFRLGClient(BizHawkClient):
             pokemon_caught_read_status = False
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx,
-                [(sb2_address + 0x028, 0x34, "System Bus")],  # Caught Pokémon
+                [(sb2_address + 0x02C, 0x34, "System Bus")],  # Caught Pokémon
                 [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
             )
 
@@ -460,7 +460,7 @@ class PokemonFRLGClient(BizHawkClient):
             pokemon_seen_read_status = False
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx,
-                [(sb2_address + 0x05C, 0x34, "System Bus")],  # Seen Pokémon
+                [(sb2_address + 0x060, 0x34, "System Bus")],  # Seen Pokémon
                 [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
             )
 
@@ -817,7 +817,7 @@ class PokemonFRLGClient(BizHawkClient):
                 ctx.bizhawk_ctx, [
                     (data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], 1, "System Bus"),
                     (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused game stat
-                    (sb2_address + 0xF20, 4, "System Bus"),  # Encryption key
+                    (sb2_address + 0xF24, 4, "System Bus"),  # Encryption key
                 ],
                 [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
             )

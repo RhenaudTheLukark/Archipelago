@@ -231,8 +231,8 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
         player_name = world.multiworld.get_player_name(item_player)
 
         if player_name not in player_name_ids:
-            # Only space for 250 player names
-            if len(player_name_ids) >= 250:
+            # Only space for 500 player names
+            if len(player_name_ids) >= 500:
                 continue
 
             player_name_ids[player_name] = len(player_name_ids)
@@ -245,8 +245,8 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
             if len(item_name) > 35:
                 item_name = item_name[:34] + "…"
 
-            # Only 36 * 1600 bytes for item names
-            if next_item_name_offset + len(item_name) + 1 > 36 * 1600:
+            # Only 36 * 2000 bytes for item names
+            if next_item_name_offset + len(item_name) + 1 > 36 * 2000:
                 continue
 
             item_name_offsets[item_name] = next_item_name_offset

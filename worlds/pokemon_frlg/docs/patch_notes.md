@@ -65,6 +65,7 @@
 * The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
 * Local non-key items are purchasable repeatedly in shops when `shopsanity` is on. This also applies if `remote_items` is on
 * Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
+* `shopsanity` checks will now be sent out as soon as you purchase the item instead of needing to exit the shop to send them out
 
 ## Bug Fixes
 * Fixed an issue with displaying move data in battle during double battles
@@ -223,7 +224,7 @@
 
 # 0.8.4
 ## Updates
-* Removed the base offset for item and location IDs (Latest I heard was that all clients should play nice with overlapping IDs but we'll see)
+* Removed the base offset for item and location IDs (Latest I heard was that all clients should play nice with overlapping IDs, but we'll see)
 * Added a checksum into the ROM in order to have better error handling when the base patch differs between the generator apworld and client apworld
 * Seafoam Islands B3F has been changed so that you can cross from the Fuchsia side to the Cinnabar side using surf and waterfall
 * A new Link Cable evo item has been added to the game. The Rival in Silph Co. 7F has been added as a new location check correlating to this item
@@ -366,7 +367,7 @@
 ## Bug Fixes
 * The "Remove Cerulean Roadblock" has been fixed so that the behavior isn't reversed
 * Fixed a logic issue with the hidden item behind the cut tree on Route 10
-* Fixed an issue where the Route 9 roadblock matched the Route 2 roadblock instead of obeying it's own setting
+* Fixed an issue where the Route 9 roadblock matched the Route 2 roadblock instead of obeying its own setting
 
 # 0.7.1
 ## Bug Fixes
