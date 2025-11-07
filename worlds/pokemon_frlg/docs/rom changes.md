@@ -66,6 +66,7 @@ predetermined priority
   * Changed the 50 coin purchase to a 100 coin purchase
   * Added a 1000 and 1500 coin purchase option
   * Made it so that you can purchase coins even if it would put you over the max coins of 9999
+* The checks for needing the Bicycle for Cycling Road now happen once you enter Cycling Road instead of in the Gates before it
 * The Saffron City guards will block your way from both directions
 * You are able to pick up both Pokémon in the Saffron Dojo
 * Your Rival in Silph Co. will give you the new Link Cable item

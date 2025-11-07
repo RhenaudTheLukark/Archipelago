@@ -68,6 +68,7 @@
 * Local non-key items are purchasable repeatedly in shops when `shopsanity` is on. This also applies if `remote_items` is on
 * Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
 * `shopsanity` checks will now be sent out as soon as you purchase the item instead of needing to exit the shop to send them out
+* Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
 
 ## Bug Fixes
 * Fixed an issue with displaying move data in battle during double battles

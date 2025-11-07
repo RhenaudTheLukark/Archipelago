@@ -967,12 +967,6 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                       lambda state: False)
     add_rule_safe("Route 16 Play Poke Flute (Left)",
                   lambda state: state.has("Poke Flute", player)),
-    add_rule_safe("Route 16 Gate 1F Bike Checkpoint (Right)",
-                  lambda state: state.has("Bicycle", player))
-
-    # Route 18
-    add_rule_safe("Route 18 Gate 1F Bike Checkpoint (Right)",
-                  lambda state: state.has("Bicycle", player))
 
     # Fuchsia City
     if options.gym_keys:
@@ -2390,6 +2384,15 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
                 add_rule(exit, lambda state: logic.can_flash(state))
             for location in world.get_region(region).locations:
                 add_rule(location, lambda state: logic.can_flash(state))
+
+    # Add bicycle logic
+    cycling_road_regions = ["Route 16 (Southwest)", "Route 17", "Route 18 (West)"]
+
+    for region in cycling_road_regions:
+        for exit in world.get_region(region).exits:
+            add_rule(exit, lambda state: state.has("Bicycle", player))
+        for location in world.get_region(region).locations:
+            add_rule(location, lambda state: state.has("Bicycle", player))
 
 
 def set_hm_compatible_pokemon(world: "PokemonFRLGWorld") -> None:

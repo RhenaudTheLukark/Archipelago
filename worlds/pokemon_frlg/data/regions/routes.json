@@ -1719,9 +1719,9 @@
       "MAP_ROUTE16_NORTH_ENTRANCE_1F:1/MAP_ROUTE16:2": "Route 16 Gate 1F Exit (Northeast)"
     }
   },
-  "REGION_ROUTE16_NORTH_ENTRANCE_1F/SOUTHEAST": {
+  "REGION_ROUTE16_NORTH_ENTRANCE_1F/SOUTH": {
     "parent_map": "MAP_ROUTE16_NORTH_ENTRANCE_1F",
-    "name": "Route 16 Gate 1F (Southeast)",
+    "name": "Route 16 Gate 1F (South)",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -1729,29 +1729,11 @@
     "kanto": true,
     "locations": [],
     "events": [],
-    "exits": {
-      "REGION_ROUTE16_NORTH_ENTRANCE_1F/SOUTHWEST": "Route 16 Gate 1F Bike Checkpoint (Right)"
-    },
+    "exits": {},
     "warps": {
+      "MAP_ROUTE16_NORTH_ENTRANCE_1F:2/MAP_ROUTE16:3": "Route 16 Gate 1F Exit (Southwest)",
       "MAP_ROUTE16_NORTH_ENTRANCE_1F:3/MAP_ROUTE16:4": "Route 16 Gate 1F Exit (Southeast)",
       "MAP_ROUTE16_NORTH_ENTRANCE_1F:4/MAP_ROUTE16_NORTH_ENTRANCE_2F:0": "Route 16 Gate 1F Stairs"
-    }
-  },
-  "REGION_ROUTE16_NORTH_ENTRANCE_1F/SOUTHWEST": {
-    "parent_map": "MAP_ROUTE16_NORTH_ENTRANCE_1F",
-    "name": "Route 16 Gate 1F (Southwest)",
-    "encounter_region": null,
-    "has_land": false,
-    "has_water": false,
-    "has_fishing": false,
-    "kanto": true,
-    "locations": [],
-    "events": [],
-    "exits": {
-      "REGION_ROUTE16_NORTH_ENTRANCE_1F/SOUTHEAST": "Route 16 Gate 1F Bike Checkpoint (Left)"
-    },
-    "warps": {
-      "MAP_ROUTE16_NORTH_ENTRANCE_1F:2/MAP_ROUTE16:3": "Route 16 Gate 1F Exit (Southwest)"
     }
   },
   "REGION_ROUTE16_NORTH_ENTRANCE_2F": {
@@ -1846,9 +1828,9 @@
       "MAP_ROUTE18:1/MAP_ROUTE18_EAST_ENTRANCE_1F:1": "Route 18 Gate (East)"
     }
   },
-  "REGION_ROUTE18_EAST_ENTRANCE_1F/WEST": {
+  "REGION_ROUTE18_EAST_ENTRANCE_1F/MAIN": {
     "parent_map": "MAP_ROUTE18_EAST_ENTRANCE_1F",
-    "name": "Route 18 Gate 1F (West)",
+    "name": "Route 18 Gate 1F",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -1856,27 +1838,9 @@
     "kanto": true,
     "locations": [],
     "events": [],
-    "exits": {
-      "REGION_ROUTE18_EAST_ENTRANCE_1F/EAST": "Route 18 Gate 1F Bike Checkpoint (Left)"
-    },
+    "exits": {},
     "warps": {
-      "MAP_ROUTE18_EAST_ENTRANCE_1F:0/MAP_ROUTE18:0": "Route 18 Gate 1F Exit (West)"
-    }
-  },
-  "REGION_ROUTE18_EAST_ENTRANCE_1F/EAST": {
-    "parent_map": "MAP_ROUTE18_EAST_ENTRANCE_1F",
-    "name": "Route 18 Gate 1F (East)",
-    "encounter_region": null,
-    "has_land": false,
-    "has_water": false,
-    "has_fishing": false,
-    "kanto": true,
-    "locations": [],
-    "events": [],
-    "exits": {
-      "REGION_ROUTE18_EAST_ENTRANCE_1F/WEST": "Route 18 Gate 1F Bike Checkpoint (Right)"
-    },
-    "warps": {
+      "MAP_ROUTE18_EAST_ENTRANCE_1F:0/MAP_ROUTE18:0": "Route 18 Gate 1F Exit (West)",
       "MAP_ROUTE18_EAST_ENTRANCE_1F:1/MAP_ROUTE18:1": "Route 18 Gate 1F Exit (East)",
       "MAP_ROUTE18_EAST_ENTRANCE_1F:2/MAP_ROUTE18_EAST_ENTRANCE_2F:0": "Route 18 Gate 1F Stairs"
     }
