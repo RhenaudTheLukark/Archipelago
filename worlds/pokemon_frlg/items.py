@@ -65,5 +65,11 @@ def update_renewable_to_progression(item: PokemonFRLGItem) -> None:
     if item.name in RENEWABLE_PROGRESSION_ITEMS:
         item.classification = ItemClassification.progression
 
-def is_renewable_progression(world: "PokemonFRLGWorld", item: Item) -> bool:
-    return item.name in RENEWABLE_PROGRESSION_ITEMS and item.player == world.player
+def is_single_purchase_item(item: PokemonFRLGItem) -> bool:
+    if (item.name in item_groups["Key Items"]
+            or item.name in item_groups["Badges"]
+            or item.name in item_groups["HMs"]
+            or item.name in item_groups["Fly Unlocks"]
+            or item.name in item_groups["Abilities"]):
+        return True
+    return False

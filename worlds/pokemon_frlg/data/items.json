@@ -181,6 +181,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Fossils", "Unique Items"]
   },
+  "ITEM_EXP_SHARE": {
+    "name": "Exp. Share",
+    "classification": "USEFUL",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_FAME_CHECKER": {
     "name": "Fame Checker",
     "classification": "PROGRESSION",
@@ -1276,11 +1281,6 @@
   },
   "ITEM_MACHO_BRACE": {
     "name": "Macho Brace",
-    "classification": "USEFUL",
-    "tags": ["Held Items"]
-  },
-  "ITEM_EXP_SHARE": {
-    "name": "Exp. Share",
     "classification": "USEFUL",
     "tags": ["Held Items"]
   },

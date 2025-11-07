@@ -306,7 +306,7 @@ class PokemonFRLGClient(BizHawkClient):
                 return False
 
             options_address = data.rom_addresses["gArchipelagoOptions"][self.game_version]
-            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x50, 1, "ROM")]))[0]
+            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x4E, 1, "ROM")]))[0]
             remote_items = int.from_bytes(remote_items_bytes, "little")
         except UnicodeDecodeError:
             return False

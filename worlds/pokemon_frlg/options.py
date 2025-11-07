@@ -2,10 +2,11 @@
 Option definitions for Pokémon FireRed/LeafGreen
 """
 from dataclasses import dataclass
-from schema import Optional, Schema, And
+from schema import And, Optional, Or, Schema
 from Options import (Choice, DeathLink, DefaultOnToggle, NamedRange, OptionDict, OptionSet, PerGameCommonOptions, Range,
                      Toggle)
-from .data import data, ability_name_map, fly_blacklist_map, fly_plando_maps, move_name_map, starting_town_blacklist_map
+from .data import (data, ability_name_map, fly_blacklist_map, fly_plando_maps, move_name_map,
+                   starting_town_blacklist_map, GAME_OPTIONS)
 
 
 class GameVersion(Choice):
@@ -1245,21 +1246,6 @@ class AllPokemonSeen(Toggle):
     display_name = "All Pokemon Seen"
 
 
-class ExpModifier(Range):
-    """
-    Sets the EXP multiplier that is used when the in game option for experience is set to Custom.
-
-    100 is default
-    50 is half
-    200 is double
-    etc.
-    """
-    display_name = "Exp Modifier"
-    range_start = 1
-    range_end = 1000
-    default = 100
-
-
 class StartingMoney(Range):
     """
     Sets the amount of money that you start with.
@@ -1344,50 +1330,64 @@ class GameOptions(OptionDict):
     Allows you to preset the in game options.
     The available options and their allowed values are the following:
 
+    - Text Speed: Slow, Mid, Fast, Instant
+    - Turbo Button: Off, A, B, A/B
     - Auto Run: Off, On
+    - Button Mode: Help, L/R, L=A
+    - Frame: 1-10
     - Battle Scene: Off, On
     - Battle Style: Shift, Set
-    - Bike Music: Off, On
-    - Blind Trainers: Off, On
-    - Button Mode: Help, LR, L=A
-    - Encounter Rates: Vanilla, Normalized
-    - Experience: None, Half, Normal, Double, Triple, Quadruple, Custom
-    - Frame: 1-10
-    - Guaranteed Catch: Off, On
-    - Item Messages: All, Progression, None
-    - Low HP Beep: Off, On
     - Show Effectiveness: Off, On
-    - Skip Fanfares: Off, On
+    - Experience Multiplier: 0-1000 in increments of 10 (0, 10, 20, etc.)
+    - Experience Distribution: Gen III, Gen VI, Gen VIII
     - Sound: Mono, Stereo
+    - Low HP Beep: Off, On
+    - Skip Fanfares: Off, On
+    - Bike Music: Off, On
     - Surf Music: Off, On
-    - Text Speed: Slow, Mid, Fast, Instant
-    - Turbo A: Off, On
+    - Guaranteed Catch: Off, On
+    - Guaranteed Run: Off, On
+    - Encounter Rates: Vanilla, Normalized
+    - Blind Trainers: Off, On
+    - Skip Nicknames: Off, On
+    - Item Messages: All, Progression, None
     """
     display_name = "Game Options"
-    default = {"Text Speed": "Instant", "Turbo A": "Off", "Auto Run": "Off", "Button Mode": "Help", "Frame": 1,
-               "Battle Scene": "On", "Battle Style": "Shift", "Show Effectiveness": "On", "Experience": "Custom",
-               "Sound": "Mono", "Low HP Beep": "On", "Skip Fanfares": "Off", "Bike Music": "On", "Surf Music": "On",
-               "Guaranteed Catch": "Off", "Encounter Rates": "Vanilla", "Blind Trainers": "Off",
-               "Item Messages": "Progression"}
+    # noinspection PyTypeChecker
     schema = Schema({
-        "Text Speed": And(str, lambda s: s in ("Slow", "Mid", "Fast", "Instant")),
-        "Turbo A": And(str, lambda s: s in ("Off", "On")),
-        "Auto Run": And(str, lambda s: s in ("Off", "On")),
-        "Button Mode": And(str, lambda s: s in ("Help", "LR", "L=A")),
-        "Frame": And(int, lambda n: 1 <= n <= 10),
-        "Battle Scene": And(str, lambda s: s in ("Off", "On")),
-        "Battle Style": And(str, lambda s: s in ("Shift", "Set")),
-        "Show Effectiveness": And(str, lambda s: s in ("Off", "On")),
-        "Experience": And(str, lambda s: s in ("None", "Half", "Normal", "Double", "Triple", "Quadruple", "Custom")),
-        "Sound": And(str, lambda s: s in ("Mono", "Stereo")),
-        "Low HP Beep": And(str, lambda s: s in ("Off", "On")),
-        "Skip Fanfares": And(str, lambda s: s in ("Off", "On")),
-        "Bike Music": And(str, lambda s: s in ("Off", "On")),
-        "Surf Music": And(str, lambda s: s in ("Off", "On")),
-        "Guaranteed Catch": And(str, lambda s: s in ("Off", "On")),
-        "Encounter Rates": And(str, lambda s: s in ("Vanilla", "Normalized")),
-        "Blind Trainers": And(str, lambda s: s in ("Off", "On")),
-        "Item Messages": And(str, lambda s: s in ("All", "Progression", "None"))
+        Optional("Text Speed"): And(str, lambda s: s in GAME_OPTIONS["Text Speed"].options.keys()),
+        Optional("Turbo Button"): Or(And(str, lambda s: s in GAME_OPTIONS["Turbo Button"].options.keys()),
+                                     And(bool, lambda s: s in GAME_OPTIONS["Turbo Button"].options.keys()),),
+        Optional("Auto Run"): Or(And(str, lambda s: s in GAME_OPTIONS["Auto Run"].options.keys()),
+                                 And(bool, lambda s: s in GAME_OPTIONS["Auto Run"].options.keys()),),
+        Optional("Button Mode"): And(str, lambda s: s in GAME_OPTIONS["Button Mode"].options.keys()),
+        Optional("Frame"): And(int, lambda i: i in GAME_OPTIONS["Frame"].options.keys()),
+        Optional("Battle Scene"): Or(And(str, lambda s: s in GAME_OPTIONS["Battle Scene"].options.keys()),
+                                     And(bool, lambda s: s in GAME_OPTIONS["Battle Scene"].options.keys()),),
+        Optional("Battle Style"): And(str, lambda s: s in GAME_OPTIONS["Battle Style"].options.keys()),
+        Optional("Show Effectiveness"): Or(And(str, lambda s: s in GAME_OPTIONS["Show Effectiveness"].options.keys()),
+                                           And(bool, lambda s: s in GAME_OPTIONS["Show Effectiveness"].options.keys()),),
+        Optional("Experience Multiplier"): And(int, lambda s: s in GAME_OPTIONS["Experience Multiplier"].options.keys()),
+        Optional("Experience Distribution"): And(str, lambda s: s in GAME_OPTIONS["Experience Distribution"].options.keys()),
+        Optional("Sound"): And(str, lambda s: s in GAME_OPTIONS["Sound"].options.keys()),
+        Optional("Low HP Beep"): Or(And(str, lambda s: s in GAME_OPTIONS["Low HP Beep"].options.keys()),
+                                    And(bool, lambda s: s in GAME_OPTIONS["Low HP Beep"].options.keys()),),
+        Optional("Skip Fanfares"): Or(And(str, lambda s: s in GAME_OPTIONS["Skip Fanfares"].options.keys()),
+                                      And(bool, lambda s: s in GAME_OPTIONS["Skip Fanfares"].options.keys()),),
+        Optional("Bike Music"): Or(And(str, lambda s: s in GAME_OPTIONS["Bike Music"].options.keys()),
+                                   And(bool, lambda s: s in GAME_OPTIONS["Bike Music"].options.keys()),),
+        Optional("Surf Music"): Or(And(str, lambda s: s in GAME_OPTIONS["Surf Music"].options.keys()),
+                                   And(bool, lambda s: s in GAME_OPTIONS["Surf Music"].options.keys()),),
+        Optional("Guaranteed Catch"): Or(And(str, lambda s: s in GAME_OPTIONS["Guaranteed Catch"].options.keys()),
+                                         And(bool, lambda s: s in GAME_OPTIONS["Guaranteed Catch"].options.keys()),),
+        Optional("Guaranteed Run"): Or(And(str, lambda s: s in GAME_OPTIONS["Guaranteed Run"].options.keys()),
+                                       And(bool, lambda s: s in GAME_OPTIONS["Guaranteed Run"].options.keys()),),
+        Optional("Encounter Rates"): And(str, lambda s: s in GAME_OPTIONS["Encounter Rates"].options.keys()),
+        Optional("Blind Trainers"): Or(And(str, lambda s: s in GAME_OPTIONS["Blind Trainers"].options.keys()),
+                                       And(bool, lambda s: s in GAME_OPTIONS["Blind Trainers"].options.keys()),),
+        Optional("Skip Nicknames"): Or(And(str, lambda s: s in GAME_OPTIONS["Skip Nicknames"].options.keys()),
+                                       And(bool, lambda s: s in GAME_OPTIONS["Skip Nicknames"].options.keys()),),
+        Optional("Item Messages"): And(str, lambda s: s in GAME_OPTIONS["Item Messages"].options.keys()),
     })
 
 
@@ -1513,7 +1513,6 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     reusable_tm_tutors: ReusableTmsTutors
     min_catch_rate: MinCatchRate
     all_pokemon_seen: AllPokemonSeen
-    exp_modifier: ExpModifier
     starting_money: StartingMoney
     better_shops: BetterShops
     free_fly_location: FreeFlyLocation
