@@ -937,7 +937,6 @@ def init() -> None:
                         location_address[game_version_revision].append(
                             alternate_rival_json["address"][game_version_revision])
 
-                # noinspection PyTypeChecker
                 new_location = LocationData(
                     location_id,
                     location_data[location_id]["name"],
@@ -950,7 +949,6 @@ def init() -> None:
                     frozenset(location_data[location_id]["tags"])
                 )
             else:
-                # noinspection PyTypeChecker
                 new_location = LocationData(
                     location_id,
                     location_data[location_id]["name"],
@@ -969,7 +967,6 @@ def init() -> None:
 
         # Events
         for event_id in region_json["events"]:
-            # noinspection PyTypeChecker
             new_event = EventData(
                 event_id,
                 event_data[event_id]["name"],

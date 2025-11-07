@@ -885,7 +885,6 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld") -> None:
 
 def _set_shop_data(world: "PokemonFRLGWorld") -> None:
     patch = world.patch_data
-    # noinspection PyTypeChecker
     shop_locations: List[PokemonFRLGLocation] = [loc for loc in world.get_locations()
                                                  if loc.category == LocationCategory.SHOP_ITEM]
     already_set_prices: Dict[str, int] = {}
@@ -925,7 +924,6 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
         if location.item.player == world.player:
             already_set_prices[location.item.name] = price
 
-        # noinspection PyTypeChecker
         if ((location.item.player and is_single_purchase_item(location.item) or location.item.player != world.player)
                 and location.address is not None):
             patch.write_token(item_address, 6, struct.pack("<B", 0))

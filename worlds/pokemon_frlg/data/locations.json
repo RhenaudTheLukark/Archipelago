@@ -3109,6 +3109,24 @@
     "category": "SHOP_ITEM",
     "include": []
   },
+  "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_1": {
+    "name": "Celadon Department Store Roof - Vending Machine Item 1",
+    "tags": ["Vending Machines", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_2": {
+    "name": "Celadon Department Store Roof - Vending Machine Item 2",
+    "tags": ["Vending Machines", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_3": {
+    "name": "Celadon Department Store Roof - Vending Machine Item 3",
+    "tags": ["Vending Machines", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
   "SHOP_CELADON_CITY_DEPT_VITAMIN_1": {
     "name": "Celadon Department Store 5F - Vitamin Shop Item 1",
     "tags": ["Shops", "Kanto", "Celadon City"],
@@ -3699,55 +3717,55 @@
   },
   "SHOP_TWO_ISLAND_1": {
     "name": "Two Island Town - Market Stall Item 1",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_2": {
     "name": "Two Island Town - Market Stall Item 2",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_3": {
     "name": "Two Island Town - Market Stall Item 3",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_4": {
     "name": "Two Island Town - Market Stall Item 4",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_5": {
     "name": "Two Island Town - Market Stall Item 5",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_6": {
     "name": "Two Island Town - Market Stall Item 6",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_7": {
     "name": "Two Island Town - Market Stall Item 7",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_8": {
     "name": "Two Island Town - Market Stall Item 8",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },
   "SHOP_TWO_ISLAND_9": {
     "name": "Two Island Town - Market Stall Item 9",
-    "tags": ["Shops", "Sevii Islands", "Two Island", "Two Island Town"],
+    "tags": ["Shops", "Market Stall", "Sevii Islands", "Two Island", "Two Island Town"],
     "category": "SHOP_ITEM",
     "include": []
   },

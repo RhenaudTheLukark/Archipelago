@@ -624,6 +624,7 @@ class PokemonFRLGWorld(World):
             "shuffle_hidden",
             "extra_key_items",
             "shopsanity",
+            "vending_machines",
             "rematchsanity",
             "famesanity",
             "shuffle_fly_unlocks",

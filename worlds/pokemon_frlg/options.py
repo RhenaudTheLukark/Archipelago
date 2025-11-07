@@ -183,6 +183,13 @@ class Shopsanity(Toggle):
     display_name = "Shopsanity"
 
 
+class VendingMachines(Toggle):
+    """
+    Shuffles the Celadon Department Store vending machine items into the general item pool.
+    """
+    display_name = "Vending Machines"
+
+
 class ShopSlots(NamedRange):
     """
     Sets the number of slots per shop that can have progression items when shopsanity is on. Shop slots that cannot be
@@ -1355,7 +1362,6 @@ class GameOptions(OptionDict):
     - Item Messages: All, Progression, None
     """
     display_name = "Game Options"
-    # noinspection PyTypeChecker
     schema = Schema({
         Optional("Text Speed"): And(str, lambda s: s in GAME_OPTIONS["Text Speed"].options.keys()),
         Optional("Turbo Button"): Or(And(str, lambda s: s in GAME_OPTIONS["Turbo Button"].options.keys()),
@@ -1428,6 +1434,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_hidden: ShuffleHiddenItems
     extra_key_items: ExtraKeyItems
     shopsanity: Shopsanity
+    vending_machines: VendingMachines
     shop_slots: ShopSlots
     shop_prices: ShopPrices
     consistent_shop_prices: ConsistentShopPrices

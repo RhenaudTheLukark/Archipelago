@@ -46,6 +46,8 @@ TRACKER_EVENT_FLAGS = [
     "FLAG_SYS_UNLOCKED_TANOBY_RUINS",
     "FLAG_SYS_CAN_LINK_WITH_RS",  # Restored Pokémon Network Machine
     "FLAG_DEFEATED_CHAMP_REMATCH",
+    "FLAG_PURCHASED_FRESH_WATER",
+    "FLAG_PURCHASED_SODA_POP",
     "FLAG_PURCHASED_LEMONADE"
 ]
 EVENT_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in TRACKER_EVENT_FLAGS}
@@ -817,7 +819,7 @@ class PokemonFRLGClient(BizHawkClient):
                 ctx.bizhawk_ctx, [
                     (data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], 1, "System Bus"),
                     (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused game stat
-                    (sb2_address + 0xF24, 4, "System Bus"),  # Encryption key
+                    (sb2_address + 0xF26, 4, "System Bus"),  # Encryption key
                 ],
                 [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
             )

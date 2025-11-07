@@ -1541,13 +1541,14 @@
     "has_fishing": false,
     "kanto": true,
     "locations": [
+      "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_1",
+      "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_2",
+      "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_3",
       "NPC_GIFT_GOT_TM16_FROM_THIRSTY_GIRL",
       "NPC_GIFT_GOT_TM20_FROM_THIRSTY_GIRL",
       "NPC_GIFT_GOT_TM33_FROM_THIRSTY_GIRL"
     ],
-    "events": [
-      "EVENT_BUY_VENDING_MACHINE_LEMONADE"
-    ],
+    "events": [],
     "exits": {},
     "warps": {
       "MAP_CELADON_CITY_DEPARTMENT_STORE_ROOF:0/MAP_CELADON_CITY_DEPARTMENT_STORE_5F:2": "Celadon Department Store Roof Exit"

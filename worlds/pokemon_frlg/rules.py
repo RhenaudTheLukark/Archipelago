@@ -1739,6 +1739,12 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner - Southeast Hidden Item",
                   lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Fresh Water)",
+                  lambda state: state.has("Fresh Water", player))
+    add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Soda Pop)",
+                  lambda state: state.has("Soda Pop", player))
+    add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Lemonade)",
+                  lambda state: state.has("Lemonade", player))
     add_rule_safe("Celadon Condominiums 1F - Brock Gift",
                   lambda state: state.has("Defeat Brock", player))
     add_rule_safe("Celadon Condominiums 1F - Misty Gift",

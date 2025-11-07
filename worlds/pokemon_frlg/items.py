@@ -8,8 +8,8 @@ if TYPE_CHECKING:
     from . import PokemonFRLGWorld
 
 
-RENEWABLE_PROGRESSION_ITEMS = ("Lemonade", "King's Rock", "Metal Coat", "Dragon Scale", "Up-Grade", "Deep Sea Scale",
-                               "Deep Sea Tooth", "Heart Scale")
+RENEWABLE_PROGRESSION_ITEMS = ("Fresh Water", "Soda Pop", "Lemonade", "King's Rock", "Metal Coat", "Dragon Scale",
+                               "Up-Grade", "Deep Sea Scale", "Deep Sea Tooth", "Heart Scale")
 
 
 class PokemonFRLGItem(Item):
