@@ -7,7 +7,7 @@ from .data import (data, EncounterType, LocationCategory, fly_destination_areas,
                    fly_destination_random, fly_destination_regions, fly_plando_maps, starting_town_blacklist_map)
 from .items import PokemonFRLGItem
 from .locations import PokemonFRLGLocation
-from .options import LevelScaling, RandomizeFlyDestinations
+from .options import LevelScaling, PewterCityRoadblock, RandomizeFlyDestinations
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -494,6 +494,9 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         forbidden_starting_towns = ["SPAWN_INDIGO_PLATEAU"]
         if not world.options.shuffle_badges:
             forbidden_starting_towns.extend(["SPAWN_ROUTE4", "SPAWN_ROUTE10"])
+        elif world.options.pewter_city_roadblock in (PewterCityRoadblock.option_brock,
+                                                     PewterCityRoadblock.option_any_gym):
+            forbidden_starting_towns.append("SPAWN_ROUTE4")
         if world.options.kanto_only:
             forbidden_starting_towns.extend(["SPAWN_ONE_ISLAND", "SPAWN_TWO_ISLAND", "SPAWN_THREE_ISLAND",
                                              "SPAWN_FOUR_ISLAND", "SPAWN_FIVE_ISLAND", "SPAWN_SIX_ISLAND",
@@ -548,37 +551,24 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
 
 def create_indirect_conditions(world: "PokemonFRLGWorld"):
-    indirect_conditions: Dict[str, List[str]] = {
-        "Seafoam Islands 1F": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                               "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                               "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                               "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                               "Seafoam Islands B3F (South Water) Water Battle"],
-        "Seafoam Islands B1F (West)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                                       "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                                       "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                                       "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                                       "Seafoam Islands B3F (South Water) Water Battle"],
-        "Seafoam Islands B1F (Northeast)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (South Water) Water Battle"],
-        "Seafoam Islands B2F (Northwest)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (South Water) Water Battle"],
-        "Seafoam Islands B2F (Northeast)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                                            "Seafoam Islands B3F (South Water) Water Battle"],
-        "Seafoam Islands B3F (West)": ["Seafoam Islands B4F Surfing Spot (Left)",
-                                       "Seafoam Islands B4F (Near Articuno) Landing Spot"],
-        "Victory Road 3F (Southwest)": ["Victory Road 2F Southeast Rock Barrier (Left)"],
-        "Vermilion City": ["Depart Seagallop (Navel Rock)", "Depart Seagallop (Birth Island)"]
-    }
-    for region, entrances in indirect_conditions.items():
-        for entrance in entrances:
-            world.multiworld.register_indirect_condition(world.get_region(region), world.get_entrance(entrance))
+    indirect_conditions: List[Tuple[List[str], List[str]]] = [
+        (["Seafoam Islands 1F", "Seafoam Islands B1F (West)", "Seafoam Islands B1F (Northeast)",
+         "Seafoam Islands B2F (Northwest)", "Seafoam Islands B2F (Northeast)"],
+         ["Seafoam Islands B3F (West) Surfing Spot (Bottom)", "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+          "Seafoam Islands B3F (East) Landing Spot (Bottom)", "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+          "Seafoam Islands B3F (South Water) Water Battle"]),
+        (["Seafoam Islands B3F (West)"],
+         ["Seafoam Islands B4F Surfing Spot (Left)", "Seafoam Islands B4F (Near Articuno) Landing Spot"]),
+        (["Pokemon Mansion 1F", "Pokemon Mansion 2F", "Pokemon Mansion 3F (North)", "Pokemon Mansion B1F"],
+         ["Pokemon Mansion 1F South Barrier", "Pokemon Mansion 1F Southeast Barrier",
+          "Pokemon Mansion 2F Center Barrier (Top)", "Pokemon Mansion 2F Center Barrier (Bottom)",
+          "Pokemon Mansion 3F Barrier (Top)", "Pokemon Mansion 3F Barrier (Bottom)"]),
+        (["Victory Road 3F (Southwest)"],
+         ["Victory Road 2F Southeast Rock Barrier (Left)"]),
+        (["Vermilion City"],
+         ["Depart Seagallop (Navel Rock)", "Depart Seagallop (Birth Island)"])
+    ]
+    for indirect_condition in indirect_conditions:
+        for region in indirect_condition[0]:
+            for entrance in indirect_condition[1]:
+                world.multiworld.register_indirect_condition(world.get_region(region), world.get_entrance(entrance))

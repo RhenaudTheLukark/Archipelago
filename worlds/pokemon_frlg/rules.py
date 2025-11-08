@@ -258,6 +258,12 @@ class PokemonFRLGLogic:
     def can_stop_seafoam_b4f_current(self, state: CollectionState) -> bool:
         return self.can_strength(state) and state.can_reach_region("Seafoam Islands B3F (West)", self.player)
 
+    def can_push_mansion_switch(self, state: CollectionState) -> bool:
+        return (state.can_reach_region("Pokemon Mansion 1F", self.player)
+                or state.can_reach_region("Pokemon Mansion 2F", self.player)
+                or state.can_reach_region("Pokemon Mansion 3F (North)", self.player)
+                or state.can_reach_region("Pokemon Mansion B1F", self.player))
+
     def can_turn_in_meteorite(self, state: CollectionState) -> bool:
         return state.has_all(("Rescue Lostelle", "Meteorite"), self.player)
 
@@ -1152,6 +1158,20 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Defeat Blaine", player))
     add_rule_safe("Pokemon Mansion 1F Exit (East)",
                   lambda state: not logic.randomizing_entrances)
+
+    # Pokemon Mansion
+    add_rule_safe("Pokemon Mansion 1F South Barrier",
+                  lambda state: logic.can_push_mansion_switch(state))
+    add_rule_safe("Pokemon Mansion 1F Southeast Barrier",
+                  lambda state: logic.can_push_mansion_switch(state))
+    add_rule_safe("Pokemon Mansion 2F Center Barrier (Top)",
+                  lambda state: logic.can_push_mansion_switch(state))
+    add_rule_safe("Pokemon Mansion 2F Center Barrier (Bottom)",
+                  lambda state: logic.can_push_mansion_switch(state))
+    add_rule_safe("Pokemon Mansion 3F Barrier (Top)",
+                  lambda state: logic.can_push_mansion_switch(state))
+    add_rule_safe("Pokemon Mansion 3F Barrier (Bottom)",
+                  lambda state: logic.can_push_mansion_switch(state))
 
     # Route 21
     add_rule_safe("Route 21 Surfing Spot",
