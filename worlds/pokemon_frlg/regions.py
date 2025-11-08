@@ -517,6 +517,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         if len(allowed_starting_towns) == 0:
             allowed_starting_towns = [town for town in starting_town_map.keys() if town not in forbidden_starting_towns]
         world.starting_town = world.random.choice(allowed_starting_towns)
+        world.starting_respawn = world.starting_town
 
     if world.options.randomize_fly_destinations != RandomizeFlyDestinations.option_off:
         fly_destinations = {}

@@ -118,6 +118,7 @@ class PokemonFRLGWorld(World):
     logic: PokemonFRLGLogic
     patch_data: PokemonFRLGPatchData
     starting_town: str
+    starting_respawn: str
     free_fly_location_id: int
     town_map_fly_location_id: int
     modified_species: Dict[int, SpeciesData]
@@ -160,6 +161,7 @@ class PokemonFRLGWorld(World):
         self.logic = PokemonFRLGLogic(player, self.item_id_to_name)
         self.patch_data = PokemonFRLGPatchData()
         self.starting_town = "SPAWN_PALLET_TOWN"
+        self.starting_respawn = "SPAWN_PALLET_TOWN"
         self.free_fly_location_id = 0
         self.town_map_fly_location_id = 0
         self.modified_species = copy.deepcopy(data.species)
@@ -359,8 +361,8 @@ class PokemonFRLGWorld(World):
         if self.options.shuffle_tm_case:
             self.itempool.append(self.create_item("TM Case"))
             self.itempool.remove(filler_items.pop())
-        if self.options.shuffle_ledge_jump:
-            self.itempool.append(self.create_item("Ledge Jump"))
+        if self.options.shuffle_jumping_shoes:
+            self.itempool.append(self.create_item("Jumping Shoes"))
             self.itempool.remove(filler_items.pop())
 
         # Add key items that are relevant in Kanto Only to the itempool
@@ -372,8 +374,7 @@ class PokemonFRLGWorld(World):
 
         # Remove copies unique items based on how many are in the start inventory
         unique_items: Set[str] = set(item_groups["Unique Items"] |
-                                     item_groups["Progressive Items"] |
-                                     item_groups["Abilities"])
+                                     item_groups["Progressive Items"])
         for item in self.multiworld.precollected_items[self.player]:
             assert isinstance(item, PokemonFRLGItem)
             if item.name in unique_items:
@@ -638,7 +639,7 @@ class PokemonFRLGWorld(World):
             "itemfinder_required",
             "flash_required",
             "fame_checker_required",
-            "bicycle_requires_ledge_jump",
+            "bicycle_requires_jumping_shoes",
             "acrobatic_bicycle",
             "remove_badge_requirement",
             "oaks_aide_route_2",

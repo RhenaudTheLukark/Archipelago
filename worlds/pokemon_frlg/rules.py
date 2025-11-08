@@ -83,7 +83,7 @@ class PokemonFRLGLogic:
     oaks_aides_require_evos: bool
     randomizing_entrances: bool
     guaranteed_hm_access: bool
-    bicycle_requires_ledge_jump: bool
+    bicycle_requires_jumping_shoes: bool
     acrobatic_bicycle: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
@@ -104,7 +104,7 @@ class PokemonFRLGLogic:
         self.oaks_aides_require_evos = False
         self.randomizing_entrances = False
         self.guaranteed_hm_access = False
-        self.bicycle_requires_ledge_jump = True
+        self.bicycle_requires_jumping_shoes = True
         self.acrobatic_bicycle = False
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
@@ -193,13 +193,13 @@ class PokemonFRLGLogic:
         return state.has_all(("Rescue Selphy", data.species[self.resort_gorgeous_pokemon].name), self.player)
 
     def can_jump_down_ledge(self, state: CollectionState) -> bool:
-        return (state.has("Ledge Jump", self.player) or
-                (not self.bicycle_requires_ledge_jump and state.has("Bicycle", self.player)))
+        return (state.has("Jumping Shoes", self.player) or
+                (not self.bicycle_requires_jumping_shoes and state.has("Bicycle", self.player)))
 
     def can_jump_up_ledge(self, state: CollectionState) -> bool:
         return (self.acrobatic_bicycle and
-                (state.has_all(("Ledge Jump", "Bicycle"), self.player) or
-                 (not self.bicycle_requires_ledge_jump and state.has("Bicycle", self.player))))
+                (state.has_all(("Jumping Shoes", "Bicycle"), self.player) or
+                 (not self.bicycle_requires_jumping_shoes and state.has("Bicycle", self.player))))
 
     def has_island_pass(self, state: CollectionState, group: int) -> bool:
         return state.has(ISLAND_PASSES[group - 1], self.player) or state.has("Progressive Pass", self.player, group)
@@ -351,7 +351,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.dexsanity_requires_evos = "Dexsanity" in world.options.evolutions_required.value
     logic.hms_require_evos = "HM Requirement" in world.options.evolutions_required.value
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
-    logic.bicycle_requires_ledge_jump = bool(world.options.bicycle_requires_ledge_jump.value)
+    logic.bicycle_requires_jumping_shoes = bool(world.options.bicycle_requires_jumping_shoes.value)
     logic.acrobatic_bicycle = bool(world.options.acrobatic_bicycle.value)
 
     # Until locations have been created, assume all Pokémon species are present in the world.

@@ -50,9 +50,9 @@ def add_starting_items(world: "PokemonFRLGWorld") -> None:
     if not world.options.shuffle_tm_case:
         world.options.start_inventory.value["TM Case"] = 1
         world.multiworld.push_precollected(world.create_item("TM Case"))
-    if not world.options.shuffle_ledge_jump:
-        world.options.start_inventory.value["Ledge Jump"] = 1
-        world.multiworld.push_precollected(world.create_item("Ledge Jump"))
+    if not world.options.shuffle_jumping_shoes:
+        world.options.start_inventory.value["Jumping Shoes"] = 1
+        world.multiworld.push_precollected(world.create_item("Jumping Shoes"))
 
 def get_random_item(world: "PokemonFRLGWorld", item_classification: ItemClassification = None) -> str:
     if item_classification is None:
@@ -69,7 +69,6 @@ def is_single_purchase_item(item: PokemonFRLGItem) -> bool:
     if (item.name in item_groups["Key Items"]
             or item.name in item_groups["Badges"]
             or item.name in item_groups["HMs"]
-            or item.name in item_groups["Fly Unlocks"]
-            or item.name in item_groups["Abilities"]):
+            or item.name in item_groups["Fly Unlocks"]):
         return True
     return False

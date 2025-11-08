@@ -241,6 +241,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
+  "ITEM_JUMPING_SHOES": {
+    "name": "Jumping Shoes",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_LEAF_STONE": {
     "name": "Leaf Stone",
     "classification": "PROGRESSION",
@@ -475,12 +480,6 @@
     "name": "Water Stone",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Evolution Items"]
-  },
-
-  "ITEM_LEDGE_JUMP": {
-    "name": "Ledge Jump",
-    "classification": "PROGRESSION",
-    "tags": ["Abilities"]
   },
 
   "ITEM_FLY_PALLET": {

@@ -393,7 +393,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x2E */ bool8 itemfinderRequired;
     # /* 0x2F */ bool8 flashRequired;
     # /* 0x30 */ bool8 fameCheckerRequired;
-    # /* 0x31 */ bool8 bikeRequiresLedgeJump;
+    # /* 0x31 */ bool8 bikeRequiresJumpingShoes;
     # /* 0x32 */ bool8 acrobaticBike;
     #
     # /* 0x33 */ u8 oaksAideRequiredCounts[5]; // Route 2, Route 10, Route 11, Route 16, Route 15
@@ -416,13 +416,14 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x45 */ bool8 teasSplit;
     #
     # /* 0x46 */ u8 startingLocation;
-    # /* 0x47 */ u8 free_fly_id;
-    # /* 0x48 */ u8 town_free_fly_id;
-    # /* 0x49 */ u16 resortGorgeousMon;
-    # /* 0x4B */ u16 introSpecies;
-    # /* 0x4D */ u16 pcItemId;
-    # /* 0x4F */ bool8 remoteItems;
-    # /* 0x50 */ bool8 randomized;
+    # /* 0x47 */ u8 startingRespawn;
+    # /* 0x48 */ u8 free_fly_id;
+    # /* 0x49 */ u8 town_free_fly_id;
+    # /* 0x4A */ u16 resortGorgeousMon;
+    # /* 0x4C */ u16 introSpecies;
+    # /* 0x4E */ u16 pcItemId;
+    # /* 0x50 */ bool8 remoteItems;
+    # /* 0x51 */ bool8 randomized;
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -604,9 +605,9 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     fame_checker_required = 1 if world.options.fame_checker_required else 0
     patch.write_token(options_address, 0x30, struct.pack("<B", fame_checker_required))
 
-    # Set bicycle requires ledge jump
-    bicycle_requires_ledge_jump = 1 if world.options.bicycle_requires_ledge_jump else 0
-    patch.write_token(options_address, 0x31, struct.pack("<B", bicycle_requires_ledge_jump))
+    # Set bicycle requires jumping shoes
+    bicycle_requires_jumping_shoes = 1 if world.options.bicycle_requires_jumping_shoes else 0
+    patch.write_token(options_address, 0x31, struct.pack("<B", bicycle_requires_jumping_shoes))
 
     # Set acrobatic bicycle
     acrobatic_bicycle = 1 if world.options.acrobatic_bicycle else 0
@@ -701,18 +702,22 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     starting_town = data.constants[world.starting_town]
     patch.write_token(options_address, 0x46, struct.pack("<B", starting_town))
 
+    # Set starting respawn
+    starting_respawn = data.constants[world.starting_respawn]
+    patch.write_token(options_address, 0x47, struct.pack("<B", starting_respawn))
+
     # Set free fly location
-    patch.write_token(options_address, 0x47, struct.pack("<B", world.free_fly_location_id))
+    patch.write_token(options_address, 0x48, struct.pack("<B", world.free_fly_location_id))
 
     # Set town map fly location
-    patch.write_token(options_address, 0x48, struct.pack("<B", world.town_map_fly_location_id))
+    patch.write_token(options_address, 0x49, struct.pack("<B", world.town_map_fly_location_id))
 
     # Set resort gorgeous mon
-    patch.write_token(options_address, 0x49, struct.pack("<H", world.logic.resort_gorgeous_pokemon))
+    patch.write_token(options_address, 0x4A, struct.pack("<H", world.logic.resort_gorgeous_pokemon))
 
     # Set intro species
     species_id = world.random.choice(list(data.species.keys()))
-    patch.write_token(options_address, 0x4B, struct.pack("<H", species_id))
+    patch.write_token(options_address, 0x4C, struct.pack("<H", species_id))
 
     # Set PC item ID
     pc_item_location = world.get_location("Player's PC - PC Item")
@@ -720,14 +725,14 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
         item_id = pc_item_location.item.code
     else:
         item_id = data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]
-    patch.write_token(options_address, 0x4D, struct.pack("<H", item_id))
+    patch.write_token(options_address, 0x4E, struct.pack("<H", item_id))
 
     # Set remote items
     remote_items = 1 if world.options.remote_items else 0
-    patch.write_token(options_address, 0x4F, struct.pack("<B", remote_items))
+    patch.write_token(options_address, 0x50, struct.pack("<B", remote_items))
 
     # Set that the game has been randomized
-    patch.write_token(options_address, 0x50, struct.pack("<B", 1))
+    patch.write_token(options_address, 0x51, struct.pack("<B", 1))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:

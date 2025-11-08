@@ -35,17 +35,17 @@
   * Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
   * Shuffle: The Pokédex is shuffled into the item pool
   * Start With: You start with the Pokédex
-* New option `shuffle_ledge_jump`
-  * Shuffles the ability to jump down ledges into the item pool. If not shuffled then you will start with it
+* New option `shuffle_jumping_shoes`
+  * Shuffles the Jumping Shoes into the item pool. If not shuffled then you will start with it. The Jumping Shoes are a new item that grants you the ability to jump down ledges
 * New option `post_goal_locations`
   * Sets whether locations that are locked behind completing your goal are included
 * New option `fishing_rods`
   * Vanilla: The fishing rods are all separate items in the pool and can be found in any order
   * There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
-* New option `bicycle_requires_ledge_jump`
-  * Sets whether the ability to jump down ledges is required for the Bicycle to jump down ledges
+* New option `bicycle_requires_jumping_shoes`
+  * Sets whether the Bicycle requires you to have the Jumping Shoes in order to jump down ledges while on the Bicycle
 * New option `acrobatic_bicycle`
-  * Sets whether the bicycle can be used to jump up ledges. If `bicycle_requires_ledge_jump` is on then you will need to be able to jump down ledges in order to jump up them as well
+  * Sets whether the Bicycle is able to jump up ledges in addition to jumping down ledges. If the `bicycle_requires_jumping_shoes` setting is on then the Jumping Shoes is necessary in order to jump up ledges as well
 * Updated option `modify_world_state`
   * Added All Elevators Locked: Prevents you from using the elevators in the Celadon Department Store and Silph Co. until you have gotten the Lift Key
 * New option `fossil_count`

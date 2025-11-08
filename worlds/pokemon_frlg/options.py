@@ -367,11 +367,13 @@ class ShuffleTMCase(Toggle):
     display_name = "Shuffle TM Case"
 
 
-class ShuffleLedgeJump(Toggle):
+class ShuffleJumpingShoes(Toggle):
     """
-    Shuffles the ability to jump down ledges into the item pool. If not shuffled then you will start with it.
+    Shuffles the Jumping Shoes into the item pool. If not shuffled then you will start with it.
+
+    The Jumping Shoes are a new item that grants you the ability to jump down ledges.
     """
-    display_name = "Shuffle Ledge Jump"
+    display_name = "Shuffle Jumping Shoes"
 
 
 class PostGoalLocations(Toggle):
@@ -501,17 +503,17 @@ class FameCheckerRequired(DefaultOnToggle):
     display_name = "Fame Checker Required"
 
 
-class BicycleRequiresLedgeJump(DefaultOnToggle):
+class BicycleRequiresJumpingShoes(DefaultOnToggle):
     """
-    Sets whether the Bicycle requires you to have the Ledge Jump ability in order to jump ledges.
+    Sets whether the Bicycle requires you to have the Jumping Shoes in order to jump down ledges while on the Bicycle.
     """
-    display_name = "Bicycle Requires Ledge Jump"
+    display_name = "Bicycle Requires Jumping Shoes"
 
 
 class AcrobaticBicycle(Toggle):
     """
-    Sets whether the Bicycle is able to jump up ledges in addition to jumping down ledges. If the Bicycle Requires Ledge
-    Jump setting is on then the Ledge Jump ability is necessary in order to jump up ledges as well.
+    Sets whether the Bicycle is able to jump up ledges in addition to jumping down ledges. If the Bicycle Requires
+    Jumping Shoes setting is on then the Jumping Shoes is necessary in order to jump up ledges as well.
     """
     display_name = "Acrobatic Bicycle"
 
@@ -1455,7 +1457,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     shuffle_running_shoes: ShuffleRunningShoes
     shuffle_berry_pouch: ShuffleBerryPouch
     shuffle_tm_case: ShuffleTMCase
-    shuffle_ledge_jump: ShuffleLedgeJump
+    shuffle_jumping_shoes: ShuffleJumpingShoes
     post_goal_locations: PostGoalLocations
     card_key: CardKey
     island_passes: IslandPasses
@@ -1466,7 +1468,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     itemfinder_required: ItemfinderRequired
     flash_required: FlashRequired
     fame_checker_required: FameCheckerRequired
-    bicycle_requires_ledge_jump: BicycleRequiresLedgeJump
+    bicycle_requires_jumping_shoes: BicycleRequiresJumpingShoes
     acrobatic_bicycle: AcrobaticBicycle
     evolutions_required: EvolutionsRequired
     evolution_methods_required: EvolutionMethodsRequired
