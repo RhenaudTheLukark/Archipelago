@@ -1695,26 +1695,6 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner - Gentleman Gift",
                   lambda state: state.has("Coin Case", player))
-    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 1",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 2",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 3",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 4",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 5",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Prize Pokemon 1 Scaling",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Prize Pokemon 2 Scaling",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Prize Pokemon 3 Scaling",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Prize Pokemon 4 Scaling",
-                  lambda state: state.has("Coin Case", player))
-    add_rule_safe("Prize Pokemon 5 Scaling",
-                  lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner - Northwest Hidden Item",
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner - North Hidden Item (Left)",
@@ -1738,6 +1718,46 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Celadon Game Corner - South Hidden Item (Right)",
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner - Southeast Hidden Item",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Item 1",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Item 2",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Item 3",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Item 4",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Item 5",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize TM 1",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize TM 2",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize TM 3",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize TM 4",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize TM 5",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 1",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 2",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 3",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 4",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 5",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Prize Pokemon 1 Scaling",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Prize Pokemon 2 Scaling",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Prize Pokemon 3 Scaling",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Prize Pokemon 4 Scaling",
+                  lambda state: state.has("Coin Case", player))
+    add_rule_safe("Prize Pokemon 5 Scaling",
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Fresh Water)",
                   lambda state: state.has("Fresh Water", player))

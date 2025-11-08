@@ -3163,6 +3163,66 @@
     "category": "SHOP_ITEM",
     "include": []
   },
+  "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_1": {
+    "name": "Celadon Game Corner Prize Room - Prize Item 1",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_2": {
+    "name": "Celadon Game Corner Prize Room - Prize Item 2",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_3": {
+    "name": "Celadon Game Corner Prize Room - Prize Item 3",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_4": {
+    "name": "Celadon Game Corner Prize Room - Prize Item 4",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_5": {
+    "name": "Celadon Game Corner Prize Room - Prize Item 5",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_1": {
+    "name": "Celadon Game Corner Prize Room - Prize TM 1",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_2": {
+    "name": "Celadon Game Corner Prize Room - Prize TM 2",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_3": {
+    "name": "Celadon Game Corner Prize Room - Prize TM 3",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_4": {
+    "name": "Celadon Game Corner Prize Room - Prize TM 4",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
+  "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_5": {
+    "name": "Celadon Game Corner Prize Room - Prize TM 5",
+    "tags": ["Prizes", "Kanto", "Celadon City"],
+    "category": "SHOP_ITEM",
+    "include": []
+  },
   "SHOP_CERULEAN_CITY_1": {
     "name": "Cerulean Poke Mart - Shop Item 1",
     "tags": ["Shops", "Kanto", "Cerulean City"],

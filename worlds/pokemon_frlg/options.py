@@ -190,6 +190,12 @@ class VendingMachines(Toggle):
     display_name = "Vending Machines"
 
 
+class Prizesanity(Toggle):
+    """
+    Shuffles the Celadon Game Corner Prize Room items and TMs into the general item pool.
+    """
+    display_name = "Prizesanity"
+
 class ShopSlots(NamedRange):
     """
     Sets the number of slots per shop that can have progression items when shopsanity is on. Shop slots that cannot be
@@ -1435,6 +1441,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     extra_key_items: ExtraKeyItems
     shopsanity: Shopsanity
     vending_machines: VendingMachines
+    prizesanity: Prizesanity
     shop_slots: ShopSlots
     shop_prices: ShopPrices
     consistent_shop_prices: ConsistentShopPrices

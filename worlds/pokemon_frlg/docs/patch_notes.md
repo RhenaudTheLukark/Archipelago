@@ -13,6 +13,8 @@
   * Local non-progression shop items can now be purchased repeatedly
 * Added option `vending_machines`
   * Shuffles the Celadon Department Store vending machine items into the general item pool
+* Added option `prizesanity`
+  * Shuffles the Celadon Game Corner Prize Room items and TMs into the general item pool
 * New option `shop_slots`
   * Sets the number of slots per shop that can have progression items when shopsanity is on. Shop slots that cannot be progression items will be filled with a random normal shop item from your world
 * Reworked option `shop_prices`

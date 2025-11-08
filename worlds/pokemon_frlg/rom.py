@@ -7,7 +7,8 @@ from typing import TYPE_CHECKING, Dict, List, Tuple
 
 from worlds.Files import APPatchExtension, APProcedurePatch, APTokenMixin, APTokenTypes
 from settings import get_settings
-from .data import data, APWORLD_VERSION, GAME_OPTIONS, EvolutionMethodEnum, LocationCategory, TrainerPokemonDataTypeEnum
+from .data import data, APWORLD_VERSION, GAME_OPTIONS, EvolutionMethodEnum, TrainerPokemonDataTypeEnum
+from.groups import location_groups
 from .items import is_single_purchase_item
 from .locations import PokemonFRLGLocation
 from .options import (CardKey, Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, IslandPasses,
@@ -886,7 +887,8 @@ def _set_randomized_fly_destinations(world: "PokemonFRLGWorld") -> None:
 def _set_shop_data(world: "PokemonFRLGWorld") -> None:
     patch = world.patch_data
     shop_locations: List[PokemonFRLGLocation] = [loc for loc in world.get_locations()
-                                                 if loc.category == LocationCategory.SHOP_ITEM]
+                                                 if loc.name in location_groups["Shops"]
+                                                 or loc.name in location_groups["Vending Machines"]]
     already_set_prices: Dict[str, int] = {}
 
     for location in shop_locations:

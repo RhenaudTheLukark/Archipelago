@@ -254,6 +254,8 @@ def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:
         shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Shops"]])
     if not world.options.vending_machines:
         shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Vending Machines"]])
+    if not world.options.prizesanity:
+        shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Prizes"]])
     for location in shop_locations:
         fill_unrandomized_location(location, True)
         update_renewable_to_progression(location.item)
@@ -270,12 +272,15 @@ def place_shop_items(world: "PokemonFRLGWorld") -> None:
         return
 
     shop_locations = [loc for loc in world.get_locations() if
-                      (loc.name in location_groups["Shops"] or loc.name in location_groups["Vending Machines"]) and
+                      (loc.name in location_groups["Shops"] or
+                       loc.name in location_groups["Vending Machines"] or
+                       loc.name in location_groups["Prizes"]) and
                       not loc.is_event]
     shop_items = [world.create_item_by_id(loc.default_item_id) for loc in shop_locations]
     non_progression_shop_locations = [loc for loc in shop_locations if
                                       loc.name not in location_groups["Market Stall"] and
                                       loc.name not in location_groups["Vending Machines"] and
+                                      loc.name not in location_groups["Prizes"] and
                                       int(loc.name[-1]) > world.options.shop_slots.value]
     world.random.shuffle(shop_items)
 
