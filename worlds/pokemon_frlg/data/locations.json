@@ -1,49 +1,49 @@
 {
   "BADGE_1": {
     "name": "Pewter Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Pewter City"],
+    "tags": ["Gym Prizes", "Kanto", "Pewter City", "Pewter Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_2": {
     "name": "Cerulean Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Cerulean City"],
+    "tags": ["Gym Prizes", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_3": {
     "name": "Vermilion Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Vermilion City"],
+    "tags": ["Gym Prizes", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_4": {
     "name": "Celadon Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Celadon City"],
+    "tags": ["Gym Prizes", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_5": {
     "name": "Fuchsia Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Fuchsia City"],
+    "tags": ["Gym Prizes", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_6": {
     "name": "Saffron Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Saffron City"],
+    "tags": ["Gym Prizes", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_7": {
     "name": "Cinnabar Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Cinnabar Island"],
+    "tags": ["Gym Prizes", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "BADGE_8": {
     "name": "Viridian Gym - Prize",
-    "tags": ["Gym Prizes", "Kanto", "Viridian City"],
+    "tags": ["Gym Prizes", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
@@ -293,7 +293,7 @@
   },
   "HIDDEN_ITEM_CERULEAN_CITY_GYM_MACHINE_PART": {
     "name": "Cerulean Gym - Hidden Item in Water",
-    "tags": ["Hidden Items", "Kanto", "Cerulean City"],
+    "tags": ["Hidden Items", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "HIDDEN_ITEM",
     "include": ["Extra Key Items"]
   },
@@ -2640,7 +2640,7 @@
   },
   "HIDDEN_ITEM_VIRIDIAN_CITY_GYM_MACHO_BRACE": {
     "name": "Viridian Gym - Hidden Item Under Giovanni",
-    "tags": ["Hidden Items", "Kanto", "Viridian City"],
+    "tags": ["Hidden Items", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "HIDDEN_ITEM",
     "include": ["Hidden Items"]
   },
@@ -2792,19 +2792,19 @@
   },
   "NPC_GIFT_GOT_TM03_FROM_MISTY": {
     "name": "Cerulean Gym - Misty TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Cerulean City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "NPC_GIFT_GOT_TM04_FROM_SABRINA": {
     "name": "Saffron Gym - Sabrina TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Saffron City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "NPC_GIFT_GOT_TM06_FROM_KOGA": {
     "name": "Fuchsia Gym - Koga TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Fuchsia City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
@@ -2816,7 +2816,7 @@
   },
   "NPC_GIFT_GOT_TM19_FROM_ERIKA": {
     "name": "Celadon Gym - Erika TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Celadon City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
@@ -2828,7 +2828,7 @@
   },
   "NPC_GIFT_GOT_TM26_FROM_GIOVANNI": {
     "name": "Viridian Gym - Giovanni TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Viridian City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
@@ -2858,19 +2858,19 @@
   },
   "NPC_GIFT_GOT_TM34_FROM_SURGE": {
     "name": "Vermilion Gym - Lt. Surge TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Vermilion City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "NPC_GIFT_GOT_TM38_FROM_BLAINE": {
     "name": "Cinnabar Gym - Blaine TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Cinnabar Island"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
   "NPC_GIFT_GOT_TM39_FROM_BROCK": {
     "name": "Pewter Gym - Brock TM",
-    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Pewter City"],
+    "tags": ["NPC Gifts", "Gym TMs", "Kanto", "Pewter City", "Pewter Gym"],
     "category": "NPC_GIFT",
     "include": []
   },
@@ -3922,7 +3922,7 @@
   },
   "TRAINER_BEAUTY_BRIDGET_REWARD": {
     "name": "Celadon Gym - Beauty Bridget Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -3946,7 +3946,7 @@
   },
   "TRAINER_BEAUTY_LORI_REWARD": {
     "name": "Celadon Gym - Beauty Lori Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -3970,7 +3970,7 @@
   },
   "TRAINER_BEAUTY_TAMIA_REWARD": {
     "name": "Celadon Gym - Beauty Tamia Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4312,7 +4312,7 @@
   },
   "TRAINER_BLACK_BELT_ATSUSHI_REWARD": {
     "name": "Viridian Gym - Black Belt Atsushi Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4354,7 +4354,7 @@
   },
   "TRAINER_BLACK_BELT_KIYO_REWARD": {
     "name": "Viridian Gym - Black Belt Kiyo Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4390,7 +4390,7 @@
   },
   "TRAINER_BLACK_BELT_TAKASHI_REWARD": {
     "name": "Viridian Gym - Black Belt Takashi Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4540,7 +4540,7 @@
   },
   "TRAINER_BURGLAR_DUSTY_REWARD": {
     "name": "Cinnabar Gym - Burglar Dusty Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4552,13 +4552,13 @@
   },
   "TRAINER_BURGLAR_QUINN_REWARD": {
     "name": "Cinnabar Gym - Burglar Quinn Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_BURGLAR_RAMON_REWARD": {
     "name": "Cinnabar Gym - Burglar Ramon Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4648,7 +4648,7 @@
   },
   "TRAINER_CAMPER_LIAM_REWARD": {
     "name": "Pewter Gym - Camper Liam Reward",
-    "tags": ["Trainers", "Kanto", "Pewter City"],
+    "tags": ["Trainers", "Kanto", "Pewter City", "Pewter Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4702,7 +4702,7 @@
   },
   "TRAINER_CHANNELER_AMANDA_REWARD": {
     "name": "Saffron Gym - Channeler Amanda Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4780,7 +4780,7 @@
   },
   "TRAINER_CHANNELER_STACY_REWARD": {
     "name": "Saffron Gym - Channeler Stacy Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4792,7 +4792,7 @@
   },
   "TRAINER_CHANNELER_TASHA_REWARD": {
     "name": "Saffron Gym - Channeler Tasha Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4834,7 +4834,7 @@
   },
   "TRAINER_COOLTRAINER_MARY_REWARD": {
     "name": "Celadon Gym - Cooltrainer Mary Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -4864,19 +4864,19 @@
   },
   "TRAINER_COOLTRAINER_SAMUEL_REWARD": {
     "name": "Viridian Gym - Cooltrainer Samuel Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_COOLTRAINER_WARREN_REWARD": {
     "name": "Viridian Gym - Cooltrainer Warren Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_COOLTRAINER_YUJI_REWARD": {
     "name": "Viridian Gym - Cooltrainer Yuji Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5116,7 +5116,7 @@
   },
   "TRAINER_ENGINEER_BAILY_REWARD": {
     "name": "Vermilion Gym - Engineer Baily Reward",
-    "tags": ["Trainers", "Kanto", "Vermilion City"],
+    "tags": ["Trainers", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5308,7 +5308,7 @@
   },
   "TRAINER_GENTLEMAN_TUCKER_REWARD": {
     "name": "Vermilion Gym - Gentleman Tucker Reward",
-    "tags": ["Trainers", "Kanto", "Vermilion City"],
+    "tags": ["Trainers", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5458,13 +5458,13 @@
   },
   "TRAINER_JUGGLER_KAYDEN_REWARD": {
     "name": "Fuchsia Gym - Juggler Kayden Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_JUGGLER_KIRK_REWARD": {
     "name": "Fuchsia Gym - Juggler Kirk Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5482,7 +5482,7 @@
   },
   "TRAINER_JUGGLER_NATE_REWARD": {
     "name": "Fuchsia Gym - Juggler Nate Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5494,7 +5494,7 @@
   },
   "TRAINER_JUGGLER_SHAWN_REWARD": {
     "name": "Fuchsia Gym - Juggler Shawn Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5596,13 +5596,13 @@
   },
   "TRAINER_LASS_KAY_REWARD": {
     "name": "Celadon Gym - Lass Kay Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LASS_LISA_REWARD": {
     "name": "Celadon Gym - Lass Lisa Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5668,49 +5668,49 @@
   },
   "TRAINER_LEADER_BLAINE_REWARD": {
     "name": "Cinnabar Gym - Leader Blaine Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_BROCK_REWARD": {
     "name": "Pewter Gym - Leader Brock Reward",
-    "tags": ["Trainers", "Kanto", "Pewter City"],
+    "tags": ["Trainers", "Kanto", "Pewter City", "Pewter Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_ERIKA_REWARD": {
     "name": "Celadon Gym - Leader Erika Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_GIOVANNI_REWARD": {
     "name": "Viridian Gym - Leader Giovanni Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_KOGA_REWARD": {
     "name": "Fuchsia Gym - Leader Koga Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_LT_SURGE_REWARD": {
     "name": "Vermilion Gym - Leader Lt. Surge Reward",
-    "tags": ["Trainers", "Kanto", "Vermilion City"],
+    "tags": ["Trainers", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_MISTY_REWARD": {
     "name": "Cerulean Gym - Leader Misty Reward",
-    "tags": ["Trainers", "Kanto", "Cerulean City"],
+    "tags": ["Trainers", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_LEADER_SABRINA_REWARD": {
     "name": "Saffron Gym - Leader Sabrina Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5836,7 +5836,7 @@
   },
   "TRAINER_PICNICKER_DIANA_REWARD": {
     "name": "Cerulean Gym - Picnicker Diana Reward",
-    "tags": ["Trainers", "Kanto", "Cerulean City"],
+    "tags": ["Trainers", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -5986,7 +5986,7 @@
   },
   "TRAINER_PICNICKER_TINA_REWARD": {
     "name": "Celadon Gym - Picnicker Tina Reward",
-    "tags": ["Trainers", "Kanto", "Celadon City"],
+    "tags": ["Trainers", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6166,7 +6166,7 @@
   },
   "TRAINER_PSYCHIC_CAMERON_REWARD": {
     "name": "Saffron Gym - Psychic Cameron Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6196,7 +6196,7 @@
   },
   "TRAINER_PSYCHIC_JOHAN_REWARD": {
     "name": "Saffron Gym - Psychic Johan Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6208,7 +6208,7 @@
   },
   "TRAINER_PSYCHIC_PRESTON_REWARD": {
     "name": "Saffron Gym - Psychic Preston Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6226,7 +6226,7 @@
   },
   "TRAINER_PSYCHIC_TYRON_REWARD": {
     "name": "Saffron Gym - Psychic Tyron Reward",
-    "tags": ["Trainers", "Kanto", "Saffron City"],
+    "tags": ["Trainers", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6340,7 +6340,7 @@
   },
   "TRAINER_SAILOR_DWAYNE_REWARD": {
     "name": "Vermilion Gym - Sailor Dwayne Reward",
-    "tags": ["Trainers", "Kanto", "Vermilion City"],
+    "tags": ["Trainers", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6502,19 +6502,19 @@
   },
   "TRAINER_SUPER_NERD_AVERY_REWARD": {
     "name": "Cinnabar Gym - Super Nerd Avery Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_SUPER_NERD_DEREK_REWARD": {
     "name": "Cinnabar Gym - Super Nerd Derek Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_SUPER_NERD_ERIK_REWARD": {
     "name": "Cinnabar Gym - Super Nerd Erik Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6550,7 +6550,7 @@
   },
   "TRAINER_SUPER_NERD_ZAC_REWARD": {
     "name": "Cinnabar Gym - Super Nerd Zac Reward",
-    "tags": ["Trainers", "Kanto", "Cinnabar Island"],
+    "tags": ["Trainers", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6730,7 +6730,7 @@
   },
   "TRAINER_SWIMMER_MALE_LUIS_REWARD": {
     "name": "Cerulean Gym - Swimmer Luis Reward",
-    "tags": ["Trainers", "Kanto", "Cerulean City"],
+    "tags": ["Trainers", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6808,13 +6808,13 @@
   },
   "TRAINER_TAMER_COLE_REWARD": {
     "name": "Viridian Gym - Tamer Cole Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_TAMER_EDGAR_REWARD": {
     "name": "Fuchsia Gym - Tamer Edgar Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -6832,13 +6832,13 @@
   },
   "TRAINER_TAMER_JASON_REWARD": {
     "name": "Viridian Gym - Tamer Jason Reward",
-    "tags": ["Trainers", "Kanto", "Viridian City"],
+    "tags": ["Trainers", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
   "TRAINER_TAMER_PHIL_REWARD": {
     "name": "Fuchsia Gym - Tamer Phil Reward",
-    "tags": ["Trainers", "Kanto", "Fuchsia City"],
+    "tags": ["Trainers", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
   },
@@ -7493,13 +7493,13 @@
   },
   "FAME_CHECKER_BLAINE_2": {
     "name": "Cinnabar Gym - Blaine Info",
-    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island"],
+    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_BLAINE_3": {
     "name": "Cinnabar Gym - Super Nerd Derek Info",
-    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island"],
+    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7511,7 +7511,7 @@
   },
   "FAME_CHECKER_BLAINE_5": {
     "name": "Cinnabar Gym - Photo Info 1",
-    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island"],
+    "tags": ["Fame Entries", "Blaine Fame Entries", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7529,7 +7529,7 @@
   },
   "FAME_CHECKER_BROCK_2": {
     "name": "Pewter Gym - Brock Info",
-    "tags": ["Fame Entries", "Brock Fame Entries", "Kanto", "Pewter City"],
+    "tags": ["Fame Entries", "Brock Fame Entries", "Kanto", "Pewter City", "Pewter Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7637,25 +7637,25 @@
   },
   "FAME_CHECKER_ERIKA_2": {
     "name": "Celadon Gym - Erika Info 1",
-    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City"],
+    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_ERIKA_3": {
     "name": "Celadon Gym - Lass Lisa Info",
-    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City"],
+    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_ERIKA_4": {
     "name": "Celadon Gym - Beauty Tamia Info",
-    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City"],
+    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_ERIKA_5": {
     "name": "Celadon Gym - Erika Info 2",
-    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City"],
+    "tags": ["Fame Entries", "Erika Fame Entries", "Kanto", "Celadon City", "Celadon Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7685,13 +7685,13 @@
   },
   "FAME_CHECKER_GIOVANNI_4": {
     "name": "Viridian Gym - Giovanni Info",
-    "tags": ["Fame Entries", "Giovanni Fame Entries", "Kanto", "Viridian City"],
+    "tags": ["Fame Entries", "Giovanni Fame Entries", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_GIOVANNI_5": {
     "name": "Viridian Gym - Gym Guy Info",
-    "tags": ["Fame Entries", "Giovanni Fame Entries", "Kanto", "Viridian City"],
+    "tags": ["Fame Entries", "Giovanni Fame Entries", "Kanto", "Viridian City", "Viridian Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7709,13 +7709,13 @@
   },
   "FAME_CHECKER_KOGA_2": {
     "name": "Fuchsia Gym - Koga Info",
-    "tags": ["Fame Entries", "Koga Fame Entries", "Kanto", "Fuchsia City"],
+    "tags": ["Fame Entries", "Koga Fame Entries", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_KOGA_3": {
     "name": "Fuchsia Gym - Juggler Kirk Info",
-    "tags": ["Fame Entries", "Koga Fame Entries", "Kanto", "Fuchsia City"],
+    "tags": ["Fame Entries", "Koga Fame Entries", "Kanto", "Fuchsia City", "Fuchsia Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7817,25 +7817,25 @@
   },
   "FAME_CHECKER_LTSURGE_2": {
     "name": "Vermilion Gym - Lt. Surge Info",
-    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City"],
+    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_LTSURGE_3": {
     "name": "Vermilion Gym - Gentleman Tucker Info 1",
-    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City"],
+    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_LTSURGE_4": {
     "name": "Vermilion Gym - Gentleman Tucker Info 2",
-    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City"],
+    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_LTSURGE_5": {
     "name": "Vermilion Gym - Sailor Dwayne Info",
-    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City"],
+    "tags": ["Fame Entries", "Lt. Surge Fame Entries", "Kanto", "Vermilion City", "Vermilion Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7853,13 +7853,13 @@
   },
   "FAME_CHECKER_MISTY_2": {
     "name": "Cerulean Gym - Misty Info",
-    "tags": ["Fame Entries", "Misty Fame Entries", "Kanto", "Cerulean City"],
+    "tags": ["Fame Entries", "Misty Fame Entries", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_MISTY_3": {
     "name": "Cerulean Gym - Swimmer Luis Info",
-    "tags": ["Fame Entries", "Misty Fame Entries", "Kanto", "Cerulean City"],
+    "tags": ["Fame Entries", "Misty Fame Entries", "Kanto", "Cerulean City", "Cerulean Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7907,7 +7907,7 @@
   },
   "FAME_CHECKER_MRFUJI_5": {
     "name": "Cinnabar Gym - Photo Info 2",
-    "tags": ["Fame Entries", "Mr. Fuji Fame Entries", "Kanto", "Cinnabar Island"],
+    "tags": ["Fame Entries", "Mr. Fuji Fame Entries", "Kanto", "Cinnabar Island", "Cinnabar Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7967,13 +7967,13 @@
   },
   "FAME_CHECKER_SABRINA_3": {
     "name": "Saffron Gym - Sabrina Info 1",
-    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City"],
+    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_SABRINA_4": {
     "name": "Saffron Gym - Sabrina Info 2",
-    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City"],
+    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
@@ -7985,7 +7985,7 @@
   },
   "FAME_CHECKER_SABRINA_6": {
     "name": "Saffron Gym - Psychic Tyron Info",
-    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City"],
+    "tags": ["Fame Entries", "Sabrina Fame Entries", "Kanto", "Saffron City", "Saffron Gym"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
   },
