@@ -2303,7 +2303,7 @@
     "warps": {
       "MAP_SEAFOAM_ISLANDS_1F:0/MAP_SEAFOAM_ISLANDS_B1F:0": "Seafoam Islands 1F Northwest Ladder",
       "MAP_SEAFOAM_ISLANDS_1F:1/MAP_SEAFOAM_ISLANDS_B1F:1": "Seafoam Islands 1F Northeast Ladder",
-      "MAP_SEAFOAM_ISLANDS_1F:3/MAP_ROUTE20:1": "Seafoam Islands 1F Exit (West)",
+      "MAP_SEAFOAM_ISLANDS_1F:3/MAP_ROUTE20:0": "Seafoam Islands 1F Exit (West)",
       "MAP_SEAFOAM_ISLANDS_1F:5/MAP_SEAFOAM_ISLANDS_B1F:9": "Seafoam Islands 1F Drop (Left)",
       "MAP_SEAFOAM_ISLANDS_1F:6/MAP_SEAFOAM_ISLANDS_B1F:10": "Seafoam Islands 1F Drop (Right)"
     }
@@ -2321,7 +2321,7 @@
     "exits": {},
     "warps": {
       "MAP_SEAFOAM_ISLANDS_1F:2/MAP_SEAFOAM_ISLANDS_B1F:2": "Seafoam Islands 1F Southeast Ladder",
-      "MAP_SEAFOAM_ISLANDS_1F:4/MAP_ROUTE20:0": "Seafoam Islands 1F Exit (East)"
+      "MAP_SEAFOAM_ISLANDS_1F:4/MAP_ROUTE20:1": "Seafoam Islands 1F Exit (East)"
     }
   },
   "REGION_SEAFOAM_ISLANDS_B1F/WEST": {

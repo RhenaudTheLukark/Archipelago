@@ -12,18 +12,6 @@ from .options import LevelScaling, RandomizeFlyDestinations
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
 
-INDIRECT_CONDITIONS: Dict[str, List[str]] = {
-    "Seafoam Islands 1F": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
-                           "Seafoam Islands B3F (West) Landing Spot (Bottom)",
-                           "Seafoam Islands B3F (East) Landing Spot (Bottom)",
-                           "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
-                           "Seafoam Islands B3F (South Water) Water Battle"],
-    "Seafoam Islands B3F (West)": ["Seafoam Islands B4F Surfing Spot (Left)",
-                                   "Seafoam Islands B4F (Near Articuno) Landing Spot"],
-    "Victory Road 3F (Southwest)": ["Victory Road 2F Southeast Rock Barrier (Left)"],
-    "Vermilion City": ["Depart Seagallop (Navel Rock)", "Depart Seagallop (Birth Island)"]
-}
-
 STATIC_POKEMON_SPOILER_NAMES = {
     "TRADE_POKEMON_MR_MIME": "Route 2 Trade House",
     "GIFT_POKEMON_MAGIKARP": "Route 4 Pokemon Center 1F",
@@ -560,6 +548,37 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
 
 
 def create_indirect_conditions(world: "PokemonFRLGWorld"):
-    for region, entrances in INDIRECT_CONDITIONS.items():
+    indirect_conditions: Dict[str, List[str]] = {
+        "Seafoam Islands 1F": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
+                               "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+                               "Seafoam Islands B3F (East) Landing Spot (Bottom)",
+                               "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+                               "Seafoam Islands B3F (South Water) Water Battle"],
+        "Seafoam Islands B1F (West)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
+                                       "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+                                       "Seafoam Islands B3F (East) Landing Spot (Bottom)",
+                                       "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+                                       "Seafoam Islands B3F (South Water) Water Battle"],
+        "Seafoam Islands B1F (Northeast)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (South Water) Water Battle"],
+        "Seafoam Islands B2F (Northwest)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (South Water) Water Battle"],
+        "Seafoam Islands B2F (Northeast)": ["Seafoam Islands B3F (West) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (West) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Landing Spot (Bottom)",
+                                            "Seafoam Islands B3F (East) Surfing Spot (Bottom)",
+                                            "Seafoam Islands B3F (South Water) Water Battle"],
+        "Seafoam Islands B3F (West)": ["Seafoam Islands B4F Surfing Spot (Left)",
+                                       "Seafoam Islands B4F (Near Articuno) Landing Spot"],
+        "Victory Road 3F (Southwest)": ["Victory Road 2F Southeast Rock Barrier (Left)"],
+        "Vermilion City": ["Depart Seagallop (Navel Rock)", "Depart Seagallop (Birth Island)"]
+    }
+    for region, entrances in indirect_conditions.items():
         for entrance in entrances:
             world.multiworld.register_indirect_condition(world.get_region(region), world.get_entrance(entrance))

@@ -248,7 +248,12 @@ class PokemonFRLGLogic:
         return False
 
     def can_stop_seafoam_b3f_current(self, state) -> bool:
-        return self.can_strength(state) and state.can_reach_region("Seafoam Islands 1F", self.player)
+        return (self.can_strength(state)
+                and state.can_reach_region("Seafoam Islands 1F", self.player)
+                and state.can_reach_region("Seafoam Islands B1F (West)", self.player)
+                and state.can_reach_region("Seafoam Islands B1F (Northeast)", self.player)
+                and state.can_reach_region("Seafoam Islands B2F (Northwest)", self.player)
+                and state.can_reach_region("Seafoam Islands B2F (Northeast)", self.player))
 
     def can_stop_seafoam_b4f_current(self, state: CollectionState) -> bool:
         return self.can_strength(state) and state.can_reach_region("Seafoam Islands B3F (West)", self.player)

@@ -1948,7 +1948,7 @@
       "REGION_ROUTE20/EAST": "Route 20 (Near North Cave) Surfing Spot"
     },
     "warps": {
-      "MAP_ROUTE20:0/MAP_SEAFOAM_ISLANDS_1F:4": "Seafoam Islands (North)"
+      "MAP_ROUTE20:0/MAP_SEAFOAM_ISLANDS_1F:3": "Seafoam Islands (North)"
     }
   },
   "REGION_ROUTE20/NEAR_SOUTH_CAVE": {
@@ -1967,7 +1967,7 @@
       "REGION_ROUTE20/WEST": "Route 20 (Near South Cave) Surfing Spot"
     },
     "warps": {
-      "MAP_ROUTE20:1/MAP_SEAFOAM_ISLANDS_1F:3": "Seafoam Islands (South)"
+      "MAP_ROUTE20:1/MAP_SEAFOAM_ISLANDS_1F:4": "Seafoam Islands (South)"
     }
   },
   "REGION_ROUTE20/WEST": {
