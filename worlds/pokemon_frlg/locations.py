@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, LocationProgressType, Region, ItemClassification
+from Fill import FillError, fill_restrictive
 from .data import data, LocationCategory, fly_blacklist_map, TRAINER_REMATCH_MAP
 from .groups import location_groups
 from .items import PokemonFRLGItem, get_random_item, update_renewable_to_progression
@@ -421,3 +422,34 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_location.access_rule = lambda state: state.has("Town Map", world.player)
         town_map_fly_location.show_in_spoiler = False
         start_region.locations.append(town_map_fly_location)
+
+def shuffle_badges(world: "PokemonFRLGWorld") -> None:
+    badge_items = []
+    badge_items.extend(world.get_pre_fill_items())
+    world.pre_fill_items.clear()
+    locations: List[PokemonFRLGLocation] = world.get_locations()
+    for attempt in range(5):
+        badge_locations: List[PokemonFRLGLocation] = [
+            loc for loc in locations if loc.name in location_groups["Gym Prizes"] and loc.item is None
+        ]
+        state = world.get_world_collection_state()
+        # Try to place badges with current Pokemon and HM access
+        # If it can't, try with guaranteed HM access and fix it later
+        if attempt > 1:
+            world.logic.guaranteed_hm_access = True
+        state.sweep_for_advancements()
+        world.random.shuffle(badge_items)
+        world.random.shuffle(badge_locations)
+        fill_restrictive(world.multiworld, state, badge_locations.copy(), badge_items,
+                         single_player_placement=True, lock=True, allow_partial=True, allow_excluded=True)
+        if len(badge_items) > 8 - len(badge_locations):
+            for location in badge_locations:
+                if location.item:
+                    badge_items.append(location.item)
+                    location.item = None
+            continue
+        else:
+            break
+    else:
+        raise FillError(f"Failed to place badges for player {world.player}")
+    world.logic.guaranteed_hm_access = False

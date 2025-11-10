@@ -2,7 +2,7 @@
 Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/regions for region definitions)
 """
 from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
-from BaseClasses import CollectionState, ItemClassification, Region
+from BaseClasses import CollectionState, Entrance, ItemClassification, Region
 from .data import (data, EncounterType, LocationCategory, fly_destination_areas, fly_destination_maps,
                    fly_destination_random, fly_destination_regions, fly_plando_maps, starting_town_blacklist_map)
 from .items import PokemonFRLGItem
@@ -240,7 +240,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
     def exclude_warp(warp: str):
         source_warp = data.warps[warp]
         dest_warp = data.warps[data.warp_map[warp]]
-        if source_warp.name == "":
+        if source_warp.name.startswith("!"):
             return True
         if dest_warp.parent_region_id is None:
             return True

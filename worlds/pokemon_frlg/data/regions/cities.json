@@ -2257,7 +2257,7 @@
   },
   "REGION_SAFFRON_CITY_GYM/SOUTH": {
     "parent_map": "MAP_SAFFRON_CITY_GYM",
-    "name": "Saffron Gym South",
+    "name": "Saffron Gym (South)",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,

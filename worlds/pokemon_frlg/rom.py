@@ -11,11 +11,11 @@ from .data import data, APWORLD_VERSION, GAME_OPTIONS, EvolutionMethodEnum, Trai
 from.groups import location_groups
 from .items import is_single_purchase_item
 from .locations import PokemonFRLGLocation
-from .options import (CardKey, Dexsanity, DungeonEntranceShuffle, FlashRequired, ForceFullyEvolved, IslandPasses,
-                      ItemfinderRequired, HmCompatibility, LevelScaling, RandomizeDamageCategories,
-                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters,
-                      RandomizeTrainerParties, RandomizeWildPokemon, ShopPrices, ShuffleFlyUnlocks, ShuffleHiddenItems,
-                      TmTutorCompatibility, Trainersanity, ViridianCityRoadblock)
+from .options import (CardKey, Dexsanity, FlashRequired, ForceFullyEvolved, IslandPasses, ItemfinderRequired,
+                      HmCompatibility, LevelScaling, RandomizeDamageCategories, RandomizeLegendaryPokemon,
+                      RandomizeMiscPokemon, RandomizeMoveTypes, RandomizeStarters, RandomizeTrainerParties,
+                      RandomizeWildPokemon, ShopPrices, ShuffleFlyUnlocks, ShuffleHiddenItems, TmTutorCompatibility,
+                      Trainersanity, ViridianCityRoadblock)
 from .pokemon import randomize_tutor_moves
 from .util import bool_array_to_int, bound, encode_string
 
@@ -423,7 +423,8 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x4C */ u16 introSpecies;
     # /* 0x4E */ u16 pcItemId;
     # /* 0x50 */ bool8 remoteItems;
-    # /* 0x51 */ bool8 randomized;
+    # /* 0x51 */ bool8 internalEntrancesRandomized;
+    # /* 0x52 */ bool8 randomized;
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -731,8 +732,12 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     remote_items = 1 if world.options.remote_items else 0
     patch.write_token(options_address, 0x50, struct.pack("<B", remote_items))
 
+    # Set interior ER
+    shuffle_interiors = 1 if world.options.shuffle_interiors else 0
+    patch.write_token(options_address, 0x51, struct.pack("<B", shuffle_interiors))
+
     # Set that the game has been randomized
-    patch.write_token(options_address, 0x51, struct.pack("<B", 1))
+    patch.write_token(options_address, 0x52, struct.pack("<B", 1))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:
@@ -787,7 +792,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
 
 
 def _set_shuffled_entrances(world: "PokemonFRLGWorld") -> None:
-    if world.options.dungeon_entrance_shuffle == DungeonEntranceShuffle.option_off:
+    if world.er_placement_state is None:
         return
 
     patch = world.patch_data

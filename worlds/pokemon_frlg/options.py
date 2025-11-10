@@ -65,22 +65,153 @@ class StartingTownBlacklist(OptionSet):
     valid_keys = list(starting_town_blacklist_map.keys())
 
 
-class DungeonEntranceShuffle(Choice):
+class ShufflePokemonCenterEntrances(Toggle):
     """
-    Shuffles dungeon entrances.
+    Shuffles the Pokemon Center entrances amongst each other.
 
-    - Off: Dungeon entrances are not shuffled
-    - Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons will connect to the same dungeon
-    - Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons do not need to lead to the same dungeon
-    - Full: All dungeon entrances are shuffled together
+    The Player's House is included in this pool but will not be shuffled.
     """
-    display_name = "Dungeon Entrance Shuffle"
+    display_name = "Shuffle Pokemon Center Entrances"
+
+
+class ShuffleGymEntrances(Toggle):
+    """
+    Shuffles the gym entrances amongst each other.
+    """
+    display_name = "Shuffle Gym Entrances"
+
+
+class ShuffleMartEntrances(Toggle):
+    """
+    Shuffles the Poke Mart entrances amongst each other.
+
+    This does not include the Celadon Department Store entrances.
+    """
+    display_name = "Shuffle Mart Entrances"
+
+
+class ShuffleHarborEntrances(Toggle):
+    """
+    Shuffles the harbor entrances amongst each other.
+    """
+    display_name = "Shuffle Harbor Entrances"
+
+
+class ShuffleBuildingEntrances(Choice):
+    """
+    Shuffles the building entrances amongst each other.
+
+    The Celadon Department Store entrnaces are included in this pool.
+
+    A builiding is considered a multi entrance building if the two entrances are normally connected inside the building.
+    For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as
+    two separate multi entrance buildings.
+
+    - Off: Building entrances are not shuffled
+    - Simple: Single entrance buildings and multi entrance buildings are shuffled separately from each other. Both entrances for multi entrance buildings will connect to the same building
+    - Restricted: Single entrance buildings and multi entrance buildings are shuffled separately from each other. Both entrances for multi entrance buildings do not need to lead to the same building
+    - Full: All building entrances are shuffled together
+    """
+    display_name = "Shuffle Building Entrances"
     default = 0
     option_off = 0
     option_simple = 1
     option_restricted = 2
     option_full = 3
 
+
+class ShuffleDungeonEntrances(Choice):
+    """
+    Shuffles the dungeon entrances amongst each other.
+
+    - Off: Dungeon entrances are not shuffled
+    - Seafoam: Swaps the two Seafoam Island entrances.
+    - Simple: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons will connect to the same dungeon
+    - Restricted: Single entrance dungeons and multi entrance dungeons are shuffled separately from each other. Both entrances for multi entrance dungeons do not need to lead to the same dungeon
+    - Full: All dungeon entrances are shuffled together
+    """
+    display_name = "Shuffle Dungeon Entrances"
+    default = 0
+    option_off = 0
+    option_seafoam = 1
+    option_simple = 2
+    option_restricted = 3
+    option_full = 4
+
+
+class ShuffleInteriorWarps(Toggle):
+    """
+    Shuffles the interior warps of buildings and dungeons amongst each other.
+
+    The Safari Zone will behave like a normal dungeon when interiors are shuffled.
+
+    The elevator warps in the Celadon Department Store, Rocket Hideout, and Silph Co. are not shuffled.
+
+    The Safari Zone Entrance <-> Safari Zone Center warp is not shuffled.
+
+    The only warps in Lost Cave that are shuffled are the two ladders.
+    """
+    display_name = "Shuffle Interior Warps"
+
+
+class ShuffleWarpTiles(Choice):
+    """
+    Shuffles the warp tiles in buildings and dungeons amongst each other.
+
+    - Off: Warp tiles are not shuffled
+    - Simple: All warp tiles in a building or dungeon are shuffled amongst each other, but they will never lead to another building or dungeon
+    - Full: All warp tiles are shuffled together
+    """
+    display_name = "Shuffle Warp Tiles"
+    default = 0
+    option_off = 0
+    option_simple = 1
+    option_full = 2
+
+
+class ShuffleDropdowns(Choice):
+    """
+    Shuffles the dropdowns in dungeons amongst each other.
+
+    The incorrect dropdowns in Dotted Hole are not shuffled.
+
+    - Off: Dropdowns are not shuffled
+    - Simple: All dropdowns of a dungeon are shuffled amongst each other, but they will never lead to another dungeon
+    - Full: All dropdowns are shuffled together
+    """
+    display_name = "Shuffle Dropdowns"
+    default = 0
+    option_off = 0
+    option_simple = 1
+    option_full = 2
+
+
+class MixEntranceWarpPools(OptionSet):
+    """
+    Shuffle the selected entrances/warps into a mixed pool instead of separate ones. Has no effect on pools whose
+    entrances/warps aren't shuffled. Entrances/warps can only be mixed with other entrance/warps that have the same
+    restrictions.
+
+    The avaialble pools that can be mixed are:
+    - Gyms
+    - Marts
+    - Harbors
+    - Buildings
+    - Dungeons
+    - Interiors
+    """
+    display_name = "Mix Entrance/Warp Pools"
+    valid_keys = ["Gyms", "Marts", "Harbors", "Buildings", "Dungeons", "Interiors"]
+
+
+class DecoupleEntrancesWarps(Toggle):
+    """
+    Decouple entrances/warps when shuffling them. This means that you are no longer guaranteed to end up back where you
+    came from when you go back through an entrance/warp.
+
+    Simple Building/Dungeon shuffle are not compatible with this option and will be changed to Restricted shuffle.
+    """
+    display_name = "Decouple Entrances/Warps"
 
 class RandomizeFlyDestinations(Choice):
     """
@@ -1434,7 +1565,17 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     kanto_only: KantoOnly
     random_starting_town: RandomStartingTown
     starting_town_blacklist: StartingTownBlacklist
-    dungeon_entrance_shuffle: DungeonEntranceShuffle
+    shuffle_pokemon_centers: ShufflePokemonCenterEntrances
+    shuffle_gyms: ShuffleGymEntrances
+    shuffle_marts: ShuffleMartEntrances
+    shuffle_harbors: ShuffleHarborEntrances
+    shuffle_buildings: ShuffleBuildingEntrances
+    shuffle_dungeons: ShuffleDungeonEntrances
+    shuffle_interiors: ShuffleInteriorWarps
+    shuffle_warp_tiles: ShuffleWarpTiles
+    shuffle_dropdowns: ShuffleDropdowns
+    mix_entrance_warp_pools: MixEntranceWarpPools
+    decouple_entrances_warps: DecoupleEntrancesWarps
     randomize_fly_destinations: RandomizeFlyDestinations
     fly_destination_plando: FlyDestinationPlando
 

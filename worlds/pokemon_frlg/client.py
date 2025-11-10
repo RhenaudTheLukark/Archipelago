@@ -770,7 +770,7 @@ class PokemonFRLGClient(BizHawkClient):
         Reads the last warp that the player took, adds it to the list of entrances found, and sends the updated list to
         the tracker.
         """
-        if "dungeon_entrance_shuffle" not in ctx.slot_data:
+        if "entrances" not in ctx.slot_data:
             return
 
         sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
@@ -801,8 +801,8 @@ class PokemonFRLGClient(BizHawkClient):
             entrance_name = data.entrance_name_map[entrance_map_id][entrance_warp_id]
             exit_name = data.entrance_name_map[exit_map_id][exit_warp_id]
             if (entrance_name not in self.local_entrances and
-                    (entrance_name in ctx.slot_data["dungeon_entrance_shuffle"] or
-                     exit_name in ctx.slot_data["dungeon_entrance_shuffle"])):
+                    (entrance_name in ctx.slot_data["entrances"] or
+                     exit_name in ctx.slot_data["entrances"])):
                 self.local_entrances[entrance_name] = exit_name
                 self.local_entrances[exit_name] = entrance_name
                 await ctx.send_msgs([{

@@ -1,8 +1,41 @@
 # 1.0.0
 ## Updates
+* The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
 * Reworked the Fossil checks
   * You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
   * The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
+* New option `shuffle_pokemon_centers`
+  * Shuffles the Pokemon Center entrances amongst each other
+  * The Player's House is included in this pool but will not be shuffled
+* New option `shuffle_gyms`
+  * Shuffles the gym entrances amongst each other
+* New Option `shuffle_marts`
+  * Shuffles the Poke Mart entrances amongst each other
+  * This does not include the Celadon Department Store entrances
+* New Option `shuffle_harbors`
+  * Shuffles the harbor entrances amongst each other
+* New Option `shuffle_buildings`
+  * Shuffles the building entrances amongst each other
+  * The Celadon Department Store entrnaces are included in this pool
+  * A builiding is considered a multi entrance building if the two entrances are normally connected inside the building. For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as two separate multi entrance buildings
+* Renamed option `dungeon_entrance_shuffle` -> `shuffle_dungeons`
+* New Option `shuffle_interiors`
+  * Shuffles the interior warps of buildings and dungeons amongst each other
+  * The Safari Zone will behave like a normal dungeon when interiors are shuffled
+  * The elevator warps in the Celadon Department Store, Rocket Hideout, and Silph Co. are not shuffled
+  * The Safari Zone Entrance <-> Safari Zone Center warp is not shuffled
+  * The only warps in Lost Cave that are shuffled are the two ladders
+* New option `shuffle_warp_tiles`
+  * Shuffles the warp tiles in buildings and dungeons amongst each other
+* New option `shuffle_dropdowns`
+  * Shuffles the dropdowns in dungeons amongst each other
+  * The incorrect dropdowns in Dotted Hole are not shuffled
+* New option `mix_entrance_warp_pools`
+  * Shuffle the selected entrances/warps into a mixed pool instead of separate ones. Has no effect on pools whose entrances/warps aren't shuffled. Entrances/warps can only be mixed with other entrance/warps that have the same restrictions
+  * The Avaiable entrances/warps that can be mixed are: Gyms, Marts, Harbors, Buildings, Dungeons, Interiors
+* New option `decouple_entrances_warps`
+  * Decouple entrances/warps when shuffling them. This means that you are no longer guaranteed to end up back where you came from when you go back through an entrance/warp
+  * Simple Building/Dungeon shuffle are not compatible with this option and will be changed to Restricted shuffle
 * Updated option `randomize_fly_destinations`
   * Off: Fly destinations are not randomized
   * Area: Fly destinations will be randomized to a location in the same area as its original location (e.g. Vermilion Fly Destination would go to either Vermilion City, Route 6, or Route 11)

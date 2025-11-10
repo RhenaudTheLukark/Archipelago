@@ -10,10 +10,9 @@ import settings
 import threading
 
 from collections import defaultdict
-from typing import Any, ClassVar, Dict, List, Set, TextIO
+from typing import Any, ClassVar, Dict, List, Set, TextIO, Tuple
 
-from BaseClasses import CollectionState, ItemClassification, MultiWorld, Tutorial, Item
-from Fill import fill_restrictive, FillError
+from BaseClasses import CollectionState, Entrance, Item, ItemClassification, MultiWorld, Region, Tutorial
 from worlds.AutoWorld import WebWorld, World
 from entrance_rando import ERPlacementState
 from .client import PokemonFRLGClient
@@ -26,10 +25,10 @@ from .items import (PokemonFRLGItem, add_starting_items, create_item_name_to_id_
                     get_item_classification)
 from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
-                        place_unrandomized_items, place_shop_items, set_free_fly)
-from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, DungeonEntranceShuffle,
-                      FishingRods, FlashRequired, FreeFlyLocation, GameVersion, Goal, IslandPasses,
-                      RandomizeLegendaryPokemon, RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleBadges,
+                        place_unrandomized_items, place_shop_items, set_free_fly, shuffle_badges)
+from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, FishingRods, FlashRequired,
+                      FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
+                      RandomizeWildPokemon, ShuffleBadges, ShuffleBuildingEntrances, ShuffleDungeonEntrances,
                       ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex, ShuffleRunningShoes, TownMapFlyLocation,
                       Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_stats, randomize_damage_categories,
@@ -42,7 +41,7 @@ from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeaf
 from .sanity_check import validate_regions
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
-# Try adding the Pokemon Gen 3 Adjuster
+# Try adding the Pokémon Gen 3 Adjuster
 try:
     from worlds._pokemon_gen3_adjuster import __init__
 except ImportError:
@@ -151,7 +150,7 @@ class PokemonFRLGWorld(World):
     pre_fill_items: List[PokemonFRLGItem]
     fly_destination_data: Dict[str, FlyData]
     er_placement_state: ERPlacementState | None
-    er_spoiler_names: List[str]
+    er_entrances: List[Tuple[Entrance, Region]]
     moves_by_type: Dict[int, Set[int]]
     cerulean_cave_included: bool
     auth: bytes
@@ -186,7 +185,7 @@ class PokemonFRLGWorld(World):
         self.pre_fill_items = []
         self.fly_destination_data = {}
         self.er_placement_state = None
-        self.er_spoiler_names = []
+        self.er_entrances = []
         self.moves_by_type = {}
         self.cerulean_cave_included = True
         self.finished_level_scaling = threading.Event()
@@ -250,6 +249,18 @@ class PokemonFRLGWorld(World):
                                 "incompatible with Kanto Only. Setting requirement to Defeat Champion.",
                                 self.player, self.player_name)
                 self.options.cerulean_cave_requirement.value = CeruleanCaveRequirement.option_champion
+
+        if self.options.decouple_entrances_warps:
+            if self.options.shuffle_buildings == ShuffleBuildingEntrances.option_simple:
+                logging.warning("Pokemon FRLG: Simple Building Shuffle for player %s (%s) is "
+                                "incompatible with Decoupled Entrances. Setting shuffle to Restricted.",
+                                self.player, self.player_name)
+                self.options.shuffle_buildings.value = ShuffleBuildingEntrances.option_restricted
+            if self.options.shuffle_dungeons == ShuffleDungeonEntrances.option_simple:
+                logging.warning("Pokemon FRLG: Simple Dungeon Shuffle for player %s (%s) is "
+                                "incompatible with Decoupled Entrances. Setting shuffle to Restricted.",
+                                self.player, self.player_name)
+                self.options.shuffle_dungeons.value = ShuffleDungeonEntrances.option_restricted
 
         # Check if Ceruelan Cave should be included in this world
         if (not self.options.post_goal_locations and
@@ -424,42 +435,10 @@ class PokemonFRLGWorld(World):
     def connect_entrances(self) -> None:
         set_free_fly(self)
         if not self.options.shuffle_badges:
-            self.shuffle_badges()
-        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
-            shuffle_entrances(self)
+            shuffle_badges(self)
             verify_hm_accessibility(self)
-
-    def shuffle_badges(self) -> None:
-        badge_items = []
-        badge_items.extend(self.get_pre_fill_items())
-        self.pre_fill_items.clear()
-        locations: List[PokemonFRLGLocation] = self.get_locations()
-        for attempt in range(5):
-            badge_locations: List[PokemonFRLGLocation] = [
-                loc for loc in locations if loc.name in location_groups["Gym Prizes"] and loc.item is None
-            ]
-            state = self.get_world_collection_state()
-            # Try to place badges with current Pokemon and HM access
-            # If it can't, try with guaranteed HM access and fix it later
-            if attempt > 1:
-                self.logic.guaranteed_hm_access = True
-            state.sweep_for_advancements()
-            self.random.shuffle(badge_items)
-            self.random.shuffle(badge_locations)
-            fill_restrictive(self.multiworld, state, badge_locations.copy(), badge_items,
-                             single_player_placement=True, lock=True, allow_partial=True, allow_excluded=True)
-            if len(badge_items) > 8 - len(badge_locations):
-                for location in badge_locations:
-                    if location.item:
-                        badge_items.append(location.item)
-                        location.item = None
-                continue
-            else:
-                break
-        else:
-            raise FillError(f"Failed to place badges for player {self.player}")
-        self.logic.guaranteed_hm_access = False
-        verify_hm_accessibility(self)
+        if shuffle_entrances(self):
+            verify_hm_accessibility(self)
 
     def generate_basic(self) -> None:
         # Create auth
@@ -554,12 +533,12 @@ class PokemonFRLGWorld(World):
             spoiler_handle.write(f"Town Map Fly Location:           {town_map_fly_location.item.name}\n")
 
     def write_spoiler(self, spoiler_handle: TextIO) -> None:
-        # Add dungeon entrances to the spoiler log if they are shuffled
-        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
-            spoiler_handle.write(f"\n\nDungeon Entrances ({self.multiworld.player_name[self.player]}):\n\n")
-            for entrance, exit in sorted(self.er_placement_state.pairings):
-                if entrance in self.er_spoiler_names:
-                    spoiler_handle.write(f"{entrance} <=> {exit}\n")
+        # Add entrances to the spoiler log if they are shuffled
+        if self.er_placement_state:
+            spoiler_handle.write(f"\n\nEntrances ({self.multiworld.player_name[self.player]}):\n\n")
+            for entrance_name, exit_name in sorted(self.er_placement_state.pairings):
+                entrance = self.get_entrance(entrance_name)
+                spoiler_handle.write(f"{entrance_name} => {entrance.connected_region}\n")
 
         # Add fly destinations to the spoiler log if they are randomized
         if self.options.randomize_fly_destinations:
@@ -621,6 +600,7 @@ class PokemonFRLGWorld(World):
             "goal",
             "skip_elite_four",
             "kanto_only",
+            "shuffle_dungeons",
             "shuffle_badges",
             "shuffle_hidden",
             "extra_key_items",
@@ -675,10 +655,11 @@ class PokemonFRLGWorld(World):
             slot_data["randomize_fly_destinations"] = {}
             for exit in self.get_region("Sky").exits:
                 slot_data["randomize_fly_destinations"][exit.name] = exit.connected_region.name
-        if self.options.dungeon_entrance_shuffle != DungeonEntranceShuffle.option_off:
-            slot_data["dungeon_entrance_shuffle"] = []
+        if (self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off
+                and self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_seafoam):
+            slot_data["entrances"] = []
             for source, dest in self.er_placement_state.pairings:
-                slot_data["dungeon_entrance_shuffle"].append(source)
+                slot_data["entrances"].append(source)
         slot_data["wild_encounters"] = {}
         slot_data["static_encounters"] = {}
         for location in self.get_locations():
