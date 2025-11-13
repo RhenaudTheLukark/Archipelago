@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Dict, List, Set, Tuple, cast, Iterable
 from BaseClasses import CollectionState
 from worlds.generic.Rules import CollectionRule, add_rule
 from .data import data, NAME_TO_SPECIES_ID, EvolutionMethodEnum, LocationCategory
+from .items import PokemonFRLGGlitchedToken
 from .locations import PokemonFRLGLocation
 from .options import (CeruleanCaveRequirement, EliteFourRequirement, FlashRequired, Goal, IslandPasses,
                       ItemfinderRequired, PewterCityRoadblock, Route22GateRequirement, Route23GuardRequirement,
@@ -2386,7 +2387,10 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
         multiworld.completion_condition[player] = lambda state: state.has("Defeat Champion (Rematch)", player)
 
     if options.pokemon_request_locations and not options.kanto_only:
-        logic.resort_gorgeous_pokemon = NAME_TO_SPECIES_ID[world.random.choice(logic.wild_pokemon)]
+        if not world.is_universal_tracker:
+            logic.resort_gorgeous_pokemon = NAME_TO_SPECIES_ID[world.random.choice(logic.wild_pokemon)]
+        else:
+            logic.resort_gorgeous_pokemon = world.ut_slot_data["resort_gorgeous_pokemon"]
 
     set_entrance_rules(world)
     set_location_rules(world)
@@ -2396,7 +2400,11 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
         assert isinstance(location, PokemonFRLGLocation)
         if (options.itemfinder_required != ItemfinderRequired.option_off and
                 location.category == LocationCategory.HIDDEN_ITEM):
-            add_rule(location, lambda state: state.has("Itemfinder", player))
+            if world.is_universal_tracker and options.itemfinder_required == ItemfinderRequired.option_logic:
+                add_rule(location, lambda state: state.has("Itemfinder", player)
+                                                 or state.has(PokemonFRLGGlitchedToken.TOKEN_NAME, player))
+            else:
+                add_rule(location, lambda state: state.has("Itemfinder", player))
         if options.fame_checker_required and location.category == LocationCategory.FAME_ENTRY:
             add_rule(location, lambda state: state.has("Fame Checker", player))
         if location.category == LocationCategory.POKEDEX:
@@ -2432,9 +2440,17 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
 
         for region in dark_cave_regions:
             for exit in world.get_region(region).exits:
-                add_rule(exit, lambda state: logic.can_flash(state))
+                if world.is_universal_tracker and options.flash_required == FlashRequired.option_logic:
+                    add_rule(exit, lambda state: logic.can_flash(state)
+                                                 or state.has(PokemonFRLGGlitchedToken.TOKEN_NAME, player))
+                else:
+                    add_rule(exit, lambda state: logic.can_flash(state))
             for location in world.get_region(region).locations:
-                add_rule(location, lambda state: logic.can_flash(state))
+                if world.is_universal_tracker and options.flash_required == FlashRequired.option_logic:
+                    add_rule(location, lambda state: logic.can_flash(state) or
+                                                     state.has(PokemonFRLGGlitchedToken.TOKEN_NAME, player))
+                else:
+                    add_rule(location, lambda state: logic.can_flash(state))
 
     # Add bicycle logic
     cycling_road_regions = ["Route 16 (Southwest)", "Route 17", "Route 18 (West)"]
@@ -2458,6 +2474,9 @@ def set_hm_compatible_pokemon(world: "PokemonFRLGWorld") -> None:
 
 
 def verify_hm_accessibility(world: "PokemonFRLGWorld") -> None:
+    if world.is_universal_tracker:
+        return
+
     logic = world.logic
 
     def can_use_hm(state: CollectionState, hm: str) -> bool:

@@ -13,7 +13,7 @@ from pkg_resources import resource_listdir, resource_isdir
 from typing import Dict, List, NamedTuple, Set, FrozenSet, Any, Tuple
 from BaseClasses import ItemClassification
 
-APWORLD_VERSION = "1.0.0 Beta 4"
+APWORLD_VERSION = "1.0.0"
 POPTRACKER_CHECKSUM = 0x4A497E8F
 NUM_REAL_SPECIES = 386
 
@@ -118,16 +118,17 @@ class LocationCategory(IntEnum):
     TOWN_VISIT = 3
     SHOP_ITEM = 4
     TRAINER = 5
-    FAME_ENTRY = 6
-    POKEDEX = 7
-    EVENT = 8
-    EVENT_WILD_POKEMON = 9
-    EVENT_STATIC_POKEMON = 10
-    EVENT_LEGENDARY_POKEMON = 11
-    EVENT_EVOLUTION_POKEMON = 12
-    EVENT_TRAINER_SCALING = 13
-    EVENT_WILD_POKEMON_SCALING = 14
-    EVENT_STATIC_POKEMON_SCALING = 15
+    TRAINER_REMATCH = 6
+    FAME_ENTRY = 7
+    POKEDEX = 8
+    EVENT = 9
+    EVENT_WILD_POKEMON = 10
+    EVENT_STATIC_POKEMON = 11
+    EVENT_LEGENDARY_POKEMON = 12
+    EVENT_EVOLUTION_POKEMON = 13
+    EVENT_TRAINER_SCALING = 14
+    EVENT_WILD_POKEMON_SCALING = 15
+    EVENT_STATIC_POKEMON_SCALING = 16
 
 
 class LocationData(NamedTuple):

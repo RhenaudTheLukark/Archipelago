@@ -19,6 +19,14 @@ class PokemonFRLGItem(Item):
         super().__init__(name, classification, code, player)
 
 
+class PokemonFRLGGlitchedToken(PokemonFRLGItem):
+    game: str = "Pokemon FireRed and LeafGreen"
+    TOKEN_NAME = "GLITCHED_TOKEN"
+
+    def __init__(self, player) -> None:
+        super().__init__(name=self.TOKEN_NAME, classification=ItemClassification.progression, code=None, player=player)
+
+
 def create_item_name_to_id_map() -> Dict[str, int]:
     """
     Creates a map from item names to their AP item ID (code)

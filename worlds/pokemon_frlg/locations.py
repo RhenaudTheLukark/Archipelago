@@ -66,6 +66,7 @@ class PokemonFRLGLocation(Location):
     location_id: str | None
     scaling_ids: List[str] | None
     spoiler_name: str
+    encounter_key: str
 
     def __init__(
             self,
@@ -78,7 +79,8 @@ class PokemonFRLGLocation(Location):
             default_item_id: int | None = None,
             location_id: str | None = None,
             scaling_ids: List[str] | None = None,
-            spoiler_name: str | None = None) -> None:
+            spoiler_name: str | None = None,
+            encounter_key: str | None = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address
@@ -86,6 +88,7 @@ class PokemonFRLGLocation(Location):
         self.location_id = location_id
         self.scaling_ids = scaling_ids
         self.spoiler_name = spoiler_name if spoiler_name is not None else name
+        self.encounter_key = encounter_key
 
 
 def create_location_name_to_id_map() -> Dict[str, int]:
@@ -167,6 +170,8 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
         included_types.add("Extra Key Items")
     if world.options.trainersanity != Trainersanity.special_range_names["none"]:
         included_types.add("Trainersanity")
+    if world.options.rematchsanity:
+        included_types.add("Rematchsanity")
     if world.options.dexsanity != Dexsanity.special_range_names["none"]:
         included_types.add("Dexsanity")
     if world.options.famesanity:
@@ -193,14 +198,24 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
         for location_id in included_locations:
             if exclude_location(location_id):
                 continue
+            if world.is_universal_tracker:
+                location = data.locations[location_id]
+                if ((location.category == LocationCategory.TRAINER
+                        or location.category == LocationCategory.TRAINER_REMATCH)
+                        and location.flag not in world.ut_slot_data["trainersanity_locations"]):
+                    continue
+                elif (location.category == LocationCategory.POKEDEX
+                      and location.flag not in world.ut_slot_data["dexsanity_locations"]):
+                    continue
             region.locations.append(create_location(location_id))
 
     # Remove trainersanity locations if there are more than the amount specified in the settings
-    if world.options.trainersanity != Trainersanity.special_range_names["none"]:
+    if world.options.trainersanity != Trainersanity.special_range_names["none"] and not world.is_universal_tracker:
         locations: List[PokemonFRLGLocation] = world.get_locations()
         trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
         locs_to_remove = len(trainer_locations) - world.options.trainersanity.value
         if locs_to_remove > 0:
+            rematchsanity = world.options.rematchsanity
             priority_trainer_locations = [loc for loc in trainer_locations
                                           if loc.name in world.options.priority_locations.value]
             non_priority_trainer_locations = [loc for loc in trainer_locations
@@ -211,18 +226,21 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
             for location in trainer_locations:
                 region = location.parent_region
                 region.locations.remove(location)
+                if rematchsanity and location.location_id in TRAINER_REMATCH_MAP:
+                    for location_id in TRAINER_REMATCH_MAP[location.location_id]:
+                        region.locations.remove(world.get_location(data.locations[location_id].name))
                 locs_to_remove -= 1
                 if locs_to_remove <= 0:
                     break
 
-    # Add rematchsanity locations
-    if world.options.rematchsanity:
-        locations: List[PokemonFRLGLocation] = world.get_locations()
-        trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
-        for location in trainer_locations:
-            if location.location_id in TRAINER_REMATCH_MAP:
-                for location_id in TRAINER_REMATCH_MAP[location.location_id]:
-                    location.parent_region.locations.append(create_location(location_id))
+    # # Add rematchsanity locations
+    # if world.options.rematchsanity:
+    #     locations: List[PokemonFRLGLocation] = world.get_locations()
+    #     trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
+    #     for location in trainer_locations:
+    #         if location.location_id in TRAINER_REMATCH_MAP:
+    #             for location_id in TRAINER_REMATCH_MAP[location.location_id]:
+    #                 location.parent_region.locations.append(create_location(location_id))
 
 
 def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:
@@ -269,7 +287,7 @@ def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:
 
 
 def place_shop_items(world: "PokemonFRLGWorld") -> None:
-    if not world.options.shopsanity and not world.options.vending_machines:
+    if (not world.options.shopsanity and not world.options.vending_machines) or world.is_universal_tracker:
         return
 
     shop_locations = [loc for loc in world.get_locations() if
@@ -376,7 +394,10 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_list = [fly for fly in fly_item_map.values() if fly not in forbidden_fly_list]
 
     if world.options.free_fly_location:
-        free_fly_location_id = world.random.choice(free_fly_list)
+        if not world.is_universal_tracker:
+            free_fly_location_id = world.random.choice(free_fly_list)
+        else:
+            free_fly_location_id = world.ut_slot_data["free_fly_location_id"]
         world.free_fly_location_id = fly_item_id_map[free_fly_location_id]
 
         if free_fly_location_id in town_map_fly_list and len(town_map_fly_list) > 1:
@@ -401,7 +422,10 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         start_region.locations.append(free_fly_location)
 
     if world.options.town_map_fly_location:
-        town_map_fly_location_id = world.random.choice(town_map_fly_list)
+        if not world.is_universal_tracker:
+            town_map_fly_location_id = world.random.choice(town_map_fly_list)
+        else:
+            town_map_fly_location_id = world.ut_slot_data["town_map_fly_location_id"]
         world.town_map_fly_location_id = fly_item_id_map[town_map_fly_location_id]
 
         start_region = world.multiworld.get_region("Title Screen", world.player)
@@ -424,6 +448,9 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         start_region.locations.append(town_map_fly_location)
 
 def shuffle_badges(world: "PokemonFRLGWorld") -> None:
+    if world.is_universal_tracker:
+        return
+
     badge_items = []
     badge_items.extend(world.get_pre_fill_items())
     world.pre_fill_items.clear()

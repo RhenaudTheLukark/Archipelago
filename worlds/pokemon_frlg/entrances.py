@@ -4,6 +4,7 @@ from BaseClasses import Entrance, EntranceType
 from entrance_rando import (ERPlacementState, EntranceRandomizationError, disconnect_entrance_for_randomization,
                             randomize_entrances)
 from .options import (ShuffleBuildingEntrances, ShuffleDropdowns, ShuffleDungeonEntrances, ShuffleWarpTiles)
+from .universal_tracker import ut_set_entrances
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -1077,12 +1078,18 @@ def _randomize_entrances(world: "PokemonFRLGWorld",
 def shuffle_entrances(world: "PokemonFRLGWorld") -> bool:
     if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_seafoam:
         _set_seafoam_entrances(world)
+    if world.is_universal_tracker:
+        ut_set_entrances(world)
+        return False
+
     shuffled_groups = _disconnect_shuffled_entrances(world)
+
     if shuffled_groups:
         entrance_group_lookup = _create_entrance_group_lookup(world)
         world.logic.randomizing_entrances = True
         _randomize_entrances(world, entrance_group_lookup, shuffled_groups)
         return True
+
     return False
 
 

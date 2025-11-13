@@ -21,8 +21,8 @@ from .data import (data, ability_name_map, ALL_SPECIES, APWORLD_VERSION, LEGENDA
                    MiscPokemonData, MoveData, move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
 from .entrances import shuffle_entrances
 from .groups import item_groups, location_groups
-from .items import (PokemonFRLGItem, add_starting_items, create_item_name_to_id_map, get_random_item,
-                    get_item_classification)
+from .items import (PokemonFRLGItem, PokemonFRLGGlitchedToken, add_starting_items, create_item_name_to_id_map,
+                    get_random_item, get_item_classification)
 from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
                         place_unrandomized_items, place_shop_items, set_free_fly, shuffle_badges)
@@ -39,6 +39,7 @@ from .regions import starting_town_map, create_indirect_conditions, create_regio
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
 from .sanity_check import validate_regions
+from .universal_tracker import ut_set_options
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 # Try adding the Pokémon Gen 3 Adjuster
@@ -114,6 +115,10 @@ class PokemonFRLGWorld(World):
     required_client_version = (0, 6, 0)
     origin_region_name = "Title Screen"
 
+    ut_can_gen_without_yaml = True
+    glitches_item_name = PokemonFRLGGlitchedToken.TOKEN_NAME
+    is_universal_tracker: bool
+
     logic: PokemonFRLGLogic
     patch_data: PokemonFRLGPatchData
     starting_town: str
@@ -157,6 +162,7 @@ class PokemonFRLGWorld(World):
 
     def __init__(self, multiworld, player):
         super(PokemonFRLGWorld, self).__init__(multiworld, player)
+        self.is_universal_tracker = hasattr(self.multiworld, "generation_is_fake")
         self.logic = PokemonFRLGLogic(player, self.item_id_to_name)
         self.patch_data = PokemonFRLGPatchData()
         self.starting_town = "SPAWN_PALLET_TOWN"
@@ -198,6 +204,9 @@ class PokemonFRLGWorld(World):
         return get_random_item(self, ItemClassification.filler)
 
     def generate_early(self) -> None:
+        if self.is_universal_tracker:
+            ut_set_options(self)
+
         self.blacklisted_wild_pokemon = {
             species.species_id for species in self.modified_species.values()
             if species.name in self.options.wild_pokemon_blacklist.value
@@ -404,7 +413,7 @@ class PokemonFRLGWorld(World):
             if not location.can_reach(state):
                 evolution_region.locations.remove(location)
 
-        if self.options.dexsanity != Dexsanity.special_range_names["none"]:
+        if self.options.dexsanity != Dexsanity.special_range_names["none"] and not self.is_universal_tracker:
             # Delete dexsanity locations that are not in logic in an all state since they aren't accessible
             pokedex_region = self.multiworld.get_region("Pokedex", self.player)
             for location in pokedex_region.locations.copy():
@@ -507,18 +516,6 @@ class PokemonFRLGWorld(World):
         out_file_name = self.multiworld.get_out_file_name_base(self.player)
         patch.write(os.path.join(output_directory, f"{out_file_name}{patch.patch_file_ending}"))
 
-        del self.modified_species
-        del self.modified_maps
-        del self.modified_starters
-        del self.modified_events
-        del self.modified_legendary_pokemon
-        del self.modified_misc_pokemon
-        del self.modified_trade_pokemon
-        del self.modified_trainers
-        del self.modified_tmhm_moves
-        del self.modified_moves
-        del self.modified_type_damage_categories
-
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.random_starting_town:
             starting_town = starting_town_map[self.starting_town]
@@ -600,27 +597,50 @@ class PokemonFRLGWorld(World):
             "goal",
             "skip_elite_four",
             "kanto_only",
+            "random_starting_town",
+            "shuffle_pokemon_centers",
+            "shuffle_gyms",
+            "shuffle_marts",
+            "shuffle_harbors",
+            "shuffle_buildings",
             "shuffle_dungeons",
+            "shuffle_interiors",
+            "shuffle_warp_tiles",
+            "shuffle_dropdowns",
+            "randomize_fly_destinations",
             "shuffle_badges",
             "shuffle_hidden",
             "extra_key_items",
             "shopsanity",
             "vending_machines",
             "prizesanity",
+            "shop_slots",
             "rematchsanity",
             "famesanity",
             "shuffle_fly_unlocks",
             "pokemon_request_locations",
+            "shuffle_pokedex",
+            "shuffle_running_shoes",
+            "shuffle_berry_pouch",
+            "shuffle_tm_case",
+            "shuffle_jumping_shoes",
+            "post_goal_locations",
             "card_key",
             "island_passes",
+            "fishing_rods",
             "split_teas",
             "gym_keys",
-            "post_goal_locations",
             "itemfinder_required",
             "flash_required",
             "fame_checker_required",
             "bicycle_requires_jumping_shoes",
             "acrobatic_bicycle",
+            "evolutions_required",
+            "evolution_methods_required",
+            "viridian_city_roadblock",
+            "pewter_city_roadblock",
+            "modify_world_state",
+            "additional_dark_caves",
             "remove_badge_requirement",
             "oaks_aide_route_2",
             "oaks_aide_route_10",
@@ -628,10 +648,6 @@ class PokemonFRLGWorld(World):
             "oaks_aide_route_16",
             "oaks_aide_route_15",
             "fossil_count",
-            "viridian_city_roadblock",
-            "pewter_city_roadblock",
-            "modify_world_state",
-            "additional_dark_caves",
             "viridian_gym_requirement",
             "viridian_gym_count",
             "route22_gate_requirement",
@@ -643,41 +659,63 @@ class PokemonFRLGWorld(World):
             "elite_four_rematch_count",
             "cerulean_cave_requirement",
             "cerulean_cave_count",
+            "free_fly_location",
+            "town_map_fly_location",
             "provide_hints",
             "death_link"
         )
+
+        game_version = self.options.game_version.current_key
+
         slot_data["trainersanity"] = 1 if self.options.trainersanity != Trainersanity.special_range_names["none"] else 0
+        slot_data["trainersanity_locations"] = [loc.address for loc in self.get_locations()
+                                                if loc.category == LocationCategory.TRAINER
+                                                or loc.category == LocationCategory.TRAINER_REMATCH]
+        slot_data["dexsanity"] = 1 if self.options.dexsanity != Dexsanity.special_range_names["none"] else 0
+        slot_data["dexsanity_locations"] = [loc.address for loc in self.get_locations()
+                                            if loc.category == LocationCategory.POKEDEX]
         slot_data["elite_four_rematch_requirement"] = self.options.elite_four_requirement.value
         slot_data["starting_town"] = data.constants[self.starting_town]
         slot_data["free_fly_location_id"] = self.free_fly_location_id
         slot_data["town_map_fly_location_id"] = self.town_map_fly_location_id
+
         if self.options.randomize_fly_destinations:
-            slot_data["randomize_fly_destinations"] = {}
+            slot_data["fly_destinations"] = {}
             for exit in self.get_region("Sky").exits:
-                slot_data["randomize_fly_destinations"][exit.name] = exit.connected_region.name
+                slot_data["fly_destinations"][exit.name] = exit.connected_region.name
+
         if (self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off
                 and self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_seafoam):
-            slot_data["entrances"] = []
+            slot_data["entrances"] = {}
             for source, dest in self.er_placement_state.pairings:
-                slot_data["entrances"].append(source)
+                slot_data["entrances"][source] = self.get_entrance(source).connected_region.name
+
         slot_data["wild_encounters"] = {}
         slot_data["static_encounters"] = {}
-        for location in self.get_locations():
-            assert isinstance(location, PokemonFRLGLocation)
-            if location.category == LocationCategory.EVENT_WILD_POKEMON:
-                national_dex_id = data.species[NAME_TO_SPECIES_ID[location.item.name]].national_dex_number
-                if national_dex_id not in slot_data["wild_encounters"]:
-                    slot_data["wild_encounters"][national_dex_id] = []
-                slot_data["wild_encounters"][national_dex_id].append(location.name)
-            elif location.category in (LocationCategory.EVENT_STATIC_POKEMON,
-                                       LocationCategory.EVENT_LEGENDARY_POKEMON):
-                pokemon_name = location.item.name.replace("Static ", "")
-                national_dex_id = data.species[NAME_TO_SPECIES_ID[pokemon_name]].national_dex_number
-                slot_data["static_encounters"][location.name] = national_dex_id
+        wild_locations = [loc for loc in self.get_locations() if loc.category == LocationCategory.EVENT_WILD_POKEMON]
+        static_locations = [loc for loc in self.get_locations()
+                            if loc.category == LocationCategory.EVENT_STATIC_POKEMON
+                            or loc.category == LocationCategory.EVENT_LEGENDARY_POKEMON]
+        for location in wild_locations:
+            national_dex_id = data.species[NAME_TO_SPECIES_ID[location.item.name]].national_dex_number
+            if location.encounter_key not in slot_data["wild_encounters"]:
+                slot_data["wild_encounters"][location.encounter_key] = set()
+            slot_data["wild_encounters"][location.encounter_key].add(national_dex_id)
+        for location in static_locations:
+            pokemon_name = location.item.name.replace("Static ", "")
+            national_dex_id = data.species[NAME_TO_SPECIES_ID[pokemon_name]].national_dex_number
+            slot_data["static_encounters"][location.encounter_key] = national_dex_id
+
+        slot_data["tm_hm_compatibility"] = {v.name: v.tm_hm_compatibility for v in self.modified_species.values()}
+        slot_data["requested_trade_pokemon"] = {k: v.requested_species_id[game_version]
+                                                for k, v in self.modified_trade_pokemon.items()}
+        slot_data["resort_gorgeous_pokemon"] = self.logic.resort_gorgeous_pokemon
         slot_data["poptracker_checksum"] = POPTRACKER_CHECKSUM
         return slot_data
 
     def create_item(self, name: str) -> "PokemonFRLGItem":
+        if name == self.glitches_item_name:
+            return PokemonFRLGGlitchedToken(self.player)
         return self.create_item_by_id(self.item_name_to_id[name])
 
     def create_item_by_id(self, item_id: int):
@@ -728,3 +766,15 @@ class PokemonFRLGWorld(World):
             return True
         else:
             return False
+
+    # Universal Tracker
+    @property
+    def ut_slot_data(self) -> dict[str, Any]:
+        if hasattr(self.multiworld, "re_gen_passthrough"):
+            return self.multiworld.re_gen_passthrough[self.game]
+        else:
+            return {}
+
+    @staticmethod
+    def interpret_slot_data(slot_data: dict[str, Any]):
+        return slot_data

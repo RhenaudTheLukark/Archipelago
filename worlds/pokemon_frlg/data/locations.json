@@ -3935,7 +3935,7 @@
   "TRAINER_BEAUTY_GRACE_2_REWARD": {
     "name": "Route 15 - Beauty Grace Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BEAUTY_LOLA_REWARD": {
@@ -3965,7 +3965,7 @@
   "TRAINER_BEAUTY_SHEILA_2_REWARD": {
     "name": "Route 13 - Beauty Sheila Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BEAUTY_TAMIA_REWARD": {
@@ -4043,7 +4043,7 @@
   "TRAINER_BIKER_JAREN_2_REWARD": {
     "name": "Route 8 - Biker Jaren Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIKER_JAXON_REWARD": {
@@ -4055,7 +4055,7 @@
   "TRAINER_BIKER_JAXON_2_REWARD": {
     "name": "Route 17 - Biker Jaxon Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 17"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIKER_LAO_REWARD": {
@@ -4073,7 +4073,7 @@
   "TRAINER_BIKER_LUKAS_2_REWARD": {
     "name": "Route 14 - Biker Lukas Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 14"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIKER_MALIK_REWARD": {
@@ -4103,7 +4103,7 @@
   "TRAINER_BIKER_RUBEN_2_REWARD": {
     "name": "Route 16 - Biker Ruben Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 16"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIKER_VIRGIL_REWARD": {
@@ -4133,13 +4133,13 @@
   "TRAINER_BIRD_KEEPER_BENNY_2_REWARD": {
     "name": "Route 14 - Bird Keeper Benny Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 14"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_BENNY_3_REWARD": {
     "name": "Route 14 - Bird Keeper Benny Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 14"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_CARTER_REWARD": {
@@ -4157,7 +4157,7 @@
   "TRAINER_BIRD_KEEPER_CHAZ_2_REWARD": {
     "name": "Memorial Pillar - Bird Keeper Chaz Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Memorial Pillar"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_CHESTER_REWARD": {
@@ -4169,13 +4169,13 @@
   "TRAINER_BIRD_KEEPER_CHESTER_2_REWARD": {
     "name": "Route 15 - Bird Keeper Chester Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_CHESTER_3_REWARD": {
     "name": "Route 15 - Bird Keeper Chester Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_DONALD_REWARD": {
@@ -4199,7 +4199,7 @@
   "TRAINER_BIRD_KEEPER_HAROLD_2_REWARD": {
     "name": "Memorial Pillar - Bird Keeper Harold Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Memorial Pillar"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_JACOB_REWARD": {
@@ -4211,13 +4211,13 @@
   "TRAINER_BIRD_KEEPER_JACOB_2_REWARD": {
     "name": "Route 18 - Bird Keeper Jacob Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 18"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_JACOB_3_REWARD": {
     "name": "Route 18 - Bird Keeper Jacob Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 18"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_MARLON_REWARD": {
@@ -4229,13 +4229,13 @@
   "TRAINER_BIRD_KEEPER_MARLON_2_REWARD": {
     "name": "Route 14 - Bird Keeper Marlon Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 14"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_MARLON_3_REWARD": {
     "name": "Route 14 - Bird Keeper Marlon Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 14"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_MILO_REWARD": {
@@ -4247,7 +4247,7 @@
   "TRAINER_BIRD_KEEPER_MILO_2_REWARD": {
     "name": "Memorial Pillar - Bird Keeper Milo Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Memorial Pillar"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_MITCH_REWARD": {
@@ -4277,13 +4277,13 @@
   "TRAINER_BIRD_KEEPER_ROBERT_2_REWARD": {
     "name": "Route 13 - Bird Keeper Robert Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_ROBERT_3_REWARD": {
     "name": "Route 13 - Bird Keeper Robert Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BIRD_KEEPER_ROGER_REWARD": {
@@ -4343,13 +4343,13 @@
   "TRAINER_BLACK_BELT_HUGH_2_REWARD": {
     "name": "Kindle Road - Black Belt Hugh Rematch Reward 1",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BLACK_BELT_HUGH_3_REWARD": {
     "name": "Kindle Road - Black Belt Hugh Rematch Reward 2",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BLACK_BELT_KIYO_REWARD": {
@@ -4379,13 +4379,13 @@
   "TRAINER_BLACK_BELT_SHEA_2_REWARD": {
     "name": "Kindle Road - Black Belt Shea Rematch Reward 1",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BLACK_BELT_SHEA_3_REWARD": {
     "name": "Kindle Road - Black Belt Shea Rematch Reward 2",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BLACK_BELT_TAKASHI_REWARD": {
@@ -4439,19 +4439,19 @@
   "TRAINER_BUG_CATCHER_COLTON_2_REWARD": {
     "name": "Route 3 - Bug Catcher Colton Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BUG_CATCHER_COLTON_3_REWARD": {
     "name": "Route 3 - Bug Catcher Colton Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BUG_CATCHER_COLTON_4_REWARD": {
     "name": "Route 3 - Bug Catcher Colton Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_BUG_CATCHER_CONNER_REWARD": {
@@ -4583,19 +4583,19 @@
   "TRAINER_CAMPER_CHRIS_2_REWARD": {
     "name": "Route 9 - Camper Chris Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_CHRIS_3_REWARD": {
     "name": "Route 9 - Camper Chris Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_CHRIS_4_REWARD": {
     "name": "Route 9 - Camper Chris Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_DREW_REWARD": {
@@ -4625,19 +4625,19 @@
   "TRAINER_CAMPER_JEFF_2_REWARD": {
     "name": "Route 6 - Camper Jeff Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_JEFF_3_REWARD": {
     "name": "Route 6 - Camper Jeff Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_JEFF_4_REWARD": {
     "name": "Route 6 - Camper Jeff Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_JUSTIN_REWARD": {
@@ -4661,19 +4661,19 @@
   "TRAINER_CAMPER_RICKY_2_REWARD": {
     "name": "Route 6 - Camper Ricky Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_RICKY_3_REWARD": {
     "name": "Route 6 - Camper Ricky Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_RICKY_4_REWARD": {
     "name": "Route 6 - Camper Ricky Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CAMPER_RILEY_REWARD": {
@@ -4829,7 +4829,7 @@
   "TRAINER_COOLTRAINER_LEROY_2_REWARD": {
     "name": "Sevault Canyon - Cooltrainer Leroy Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_COOLTRAINER_MARY_REWARD": {
@@ -4847,7 +4847,7 @@
   "TRAINER_COOLTRAINER_MICHELLE_2_REWARD": {
     "name": "Sevault Canyon - Cooltrainer Michelle Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_COOLTRAINER_NAOMI_REWARD": {
@@ -4889,7 +4889,7 @@
   "TRAINER_COOL_COUPLE_LEX_NYA_2_REWARD": {
     "name": "Sevault Canyon - Cool Couple Lex & Nya Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_COOL_COUPLE_RAY_TYRA_REWARD": {
@@ -4907,7 +4907,7 @@
   "TRAINER_CRUSH_GIRL_CYNDY_2_REWARD": {
     "name": "Sevault Canyon - Crush Girl Cyndy Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_GIRL_JOCELYN_REWARD": {
@@ -4925,13 +4925,13 @@
   "TRAINER_CRUSH_GIRL_SHARON_2_REWARD": {
     "name": "Kindle Road - Crush Girl Sharon Rematch Reward 1",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_GIRL_SHARON_3_REWARD": {
     "name": "Kindle Road - Crush Girl Sharon Rematch Reward 2",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_GIRL_TANYA_REWARD": {
@@ -4943,13 +4943,13 @@
   "TRAINER_CRUSH_GIRL_TANYA_2_REWARD": {
     "name": "Kindle Road - Crush Girl Tanya Rematch Reward 1",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_GIRL_TANYA_3_REWARD": {
     "name": "Kindle Road - Crush Girl Tanya Rematch Reward 2",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_KIN_MIK_KIA_REWARD": {
@@ -4961,13 +4961,13 @@
   "TRAINER_CRUSH_KIN_MIK_KIA_2_REWARD": {
     "name": "Kindle Road - Crush Kin Mik & Kia Rematch Reward 1",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_KIN_MIK_KIA_3_REWARD": {
     "name": "Kindle Road - Crush Kin Mik & Kia Rematch Reward 2",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_KIN_RON_MYA_REWARD": {
@@ -4979,19 +4979,19 @@
   "TRAINER_CRUSH_KIN_RON_MYA_2_REWARD": {
     "name": "Route 15 - Crush Kin Ron & Mya Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_KIN_RON_MYA_3_REWARD": {
     "name": "Route 15 - Crush Kin Ron & Mya Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CRUSH_KIN_RON_MYA_4_REWARD": {
     "name": "Route 15 - Crush Kin Ron & Mya Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CUE_BALL_CAMRON_REWARD": {
@@ -5003,7 +5003,7 @@
   "TRAINER_CUE_BALL_CAMRON_2_REWARD": {
     "name": "Route 16 - Cue Ball Camron Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 16"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CUE_BALL_COREY_REWARD": {
@@ -5015,7 +5015,7 @@
   "TRAINER_CUE_BALL_COREY_2_REWARD": {
     "name": "Route 17 - Cue Ball Corey Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 17"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CUE_BALL_ISAIAH_REWARD": {
@@ -5027,7 +5027,7 @@
   "TRAINER_CUE_BALL_ISAIAH_2_REWARD": {
     "name": "Route 17 - Cue Ball Isaiah Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 17"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_CUE_BALL_JAMAL_REWARD": {
@@ -5129,7 +5129,7 @@
   "TRAINER_ENGINEER_BERNIE_2_REWARD": {
     "name": "Route 11 - Engineer Bernie Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 11"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_ENGINEER_BRAXTON_REWARD": {
@@ -5177,7 +5177,7 @@
   "TRAINER_FISHERMAN_ELLIOT_2_REWARD": {
     "name": "Route 12 - Fisherman Elliot Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 12"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_FISHERMAN_HANK_REWARD": {
@@ -5225,7 +5225,7 @@
   "TRAINER_FISHERMAN_WADE_2_REWARD": {
     "name": "Route 21 - Fisherman Wade Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 21"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_GAMER_DARIAN_REWARD": {
@@ -5237,7 +5237,7 @@
   "TRAINER_GAMER_DARIAN_2_REWARD": {
     "name": "Route 11 - Gamer Darian Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 11"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_GAMER_DIRK_REWARD": {
@@ -5267,7 +5267,7 @@
   "TRAINER_GAMER_RICH_2_REWARD": {
     "name": "Route 8 - Gamer Rich Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_GAMER_STAN_REWARD": {
@@ -5357,7 +5357,7 @@
   "TRAINER_HIKER_EARL_2_REWARD": {
     "name": "Water Path - Hiker Earl Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Water Path"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_HIKER_ERIC_REWARD": {
@@ -5375,7 +5375,7 @@
   "TRAINER_HIKER_FRANKLIN_2_REWARD": {
     "name": "Route 25 - Hiker Franklin Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_HIKER_JEREMY_REWARD": {
@@ -5387,7 +5387,7 @@
   "TRAINER_HIKER_JEREMY_2_REWARD": {
     "name": "Route 9 - Hiker Jeremy Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_HIKER_LENNY_REWARD": {
@@ -5429,7 +5429,7 @@
   "TRAINER_HIKER_TRENT_2_REWARD": {
     "name": "Route 10 - Hiker Trent Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 10"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_HIKER_WAYNE_REWARD": {
@@ -5477,7 +5477,7 @@
   "TRAINER_JUGGLER_MASON_2_REWARD": {
     "name": "Canyon Entrance - Juggler Mason Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Canyon Entrance"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_JUGGLER_NATE_REWARD": {
@@ -5573,13 +5573,13 @@
   "TRAINER_LASS_JANICE_2_REWARD": {
     "name": "Route 3 - Lass Janice Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_JANICE_3_REWARD": {
     "name": "Route 3 - Lass Janice Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_JOANA_REWARD": {
@@ -5615,13 +5615,13 @@
   "TRAINER_LASS_MEGAN_2_REWARD": {
     "name": "Route 8 - Lass Megan Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_MEGAN_3_REWARD": {
     "name": "Route 8 - Lass Megan Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_MIRIAM_REWARD": {
@@ -5645,13 +5645,13 @@
   "TRAINER_LASS_RELI_2_REWARD": {
     "name": "Route 24 - Lass Reli Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 24"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_RELI_3_REWARD": {
     "name": "Route 24 - Lass Reli Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 24"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_LASS_ROBIN_REWARD": {
@@ -5741,7 +5741,7 @@
   "TRAINER_PAINTER_RAYNA_2_REWARD": {
     "name": "Resort Gorgeous - Painter Rayna Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Resort Gorgeous"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ALICIA_REWARD": {
@@ -5753,19 +5753,19 @@
   "TRAINER_PICNICKER_ALICIA_2_REWARD": {
     "name": "Route 9 - Picnicker Alicia Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ALICIA_3_REWARD": {
     "name": "Route 9 - Picnicker Alicia Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ALICIA_4_REWARD": {
     "name": "Route 9 - Picnicker Alicia Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 9"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ALMA_REWARD": {
@@ -5789,19 +5789,19 @@
   "TRAINER_PICNICKER_BECKY_2_REWARD": {
     "name": "Route 15 - Picnicker Becky Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_BECKY_3_REWARD": {
     "name": "Route 15 - Picnicker Becky Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_BECKY_4_REWARD": {
     "name": "Route 15 - Picnicker Becky Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 15"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_CAITLIN_REWARD": {
@@ -5867,19 +5867,19 @@
   "TRAINER_PICNICKER_ISABELLE_2_REWARD": {
     "name": "Route 6 - Picnicker Isabelle Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ISABELLE_3_REWARD": {
     "name": "Route 6 - Picnicker Isabelle Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_ISABELLE_4_REWARD": {
     "name": "Route 6 - Picnicker Isabelle Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 6"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_KELSEY_REWARD": {
@@ -5891,19 +5891,19 @@
   "TRAINER_PICNICKER_KELSEY_2_REWARD": {
     "name": "Route 25 - Picnicker Kelsey Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_KELSEY_3_REWARD": {
     "name": "Route 25 - Picnicker Kelsey Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_KELSEY_4_REWARD": {
     "name": "Route 25 - Picnicker Kelsey Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_KINDRA_REWARD": {
@@ -5939,13 +5939,13 @@
   "TRAINER_PICNICKER_MISSY_2_REWARD": {
     "name": "Route 20 - Picnicker Missy Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 20"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_MISSY_3_REWARD": {
     "name": "Route 20 - Picnicker Missy Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 20"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_NANCY_REWARD": {
@@ -5969,19 +5969,19 @@
   "TRAINER_PICNICKER_SUSIE_2_REWARD": {
     "name": "Route 13 - Picnicker Susie Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_SUSIE_3_REWARD": {
     "name": "Route 13 - Picnicker Susie Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_SUSIE_4_REWARD": {
     "name": "Route 13 - Picnicker Susie Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 13"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PICNICKER_TINA_REWARD": {
@@ -6011,7 +6011,7 @@
   "TRAINER_PKMN_BREEDER_ALIZE_2_REWARD": {
     "name": "Water Labyrinth - Pokemon Breeder Alize Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Water Labyrinth"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PKMN_BREEDER_ALLISON_REWARD": {
@@ -6041,7 +6041,7 @@
   "TRAINER_PKMN_RANGER_JACKSON_2_REWARD": {
     "name": "Sevault Canyon - Pokemon Ranger Jackson Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PKMN_RANGER_KATELYN_REWARD": {
@@ -6053,7 +6053,7 @@
   "TRAINER_PKMN_RANGER_KATELYN_2_REWARD": {
     "name": "Sevault Canyon - Pokemon Ranger Katelyn Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PKMN_RANGER_LOGAN_REWARD": {
@@ -6071,7 +6071,7 @@
   "TRAINER_PKMN_RANGER_MADELINE_2_REWARD": {
     "name": "Canyon Entrance - Pokemon Ranger Madeline Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Canyon Entrance"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PKMN_RANGER_NICOLAS_REWARD": {
@@ -6083,7 +6083,7 @@
   "TRAINER_PKMN_RANGER_NICOLAS_2_REWARD": {
     "name": "Canyon Entrance - Pokemon Ranger Nicolas Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Canyon Entrance"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_ASHTON_REWARD": {
@@ -6113,7 +6113,7 @@
   "TRAINER_POKEMANIAC_HECTOR_2_REWARD": {
     "name": "Ruin Valley - PokeManiac Hector Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Ruin Valley"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_HERMAN_REWARD": {
@@ -6125,13 +6125,13 @@
   "TRAINER_POKEMANIAC_HERMAN_2_REWARD": {
     "name": "Route 10 - PokeManiac Herman Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 10"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_HERMAN_3_REWARD": {
     "name": "Route 10 - PokeManiac Herman Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 10"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_MARK_REWARD": {
@@ -6143,13 +6143,13 @@
   "TRAINER_POKEMANIAC_MARK_2_REWARD": {
     "name": "Route 10 - PokeManiac Mark Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 10"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_MARK_3_REWARD": {
     "name": "Route 10 - PokeManiac Mark Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 10"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_POKEMANIAC_STEVE_REWARD": {
@@ -6179,7 +6179,7 @@
   "TRAINER_PSYCHIC_DARIO_2_REWARD": {
     "name": "Trainer Tower Exterior - Psychic Dario Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Trainer Tower Exterior"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PSYCHIC_JACLYN_REWARD": {
@@ -6191,7 +6191,7 @@
   "TRAINER_PSYCHIC_JACLYN_2_REWARD": {
     "name": "Green Path - Psychic Jaclyn Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Green Path"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PSYCHIC_JOHAN_REWARD": {
@@ -6221,7 +6221,7 @@
   "TRAINER_PSYCHIC_RODETTE_2_REWARD": {
     "name": "Trainer Tower Exterior - Psychic Rodette Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Trainer Tower Exterior"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_PSYCHIC_TYRON_REWARD": {
@@ -6281,7 +6281,7 @@
   "TRAINER_ROCKER_LUCA_2_REWARD": {
     "name": "Route 12 - Rocker Luca Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 12"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_RUIN_MANIAC_BENJAMIN_REWARD": {
@@ -6311,7 +6311,7 @@
   "TRAINER_RUIN_MANIAC_LARRY_2_REWARD": {
     "name": "Ruin Valley - Ruin Maniac Larry Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Ruin Valley"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_RUIN_MANIAC_LAWSON_REWARD": {
@@ -6485,13 +6485,13 @@
   "TRAINER_SIS_AND_BRO_LIL_IAN_2_REWARD": {
     "name": "Route 21 - Sis and Bro Lil & Ian Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 21"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SIS_AND_BRO_LIL_IAN_3_REWARD": {
     "name": "Route 21 - Sis and Bro Lil & Ian Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 21"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SUPER_NERD_AIDAN_REWARD": {
@@ -6527,7 +6527,7 @@
   "TRAINER_SUPER_NERD_GLENN_2_REWARD": {
     "name": "Route 8 - Super Nerd Glenn Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SUPER_NERD_JOVAN_REWARD": {
@@ -6569,7 +6569,7 @@
   "TRAINER_SWIMMER_FEMALE_ALICE_2_REWARD": {
     "name": "Route 19 - Swimmer Alice Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 19"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_FEMALE_AMARA_REWARD": {
@@ -6611,7 +6611,7 @@
   "TRAINER_SWIMMER_FEMALE_MELISSA_2_REWARD": {
     "name": "Route 20 - Swimmer Melissa Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 20"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_FEMALE_NICOLE_REWARD": {
@@ -6623,7 +6623,7 @@
   "TRAINER_SWIMMER_FEMALE_NICOLE_2_REWARD": {
     "name": "Outcast Island - Swimmer Nicole Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Outcast Island"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_FEMALE_NORA_REWARD": {
@@ -6671,7 +6671,7 @@
   "TRAINER_SWIMMER_MALE_DARRIN_2_REWARD": {
     "name": "Route 20 - Swimmer Darrin Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 20"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_MALE_DAVID_REWARD": {
@@ -6701,7 +6701,7 @@
   "TRAINER_SWIMMER_MALE_FINN_2_REWARD": {
     "name": "Kindle Road - Swimmer Finn Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "One Island", "Kindle Road"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_MALE_GARRETT_REWARD": {
@@ -6719,7 +6719,7 @@
   "TRAINER_SWIMMER_MALE_JACK_2_REWARD": {
     "name": "Route 21 - Swimmer Jack Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 21"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_MALE_JEROME_REWARD": {
@@ -6743,7 +6743,7 @@
   "TRAINER_SWIMMER_MALE_MATTHEW_2_REWARD": {
     "name": "Route 19 - Swimmer Matthew Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 19"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_MALE_MYMO_REWARD": {
@@ -6779,7 +6779,7 @@
   "TRAINER_SWIMMER_MALE_SAMIR_2_REWARD": {
     "name": "Water Path - Swimmer Samir Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Six Island", "Water Path"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_SWIMMER_MALE_SPENCER_REWARD": {
@@ -6803,7 +6803,7 @@
   "TRAINER_SWIMMER_MALE_TONY_2_REWARD": {
     "name": "Route 19 - Swimmer Tony Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 19"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_TAMER_COLE_REWARD": {
@@ -6827,7 +6827,7 @@
   "TRAINER_TAMER_EVAN_2_REWARD": {
     "name": "Sevault Canyon - Tamer Evan Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Seven Island", "Sevault Canyon"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_TAMER_JASON_REWARD": {
@@ -7175,7 +7175,7 @@
   "TRAINER_TUBER_AMIRA_2_REWARD": {
     "name": "Bond Bridge - Tuber Amira Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Three Island", "Bond Bridge"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_TWINS_ELI_ANNE_REWARD": {
@@ -7187,7 +7187,7 @@
   "TRAINER_TWINS_ELI_ANNE_2_REWARD": {
     "name": "Route 8 - Twins Eli & Anne Rematch Reward",
     "tags": ["Trainers", "Kanto", "Route 8"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_TWINS_JOY_MEG_REWARD": {
@@ -7199,7 +7199,7 @@
   "TRAINER_TWINS_JOY_MEG_2_REWARD": {
     "name": "Bond Bridge - Twins Joy & Meg Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Three Island", "Bond Bridge"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_TWINS_KIRI_JAN_REWARD": {
@@ -7223,19 +7223,19 @@
   "TRAINER_YOUNGSTER_BEN_2_REWARD": {
     "name": "Route 3 - Youngster Ben Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_BEN_3_REWARD": {
     "name": "Route 3 - Youngster Ben Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_BEN_4_REWARD": {
     "name": "Route 3 - Youngster Ben Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 3"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_CALVIN_REWARD": {
@@ -7253,19 +7253,19 @@
   "TRAINER_YOUNGSTER_CHAD_2_REWARD": {
     "name": "Route 25 - Youngster Chad Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_CHAD_3_REWARD": {
     "name": "Route 25 - Youngster Chad Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_CHAD_4_REWARD": {
     "name": "Route 25 - Youngster Chad Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 25"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_CORDELL_REWARD": {
@@ -7295,7 +7295,7 @@
   "TRAINER_YOUNGSTER_DESTIN_2_REWARD": {
     "name": "Resort Gorgeous - Youngster Destin Rematch Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Resort Gorgeous"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_DILLON_REWARD": {
@@ -7343,19 +7343,19 @@
   "TRAINER_YOUNGSTER_TIMMY_2_REWARD": {
     "name": "Route 24 - Youngster Timmy Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 24"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_TIMMY_3_REWARD": {
     "name": "Route 24 - Youngster Timmy Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 24"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_TIMMY_4_REWARD": {
     "name": "Route 24 - Youngster Timmy Rematch Reward 3",
     "tags": ["Trainers", "Kanto", "Route 24"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_TYLER_REWARD": {
@@ -7373,13 +7373,13 @@
   "TRAINER_YOUNGSTER_YASU_2_REWARD": {
     "name": "Route 11 - Youngster Yasu Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 11"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNGSTER_YASU_3_REWARD": {
     "name": "Route 11 - Youngster Yasu Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 11"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNG_COUPLE_EVE_JON_REWARD": {
@@ -7397,13 +7397,13 @@
   "TRAINER_YOUNG_COUPLE_GIA_JES_2_REWARD": {
     "name": "Route 12 - Young Couple Gia & Jes Rematch Reward 1",
     "tags": ["Trainers", "Kanto", "Route 12"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNG_COUPLE_GIA_JES_3_REWARD": {
     "name": "Route 12 - Young Couple Gia & Jes Rematch Reward 2",
     "tags": ["Trainers", "Kanto", "Route 12"],
-    "category": "TRAINER",
+    "category": "TRAINER_REMATCH",
     "include": ["Rematchsanity"]
   },
   "TRAINER_YOUNG_COUPLE_LEA_JED_REWARD": {
