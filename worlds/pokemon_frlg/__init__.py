@@ -39,7 +39,7 @@ from .regions import starting_town_map, create_indirect_conditions, create_regio
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
 from .sanity_check import validate_regions
-from .universal_tracker import ut_set_options
+from .universal_tracker import ut_reconnect_found_entrances, ut_set_options
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 # Try adding the Pokémon Gen 3 Adjuster
@@ -118,6 +118,7 @@ class PokemonFRLGWorld(World):
     ut_can_gen_without_yaml = True
     glitches_item_name = PokemonFRLGGlitchedToken.TOKEN_NAME
     is_universal_tracker: bool
+    found_entrances_datastorage_key: List[str] = []
 
     logic: PokemonFRLGLogic
     patch_data: PokemonFRLGPatchData
@@ -607,6 +608,7 @@ class PokemonFRLGWorld(World):
             "shuffle_interiors",
             "shuffle_warp_tiles",
             "shuffle_dropdowns",
+            "decouple_entrances_warps",
             "randomize_fly_destinations",
             "shuffle_badges",
             "shuffle_hidden",
@@ -778,3 +780,7 @@ class PokemonFRLGWorld(World):
     @staticmethod
     def interpret_slot_data(slot_data: dict[str, Any]):
         return slot_data
+
+    def reconnect_found_entrances(self, found_key: str, data_storage_value: Any) -> None:
+        if data_storage_value:
+            ut_reconnect_found_entrances(self, found_key)

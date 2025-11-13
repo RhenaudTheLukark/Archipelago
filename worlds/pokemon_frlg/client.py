@@ -798,13 +798,20 @@ class PokemonFRLGClient(BizHawkClient):
                 return
             if exit_warp_id not in data.entrance_name_map[exit_map_id]:
                 return
+
             entrance_name = data.entrance_name_map[entrance_map_id][entrance_warp_id]
             exit_name = data.entrance_name_map[exit_map_id][exit_warp_id]
+
             if (entrance_name not in self.local_entrances and
                     (entrance_name in ctx.slot_data["entrances"] or
                      exit_name in ctx.slot_data["entrances"])):
-                self.local_entrances[entrance_name] = exit_name
-                self.local_entrances[exit_name] = entrance_name
+                if ctx.slot_data["decouple_entrances_warps"]:
+                    self.local_entrances[entrance_name] = exit_name
+                else:
+                    self.local_entrances[entrance_name] = exit_name
+                    self.local_entrances[exit_name] = entrance_name
+
+                # Send to Poptracker
                 await ctx.send_msgs([{
                     "cmd": "Set",
                     "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
@@ -812,6 +819,24 @@ class PokemonFRLGClient(BizHawkClient):
                     "want_reply": False,
                     "operations": [{"operation": "update", "value": self.local_entrances}]
                 }])
+
+                # Send to Universal Tracker
+                await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"pokemon_frlg_{ctx.slot}_{entrance_name}",
+                    "default": False,
+                    "want_reply": False,
+                    "operations": [{"operation": "replace", "value": True}]
+                }])
+                if not ctx.slot_data["decouple_entrances_warps"]:
+                    await ctx.send_msgs([{
+                        "cmd": "Set",
+                        "key": f"pokemon_frlg_{ctx.slot}_{exit_name}",
+                        "default": False,
+                        "want_reply": False,
+                        "operations": [{"operation": "replace", "value": True}]
+                    }])
+
 
     async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
         """

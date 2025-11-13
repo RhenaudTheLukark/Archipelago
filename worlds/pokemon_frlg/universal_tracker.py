@@ -132,10 +132,28 @@ def ut_set_requested_trade_pokemon(world: "PokemonFRLGWorld") -> None:
 
 
 def ut_set_entrances(world: "PokemonFRLGWorld") -> None:
+    deferred_entrances = (hasattr(world.multiworld, "enforce_deferred_connections")
+                          and world.multiworld.enforce_deferred_connections in ("on", "default"))
+    datastorage_key_prefix = "pokemon_frlg_{player}_"
+
     if "entrances" in world.ut_slot_data:
         for entrance_name, region_name in world.ut_slot_data["entrances"].items():
             entrance = world.get_entrance(entrance_name)
             region = world.get_region(region_name)
             entrance.connected_region.entrances.remove(entrance)
-            entrance.connected_region = region
-            region.entrances.append(entrance)
+            if deferred_entrances:
+                entrance.connected_region = None
+                datastorage_key = datastorage_key_prefix + entrance_name
+                world.found_entrances_datastorage_key.append(datastorage_key)
+            else:
+                entrance.connected_region = region
+                region.entrances.append(entrance)
+
+
+def ut_reconnect_found_entrances(world: "PokemonFRLGWorld", found_key: str) -> None:
+    entrance_name = found_key.split("_")[-1]
+    region_name = world.ut_slot_data["entrances"][entrance_name]
+    entrance = world.get_entrance(entrance_name)
+    region = world.get_region(region_name)
+    entrance.connected_region = region
+    region.entrances.append(entrance)
