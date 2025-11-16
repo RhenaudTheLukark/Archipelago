@@ -33,7 +33,7 @@ GAME_OPTIONS: Dict[str, GameOption] = {
     "Battle Scene": GameOption(1, {"Off": 0, False: 0, "On": 1, True: 1}, 1, 7),
     "Battle Style": GameOption(0, {"Shift": 0, "Set": 1}, 1, 8),
     "Show Effectiveness": GameOption(1, {"Off": 0, False: 0, "On": 1, True: 1}, 1, 9),
-    "Experience Multiplier": GameOption(100, dict(zip([i * 10 for i in range(100)], [i * 10 for i in range(100)])), -2, 0),
+    "Experience Multiplier": GameOption(100, dict(zip([i * 10 for i in range(101)], [i * 10 for i in range(101)])), -2, 0),
     "Experience Distribution": GameOption(0, {"Gen III": 0, "Gen VI": 1, "Gen VIII": 2}, 1, 10),
     "Sound": GameOption(0, {"Mono": 0, "Stereo": 1}, 1, 12),
     "Low HP Beep": GameOption(1, {"Off": 0, False: 0, "On": 1, True: 1}, 1, 13),
