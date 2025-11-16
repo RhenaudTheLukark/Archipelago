@@ -317,6 +317,8 @@ class Shopsanity(Toggle):
 class VendingMachines(Toggle):
     """
     Shuffles the Celadon Department Store vending machine items into the general item pool.
+
+    At least one Fresh Water, Soda Pop, and Lemonade are guaranteed to be placed in a shop location.
     """
     display_name = "Vending Machines"
 

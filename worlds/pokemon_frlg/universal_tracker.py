@@ -3835,7 +3835,7 @@ POPTRACKER_LOCATIONS: Dict[str, int] = {
     "Pokémon Tower 6F Southwest Item/Item": "ITEM_POKEMON_TOWER_6F_RARE_CANDY",
     "Pokémon Tower 7F South Team Rocket Grunt/Reward": "TRAINER_TEAM_ROCKET_GRUNT_19_REWARD",
     "Pokémon Tower 7F Center Team Rocket Grunt/Reward": "TRAINER_TEAM_ROCKET_GRUNT_20_REWARD",
-    "Pokémon Tower 7F Team Rocket Grunt/Info": "FAME_CHECKER_MRFUJI_2",
+    "Pokémon Tower 7F Center Team Rocket Grunt/Info": "FAME_CHECKER_MRFUJI_2",
     "Pokémon Tower 7F North Team Rocket Grunt/Reward": "TRAINER_TEAM_ROCKET_GRUNT_21_REWARD",
     "Pokémon Tower Mr. Fuji/Hidden Item Under Mr. Fuji": "HIDDEN_ITEM_POKEMON_TOWER_7F_SOOTHE_BELL",
     "Underground Path East-West Tunnel Farthest East Hidden Item/Hidden Item": "HIDDEN_ITEM_UNDERGROUND_PATH_EAST_WEST_TUNNEL_ICE_HEAL",
