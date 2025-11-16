@@ -397,7 +397,8 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         if not world.is_universal_tracker:
             free_fly_location_id = world.random.choice(free_fly_list)
         else:
-            free_fly_location_id = world.ut_slot_data["free_fly_location_id"]
+            fly_map_lookup = {v: k for k, v in fly_item_id_map.items()}
+            free_fly_location_id = fly_map_lookup[world.ut_slot_data["free_fly_location_id"]]
         world.free_fly_location_id = fly_item_id_map[free_fly_location_id]
 
         if free_fly_location_id in town_map_fly_list and len(town_map_fly_list) > 1:
@@ -425,7 +426,8 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         if not world.is_universal_tracker:
             town_map_fly_location_id = world.random.choice(town_map_fly_list)
         else:
-            town_map_fly_location_id = world.ut_slot_data["town_map_fly_location_id"]
+            fly_map_lookup = {v: k for k, v in fly_item_id_map.items()}
+            town_map_fly_location_id = fly_map_lookup[world.ut_slot_data["town_map_fly_location_id"]]
         world.town_map_fly_location_id = fly_item_id_map[town_map_fly_location_id]
 
         start_region = world.multiworld.get_region("Title Screen", world.player)

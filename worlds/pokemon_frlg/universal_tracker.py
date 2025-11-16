@@ -80,7 +80,10 @@ def ut_set_locations(world: "PokemonFRLGWorld") -> None:
     for starting_town, locations in STARTING_TOWN_PC_LOCATIONS.items():
         if world.ut_slot_data["starting_town"] != data.constants[starting_town]:
             for location in locations:
-                world.tracker_world["poptracker_name_mapping"].pop(location)
+                try:
+                    world.tracker_world["poptracker_name_mapping"].pop(location)
+                except KeyError:
+                    pass
     if world.options.shuffle_pokemon_centers:
         world.tracker_world["map_page_locations"].remove("ut_locations/entrances/pokemon_center_overview.json")
     if world.options.shuffle_gyms:

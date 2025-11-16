@@ -127,8 +127,8 @@ class PokemonFRLGWorld(World):
     is_universal_tracker: bool
     found_entrances_datastorage_key: List[str] = []
     tracker_world = {
-        "map_page_maps": MAP_PAGE_MAPS,
-        "map_page_locations": MAP_PAGE_LOCATIONS,
+        "map_page_maps": copy.deepcopy(MAP_PAGE_MAPS),
+        "map_page_locations": copy.deepcopy(MAP_PAGE_LOCATIONS),
         "external_pack_key": "ut_poptracker_path",
         "poptracker_name_mapping": {k: data.locations[v].flag for k, v in POPTRACKER_LOCATIONS.items()},
         "map_page_index": map_page_index,
@@ -703,9 +703,10 @@ class PokemonFRLGWorld(World):
             for exit in self.get_region("Sky").exits:
                 slot_data["fly_destinations"][exit.name] = exit.connected_region.name
 
-        slot_data["entrances"] = {}
-        for source, dest in self.er_placement_state.pairings:
-            slot_data["entrances"][source] = self.get_entrance(source).connected_region.name
+        if self.er_placement_state is not None:
+            slot_data["entrances"] = {}
+            for source, dest in self.er_placement_state.pairings:
+                slot_data["entrances"][source] = self.get_entrance(source).connected_region.name
 
         slot_data["wild_encounters"] = {}
         slot_data["static_encounters"] = {}
