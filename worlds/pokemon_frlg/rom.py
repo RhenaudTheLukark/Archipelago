@@ -905,6 +905,7 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
         if location.item is None:
             continue
 
+        already_set = False
         item_address = location.item_address
 
         if location.item.player != world.player:
@@ -917,19 +918,21 @@ def _set_shop_data(world: "PokemonFRLGWorld") -> None:
         else:
             if location.item.name in already_set_prices and world.options.consistent_shop_prices:
                 price = already_set_prices[location.item.name]
+                already_set = True
             else:
                 price = data.items[world.item_name_to_id[location.item.name]].price
             if location.item.code is not None:
                 patch.write_token(item_address, 2, struct.pack("<H", location.item.code))
 
-        if world.options.shop_prices == ShopPrices.option_cheap:
-            price = round(price * 0.5)
-        elif world.options.shop_prices == ShopPrices.option_affordable:
-            price = world.random.randint(round(price * 0.5), price)
-        elif world.options.shop_prices == ShopPrices.option_standard:
-            price = world.random.randint(round(price * 0.5), round(price * 1.5))
-        elif world.options.shop_prices == ShopPrices.option_expensive:
-            price = world.random.randint(price, round(price * 1.5))
+        if not already_set:
+            if world.options.shop_prices == ShopPrices.option_cheap:
+                price = round(price * 0.5)
+            elif world.options.shop_prices == ShopPrices.option_affordable:
+                price = world.random.randint(round(price * 0.5), price)
+            elif world.options.shop_prices == ShopPrices.option_standard:
+                price = world.random.randint(round(price * 0.5), round(price * 1.5))
+            elif world.options.shop_prices == ShopPrices.option_expensive:
+                price = world.random.randint(price, round(price * 1.5))
 
         patch.write_token(item_address, 4, struct.pack("<H", price))
 
