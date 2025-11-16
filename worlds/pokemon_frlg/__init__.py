@@ -703,11 +703,9 @@ class PokemonFRLGWorld(World):
             for exit in self.get_region("Sky").exits:
                 slot_data["fly_destinations"][exit.name] = exit.connected_region.name
 
-        if (self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off
-                and self.options.shuffle_dungeons != ShuffleDungeonEntrances.option_seafoam):
-            slot_data["entrances"] = {}
-            for source, dest in self.er_placement_state.pairings:
-                slot_data["entrances"][source] = self.get_entrance(source).connected_region.name
+        slot_data["entrances"] = {}
+        for source, dest in self.er_placement_state.pairings:
+            slot_data["entrances"][source] = self.get_entrance(source).connected_region.name
 
         slot_data["wild_encounters"] = {}
         slot_data["static_encounters"] = {}
