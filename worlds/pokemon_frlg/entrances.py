@@ -639,23 +639,21 @@ MART_GROUPS = [EntranceGroup.MART_ENTRANCE, EntranceGroup.MART_EXIT]
 
 HARBOR_GROUPS = [EntranceGroup.HARBOR_ENTRANCE, EntranceGroup.HARBOR_EXIT]
 
-BUILDING_GROUPS = [EntranceGroup.SINGLE_BUILDING_ENTRANCE, EntranceGroup.SINGLE_BUILDING_EXIT,
-                   EntranceGroup.MULTI_BUILDING_ENTRANCE, EntranceGroup.MULTI_BUILDING_EXIT]
+SINGLE_BUILDING_GROUPS = [EntranceGroup.SINGLE_BUILDING_ENTRANCE, EntranceGroup.SINGLE_BUILDING_EXIT]
+
+MULTI_BUILDING_GROUPS = [EntranceGroup.MULTI_BUILDING_ENTRANCE, EntranceGroup.MULTI_BUILDING_EXIT]
 
 BUILDING_ENTRANCE_GROUPS = [EntranceGroup.SINGLE_BUILDING_ENTRANCE, EntranceGroup.MULTI_BUILDING_ENTRANCE]
 
 BUILDING_EXIT_GROUPS = [EntranceGroup.SINGLE_BUILDING_EXIT, EntranceGroup.MULTI_BUILDING_EXIT]
 
-DUNGEON_GROUPS = [EntranceGroup.SINGLE_DUNGEON_ENTRANCE, EntranceGroup.SINGLE_DUNGEON_EXIT,
-                  EntranceGroup.MULTI_DUNGEON_ENTRANCE, EntranceGroup.MULTI_DUNGEON_EXIT]
+SINGLE_DUNGEON_GROUPS = [EntranceGroup.SINGLE_DUNGEON_ENTRANCE, EntranceGroup.SINGLE_DUNGEON_EXIT]
+
+MULTI_DUNGEON_GROUPS = [EntranceGroup.MULTI_DUNGEON_ENTRANCE, EntranceGroup.MULTI_DUNGEON_EXIT]
 
 DUNGEON_ENTRANCE_GROUPS = [EntranceGroup.SINGLE_DUNGEON_ENTRANCE, EntranceGroup.MULTI_DUNGEON_ENTRANCE]
 
 DUNGEON_EXIT_GROUPS = [EntranceGroup.SINGLE_DUNGEON_EXIT, EntranceGroup.MULTI_DUNGEON_EXIT]
-
-RESTRICTED_SINGLE_ENTRANCE_GROUPS = [EntranceGroup.SINGLE_BUILDING_ENTRANCE, EntranceGroup.SINGLE_DUNGEON_ENTRANCE]
-
-RESTRICTED_SINGLE_EXIT_GROUPS = [EntranceGroup.SINGLE_BUILDING_EXIT, EntranceGroup.SINGLE_DUNGEON_EXIT]
 
 RESTRICTED_MULTI_ENTRANCE_GROUPS = [EntranceGroup.MULTI_BUILDING_ENTRANCE, EntranceGroup.MULTI_DUNGEON_ENTRANCE]
 
@@ -697,7 +695,7 @@ def _set_seafoam_entrances(world: "PokemonFRLGWorld") -> None:
         region.entrances.append(entrance)
 
 
-def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> Set[EntranceGroup]:
+def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> bool:
     def get_entrance_safe(entrance_name: str) -> Entrance | None:
         try:
             entrance = world.get_entrance(entrance_name)
@@ -714,32 +712,37 @@ def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> Set[EntranceGro
             return EntranceType.ONE_WAY
         return EntranceType.TWO_WAY
 
-    shuffled_groups = set()
     shuffled_entrances: List[str] = []
 
     if world.options.shuffle_pokemon_centers:
         shuffled_entrances.extend(POKEMON_CENTER_ENTRANCES)
         shuffled_entrances.extend(POKEMON_CENTER_EXITS)
+
     if world.options.shuffle_gyms:
         shuffled_entrances.extend(GYM_ENTRANCES)
         shuffled_entrances.extend(GYM_EXITS)
+
     if world.options.shuffle_marts:
         shuffled_entrances.extend(MART_ENTRANCES)
         shuffled_entrances.extend(MART_EXITS)
+
     if world.options.shuffle_harbors:
         shuffled_entrances.extend(HARBOR_ENTRANCES)
         shuffled_entrances.extend(HARBOR_EXITS)
+
     if world.options.shuffle_buildings != ShuffleBuildingEntrances.option_off:
         shuffled_entrances.extend(SINGLE_BUILDING_ENTRANCES)
         shuffled_entrances.extend(SINGLE_BUILDING_EXITS)
         shuffled_entrances.extend(MULTI_BUILDING_ENTRANCES)
         shuffled_entrances.extend(MULTI_BUILDING_EXITS)
+
     if (world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off
             and world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_seafoam):
         shuffled_entrances.extend(SINGLE_DUNGEON_ENTRANCES)
         shuffled_entrances.extend(SINGLE_DUNGEON_EXITS)
         shuffled_entrances.extend(MULTI_DUNGEON_ENTRANCES)
         shuffled_entrances.extend(MULTI_DUNGEON_EXITS)
+
     if world.options.shuffle_interiors:
         shuffled_entrances.extend(PEWTER_MUSEUM_WARPS)
         shuffled_entrances.extend(MT_MOON_WARPS)
@@ -771,9 +774,11 @@ def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> Set[EntranceGro
         shuffled_entrances.extend(DOTTED_HOLE_WARPS)
         shuffled_entrances.extend(CERULEAN_CAVE_WARPS)
         shuffled_entrances.extend(NAVEL_ROCK_WARPS)
+
     if world.options.shuffle_warp_tiles != ShuffleWarpTiles.option_off:
         shuffled_entrances.extend(SILPH_CO_WARP_TILES)
         shuffled_entrances.extend(SAFFRON_GYM_WARP_TILES)
+
     if world.options.shuffle_dropdowns != ShuffleDropdowns.option_off:
         shuffled_entrances.extend(SEAFOAM_ISLANDS_DROPS)
         shuffled_entrances.extend(POKEMON_MANSION_DROPS)
@@ -791,9 +796,8 @@ def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> Set[EntranceGro
                 target_name = None
             world.er_entrances.append((entrance, entrance.connected_region))
             disconnect_entrance_for_randomization(entrance, entrance.randomization_group, target_name)
-            shuffled_groups.add(entrance.randomization_group)
 
-    return shuffled_groups
+    return len(shuffled_entrances) > 0
 
 
 def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGroup, List[EntranceGroup]]:
@@ -801,11 +805,23 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
     mixed_entrance_group = []
     mixed_exit_group = []
     unrestricted_entrances = False
+    restricted_entrances_mixed = False
 
+    if ("Buildings" in world.options.mix_entrance_warp_pools.value
+            and "Dungeons" in world.options.mix_entrance_warp_pools.value
+            and ((world.options.shuffle_buildings == ShuffleBuildingEntrances.option_simple
+                  and world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_simple)
+                 or (world.options.shuffle_buildings == ShuffleBuildingEntrances.option_restricted
+                     and world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_restricted))):
+        restricted_entrances_mixed = True
+
+    # Create the mixed entrance/exit groups. If interiors are included in the mixed pool then the restriction
+    # that entrances -> exits and vice versa can be ignored. Any warp in the mixed pool can go to any other warp.
     if "Interiors" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_interiors:
         mixed_entrance_group.extend(INTERIOR_WARP_GROUPS)
         mixed_exit_group.extend(INTERIOR_WARP_GROUPS)
         unrestricted_entrances = True
+
     if "Gyms" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_gyms:
         if unrestricted_entrances:
             mixed_entrance_group.extend(GYM_GROUPS)
@@ -813,6 +829,7 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             mixed_entrance_group.append(EntranceGroup.GYM_EXIT)
             mixed_exit_group.append(EntranceGroup.GYM_ENTRANCE)
+
     if "Marts" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_marts:
         if unrestricted_entrances:
             mixed_entrance_group.extend(MART_GROUPS)
@@ -820,6 +837,7 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             mixed_entrance_group.append(EntranceGroup.MART_EXIT)
             mixed_exit_group.append(EntranceGroup.MART_ENTRANCE)
+
     if "Harbors" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_harbors:
         if unrestricted_entrances:
             mixed_entrance_group.extend(HARBOR_GROUPS)
@@ -827,26 +845,44 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             mixed_entrance_group.append(EntranceGroup.HARBOR_EXIT)
             mixed_exit_group.append(EntranceGroup.HARBOR_ENTRANCE)
-    if ("Buildings" in world.options.mix_entrance_warp_pools.value
-            and world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full):
-        if unrestricted_entrances:
-            mixed_entrance_group.extend(BUILDING_GROUPS)
-            mixed_exit_group.extend(BUILDING_GROUPS)
-        else:
-            mixed_entrance_group.extend(BUILDING_EXIT_GROUPS)
-            mixed_exit_group.extend(BUILDING_ENTRANCE_GROUPS)
-    if ("Dungeons" in world.options.mix_entrance_warp_pools.value
-            and world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full):
-        if unrestricted_entrances:
-            mixed_entrance_group.extend(DUNGEON_GROUPS)
-            mixed_exit_group.extend(DUNGEON_GROUPS)
-        else:
-            mixed_entrance_group.extend(DUNGEON_EXIT_GROUPS)
-            mixed_exit_group.extend(DUNGEON_ENTRANCE_GROUPS)
 
+    # If buildings or dungeons are mixed then single entrance buildings are always added to the mixed pool. Multi
+    # entrance buildings are only added to the mixed pool if the shuffle option is set to full.
+    if ("Buildings" in world.options.mix_entrance_warp_pools.value
+            and world.options.shuffle_buildings != ShuffleBuildingEntrances.option_off):
+        if unrestricted_entrances:
+            mixed_entrance_group.extend(SINGLE_BUILDING_GROUPS)
+            mixed_exit_group.extend(SINGLE_BUILDING_GROUPS)
+            if world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full:
+                mixed_entrance_group.extend(MULTI_BUILDING_GROUPS)
+                mixed_exit_group.extend(MULTI_BUILDING_GROUPS)
+        else:
+            mixed_entrance_group.append(EntranceGroup.SINGLE_BUILDING_EXIT)
+            mixed_exit_group.append(EntranceGroup.SINGLE_BUILDING_ENTRANCE)
+            if world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full:
+                mixed_entrance_group.append(EntranceGroup.MULTI_BUILDING_EXIT)
+                mixed_exit_group.append(EntranceGroup.MULTI_BUILDING_ENTRANCE)
+
+    if ("Dungeons" in world.options.mix_entrance_warp_pools.value
+            and world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off):
+        if unrestricted_entrances:
+            mixed_entrance_group.extend(SINGLE_DUNGEON_GROUPS)
+            mixed_exit_group.extend(SINGLE_DUNGEON_GROUPS)
+            if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full:
+                mixed_entrance_group.extend(MULTI_DUNGEON_GROUPS)
+                mixed_exit_group.extend(MULTI_DUNGEON_GROUPS)
+        else:
+            mixed_entrance_group.append(EntranceGroup.SINGLE_DUNGEON_EXIT)
+            mixed_exit_group.append(EntranceGroup.SINGLE_DUNGEON_ENTRANCE)
+            if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full:
+                mixed_entrance_group.append(EntranceGroup.MULTI_DUNGEON_EXIT)
+                mixed_exit_group.append(EntranceGroup.MULTI_DUNGEON_ENTRANCE)
+
+    # Set the entrance groups that an entrance/exit can shuffle with
     if world.options.shuffle_pokemon_centers:
         entrance_group_lookup[EntranceGroup.POKEMON_CENTER_ENTRANCE] = [EntranceGroup.POKEMON_CENTER_EXIT]
         entrance_group_lookup[EntranceGroup.POKEMON_CENTER_EXIT] = [EntranceGroup.POKEMON_CENTER_ENTRANCE]
+
     if world.options.shuffle_gyms:
         if "Gyms" in world.options.mix_entrance_warp_pools.value:
             entrance_group_lookup[EntranceGroup.GYM_ENTRANCE] = mixed_entrance_group
@@ -854,6 +890,7 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             entrance_group_lookup[EntranceGroup.GYM_ENTRANCE] = [EntranceGroup.GYM_EXIT]
             entrance_group_lookup[EntranceGroup.GYM_EXIT] = [EntranceGroup.GYM_ENTRANCE]
+
     if world.options.shuffle_marts:
         if "Marts" in world.options.mix_entrance_warp_pools.value:
             entrance_group_lookup[EntranceGroup.MART_ENTRANCE] = mixed_entrance_group
@@ -861,6 +898,7 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             entrance_group_lookup[EntranceGroup.MART_ENTRANCE] = [EntranceGroup.MART_EXIT]
             entrance_group_lookup[EntranceGroup.MART_EXIT] = [EntranceGroup.MART_ENTRANCE]
+
     if world.options.shuffle_harbors:
         if "Harbors" in world.options.mix_entrance_warp_pools.value:
             entrance_group_lookup[EntranceGroup.HARBOR_ENTRANCE] = mixed_entrance_group
@@ -868,67 +906,75 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
         else:
             entrance_group_lookup[EntranceGroup.HARBOR_ENTRANCE] = [EntranceGroup.HARBOR_EXIT]
             entrance_group_lookup[EntranceGroup.HARBOR_EXIT] = [EntranceGroup.HARBOR_ENTRANCE]
-    if world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full:
+
+    # If buildings/dungeons are in the mixed pool, set single entrances/exits so they can connect to any other mixed
+    # entrance/exit. Only set multi entrances/exits to be in the mixed pool if the shuffle option is full. Otherwise,
+    # set multi exntrances/exits to be mixed with all building/dungeon multi entrances/exits if their shuffle options
+    # are the same
+    if world.options.shuffle_buildings != ShuffleBuildingEntrances.option_off:
         if "Buildings" in world.options.mix_entrance_warp_pools.value:
             entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = mixed_entrance_group
             entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = mixed_exit_group
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = mixed_entrance_group
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = mixed_exit_group
+            if world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full:
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = mixed_entrance_group
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = mixed_exit_group
+            elif restricted_entrances_mixed:
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = RESTRICTED_MULTI_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = RESTRICTED_MULTI_ENTRANCE_GROUPS
+            else:
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = [EntranceGroup.MULTI_BUILDING_EXIT]
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = [EntranceGroup.MULTI_BUILDING_ENTRANCE]
         else:
-            entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = BUILDING_EXIT_GROUPS
-            entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = BUILDING_ENTRANCE_GROUPS
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = BUILDING_EXIT_GROUPS
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = BUILDING_ENTRANCE_GROUPS
-    if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full:
+            if world.options.shuffle_buildings == ShuffleBuildingEntrances.option_full:
+                entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = BUILDING_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = BUILDING_ENTRANCE_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = BUILDING_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = BUILDING_ENTRANCE_GROUPS
+            else:
+                entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = [EntranceGroup.SINGLE_BUILDING_EXIT]
+                entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = [EntranceGroup.SINGLE_BUILDING_ENTRANCE]
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = [EntranceGroup.MULTI_BUILDING_EXIT]
+                entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = [EntranceGroup.MULTI_BUILDING_ENTRANCE]
+
+    if world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off:
         if "Dungeons" in world.options.mix_entrance_warp_pools.value:
             entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = mixed_entrance_group
             entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = mixed_exit_group
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = mixed_entrance_group
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = mixed_exit_group
+            if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full:
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = mixed_entrance_group
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = mixed_exit_group
+            elif restricted_entrances_mixed:
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = RESTRICTED_MULTI_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = RESTRICTED_MULTI_ENTRANCE_GROUPS
+            else:
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = [EntranceGroup.MULTI_DUNGEON_EXIT]
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = [EntranceGroup.MULTI_DUNGEON_ENTRANCE]
         else:
-            entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = DUNGEON_EXIT_GROUPS
-            entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = DUNGEON_ENTRANCE_GROUPS
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = DUNGEON_EXIT_GROUPS
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = DUNGEON_ENTRANCE_GROUPS
-    if ("Buildings" in world.options.mix_entrance_warp_pools.value
-            and "Dungeons" in world.options.mix_entrance_warp_pools.value
-            and ((world.options.shuffle_buildings == ShuffleBuildingEntrances.option_restricted
-                  and world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_restricted)
-                 or (world.options.shuffle_buildings == ShuffleBuildingEntrances.option_simple
-                     and world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_simple))):
-        entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = RESTRICTED_SINGLE_EXIT_GROUPS
-        entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = RESTRICTED_SINGLE_ENTRANCE_GROUPS
-        entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = RESTRICTED_MULTI_EXIT_GROUPS
-        entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = RESTRICTED_MULTI_ENTRANCE_GROUPS
-        entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = RESTRICTED_SINGLE_EXIT_GROUPS
-        entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = RESTRICTED_SINGLE_ENTRANCE_GROUPS
-        entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = RESTRICTED_MULTI_EXIT_GROUPS
-        entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = RESTRICTED_MULTI_ENTRANCE_GROUPS
-    else:
-        if (world.options.shuffle_buildings == ShuffleBuildingEntrances.option_restricted
-                or world.options.shuffle_buildings == ShuffleBuildingEntrances.option_simple):
-            entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_ENTRANCE] = [EntranceGroup.SINGLE_BUILDING_EXIT]
-            entrance_group_lookup[EntranceGroup.SINGLE_BUILDING_EXIT] = [EntranceGroup.SINGLE_BUILDING_ENTRANCE]
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_ENTRANCE] = [EntranceGroup.MULTI_BUILDING_EXIT]
-            entrance_group_lookup[EntranceGroup.MULTI_BUILDING_EXIT] = [EntranceGroup.MULTI_BUILDING_ENTRANCE]
-        if (world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_restricted
-                or world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_simple):
-            entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = [EntranceGroup.SINGLE_DUNGEON_EXIT]
-            entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = [EntranceGroup.SINGLE_DUNGEON_ENTRANCE]
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = [EntranceGroup.MULTI_DUNGEON_EXIT]
-            entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = [EntranceGroup.MULTI_DUNGEON_ENTRANCE]
+            if world.options.shuffle_dungeons == ShuffleDungeonEntrances.option_full:
+                entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = DUNGEON_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = DUNGEON_ENTRANCE_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = DUNGEON_EXIT_GROUPS
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = DUNGEON_ENTRANCE_GROUPS
+            else:
+                entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_ENTRANCE] = [EntranceGroup.SINGLE_DUNGEON_EXIT]
+                entrance_group_lookup[EntranceGroup.SINGLE_DUNGEON_EXIT] = [EntranceGroup.SINGLE_DUNGEON_ENTRANCE]
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_ENTRANCE] = [EntranceGroup.MULTI_DUNGEON_EXIT]
+                entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = [EntranceGroup.MULTI_DUNGEON_ENTRANCE]
+
     if world.options.shuffle_interiors:
         for group in INTERIOR_WARP_GROUPS:
             if "Interiors" in world.options.mix_entrance_warp_pools.value:
                 entrance_group_lookup[group] = mixed_exit_group
             else:
                 entrance_group_lookup[group] = INTERIOR_WARP_GROUPS
+
     if world.options.shuffle_warp_tiles == ShuffleWarpTiles.option_full:
         entrance_group_lookup[EntranceGroup.SILPH_CO_WARP_TILE] = WARP_TILE_GROUPS
         entrance_group_lookup[EntranceGroup.SAFFRON_GYM_WARP_TILE] = WARP_TILE_GROUPS
     elif world.options.shuffle_warp_tiles == ShuffleWarpTiles.option_simple:
         entrance_group_lookup[EntranceGroup.SILPH_CO_WARP_TILE] = [EntranceGroup.SILPH_CO_WARP_TILE]
         entrance_group_lookup[EntranceGroup.SAFFRON_GYM_WARP_TILE] = [EntranceGroup.SAFFRON_GYM_WARP_TILE]
+
     if world.options.shuffle_dropdowns == ShuffleDropdowns.option_full:
         entrance_group_lookup[EntranceGroup.SEAFOAM_ISLANDS_DROP] = DROPDOWN_GROUPS
         entrance_group_lookup[EntranceGroup.POKEMON_MANSION_DROP] = DROPDOWN_GROUPS
@@ -1009,8 +1055,7 @@ def _set_respawn_town(world: "PokemonFRLGWorld") -> None:
 
 
 def _randomize_entrances(world: "PokemonFRLGWorld",
-                         entrance_group_lookup: Dict[EntranceGroup, List[EntranceGroup]],
-                         shuffled_groups: Set[EntranceGroup]) -> None:
+                         entrance_group_lookup: Dict[EntranceGroup, List[EntranceGroup]]) -> None:
     if world.options.decouple_entrances_warps:
         coupled = False
     else:
@@ -1063,16 +1108,6 @@ def _randomize_entrances(world: "PokemonFRLGWorld",
                     target = child_region.create_er_target(f"!{entrance.name}")
                     target.randomization_group = entrance.randomization_group
                     target.randomization_type = entrance.randomization_type
-            # for region in world.get_regions():
-            #     for exit in region.get_exits():
-            #         if (exit.randomization_group in shuffled_groups and
-            #                 exit.parent_region and
-            #                 exit.connected_region):
-            #             if exit.randomization_type == EntranceType.ONE_WAY:
-            #                 target_name = f"!{exit.name}"
-            #             else:
-            #                 target_name = None
-            #             disconnect_entrance_for_randomization(exit, exit.randomization_group, target_name)
 
 
 def shuffle_entrances(world: "PokemonFRLGWorld") -> bool:
@@ -1082,12 +1117,12 @@ def shuffle_entrances(world: "PokemonFRLGWorld") -> bool:
         ut_set_entrances(world)
         return False
 
-    shuffled_groups = _disconnect_shuffled_entrances(world)
+    entrance_rando = _disconnect_shuffled_entrances(world)
 
-    if shuffled_groups:
+    if entrance_rando:
         entrance_group_lookup = _create_entrance_group_lookup(world)
         world.logic.randomizing_entrances = True
-        _randomize_entrances(world, entrance_group_lookup, shuffled_groups)
+        _randomize_entrances(world, entrance_group_lookup)
         return True
 
     return False
