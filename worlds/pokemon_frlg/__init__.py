@@ -10,6 +10,7 @@ import settings
 import threading
 
 from collections import defaultdict
+from settings import FilePath, Group, UserFilePath
 from typing import Any, ClassVar, Dict, List, Set, TextIO, Tuple
 
 from BaseClasses import CollectionState, Entrance, Item, ItemClassification, MultiWorld, Region, Tutorial
@@ -39,7 +40,8 @@ from .regions import starting_town_map, create_indirect_conditions, create_regio
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
 from .sanity_check import validate_regions
-from .universal_tracker import ut_reconnect_found_entrances, ut_set_options
+from .universal_tracker import (MAP_PAGE_LOCATIONS, MAP_PAGE_MAPS, POPTRACKER_LOCATIONS, map_page_index,
+                                ut_reconnect_found_entrances, ut_set_locations, ut_set_maps, ut_set_options)
 from .util import int_to_bool_array, HM_TO_COMPATIBILITY_ID
 
 # Try adding the Pokémon Gen 3 Adjuster
@@ -73,21 +75,26 @@ class PokemonFRLGWebWorld(WebWorld):
     tutorials = [setup_en, adjuster_en]
 
 
-class PokemonFRLGSettings(settings.Group):
-    class PokemonFireRedRomFile(settings.UserFilePath):
+class PokemonFRLGSettings(Group):
+    class PokemonFireRedRomFile(UserFilePath):
         """File name of your English Pokémon FireRed ROM"""
         description = "Pokemon FireRed ROM File"
         copy_to = "Pokemon - FireRed Version (USA, Europe).gba"
         md5s = PokemonFireRedProcedurePatch.hash
 
-    class PokemonLeafGreenRomFile(settings.UserFilePath):
+    class PokemonLeafGreenRomFile(UserFilePath):
         """File name of your English Pokémon LeafGreen ROM"""
         description = "Pokemon LeafGreen ROM File"
         copy_to = "Pokemon - LeafGreen Version (USA, Europe).gba"
         md5s = PokemonLeafGreenProcedurePatch.hash
 
+    class UTPoptrackerPath(FilePath):
+        description = "Pokemon FRLG Poptracker Pack Zip File"
+        required = False
+
     firered_rom_file: PokemonFireRedRomFile = PokemonFireRedRomFile(PokemonFireRedRomFile.copy_to)
     leafgreen_rom_file: PokemonLeafGreenRomFile = PokemonLeafGreenRomFile(PokemonLeafGreenRomFile.copy_to)
+    ut_poptracker_path: UTPoptrackerPath | str = UTPoptrackerPath()
 
 
 class PokemonFRLGWorld(World):
@@ -119,6 +126,14 @@ class PokemonFRLGWorld(World):
     glitches_item_name = PokemonFRLGGlitchedToken.TOKEN_NAME
     is_universal_tracker: bool
     found_entrances_datastorage_key: List[str] = []
+    tracker_world = {
+        "map_page_maps": MAP_PAGE_MAPS,
+        "map_page_locations": MAP_PAGE_LOCATIONS,
+        "external_pack_key": "ut_poptracker_path",
+        "poptracker_name_mapping": {k: data.locations[v].flag for k, v in POPTRACKER_LOCATIONS.items()},
+        "map_page_index": map_page_index,
+        "map_page_setting_key": "pokemon_frlg_map_{team}_{player}",
+    }
 
     logic: PokemonFRLGLogic
     patch_data: PokemonFRLGPatchData
@@ -207,6 +222,8 @@ class PokemonFRLGWorld(World):
     def generate_early(self) -> None:
         if self.is_universal_tracker:
             ut_set_options(self)
+            ut_set_maps(self)
+            ut_set_locations(self)
 
         self.blacklisted_wild_pokemon = {
             species.species_id for species in self.modified_species.values()

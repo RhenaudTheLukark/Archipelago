@@ -753,6 +753,8 @@ class PokemonFRLGClient(BizHawkClient):
             section_id = 0
         if self.current_map[0] != map_id or self.current_map[1] != section_id:
             self.current_map = (map_id, section_id)
+
+            # Send to Poptracker
             await ctx.send_msgs([{
                 "cmd": "Bounce",
                 "slots": [ctx.slot],
@@ -761,6 +763,15 @@ class PokemonFRLGClient(BizHawkClient):
                     "mapId": map_id,
                     "sectionId": section_id
                 }
+            }])
+
+            # Send to Universal Tracker
+            await ctx.send_msgs([{
+                "cmd": "Set",
+                "key": f"pokemon_frlg_map_{ctx.team}_{ctx.slot}",
+                "default": [0, 0],
+                "want_reply": False,
+                "operations": [{"operation": "replace", "value": [map_id, section_id]}]
             }])
 
     async def handle_entrance_updates(self,

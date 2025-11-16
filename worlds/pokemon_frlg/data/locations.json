@@ -140,7 +140,7 @@
     "include": []
   },
   "ITEM_SAFARI_ZONE_WEST_GOLD_TEETH": {
-    "name": "Safari Zone West - Northeast Item",
+    "name": "Safari Zone West Area - Northeast Item",
     "tags": ["Overworld Items", "Kanto", "Safari Zone"],
     "category": "OVERWORLD_ITEM",
     "include": []
@@ -555,7 +555,7 @@
     "include": ["Gym Keys"]
   },
   "ITEM_SAFARI_ZONE_EAST_RESTHOUSE_FUCHSIA_KEY": {
-    "name": "Safari Zone East Rest House - Item",
+    "name": "Safari Zone East Area Rest House - Item",
     "tags": ["Overworld Items", "Kanto", "Safari Zone"],
     "category": "OVERWORLD_ITEM",
     "include": ["Gym Keys"]
@@ -6201,7 +6201,7 @@
     "include": ["Trainersanity"]
   },
   "TRAINER_PSYCHIC_LAURA_REWARD": {
-    "name": "Lost Cave Room 4 - Psychic Laura Reward",
+    "name": "Lost Cave B1F Room 4 - Psychic Laura Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Lost Cave"],
     "category": "TRAINER",
     "include": ["Trainersanity"]
@@ -6315,7 +6315,7 @@
     "include": ["Rematchsanity"]
   },
   "TRAINER_RUIN_MANIAC_LAWSON_REWARD": {
-    "name": "Lost Cave Room 1 - Ruin Maniac Lawson Reward",
+    "name": "Lost Cave B1F Room 1 - Ruin Maniac Lawson Reward",
     "tags": ["Trainers", "Sevii Islands", "Five Island", "Lost Cave"],
     "category": "TRAINER",
     "include": ["Trainersanity"]

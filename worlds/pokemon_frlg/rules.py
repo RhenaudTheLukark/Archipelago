@@ -2447,8 +2447,8 @@ def set_rules(world: "PokemonFRLGWorld") -> None:
                     add_rule(exit, lambda state: logic.can_flash(state))
             for location in world.get_region(region).locations:
                 if world.is_universal_tracker and options.flash_required == FlashRequired.option_logic:
-                    add_rule(location, lambda state: logic.can_flash(state) or
-                                                     state.has(PokemonFRLGGlitchedToken.TOKEN_NAME, player))
+                    add_rule(location, lambda state: logic.can_flash(state)
+                                                     or state.has(PokemonFRLGGlitchedToken.TOKEN_NAME, player))
                 else:
                     add_rule(location, lambda state: logic.can_flash(state))
 

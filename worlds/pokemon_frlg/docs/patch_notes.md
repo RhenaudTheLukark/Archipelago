@@ -1,16 +1,20 @@
 # 1.0.0
 ## Updates
+* Added support for Universal Tracker
+  * When launching UT, you can supply the path to your Pokémon FRLG Poptracker pack in order to add a map tab to universal tracker
+  * Supports full auto tracking of locations and entrances all with auto-tabbing for the map
+  * Events are currently not displayed on the map and are automatically assumed collected once you can reach them
 * The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
 * Reworked the Fossil checks
   * You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
   * The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
 * New option `shuffle_pokemon_centers`
-  * Shuffles the Pokemon Center entrances amongst each other
+  * Shuffles the Pokémon Center entrances amongst each other
   * The Player's House is included in this pool but will not be shuffled
 * New option `shuffle_gyms`
   * Shuffles the gym entrances amongst each other
 * New Option `shuffle_marts`
-  * Shuffles the Poke Mart entrances amongst each other
+  * Shuffles the Poké Mart entrances amongst each other
   * This does not include the Celadon Department Store entrances
 * New Option `shuffle_harbors`
   * Shuffles the harbor entrances amongst each other
