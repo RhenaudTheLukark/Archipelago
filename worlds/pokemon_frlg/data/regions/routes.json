@@ -280,7 +280,7 @@
     "events": [],
     "exits": {
       "REGION_ROUTE4/EAST": "Route 4 Southeast Ledge (Bottom)",
-      "REGION_CERULEAN_CITY/MAIN": "Route 4 Exit (East)"
+      "REGION_CERULEAN_CITY/MAIN": "Route 4 Exit (Southeast)"
     },
     "warps": {}
   },
@@ -310,7 +310,8 @@
     ],
     "events": [],
     "exits": {
-      "REGION_ROUTE4/EAST": "Route 4 Northeast Ledge (Top)"
+      "REGION_ROUTE4/EAST": "Route 4 Northeast Ledge (Top)",
+      "REGION_CERULEAN_CITY/NEAR_CAVE": "Route 4 Exit (Northeast)"
     },
     "warps": {}
   },
