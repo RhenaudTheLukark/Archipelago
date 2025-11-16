@@ -86,7 +86,7 @@
       "REGION_ROUTE2/NORTHEAST": "Route 2 Center Cuttable Tree (Bottom)"
     },
     "warps": {
-      "MAP_ROUTE2:6,7/MAP_ROUTE2_EAST_BUILDING:0": "Route 2 Gate (North)"
+      "MAP_ROUTE2:8,9/MAP_ROUTE2_EAST_BUILDING:1": "Route 2 Gate (North)"
     }
   },
   "REGION_ROUTE2/SOUTHEAST": {
@@ -106,7 +106,7 @@
       "REGION_ROUTE2/SOUTHWEST": "Route 2 South Cuttable Trees (Right)"
     },
     "warps": {
-      "MAP_ROUTE2:8,9/MAP_ROUTE2_EAST_BUILDING:1": "Route 2 Gate (South)"
+      "MAP_ROUTE2:6,7/MAP_ROUTE2_EAST_BUILDING:0": "Route 2 Gate (South)"
     }
   },
   "REGION_ROUTE2_VIRIDIAN_FOREST_SOUTH_ENTRANCE/MAIN": {
