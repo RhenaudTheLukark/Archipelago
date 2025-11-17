@@ -432,10 +432,10 @@ class PokemonFRLGClient(BizHawkClient):
             # Read shop flags
             shop_bytes = bytes(0)
             shop_read_status = False
-            if ctx.slot_data["shopsanity"]:
+            if ctx.slot_data["shopsanity"] or ctx.slot_data["vending_machines"] or ctx.slot_data["prizesanity"]:
                 read_result = await bizhawk.guarded_read(
                     ctx.bizhawk_ctx,
-                    [(sb2_address + 0xB24, 0x2A, "System Bus")],  # Shop Flags
+                    [(sb2_address + 0xB24, 0x30, "System Bus")],  # Shop Flags
                     [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
                 )
 
