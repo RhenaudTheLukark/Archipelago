@@ -643,7 +643,7 @@
       "REGION_CERULEAN_CITY/MAIN": ["Cerulean City Ledge (Top)", "Cerulean City Cuttable Tree (Bottom)"],
       "REGION_CERULEAN_CITY/VISIT": "Visit Cerulean City (Outskirts)",
       "REGION_ROUTE5/MAIN": "Cerulean City Exit (South)",
-      "REGION_ROUTE9/MAIN": "Cerulean City Exit (East)"
+      "REGION_ROUTE9/WEST": "Cerulean City Exit (East)"
     },
     "warps": {
       "MAP_CERULEAN_CITY:10/MAP_CERULEAN_CITY_HOUSE2:1": "Robbed House (Back)"
