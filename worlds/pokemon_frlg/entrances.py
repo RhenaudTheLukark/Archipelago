@@ -1,5 +1,5 @@
 from enum import IntEnum
-from typing import TYPE_CHECKING, Dict, List, Set
+from typing import TYPE_CHECKING, Dict, List
 from BaseClasses import Entrance, EntranceType
 from entrance_rando import (ERPlacementState, EntranceRandomizationError, disconnect_entrance_for_randomization,
                             randomize_entrances)
@@ -162,103 +162,72 @@ MULTI_DUNGEON_EXITS = ["Viridian Forest Exit (South)", "Viridian Forest Exit (No
                        "Seafoam Islands 1F Exit (East)", "Victory Road 1F Exit", "Victory Road 2F Exit",
                        "Pattern Bush Exit (West)", "Pattern Bush Exit (East)"]
 
-PEWTER_MUSEUM_WARPS = ["Pewter Museum 1F Stairs", "Pewter Museum 2F Stairs"]
-
-MT_MOON_WARPS = ["Mt. Moon 1F Northwest Ladder", "Mt. Moon 1F Center Ladder (Left)",
-                 "Mt. Moon 1F Center Ladder (Right)", "Mt. Moon B1F (First Tunnel) Northeast Ladder",
-                 "Mt. Moon B1F (First Tunnel) Southwest Ladder", "Mt. Moon B1F (Second Tunnel) East Ladder",
-                 "Mt. Moon B1F (Second Tunnel) West Ladder", "Mt. Moon B1F (Third Tunnel) Northwest Ladder",
-                 "Mt. Moon B1F (Third Tunnel) Southeast Ladder", "Mt. Moon B1F (Fourth Tunnel) West Ladder",
-                 "Mt. Moon B2F South Ladder", "Mt. Moon B2F Northeast Ladder", "Mt. Moon B2F Center Ladder",
-                 "Mt. Moon B2F Northwest Ladder"]
-
-UNDERGROUND_PATH_NORTH_SOUTH_WARPS = ["Underground Path North Entrance Stairs",
-                                      "Underground Path North-South Tunnel North Stairs",
-                                      "Underground Path North-South Tunnel South Stairs",
-                                      "Underground Path South Entrance Stairs"]
-
-SS_ANNE_WARPS = ["S.S. Anne", "S.S. Anne 1F Corridor Northwest Stairs", "S.S. Anne Kitchen", "S.S. Anne Exit",
-                 "S.S. Anne 1F Corridor Southeast Stairs", "S.S. Anne 1F Room 1", "S.S. Anne 1F Room 2",
-                 "S.S. Anne 1F Room 3", "S.S. Anne 1F Room 4", "S.S. Anne 1F Room 5", "S.S. Anne 1F Room 7",
-                 "S.S. Anne 1F Room 6", "S.S. Anne Kitchen Exit", "S.S. Anne 1F Room 1 Exit",
-                 "S.S. Anne 1F Room 2 Exit", "S.S. Anne 1F Room 3 Exit", "S.S. Anne 1F Room 4 Exit",
-                 "S.S. Anne 1F Room 5 Exit", "S.S. Anne 1F Room 6 Exit", "S.S. Anne 1F Room 7 Exit",
-                 "S.S. Anne B1F Corridor Stairs", "S.S. Anne B1F Room 1", "S.S. Anne B1F Room 2",
-                 "S.S. Anne B1F Room 3", "S.S. Anne B1F Room 4", "S.S. Anne B1F Room 5", "S.S. Anne B1F Room 1 Exit",
-                 "S.S. Anne B1F Room 2 Exit", "S.S. Anne B1F Room 3 Exit", "S.S. Anne B1F Room 4 Exit",
-                 "S.S. Anne B1F Room 5 Exit", "S.S. Anne 2F Corridor Northwest Stairs",
-                 "S.S. Anne 2F Corridor Southwest Stairs", "S.S. Anne 2F Corridor Northeast Stairs",
-                 "S.S. Anne 2F Room 1", "S.S. Anne 2F Room 2", "S.S. Anne 2F Room 3", "S.S. Anne 2F Room 4",
-                 "S.S. Anne 2F Room 5", "S.S. Anne 2F Room 6", "S.S. Anne 2F Room 1 Exit", "S.S. Anne 2F Room 2 Exit",
-                 "S.S. Anne 2F Room 3 Exit", "S.S. Anne 2F Room 4 Exit", "S.S. Anne 2F Room 5 Exit",
-                 "S.S. Anne 2F Room 6 Exit", "S.S. Anne 3F Corridor Exit", "S.S. Anne 3F Corridor Stairs",
-                 "S.S. Anne Deck Exit", "S.S. Anne Captain's Office Stairs"]
-
-DIGLETTS_CAVE_WARPS = ["Diglett's Cave South Entrance Ladder", "Diglett's Cave B1F Northwest Ladder",
-                       "Diglett's Cave B1F Southeast Ladder", "Diglett's Cave North Entrance Ladder"]
-
-ROUTE_11_GATE_WARPS = ["Route 11 Gate 1F Stairs", "Route 11 Gate 2F Stairs"]
-
-ROCK_TUNNEL_WARPS = ["Rock Tunnel 1F Northeast Ladder", "Rock Tunnel 1F Northwest Ladder",
-                     "Rock Tunnel 1F Center Ladder", "Rock Tunnel 1F East Ladder", "Rock Tunnel B1F Southeast Ladder",
-                     "Rock Tunnel B1F Northeast Ladder", "Rock Tunnel B1F Center Ladder",
-                     "Rock Tunnel B1F Northwest Ladder"]
-
-UNDERGROUND_PATH_EAST_WEST_WARPS = ["Underground Path East Entrance Stairs",
-                                    "Underground Path East-West Tunnel East Stairs",
-                                    "Underground Path East-West Tunnel West Stairs",
-                                    "Underground Path West Entrance Stairs"]
-
-CELADON_DEPARTMENT_STORE_WARPS = ["Celadon Department Store 1F Stairs", "Celadon Department Store 2F West Stairs",
-                                  "Celadon Department Store 2F East Stairs", "Celadon Department Store 3F East Stairs",
-                                  "Celadon Department Store 3F West Stairs", "Celadon Department Store 4F West Stairs",
-                                  "Celadon Department Store 4F East Stairs", "Celadon Department Store 5F East Stairs",
-                                  "Celadon Department Store 5F West Stairs", "Celadon Department Store Roof Exit"]
-
-CELADON_CONDOMINIUMS_WARPS = ["Celadon Condominiums 1F Northeast Stairs", "Celadon Condominiums 1F Northwest Stairs",
-                              "Celadon Condominiums 2F Northeast Stairs (Left)",
-                              "Celadon Condominiums 2F Northeast Stairs (Right)",
-                              "Celadon Condominiums 2F Northwest Stairs (Right)",
-                              "Celadon Condominiums 2F Northwest Stairs (Left)",
-                              "Celadon Condominiums 3F Northeast Stairs (Right)",
-                              "Celadon Condominiums 3F Northeast Stairs (Left)",
-                              "Celadon Condominiums 3F Northwest Stairs (Left)",
-                              "Celadon Condominiums 3F Northwest Stairs (Right)",
-                              "Celadon Condominiums Roof Northeast Stairs",
-                              "Celadon Condominiums Roof Northwest Stairs", "Celadon Condominiums Roof Room",
-                              "Celadon Condominiums Roof Room Exit"]
-
-ROCKET_HIDEOUT_WARPS = ["Rocket Hideout B1F Northeast Stairs", "Rocket Hideout B1F South Stairs",
-                        "Rocket Hideout B2F Northeast Stairs (Left)", "Rocket Hideout B2F Northeast Stairs (Right)",
-                        "Rocket Hideout B2F Southeast Stairs", "Rocket Hideout B3F North Stairs",
-                        "Rocket Hideout B3F South Stairs", "Rocket Hideout B4F Stairs"]
-
-POKEMON_TOWER_WARPS = ["Pokemon Tower 1F Stairs", "Pokemon Tower 2F West Stairs", "Pokemon Tower 2F East Stairs",
-                       "Pokemon Tower 3F West Stairs", "Pokemon Tower 3F East Stairs", "Pokemon Tower 4F West Stairs",
-                       "Pokemon Tower 4F East Stairs", "Pokemon Tower 5F West Stairs", "Pokemon Tower 5F East Stairs",
-                       "Pokemon Tower 6F East Stairs", "Pokemon Tower 6F South Stairs", "Pokemon Tower 7F Stairs"]
-
-ROUTE_12_GATE_WARPS = ["Route 12 Gate 1F Stairs", "Route 12 Gate 2F Stairs"]
-
-ROUTE_15_GATE_WARPS = ["Route 15 Gate 1F Stairs", "Route 15 Gate 2F Stairs"]
-
-ROUTE_16_GATE_WARPS = ["Route 16 Gate 1F Stairs", "Route 16 Gate 2F Stairs"]
-
-ROUTE_18_GATE_WARPS = ["Route 18 Gate 1F Stairs", "Route 18 Gate 2F Stairs"]
-
-SAFARI_ZONE_WARPS = ["Safari Zone Center Area Rest House", "Safari Zone Center Area Exit (East)",
-                     "Safari Zone Center Area Exit (North)", "Safari Zone Center Area Exit (West)",
-                     "Safari Zone East Area Exit (Northwest)", "Safari Zone East Area Exit (Southwest)",
-                     "Safari Zone East Area Rest House", "Safari Zone North Area Exit (Southwest)",
-                     "Safari Zone North Area Exit (South)", "Safari Zone North Area Exit (East)",
-                     "Safari Zone North Area Exit (Southeast)", "Safari Zone North Area Rest House",
-                     "Safari Zone West Area Exit (Northeast)", "Safari Zone West Area Exit (East)",
-                     "Safari Zone West Area Rest House", "Safari Zone West Area Exit (North)",
-                     "Safari Zone Secret House", "Safari Zone Center Area Rest House Exit",
-                     "Safari Zone East Area Rest House Exit", "Safari Zone North Area Rest House Exit",
-                     "Safari Zone West Area Rest House Exit", "Safari Zone Secret House Exit"]
-
-SILPH_CO_WARPS = ["Silph Co. 1F Stairs", "Silph Co. 2F Northeast Stairs (Left)",
+INTERIOR_WARPS = ["Pewter Museum 1F Stairs", "Pewter Museum 2F Stairs", "Mt. Moon 1F Northwest Ladder",
+                  "Mt. Moon 1F Center Ladder (Left)", "Mt. Moon 1F Center Ladder (Right)",
+                  "Mt. Moon B1F (First Tunnel) Northeast Ladder", "Mt. Moon B1F (First Tunnel) Southwest Ladder",
+                  "Mt. Moon B1F (Second Tunnel) East Ladder", "Mt. Moon B1F (Second Tunnel) West Ladder",
+                  "Mt. Moon B1F (Third Tunnel) Northwest Ladder", "Mt. Moon B1F (Third Tunnel) Southeast Ladder",
+                  "Mt. Moon B1F (Fourth Tunnel) West Ladder", "Mt. Moon B2F South Ladder",
+                  "Mt. Moon B2F Northeast Ladder", "Mt. Moon B2F Center Ladder", "Mt. Moon B2F Northwest Ladder",
+                  "Underground Path North Entrance Stairs", "Underground Path North-South Tunnel North Stairs",
+                  "Underground Path North-South Tunnel South Stairs", "Underground Path South Entrance Stairs",
+                  "S.S. Anne", "S.S. Anne 1F Corridor Northwest Stairs", "S.S. Anne Kitchen", "S.S. Anne Exit",
+                  "S.S. Anne 1F Corridor Southeast Stairs", "S.S. Anne 1F Room 1", "S.S. Anne 1F Room 2",
+                  "S.S. Anne 1F Room 3", "S.S. Anne 1F Room 4", "S.S. Anne 1F Room 5", "S.S. Anne 1F Room 7",
+                  "S.S. Anne 1F Room 6", "S.S. Anne Kitchen Exit", "S.S. Anne 1F Room 1 Exit",
+                  "S.S. Anne 1F Room 2 Exit", "S.S. Anne 1F Room 3 Exit", "S.S. Anne 1F Room 4 Exit",
+                  "S.S. Anne 1F Room 5 Exit", "S.S. Anne 1F Room 6 Exit", "S.S. Anne 1F Room 7 Exit",
+                  "S.S. Anne B1F Corridor Stairs", "S.S. Anne B1F Room 1", "S.S. Anne B1F Room 2",
+                  "S.S. Anne B1F Room 3", "S.S. Anne B1F Room 4", "S.S. Anne B1F Room 5", "S.S. Anne B1F Room 1 Exit",
+                  "S.S. Anne B1F Room 2 Exit", "S.S. Anne B1F Room 3 Exit", "S.S. Anne B1F Room 4 Exit",
+                  "S.S. Anne B1F Room 5 Exit", "S.S. Anne 2F Corridor Northwest Stairs",
+                  "S.S. Anne 2F Corridor Southwest Stairs", "S.S. Anne 2F Corridor Northeast Stairs",
+                  "S.S. Anne 2F Room 1", "S.S. Anne 2F Room 2", "S.S. Anne 2F Room 3", "S.S. Anne 2F Room 4",
+                  "S.S. Anne 2F Room 5", "S.S. Anne 2F Room 6", "S.S. Anne 2F Room 1 Exit", "S.S. Anne 2F Room 2 Exit",
+                  "S.S. Anne 2F Room 3 Exit", "S.S. Anne 2F Room 4 Exit", "S.S. Anne 2F Room 5 Exit",
+                  "S.S. Anne 2F Room 6 Exit", "S.S. Anne 3F Corridor Exit", "S.S. Anne 3F Corridor Stairs",
+                  "S.S. Anne Deck Exit", "S.S. Anne Captain's Office Stairs", "Diglett's Cave South Entrance Ladder",
+                  "Diglett's Cave B1F Northwest Ladder", "Diglett's Cave B1F Southeast Ladder",
+                  "Diglett's Cave North Entrance Ladder", "Route 11 Gate 1F Stairs", "Route 11 Gate 2F Stairs",
+                  "Rock Tunnel 1F Northeast Ladder", "Rock Tunnel 1F Northwest Ladder", "Rock Tunnel 1F Center Ladder",
+                  "Rock Tunnel 1F East Ladder", "Rock Tunnel B1F Southeast Ladder", "Rock Tunnel B1F Northeast Ladder",
+                  "Rock Tunnel B1F Center Ladder", "Rock Tunnel B1F Northwest Ladder",
+                  "Underground Path East Entrance Stairs", "Underground Path East-West Tunnel East Stairs",
+                  "Underground Path East-West Tunnel West Stairs", "Underground Path West Entrance Stairs",
+                  "Celadon Department Store 1F Stairs", "Celadon Department Store 2F West Stairs",
+                  "Celadon Department Store 2F East Stairs", "Celadon Department Store 3F East Stairs",
+                  "Celadon Department Store 3F West Stairs", "Celadon Department Store 4F West Stairs",
+                  "Celadon Department Store 4F East Stairs", "Celadon Department Store 5F East Stairs",
+                  "Celadon Department Store 5F West Stairs", "Celadon Department Store Roof Exit",
+                  "Celadon Condominiums 1F Northeast Stairs", "Celadon Condominiums 1F Northwest Stairs",
+                  "Celadon Condominiums 2F Northeast Stairs (Left)", "Celadon Condominiums 2F Northeast Stairs (Right)",
+                  "Celadon Condominiums 2F Northwest Stairs (Right)", "Celadon Condominiums 2F Northwest Stairs (Left)",
+                  "Celadon Condominiums 3F Northeast Stairs (Right)", "Celadon Condominiums 3F Northeast Stairs (Left)",
+                  "Celadon Condominiums 3F Northwest Stairs (Left)", "Celadon Condominiums 3F Northwest Stairs (Right)",
+                  "Celadon Condominiums Roof Northeast Stairs", "Celadon Condominiums Roof Northwest Stairs",
+                  "Celadon Condominiums Roof Room", "Celadon Condominiums Roof Room Exit",
+                  "Rocket Hideout B1F Northeast Stairs", "Rocket Hideout B1F South Stairs",
+                  "Rocket Hideout B2F Northeast Stairs (Left)", "Rocket Hideout B2F Northeast Stairs (Right)",
+                  "Rocket Hideout B2F Southeast Stairs", "Rocket Hideout B3F North Stairs",
+                  "Rocket Hideout B3F South Stairs", "Rocket Hideout B4F Stairs", "Pokemon Tower 1F Stairs",
+                  "Pokemon Tower 2F West Stairs", "Pokemon Tower 2F East Stairs", "Pokemon Tower 3F West Stairs",
+                  "Pokemon Tower 3F East Stairs", "Pokemon Tower 4F West Stairs", "Pokemon Tower 4F East Stairs",
+                  "Pokemon Tower 5F West Stairs", "Pokemon Tower 5F East Stairs", "Pokemon Tower 6F East Stairs",
+                  "Pokemon Tower 6F South Stairs", "Pokemon Tower 7F Stairs", "Route 12 Gate 1F Stairs",
+                  "Route 12 Gate 2F Stairs", "Route 15 Gate 1F Stairs", "Route 15 Gate 2F Stairs",
+                  "Route 16 Gate 1F Stairs", "Route 16 Gate 2F Stairs", "Route 18 Gate 1F Stairs",
+                  "Route 18 Gate 2F Stairs", "Safari Zone Center Area Rest House",
+                  "Safari Zone Center Area Exit (East)", "Safari Zone Center Area Exit (North)",
+                  "Safari Zone Center Area Exit (West)", "Safari Zone East Area Exit (Northwest)",
+                  "Safari Zone East Area Exit (Southwest)", "Safari Zone East Area Rest House",
+                  "Safari Zone North Area Exit (Southwest)", "Safari Zone North Area Exit (South)",
+                  "Safari Zone North Area Exit (East)", "Safari Zone North Area Exit (Southeast)",
+                  "Safari Zone North Area Rest House", "Safari Zone West Area Exit (Northeast)",
+                  "Safari Zone West Area Exit (East)", "Safari Zone West Area Rest House",
+                  "Safari Zone West Area Exit (North)", "Safari Zone Secret House",
+                  "Safari Zone Center Area Rest House Exit", "Safari Zone East Area Rest House Exit",
+                  "Safari Zone North Area Rest House Exit", "Safari Zone West Area Rest House Exit",
+                  "Safari Zone Secret House Exit", "Silph Co. 1F Stairs", "Silph Co. 2F Northeast Stairs (Left)",
                   "Silph Co. 2F Northeast Stairs (Right)", "Silph Co. 3F Northeast Stairs (Left)",
                   "Silph Co. 3F Northeast Stairs (Right)", "Silph Co. 4F Northeast Stairs (Left)",
                   "Silph Co. 4F Northeast Stairs (Right)", "Silph Co. 5F Northeast Stairs (Left)",
@@ -266,98 +235,73 @@ SILPH_CO_WARPS = ["Silph Co. 1F Stairs", "Silph Co. 2F Northeast Stairs (Left)",
                   "Silph Co. 7F North Stairs", "Silph Co. 7F Northeast Stairs", "Silph Co. 8F North Stairs",
                   "Silph Co. 8F Northeast Stairs", "Silph Co. 9F North Stairs (Left)",
                   "Silph Co. 9F North Stairs (Right)", "Silph Co. 10F North Stairs (Left)",
-                  "Silph Co. 10F North Stairs (Right)", "Silph Co. 11F Stairs"]
-
-COPYCATS_HOUSE_WARPS = ["Copycat's House 1F Stairs", "Copycat's House 2F Stairs"]
-
-SEAFOAM_ISLANDS_WARPS = ["Seafoam Islands 1F Northwest Ladder", "Seafoam Islands 1F Northeast Ladder",
-                         "Seafoam Islands 1F Southeast Ladder", "Seafoam Islands B1F Northwest Ladder (Bottom)",
-                         "Seafoam Islands B1F Northwest Ladder (Top)", "Seafoam Islands B1F Center Ladder",
-                         "Seafoam Islands B1F South Ladder", "Seafoam Islands B1F Northeast Ladder",
-                         "Seafoam Islands B1F Southeast Ladder (Bottom Left)",
-                         "Seafoam Islands B1F Southeast Ladder (Top Right)", "Seafoam Islands B2F Northwest Ladder",
-                         "Seafoam Islands B2F Southwest Ladder", "Seafoam Islands B2F Center Ladder",
-                         "Seafoam Islands B2F South Ladder", "Seafoam Islands B2F Northeast Ladder",
-                         "Seafoam Islands B2F Southeast Ladder (Bottom)", "Seafoam Islands B2F Southeast Ladder (Top)",
-                         "Seafoam Islands B3F Southwest Ladder", "Seafoam Islands B3F West Ladder",
-                         "Seafoam Islands B3F Northeast Ladder (Right)", "Seafoam Islands B3F Northeast Ladder (Left)",
-                         "Seafoam Islands B3F Southeast Ladder", "Seafoam Islands B4F Center Ladder",
-                         "Seafoam Islands B4F Northeast Ladder"]
-
-POKEMON_LAB_WARPS = ["Pokemon Lab Lounge", "Pokemon Lab Research Room", "Pokemon Lab Experiment Room",
-                     "Pokemon Lab Lounge Exit", "Pokemon Lab Research Room Exit", "Pokemon Lab Experiment Room Exit"]
-
-POKEMON_MANSION_WARPS = ["Pokemon Mansion 1F West Stairs", "Pokemon Mansion 1F South Stairs",
-                         "Pokemon Mansion 2F Northwest Stairs", "Pokemon Mansion 2F West Stairs (Left)",
-                         "Pokemon Mansion 2F West Stairs (Right)", "Pokemon Mansion 2F East Stairs",
-                         "Pokemon Mansion 3F Southwest Stairs", "Pokemon Mansion 3F Northwest Stairs",
-                         "Pokemon Mansion 3F Southeast Stairs", "Pokemon Mansion B1F Stairs"]
-
-VICTORY_ROAD_WARPS = ["Victory Road 1F Ladder", "Victory Road 2F West Ladder", "Victory Road 2F Center Ladder",
-                      "Victory Road 2F Northwest Ladder", "Victory Road 2F Southeast Ladder",
-                      "Victory Road 2F East Ladder", "Victory Road 3F Northwest Ladder",
-                      "Victory Road 3F Northeast Ladder", "Victory Road 3F Southeast Ladder (Top)",
-                      "Victory Road 3F Southeast Ladder (Bottom)"]
-
-MT_EMBER_WARPS = ["Mt. Ember Ruby Path", "Mt. Ember Summit Path (Bottom)", "Mt. Ember Summit Path (Top)",
-                  "Mt. Ember Summit", "Mt. Ember Summit Path 1F Exit (South)", "Mt. Ember Summit Path 1F Exit (North)",
-                  "Mt. Ember Summit Path 2F Exit (South)", "Mt. Ember Summit Path 2F Exit (North)",
-                  "Mt. Ember Summit Path 3F Exit (West)", "Mt. Ember Summit Path 3F Exit (East)",
-                  "Mt. Ember Summit Exit", "Mt. Ember Ruby Path 1F Exit", "Mt. Ember Ruby Path 1F Northwest Ladder",
-                  "Mt. Ember Ruby Path 1F Northeast Ladder", "Mt. Ember Ruby Path B1F South Ladder",
-                  "Mt. Ember Ruby Path B1F North Ladder", "Mt. Ember Ruby Path B1F Return Northeast Ladder",
-                  "Mt. Ember Ruby Path B1F Return Southwest Ladder", "Mt. Ember Ruby Path B2F West Ladder",
-                  "Mt. Ember Ruby Path B2F East Ladder", "Mt. Ember Ruby Path B2F Return Northeast Ladder",
-                  "Mt. Ember Ruby Path B2F Return Southwest Ladder", "Mt. Ember Ruby Path B3F Northwest Ladder",
-                  "Mt. Ember Ruby Path B3F Southwest Ladder", "Mt. Ember Ruby Path B3F Southeast Ladder",
-                  "Mt. Ember Ruby Path B4F Southeast Ladder", "Mt. Ember Ruby Path B4F Northwest Ladder",
-                  "Mt. Ember Ruby Path B5F Ladder"]
-
-ICEFALL_CAVE_WARPS = ["Icefall Cave Front Exit (North)", "Icefall Cave Front Ladder", "Icefall Cave 1F Exit (South)",
-                      "Icefall Cave 1F East Ladder", "Icefall Cave 1F Northeast Ladder",
-                      "Icefall Cave 1F Southeast Ladder", "Icefall Cave 1F Northwest Ladder",
-                      "Icefall Cave 1F Exit (North)", "Icefall Cave B1F West Ladder", "Icefall Cave B1F North Ladder",
-                      "Icefall Cave B1F South Ladder", "Icefall Cave Back Exit"]
-
-LOST_CAVE_TWO_WAY_WARPS = ["Lost Cave 1F Ladder", "Lost Cave B1F Room 1 Ladder"]
-
-LOST_CAVE_ONE_WAY_WARPS = ["Lost Cave B1F Room 1 Exit (East)", "Lost Cave B1F Room 2 Exit (North)",
-                           "Lost Cave B1F Room 2 Exit (South)", "Lost Cave B1F Room 3 Exit (South)",
-                           "Lost Cave B1F Room 4 Exit (North)", "Lost Cave B1F Room 4 Exit (South)",
-                           "Lost Cave B1F Room 5 Exit (East)", "Lost Cave B1F Room 6 Exit (East)",
-                           "Lost Cave B1F Room 6 Exit (West)", "Lost Cave B1F Room 7 Exit (South)",
-                           "Lost Cave B1F Room 8 Exit (East)", "Lost Cave B1F Room 8 Exit (West)",
-                           "Lost Cave B1F Room 9 Exit (North)"]
-
-DOTTED_HOLE_WARPS = ["Dotted Hole 1F Ladder", "Dotted Hole Sapphire Room Ladder"]
-
-CERULEAN_CAVE_WARPS = ["Cerulean Cave 1F Northeast Ladder", "Cerulean Cave 1F North Ladder",
-                       "Cerulean Cave 1F Southwest Ladder", "Cerulean Cave 1F East Ladder",
-                       "Cerulean Cave 1F Center Ladder", "Cerulean Cave 1F Northwest Ladder (Bottom)",
-                       "Cerulean Cave 1F Northwest Ladder (Top)", "Cerulean Cave 2F Northeast Ladder",
-                       "Cerulean Cave 2F North Ladder", "Cerulean Cave 2F West Ladder",
-                       "Cerulean Cave 2F East Ladder", "Cerulean Cave 2F Center Ladder",
-                       "Cerulean Cave 2F Northwest Ladder", "Cerulean Cave B1F Ladder"]
-
-NAVEL_ROCK_WARPS = ["Navel Rock 1F Ladder", "Navel Rock B1F Northwest Ladder", "Navel Rock B1F Southeast Ladder",
-                    "Navel Rock Fork South Ladder", "Navel Rock Fork Northwest Ladder",
-                    "Navel Rock Fork Northeast Ladder", "Navel Rock Summit Path 2F Southeast Ladder",
-                    "Navel Rock Summit Path 2F Northwest Ladder", "Navel Rock Summit Path 3F Northwest Ladder",
-                    "Navel Rock Summit Path 3F Southeast Ladder", "Navel Rock Summit Path 4F Southeast Ladder",
-                    "Navel Rock Summit Path 4F Northwest Ladder", "Navel Rock Summit Path 5F Northwest Ladder",
-                    "Navel Rock Summit Path 5F Southeast Ladder", "Navel Rock Summit Ladder",
-                    "Navel Rock Base Path B1F Northwest Ladder", "Navel Rock Base Path B1F Southeast Ladder",
-                    "Navel Rock Base Path B2F Southeast Ladder", "Navel Rock Base Path B2F Northwest Ladder",
-                    "Navel Rock Base Path B3F Northwest Ladder", "Navel Rock Base Path B3F Southeast Ladder",
-                    "Navel Rock Base Path B4F Southeast Ladder", "Navel Rock Base Path B4F Northwest Ladder",
-                    "Navel Rock Base Path B5F Northwest Ladder", "Navel Rock Base Path B5F Southeast Ladder",
-                    "Navel Rock Base Path B6F Southeast Ladder", "Navel Rock Base Path B6F Northwest Ladder",
-                    "Navel Rock Base Path B7F Northwest Ladder", "Navel Rock Base Path B7F Southeast Ladder",
-                    "Navel Rock Base Path B8F Southeast Ladder", "Navel Rock Base Path B8F Northwest Ladder",
-                    "Navel Rock Base Path B9F Northwest Ladder", "Navel Rock Base Path B9F Southeast Ladder",
-                    "Navel Rock Base Path B10F Southeast Ladder", "Navel Rock Base Path B10F Northwest Ladder",
-                    "Navel Rock Base Path B11F Northwest Ladder", "Navel Rock Base Path B11F Southeast Ladder",
-                    "Navel Rock Base Ladder"]
+                  "Silph Co. 10F North Stairs (Right)", "Silph Co. 11F Stairs", "Copycat's House 1F Stairs",
+                  "Copycat's House 2F Stairs", "Seafoam Islands 1F Northwest Ladder",
+                  "Seafoam Islands 1F Northeast Ladder", "Seafoam Islands 1F Southeast Ladder",
+                  "Seafoam Islands B1F Northwest Ladder (Bottom)", "Seafoam Islands B1F Northwest Ladder (Top)",
+                  "Seafoam Islands B1F Center Ladder", "Seafoam Islands B1F South Ladder",
+                  "Seafoam Islands B1F Northeast Ladder", "Seafoam Islands B1F Southeast Ladder (Bottom Left)",
+                  "Seafoam Islands B1F Southeast Ladder (Top Right)", "Seafoam Islands B2F Northwest Ladder",
+                  "Seafoam Islands B2F Southwest Ladder", "Seafoam Islands B2F Center Ladder",
+                  "Seafoam Islands B2F South Ladder", "Seafoam Islands B2F Northeast Ladder",
+                  "Seafoam Islands B2F Southeast Ladder (Bottom)", "Seafoam Islands B2F Southeast Ladder (Top)",
+                  "Seafoam Islands B3F Southwest Ladder", "Seafoam Islands B3F West Ladder",
+                  "Seafoam Islands B3F Northeast Ladder (Right)", "Seafoam Islands B3F Northeast Ladder (Left)",
+                  "Seafoam Islands B3F Southeast Ladder", "Seafoam Islands B4F Center Ladder",
+                  "Seafoam Islands B4F Northeast Ladder", "Pokemon Lab Lounge", "Pokemon Lab Research Room",
+                  "Pokemon Lab Experiment Room", "Pokemon Lab Lounge Exit", "Pokemon Lab Research Room Exit",
+                  "Pokemon Lab Experiment Room Exit", "Pokemon Mansion 1F West Stairs",
+                  "Pokemon Mansion 1F South Stairs", "Pokemon Mansion 2F Northwest Stairs",
+                  "Pokemon Mansion 2F West Stairs (Left)", "Pokemon Mansion 2F West Stairs (Right)",
+                  "Pokemon Mansion 2F East Stairs", "Pokemon Mansion 3F Southwest Stairs",
+                  "Pokemon Mansion 3F Northwest Stairs", "Pokemon Mansion 3F Southeast Stairs",
+                  "Pokemon Mansion B1F Stairs", "Victory Road 1F Ladder", "Victory Road 2F West Ladder",
+                  "Victory Road 2F Center Ladder", "Victory Road 2F Northwest Ladder",
+                  "Victory Road 2F Southeast Ladder", "Victory Road 2F East Ladder", "Victory Road 3F Northwest Ladder",
+                  "Victory Road 3F Northeast Ladder", "Victory Road 3F Southeast Ladder (Top)",
+                  "Victory Road 3F Southeast Ladder (Bottom)", "Mt. Ember Ruby Path", "Mt. Ember Summit Path (Bottom)",
+                  "Mt. Ember Summit Path (Top)", "Mt. Ember Summit", "Mt. Ember Summit Path 1F Exit (South)",
+                  "Mt. Ember Summit Path 1F Exit (North)", "Mt. Ember Summit Path 2F Exit (South)",
+                  "Mt. Ember Summit Path 2F Exit (North)", "Mt. Ember Summit Path 3F Exit (West)",
+                  "Mt. Ember Summit Path 3F Exit (East)", "Mt. Ember Summit Exit", "Mt. Ember Ruby Path 1F Exit",
+                  "Mt. Ember Ruby Path 1F Northwest Ladder", "Mt. Ember Ruby Path 1F Northeast Ladder",
+                  "Mt. Ember Ruby Path B1F South Ladder", "Mt. Ember Ruby Path B1F North Ladder",
+                  "Mt. Ember Ruby Path B1F Return Northeast Ladder", "Mt. Ember Ruby Path B1F Return Southwest Ladder",
+                  "Mt. Ember Ruby Path B2F West Ladder", "Mt. Ember Ruby Path B2F East Ladder",
+                  "Mt. Ember Ruby Path B2F Return Northeast Ladder", "Mt. Ember Ruby Path B2F Return Southwest Ladder",
+                  "Mt. Ember Ruby Path B3F Northwest Ladder", "Mt. Ember Ruby Path B3F Southwest Ladder",
+                  "Mt. Ember Ruby Path B3F Southeast Ladder", "Mt. Ember Ruby Path B4F Southeast Ladder",
+                  "Mt. Ember Ruby Path B4F Northwest Ladder", "Mt. Ember Ruby Path B5F Ladder",
+                  "Icefall Cave Front Exit (North)", "Icefall Cave Front Ladder", "Icefall Cave 1F Exit (South)",
+                  "Icefall Cave 1F East Ladder", "Icefall Cave 1F Northeast Ladder", "Icefall Cave 1F Southeast Ladder",
+                  "Icefall Cave 1F Northwest Ladder", "Icefall Cave 1F Exit (North)", "Icefall Cave B1F West Ladder",
+                  "Icefall Cave B1F North Ladder", "Icefall Cave B1F South Ladder", "Icefall Cave Back Exit",
+                  "Lost Cave 1F Ladder", "Lost Cave B1F Room 1 Ladder", "Dotted Hole 1F Ladder",
+                  "Dotted Hole Sapphire Room Ladder", "Cerulean Cave 1F Northeast Ladder",
+                  "Cerulean Cave 1F North Ladder", "Cerulean Cave 1F Southwest Ladder", "Cerulean Cave 1F East Ladder",
+                  "Cerulean Cave 1F Center Ladder", "Cerulean Cave 1F Northwest Ladder (Bottom)",
+                  "Cerulean Cave 1F Northwest Ladder (Top)", "Cerulean Cave 2F Northeast Ladder",
+                  "Cerulean Cave 2F North Ladder", "Cerulean Cave 2F West Ladder", "Cerulean Cave 2F East Ladder",
+                  "Cerulean Cave 2F Center Ladder", "Cerulean Cave 2F Northwest Ladder", "Cerulean Cave B1F Ladder",
+                  "Navel Rock 1F Ladder", "Navel Rock B1F Northwest Ladder", "Navel Rock B1F Southeast Ladder",
+                  "Navel Rock Fork South Ladder", "Navel Rock Fork Northwest Ladder",
+                  "Navel Rock Fork Northeast Ladder", "Navel Rock Summit Path 2F Southeast Ladder",
+                  "Navel Rock Summit Path 2F Northwest Ladder", "Navel Rock Summit Path 3F Northwest Ladder",
+                  "Navel Rock Summit Path 3F Southeast Ladder", "Navel Rock Summit Path 4F Southeast Ladder",
+                  "Navel Rock Summit Path 4F Northwest Ladder", "Navel Rock Summit Path 5F Northwest Ladder",
+                  "Navel Rock Summit Path 5F Southeast Ladder", "Navel Rock Summit Ladder",
+                  "Navel Rock Base Path B1F Northwest Ladder", "Navel Rock Base Path B1F Southeast Ladder",
+                  "Navel Rock Base Path B2F Southeast Ladder", "Navel Rock Base Path B2F Northwest Ladder",
+                  "Navel Rock Base Path B3F Northwest Ladder", "Navel Rock Base Path B3F Southeast Ladder",
+                  "Navel Rock Base Path B4F Southeast Ladder", "Navel Rock Base Path B4F Northwest Ladder",
+                  "Navel Rock Base Path B5F Northwest Ladder", "Navel Rock Base Path B5F Southeast Ladder",
+                  "Navel Rock Base Path B6F Southeast Ladder", "Navel Rock Base Path B6F Northwest Ladder",
+                  "Navel Rock Base Path B7F Northwest Ladder", "Navel Rock Base Path B7F Southeast Ladder",
+                  "Navel Rock Base Path B8F Southeast Ladder", "Navel Rock Base Path B8F Northwest Ladder",
+                  "Navel Rock Base Path B9F Northwest Ladder", "Navel Rock Base Path B9F Southeast Ladder",
+                  "Navel Rock Base Path B10F Southeast Ladder", "Navel Rock Base Path B10F Northwest Ladder",
+                  "Navel Rock Base Path B11F Northwest Ladder", "Navel Rock Base Path B11F Southeast Ladder",
+                  "Navel Rock Base Ladder"]
 
 SILPH_CO_WARP_TILES = ["Silph Co. 2F North Warp Tile", "Silph Co. 2F Southeast Warp Tile",
                        "Silph Co. 2F Northwest Warp Tile", "Silph Co. 2F Southwest Warp Tile",
@@ -491,41 +435,13 @@ class EntranceGroup(IntEnum):
     SINGLE_DUNGEON_EXIT = 14
     MULTI_DUNGEON_ENTRANCE = 15
     MULTI_DUNGEON_EXIT = 16
-    PEWTER_MUSEUM_WARP = 17
-    MT_MOON_WARP = 18
-    UNDERGROUND_PATH_NORTH_SOUTH_WARP = 19
-    SS_ANNE_WARP = 20
-    DIGLETTS_CAVE_WARP = 21
-    ROUTE_11_GATE_WARP = 22
-    ROCK_TUNNEL_WARP = 23
-    UNDERGROUND_PATH_EAST_WEST_WARP = 24
-    CELADON_DEPARTMENT_STORE_WARP = 25
-    CELADON_CONDOMINIUMS_WARP = 26
-    ROCKET_HIDEOUT_WARP = 27
-    POKEMON_TOWER_WARP = 28
-    ROUTE_12_GATE_WARP = 29
-    ROUTE_15_GATE_WARP = 30
-    ROUTE_16_GATE_WARP = 31
-    ROUTE_18_GATE_WARP = 32
-    SAFARI_ZONE_WARP = 33
-    SILPH_CO_WARP = 34
-    COPYCATS_HOUSE_WARP = 35
-    SEAFOAM_ISLANDS_WARP = 36
-    POKEMON_LAB_WARP = 37
-    POKEMON_MANSION_WARP = 38
-    VICTORY_ROAD_WARP = 39
-    MT_EMBER_WARP = 40
-    ICEFALL_CAVE_WARP = 41
-    LOST_CAVE_WARP = 42
-    DOTTED_HOLE_WARP = 43
-    CERULEAN_CAVE_WARP = 44
-    NAVEL_ROCK_WARP = 45
-    SILPH_CO_WARP_TILE = 46
-    SAFFRON_GYM_WARP_TILE = 47
-    SEAFOAM_ISLANDS_DROP = 48
-    POKEMON_MANSION_DROP = 49
-    VICTORY_ROAD_DROP = 50
-    DOTTED_HOLE_DROP = 51
+    INTERIOR_WARP = 17
+    SILPH_CO_WARP_TILE = 18
+    SAFFRON_GYM_WARP_TILE = 19
+    SEAFOAM_ISLANDS_DROP = 20
+    POKEMON_MANSION_DROP = 21
+    VICTORY_ROAD_DROP = 22
+    DOTTED_HOLE_DROP = 23
 
 ENTRANCE_GROUPS: Dict[str, EntranceGroup] = {}
 for entrance_name in POKEMON_CENTER_ENTRANCES:
@@ -560,66 +476,8 @@ for entrance_name in MULTI_DUNGEON_ENTRANCES:
     ENTRANCE_GROUPS[entrance_name] = EntranceGroup.MULTI_DUNGEON_ENTRANCE
 for entrance_name in MULTI_DUNGEON_EXITS:
     ENTRANCE_GROUPS[entrance_name] = EntranceGroup.MULTI_DUNGEON_EXIT
-for entrance_name in PEWTER_MUSEUM_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.PEWTER_MUSEUM_WARP
-for entrance_name in MT_MOON_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.MT_MOON_WARP
-for entrance_name in UNDERGROUND_PATH_NORTH_SOUTH_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.UNDERGROUND_PATH_NORTH_SOUTH_WARP
-for entrance_name in SS_ANNE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.SS_ANNE_WARP
-for entrance_name in DIGLETTS_CAVE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.DIGLETTS_CAVE_WARP
-for entrance_name in ROUTE_11_GATE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROUTE_11_GATE_WARP
-for entrance_name in ROCK_TUNNEL_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROCK_TUNNEL_WARP
-for entrance_name in UNDERGROUND_PATH_EAST_WEST_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.UNDERGROUND_PATH_EAST_WEST_WARP
-for entrance_name in CELADON_DEPARTMENT_STORE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.CELADON_DEPARTMENT_STORE_WARP
-for entrance_name in CELADON_CONDOMINIUMS_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.CELADON_CONDOMINIUMS_WARP
-for entrance_name in ROCKET_HIDEOUT_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROCKET_HIDEOUT_WARP
-for entrance_name in POKEMON_TOWER_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.POKEMON_TOWER_WARP
-for entrance_name in ROUTE_12_GATE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROUTE_12_GATE_WARP
-for entrance_name in ROUTE_15_GATE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROUTE_15_GATE_WARP
-for entrance_name in ROUTE_16_GATE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROUTE_16_GATE_WARP
-for entrance_name in ROUTE_18_GATE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ROUTE_18_GATE_WARP
-for entrance_name in SAFARI_ZONE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.SAFARI_ZONE_WARP
-for entrance_name in SILPH_CO_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.SILPH_CO_WARP
-for entrance_name in COPYCATS_HOUSE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.COPYCATS_HOUSE_WARP
-for entrance_name in SEAFOAM_ISLANDS_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.SEAFOAM_ISLANDS_WARP
-for entrance_name in POKEMON_LAB_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.POKEMON_LAB_WARP
-for entrance_name in POKEMON_MANSION_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.POKEMON_MANSION_WARP
-for entrance_name in VICTORY_ROAD_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.VICTORY_ROAD_WARP
-for entrance_name in MT_EMBER_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.MT_EMBER_WARP
-for entrance_name in ICEFALL_CAVE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.ICEFALL_CAVE_WARP
-for entrance_name in LOST_CAVE_TWO_WAY_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.LOST_CAVE_WARP
-for entrance_name in LOST_CAVE_ONE_WAY_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.LOST_CAVE_WARP
-for entrance_name in DOTTED_HOLE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.DOTTED_HOLE_WARP
-for entrance_name in CERULEAN_CAVE_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.CERULEAN_CAVE_WARP
-for entrance_name in NAVEL_ROCK_WARPS:
-    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.NAVEL_ROCK_WARP
+for entrance_name in INTERIOR_WARPS:
+    ENTRANCE_GROUPS[entrance_name] = EntranceGroup.INTERIOR_WARP
 for entrance_name in SILPH_CO_WARP_TILES:
     ENTRANCE_GROUPS[entrance_name] = EntranceGroup.SILPH_CO_WARP_TILE
 for entrance_name in SAFFRON_GYM_WARP_TILES:
@@ -659,20 +517,6 @@ RESTRICTED_MULTI_ENTRANCE_GROUPS = [EntranceGroup.MULTI_BUILDING_ENTRANCE, Entra
 
 RESTRICTED_MULTI_EXIT_GROUPS = [EntranceGroup.MULTI_BUILDING_EXIT, EntranceGroup.MULTI_DUNGEON_EXIT]
 
-INTERIOR_WARP_GROUPS = [EntranceGroup.PEWTER_MUSEUM_WARP, EntranceGroup.MT_MOON_WARP,
-                        EntranceGroup.UNDERGROUND_PATH_NORTH_SOUTH_WARP, EntranceGroup.SS_ANNE_WARP,
-                        EntranceGroup.DIGLETTS_CAVE_WARP, EntranceGroup.ROUTE_11_GATE_WARP,
-                        EntranceGroup.ROCK_TUNNEL_WARP, EntranceGroup.UNDERGROUND_PATH_EAST_WEST_WARP,
-                        EntranceGroup.CELADON_DEPARTMENT_STORE_WARP, EntranceGroup.CELADON_CONDOMINIUMS_WARP,
-                        EntranceGroup.ROCKET_HIDEOUT_WARP, EntranceGroup.POKEMON_TOWER_WARP,
-                        EntranceGroup.ROUTE_12_GATE_WARP, EntranceGroup.ROUTE_15_GATE_WARP,
-                        EntranceGroup.ROUTE_16_GATE_WARP, EntranceGroup.ROUTE_18_GATE_WARP,
-                        EntranceGroup.SAFARI_ZONE_WARP, EntranceGroup.SILPH_CO_WARP, EntranceGroup.COPYCATS_HOUSE_WARP,
-                        EntranceGroup.SEAFOAM_ISLANDS_WARP, EntranceGroup.POKEMON_LAB_WARP,
-                        EntranceGroup.POKEMON_MANSION_WARP, EntranceGroup.VICTORY_ROAD_WARP,
-                        EntranceGroup.MT_EMBER_WARP, EntranceGroup.ICEFALL_CAVE_WARP, EntranceGroup.LOST_CAVE_WARP,
-                        EntranceGroup.DOTTED_HOLE_WARP, EntranceGroup.CERULEAN_CAVE_WARP, EntranceGroup.NAVEL_ROCK_WARP]
-
 WARP_TILE_GROUPS = [EntranceGroup.SILPH_CO_WARP_TILE, EntranceGroup.SAFFRON_GYM_WARP_TILE]
 
 DROPDOWN_GROUPS = [EntranceGroup.SEAFOAM_ISLANDS_DROP, EntranceGroup.POKEMON_MANSION_DROP,
@@ -704,8 +548,7 @@ def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> bool:
         return entrance
 
     def get_entrance_type(entrance_name: str) -> EntranceType:
-        if (entrance_name in LOST_CAVE_ONE_WAY_WARPS
-                or entrance_name in SEAFOAM_ISLANDS_DROPS
+        if (entrance_name in SEAFOAM_ISLANDS_DROPS
                 or entrance_name in POKEMON_MANSION_DROPS
                 or entrance_name in VICTORY_ROAD_DROPS
                 or entrance_name in DOTTED_HOLE_DROPS):
@@ -744,36 +587,7 @@ def _disconnect_shuffled_entrances(world: "PokemonFRLGWorld") -> bool:
         shuffled_entrances.extend(MULTI_DUNGEON_EXITS)
 
     if world.options.shuffle_interiors:
-        shuffled_entrances.extend(PEWTER_MUSEUM_WARPS)
-        shuffled_entrances.extend(MT_MOON_WARPS)
-        shuffled_entrances.extend(UNDERGROUND_PATH_NORTH_SOUTH_WARPS)
-        shuffled_entrances.extend(SS_ANNE_WARPS)
-        shuffled_entrances.extend(DIGLETTS_CAVE_WARPS)
-        shuffled_entrances.extend(ROUTE_11_GATE_WARPS)
-        shuffled_entrances.extend(ROCK_TUNNEL_WARPS)
-        shuffled_entrances.extend(UNDERGROUND_PATH_EAST_WEST_WARPS)
-        shuffled_entrances.extend(CELADON_DEPARTMENT_STORE_WARPS)
-        shuffled_entrances.extend(CELADON_CONDOMINIUMS_WARPS)
-        shuffled_entrances.extend(ROCKET_HIDEOUT_WARPS)
-        shuffled_entrances.extend(POKEMON_TOWER_WARPS)
-        shuffled_entrances.extend(ROUTE_12_GATE_WARPS)
-        shuffled_entrances.extend(ROUTE_15_GATE_WARPS)
-        shuffled_entrances.extend(ROUTE_16_GATE_WARPS)
-        shuffled_entrances.extend(ROUTE_18_GATE_WARPS)
-        shuffled_entrances.extend(SAFARI_ZONE_WARPS)
-        shuffled_entrances.extend(SILPH_CO_WARPS)
-        shuffled_entrances.extend(COPYCATS_HOUSE_WARPS)
-        shuffled_entrances.extend(SEAFOAM_ISLANDS_WARPS)
-        shuffled_entrances.extend(POKEMON_LAB_WARPS)
-        shuffled_entrances.extend(POKEMON_MANSION_WARPS)
-        shuffled_entrances.extend(VICTORY_ROAD_WARPS)
-        shuffled_entrances.extend(MT_EMBER_WARPS)
-        shuffled_entrances.extend(ICEFALL_CAVE_WARPS)
-        shuffled_entrances.extend(LOST_CAVE_TWO_WAY_WARPS)
-        # shuffled_entrances.extend(LOST_CAVE_ONE_WAY_WARPS)
-        shuffled_entrances.extend(DOTTED_HOLE_WARPS)
-        shuffled_entrances.extend(CERULEAN_CAVE_WARPS)
-        shuffled_entrances.extend(NAVEL_ROCK_WARPS)
+        shuffled_entrances.extend(INTERIOR_WARPS)
 
     if world.options.shuffle_warp_tiles != ShuffleWarpTiles.option_off:
         shuffled_entrances.extend(SILPH_CO_WARP_TILES)
@@ -818,8 +632,8 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
     # Create the mixed entrance/exit groups. If interiors are included in the mixed pool then the restriction
     # that entrances -> exits and vice versa can be ignored. Any warp in the mixed pool can go to any other warp.
     if "Interiors" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_interiors:
-        mixed_entrance_group.extend(INTERIOR_WARP_GROUPS)
-        mixed_exit_group.extend(INTERIOR_WARP_GROUPS)
+        mixed_entrance_group.append(EntranceGroup.INTERIOR_WARP)
+        mixed_exit_group.append(EntranceGroup.INTERIOR_WARP)
         unrestricted_entrances = True
 
     if "Gyms" in world.options.mix_entrance_warp_pools.value and world.options.shuffle_gyms:
@@ -962,11 +776,10 @@ def _create_entrance_group_lookup(world: "PokemonFRLGWorld") -> Dict[EntranceGro
                 entrance_group_lookup[EntranceGroup.MULTI_DUNGEON_EXIT] = [EntranceGroup.MULTI_DUNGEON_ENTRANCE]
 
     if world.options.shuffle_interiors:
-        for group in INTERIOR_WARP_GROUPS:
-            if "Interiors" in world.options.mix_entrance_warp_pools.value:
-                entrance_group_lookup[group] = mixed_exit_group
-            else:
-                entrance_group_lookup[group] = INTERIOR_WARP_GROUPS
+        if "Interiors" in world.options.mix_entrance_warp_pools.value:
+            entrance_group_lookup[EntranceGroup.INTERIOR_WARP] = mixed_exit_group
+        else:
+            entrance_group_lookup[EntranceGroup.INTERIOR_WARP] = [EntranceGroup.INTERIOR_WARP]
 
     if world.options.shuffle_warp_tiles == ShuffleWarpTiles.option_full:
         entrance_group_lookup[EntranceGroup.SILPH_CO_WARP_TILE] = WARP_TILE_GROUPS
