@@ -425,6 +425,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # /* 0x50 */ bool8 remoteItems;
     # /* 0x51 */ bool8 internalEntrancesRandomized;
     # /* 0x52 */ bool8 randomized;
+    # /* 0x53 */ u8 version[16];
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -739,6 +740,11 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # Set that the game has been randomized
     patch.write_token(options_address, 0x52, struct.pack("<B", 1))
 
+    # Set apworld version
+    apworld_version = f"AP v{APWORLD_VERSION}"
+    for j, b in enumerate(encode_string(apworld_version, 16)):
+        patch.write_token(options_address, 0x53 + j, struct.pack("<B", b))
+
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:
         flash_level_address = data.rom_addresses["sFlashLevelToRadius"]
@@ -784,7 +790,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     # Set slot auth
     patch.write_token(data.rom_addresses["gArchipelagoInfo"], 0, world.auth)
 
-    # Set apworld version
+    # Set apworld version in ROM header
     apworld_version_address = {}
     for key in patch.revision_keys:
         apworld_version_address[key] = 0x178

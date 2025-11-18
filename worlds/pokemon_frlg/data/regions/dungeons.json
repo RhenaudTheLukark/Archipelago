@@ -3548,12 +3548,28 @@
     "has_fishing": false,
     "kanto": false,
     "locations": [
-      "ITEM_FOUR_ISLAND_ICEFALL_CAVE_B1F_NEVER_MELT_ICE",
+      "ITEM_FOUR_ISLAND_ICEFALL_CAVE_B1F_NEVER_MELT_ICE"
+    ],
+    "events": [],
+    "exits": {
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/SOUTH": "Icefall Cave B1F Sliding Ice (South)"
+    },
+    "warps": {}
+  },
+  "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/SOUTH": {
+    "parent_map": "MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F",
+    "name": "Icefall Cave B1F (South)",
+    "encounter_region": "Icefall Cave B1F",
+    "has_land": true,
+    "has_water": false,
+    "has_fishing": false,
+    "kanto": false,
+    "locations": [
       "ITEM_FOUR_ISLAND_ICEFALL_CAVE_B1F_FULL_RESTORE"
     ],
     "events": [],
     "exits": {
-      "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/NORTH": "Icefall Cave B1F Sliding Ice"
+      "REGION_FOUR_ISLAND_ICEFALL_CAVE_B1F/NORTH": "Icefall Cave B1F Sliding Ice (North)"
     },
     "warps": {
       "MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F:2/MAP_FOUR_ISLAND_ICEFALL_CAVE_1F:4": "Icefall Cave B1F South Ladder"

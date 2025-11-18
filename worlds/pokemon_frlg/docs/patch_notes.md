@@ -110,6 +110,7 @@
 * Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
 * `shopsanity` checks will now be sent out as soon as you purchase the item instead of needing to exit the shop to send them out
 * Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
+* Exp. Share has been changed into a key item that can be used to toggle exp sharing on/off. The way experience is shared is determined by your Experience Distribution setting
 
 ## Bug Fixes
 * Fixed an issue with displaying move data in battle during double battles
