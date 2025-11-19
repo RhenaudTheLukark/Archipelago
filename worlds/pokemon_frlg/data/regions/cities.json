@@ -49,7 +49,7 @@
     "events": [],
     "exits": {
       "REGION_PALLET_TOWN/MAIN": "Pallet Town Landing Spot",
-      "REGION_ROUTE21/MAIN": "Pallet Town Exit (South)"
+      "REGION_ROUTE21/WATER": "Pallet Town Exit (South)"
     },
     "warps": {}
   },

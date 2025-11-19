@@ -1,13 +1,30 @@
 # 1.0.0
-## Updates
+## Game Updates
+* The Title Screen and Start Game menu have been updated
+  * Pressing start will now go to the Start Game menu if there is no save data instead of immediately going into the Oak intro
+  * An Option choice has been added to the Start Game menu so you can modify your game options before starting a new game or loading your save
+  * The apworld version is displayed in the top right of the first choice box on the Start Game menu
+* NPCs and events that block the player will now force the player back the direction they came from (e.g. Pewter City Roadblock, Route 23 Guard, etc.)
+* Increased Trainer money rewards so that they scale based on party size and Pokémon's BST
+* Local non-key items are purchasable repeatedly in shops when `shopsanity` is on. This also applies if `remote_items` is on
+* Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
+* Exp. Share has been changed into a key item that can be used to toggle exp sharing on/off. The way experience is shared is determined by your Experience Distribution setting
+* The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
+* Restored the triggers for the first Rival battle
+* Reworked the Fossil checks
+  * You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
+  * The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
+* The Vending Machines and Game Corner Prize Room Item/TM exchange have been changed to work like Poké Marts instead of using a multi-choice menu
+* Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
+* The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
+* The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
+* Updated the Two Island Market Stall so that you can view all the items in the shop immediately
+
+## Apworld Updates
 * Added support for Universal Tracker
   * When launching UT, you can supply the path to your Pokémon FRLG Poptracker pack in order to add a map tab to universal tracker
   * Supports full auto tracking of locations and entrances all with auto-tabbing for the map
   * Events are currently not displayed on the map and are automatically assumed collected once you can reach them
-* The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
-* Reworked the Fossil checks
-  * You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
-  * The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
 * New option `shuffle_pokemon_centers`
   * Shuffles the Pokémon Center entrances amongst each other
   * The Player's House is included in this pool but will not be shuffled
@@ -100,21 +117,15 @@
   * Added Experience Distribution, Guaranteed Run, and Skip Nicknames
   * Updated Experience Multiplier to set the exact multiplier from 0-1000 in increments of 10
 * The Title Screen locations have been removed. All items that you can start with (e.g. Berry Pouch, TM Case, etc.) will be added to your `start_inventory`
-* The fences in Pallet Town and Route 21 have been modified so that you can surf left to right in Pallet Town without accidentally leaving the water
-* Restored the triggers for the first Rival battle
-* NPCs and events that block the player will now force the player back the direction they came from (e.g. Pewter City Roadblock, Route 23 Guard, etc.)
-* Increased Trainer money rewards so that they scale based on party size and Pokémon's BST
-* Updated the Two Island Market Stall so that you can view all the items in the shop immediately
-* The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
-* Local non-key items are purchasable repeatedly in shops when `shopsanity` is on. This also applies if `remote_items` is on
-* Lemonade is no longer sold in the Pokémon Center shop. If `shopsanity` is on then at least one Lemonade will be placed in a shop location
 * `shopsanity` checks will now be sent out as soon as you purchase the item instead of needing to exit the shop to send them out
-* Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
-* Exp. Share has been changed into a key item that can be used to toggle exp sharing on/off. The way experience is shared is determined by your Experience Distribution setting
 
 ## Bug Fixes
 * Fixed an issue with displaying move data in battle during double battles
 * Fixed an issue where Route 21 fishing battles were not in logic unless you could surf
+
+## Known Issues
+* The `base_stats` option does not affect Deoxys attack/defense forms
+* Entrance squares are always displayed on UT even if they aren't randomized and may overlap with location squares on some maps
 
 # 0.9.6
 ## Bug Fixes
