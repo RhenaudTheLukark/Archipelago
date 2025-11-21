@@ -28,10 +28,10 @@ from .level_scaling import level_scaling
 from .locations import (PokemonFRLGLocation, create_location_name_to_id_map, create_locations,
                         place_unrandomized_items, place_shop_items, set_free_fly, shuffle_badges)
 from .options import (PokemonFRLGOptions, CardKey, CeruleanCaveRequirement, Dexsanity, FishingRods, FlashRequired,
-                      FreeFlyLocation, GameVersion, Goal, IslandPasses, RandomizeLegendaryPokemon, RandomizeMiscPokemon,
-                      RandomizeWildPokemon, ShuffleBadges, ShuffleBuildingEntrances, ShuffleDungeonEntrances,
-                      ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex, ShuffleRunningShoes, TownMapFlyLocation,
-                      Trainersanity, ViridianCityRoadblock)
+                      FreeFlyLocation, GameVersion, Goal, IslandPasses, MixEntranceWarpPools, RandomizeLegendaryPokemon,
+                      RandomizeMiscPokemon, RandomizeWildPokemon, ShuffleBadges, ShuffleBuildingEntrances,
+                      ShuffleDungeonEntrances, ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex,
+                      ShuffleRunningShoes, TownMapFlyLocation, Trainersanity, ViridianCityRoadblock)
 from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_stats, randomize_damage_categories,
                       randomize_legendaries, randomize_misc_pokemon, randomize_moves, randomize_move_types,
                       randomize_requested_trade_pokemon, randomize_starters, randomize_tm_hm_compatibility,
@@ -263,6 +263,10 @@ class PokemonFRLGWorld(World):
         self.blacklisted_abilities = {ability_name_map[name] for name in self.options.ability_blacklist.value}
         self.blacklisted_moves = {move_name_map[name] for name in self.options.move_blacklist.value}
         self.blacklisted_tm_tutor_moves = {move_name_map[name] for name in self.options.tm_tutor_moves_blacklist.value}
+
+        if "All" in self.options.mix_entrance_warp_pools.value:
+            for key in MixEntranceWarpPools.valid_keys:
+                self.options.mix_entrance_warp_pools.value.add(key)
 
         # Modify options that are incompatible with each other
         if self.options.kanto_only:

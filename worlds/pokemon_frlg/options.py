@@ -190,7 +190,7 @@ class MixEntranceWarpPools(OptionSet):
     """
     Shuffle the selected entrances/warps into a mixed pool instead of separate ones. Has no effect on pools whose
     entrances/warps aren't shuffled. Entrances/warps can only be mixed with other entrance/warps that have the same
-    restrictions.
+    restrictions. Can specify "All" as a shortcut for adding in all entrances/warps that can be mixed.
 
     The avaialble pools that can be mixed are:
     - Gyms
@@ -201,7 +201,7 @@ class MixEntranceWarpPools(OptionSet):
     - Interiors
     """
     display_name = "Mix Entrance/Warp Pools"
-    valid_keys = ["Gyms", "Marts", "Harbors", "Buildings", "Dungeons", "Interiors"]
+    valid_keys = ["Gyms", "Marts", "Harbors", "Buildings", "Dungeons", "Interiors", "All"]
 
 
 class DecoupleEntrancesWarps(Toggle):
