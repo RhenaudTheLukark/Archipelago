@@ -1,8 +1,9 @@
 from enum import IntEnum
 from typing import TYPE_CHECKING, Dict, List
-from BaseClasses import Entrance, EntranceType
+from BaseClasses import Entrance, EntranceType, Region
 from entrance_rando import (ERPlacementState, EntranceRandomizationError, disconnect_entrance_for_randomization,
                             randomize_entrances)
+from .data import data
 from .options import (ShuffleBuildingEntrances, ShuffleDropdowns, ShuffleDungeonEntrances, ShuffleWarpTiles)
 from .universal_tracker import ut_set_entrances
 
@@ -416,6 +417,54 @@ BUILDING_PAIRS = BUILDING_ENTRANCE_PAIRS | BUILDING_ENTRANCE_PAIRS_REVERSE
 DUNGEON_ENTRANCE_PAIRS_REVERSE = {k: v for v, k in DUNGEON_ENTRANCE_PAIRS.items()}
 DUNGEON_PAIRS = DUNGEON_ENTRANCE_PAIRS | DUNGEON_ENTRANCE_PAIRS_REVERSE
 MULTI_PAIRS = BUILDING_PAIRS | DUNGEON_PAIRS
+
+OUTDOOR_REGIONS = [
+    "Title Screen", "Player's PC", "Pokedex", "Evolutions", "Sky", "Pallet Town (Visit)", "Pallet Town",
+    "Pallet Town (Water)", "Viridian City (Visit)", "Viridian City (South)", "Viridian City (North)",
+    "Viridian City (Water)", "Pewter City (Visit)", "Pewter City", "Pewter City (Near Roadblock)",
+    "Pewter City (Near Museum)", "Cerulean City (Visit)", "Cerulean City", "Cerulean City (Backyard)",
+    "Cerulean City (Outskirts)", "Cerulean City (Water)", "Cerulean City (Near Cave)", "Vermilion City (Visit)",
+    "Vermilion City", "Vermilion City (Near Gym)", "Vermilion City (Near Harbor)", "Vermilion City (Near Sign)",
+    "Vermilion City (Water)", "Lavender Town (Visit)", "Lavender Town", "Celadon City (Visit)", "Celadon City",
+    "Celadon City (Near Gym)", "Celadon City (Water)", "Fuchsia City (Visit)", "Fuchsia City",
+    "Fuchsia City (Backyard)", "Fuchsia City (Water)", "Saffron City (Visit)", "Saffron City",
+    "Cinnabar Island (Visit)", "Cinnabar Island", "Cinnabar Island (Water)", "Indigo Plateau (Visit)",
+    "Indigo Plateau", "One Island Town (Visit)", "One Island Town", "One Island Town (Water)", "Treasure Beach (Water)",
+    "Treasure Beach", "Kindle Road (South)", "Kindle Road (South Water)", "Kindle Road (Center)",
+    "Kindle Road (North Water)", "Kindle Road (North)", "Two Island Town (Visit)", "Two Island Town", "Cape Brink",
+    "Cape Brink (Water)", "Three Isle Port (West)", "Three Isle Port (East)", "Three Island Town (Visit)",
+    "Three Island Town (South)", "Three Island Town (North)", "Bond Bridge", "Bond Bridge (Water)",
+    "Four Island Town (Visit)", "Four Island Town", "Four Island Town (Water)", "Four Island Town (Near Cave)",
+    "Five Island Town (Visit)", "Five Island Town", "Five Island Town (Water)", "Five Isle Meadow",
+    "Five Isle Meadow (Water)", "Memorial Pillar (Water)", "Memorial Pillar", "Water Labyrinth (Water)",
+    "Water Labyrinth", "Resort Gorgeous (Water)", "Resort Gorgeous (Near Resort)", "Resort Gorgeous (Near Cave)",
+    "Six Island Town (Visit)", "Six Island Town", "Water Path (South)", "Water Path (South Water)",
+    "Water Path (North)", "Water Path (North Water)", "Ruin Valley", "Ruin Valley (Water)", "Green Path (East)",
+    "Green Path (West)", "Green Path (Water)", "Outcast Island (Water)", "Outcast Island", "Seven Island Town (Visit)",
+    "Seven Island Town", "Canyon Entrance", "Sevault Canyon", "Tanoby Ruins", "Tanoby Ruins (Water)",
+    "Tanoby Ruins (Monean Island)", "Tanoby Ruins (Liptoo Island)", "Tanoby Ruins (Weepth Island)",
+    "Tanoby Ruins (Dilford Island)", "Tanoby Ruins (Scufib Island)", "Tanoby Ruins (Rixy Island)",
+    "Tanoby Ruins (Viapois Island)", "Trainer Tower Exterior (South)", "Trainer Tower Exterior (Water)",
+    "Trainer Tower Exterior (North)", "Navel Rock Exterior", "Birth Island Exterior", "Route 1", "Route 2 (Southwest)",
+    "Route 2 (Northwest)", "Route 2 (Northeast)", "Route 2 (East)", "Route 2 (Southeast)", "Route 3",
+    "Route 3 (Between Ledges)", "Route 4 (West)", "Route 4 (East)", "Route 4 (Southeast)", "Route 4 (Water)",
+    "Route 4 (Northeast)", "Route 5", "Route 5 (Center)", "Route 5 (Near Daycare)", "Route 5 (Near Underground)",
+    "Route 6", "Route 6 (Near Underground)", "Route 6 (Water)", "Route 7", "Route 7 (Near Underground)", "Route 8",
+    "Route 8 (Behind Trees)", "Route 8 (Near Underground)", "Route 9 (West)", "Route 9", "Route 9 (East)",
+    "Route 10 (North)", "Route 10 (South)", "Route 10 (North Water)", "Route 10 (South Water)",
+    "Route 10 (Near Power Plant)", "Route 10 (Near Power Plant Back)", "Route 11 (West)", "Route 11 (East)",
+    "Route 11 (Water)", "Route 12 (West)", "Route 12 (North)", "Route 12 (North Water)", "Route 12 (Center)",
+    "Route 12 (Center Water)", "Route 12 (Snorlax Area)", "Route 12 (South)", "Route 12 (South Water)",
+    "Route 12 (Behind North Tree)", "Route 12 (Behind South Tree)", "Route 13", "Route 13 (Behind Tree)",
+    "Route 13 (Water)", "Route 14", "Route 14 (Behind Tree)", "Route 15 (South)", "Route 15 (North)",
+    "Route 15 (Southwest)", "Route 16 (Southeast)", "Route 16 (Northeast)", "Route 16 (Northwest)",
+    "Route 16 (Snorlax Area)", "Route 16 (Center)", "Route 16 (Southwest)", "Route 17", "Route 18 (West)",
+    "Route 18 (East)", "Route 19", "Route 19 (Water)", "Route 20 (East)", "Route 20 (Near North Cave)",
+    "Route 20 (Near South Cave)", "Route 20 (West)", "Route 21", "Route 21 (Water)", "Route 22 (East)",
+    "Route 22 (West)", "Route 22 (Water)", "Route 23 (South)", "Route 23 (South Water)", "Route 23 (North Water)",
+    "Route 23 (Near Water)", "Route 23 (Center)", "Route 23 (Near Cave)", "Route 23 (North)", "Route 24",
+    "Route 24 (Water)", "Route 25", "Route 25 (Water)"
+]
 
 class EntranceGroup(IntEnum):
     UNSHUFFLED = 0
@@ -971,3 +1020,25 @@ def connect_simple_entrances(er_state: ERPlacementState,
     return False
 
 
+def set_hint_entrances(world: "PokemonFRLGWorld") -> None:
+    real_regions = [region.name for region in data.regions.values()]
+    for region in world.get_regions():
+        checked_regions = {region}
+        entrance_hints = set()
+
+        def check_region(region_to_check: Region) -> bool | None:
+            if region_to_check.name in OUTDOOR_REGIONS:
+                return True
+            for entrance in region_to_check.entrances:
+                if entrance.parent_region not in checked_regions:
+                    checked_regions.add(entrance.parent_region)
+                    is_outdoors = check_region(entrance.parent_region)
+                    if is_outdoors:
+                        entrance_hints.add(entrance.name)
+                    elif is_outdoors is not None:
+                        return is_outdoors
+            return None
+
+        if region.name not in OUTDOOR_REGIONS and region.name in real_regions:
+            check_region(region)
+            region.entrance_hints = entrance_hints

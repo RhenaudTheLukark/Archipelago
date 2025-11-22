@@ -67,6 +67,7 @@ class PokemonFRLGLocation(Location):
     scaling_ids: List[str] | None
     spoiler_name: str
     encounter_key: str
+    hint_entrances: List[str]
 
     def __init__(
             self,

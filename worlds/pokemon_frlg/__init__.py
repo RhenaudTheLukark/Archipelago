@@ -6,7 +6,6 @@ import copy
 import logging
 import os.path
 import pkgutil
-import settings
 import threading
 
 from collections import defaultdict
@@ -20,7 +19,7 @@ from .client import PokemonFRLGClient
 from .data import (data, ability_name_map, ALL_SPECIES, APWORLD_VERSION, LEGENDARY_POKEMON, NAME_TO_SPECIES_ID,
                    POPTRACKER_CHECKSUM, LocationCategory, EventData, EvolutionMethodEnum, FlyData, MapData,
                    MiscPokemonData, MoveData, move_name_map, SpeciesData, StarterData, TrainerData, TradePokemonData)
-from .entrances import shuffle_entrances
+from .entrances import set_hint_entrances, shuffle_entrances
 from .groups import item_groups, location_groups
 from .items import (PokemonFRLGItem, PokemonFRLGGlitchedToken, add_starting_items, create_item_name_to_id_map,
                     get_random_item, get_item_classification)
@@ -36,7 +35,7 @@ from .pokemon import (add_hm_compatability, randomize_abilities, randomize_base_
                       randomize_legendaries, randomize_misc_pokemon, randomize_moves, randomize_move_types,
                       randomize_requested_trade_pokemon, randomize_starters, randomize_tm_hm_compatibility,
                       randomize_tm_moves, randomize_trainer_parties, randomize_types, randomize_wild_encounters)
-from .regions import starting_town_map, create_indirect_conditions, create_regions
+from .regions import starting_town_map, create_indirect_conditions, create_regions, PokemonFRLGRegion
 from .rules import PokemonFRLGLogic, set_hm_compatible_pokemon, set_logic_options, set_rules, verify_hm_accessibility
 from .rom import PokemonFRLGPatchData, PokemonFireRedProcedurePatch, PokemonLeafGreenProcedurePatch, write_tokens
 from .sanity_check import validate_regions
@@ -593,6 +592,7 @@ class PokemonFRLGWorld(World):
                 spoiler_handle.write(line)
 
     def extend_hint_information(self, hint_data):
+        hint_data[self.player] = {}
         if self.options.dexsanity != Dexsanity.special_range_names["none"]:
             species_locations = defaultdict(set)
 
@@ -604,10 +604,17 @@ class PokemonFRLGWorld(World):
                     pokemon_name = location.item.name.replace("Static ", "")
                     species_locations[pokemon_name].add(location.spoiler_name)
 
-            hint_data[self.player] = {
-                self.location_name_to_id[f"Pokedex - {species}"]: ", ".join(sorted(maps))
-                for species, maps in species_locations.items()
-            }
+            for species, maps in species_locations.items():
+                hint_data[self.player][self.location_name_to_id[f"Pokedex - {species}"]] = ", ".join(sorted(maps))
+
+        if self.er_placement_state is not None:
+            set_hint_entrances(self)
+            for region in self.get_regions():
+                assert isinstance(region, PokemonFRLGRegion)
+                if region.entrance_hints:
+                    for location in region.locations:
+                        if not location.is_event:
+                            hint_data[self.player][location.address] = ", ".join(sorted(region.entrance_hints))
 
     def modify_multidata(self, multidata: Dict[str, Any]):
         multidata["connect_names"][base64.b64encode(self.auth).decode("ascii")] = \

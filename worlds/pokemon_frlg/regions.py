@@ -1,8 +1,8 @@
 """
 Functions related to AP regions for Pokémon FireRed and LeafGreen (see ./data/regions for region definitions)
 """
-from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
-from BaseClasses import CollectionState, Entrance, ItemClassification, Region
+from typing import TYPE_CHECKING, Dict, List, Set, Tuple, Callable
+from BaseClasses import CollectionState, ItemClassification, Region
 from .data import (data, EncounterType, LocationCategory, fly_destination_areas, fly_destination_maps,
                    fly_destination_random, fly_destination_regions, fly_plando_maps, starting_town_blacklist_map)
 from .items import PokemonFRLGItem
@@ -99,10 +99,12 @@ fly_destination_entrance_map = {
 
 class PokemonFRLGRegion(Region):
     distance: int | None
+    entrance_hints: Set[str]
 
     def __init__(self, name, player, multiworld):
         super().__init__(name, player, multiworld)
         self.distance = None
+        self.entrance_hints = set()
 
 
 def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
