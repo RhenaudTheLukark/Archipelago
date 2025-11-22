@@ -171,8 +171,8 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
         included_types.add("Extra Key Items")
     if world.options.trainersanity != Trainersanity.special_range_names["none"]:
         included_types.add("Trainersanity")
-    if world.options.rematchsanity:
-        included_types.add("Rematchsanity")
+        if world.options.rematchsanity:
+            included_types.add("Rematchsanity")
     if world.options.dexsanity != Dexsanity.special_range_names["none"]:
         included_types.add("Dexsanity")
     if world.options.famesanity:
@@ -233,15 +233,6 @@ def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> N
                 locs_to_remove -= 1
                 if locs_to_remove <= 0:
                     break
-
-    # # Add rematchsanity locations
-    # if world.options.rematchsanity:
-    #     locations: List[PokemonFRLGLocation] = world.get_locations()
-    #     trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
-    #     for location in trainer_locations:
-    #         if location.location_id in TRAINER_REMATCH_MAP:
-    #             for location_id in TRAINER_REMATCH_MAP[location.location_id]:
-    #                 location.parent_region.locations.append(create_location(location_id))
 
 
 def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:

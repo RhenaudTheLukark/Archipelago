@@ -4171,7 +4171,7 @@ POPTRACKER_LOCATIONS: Dict[str, int] = {
     "Lostelle's Dad/Gift": "NPC_GIFT_GOT_MOON_STONE_FROM_JOYFUL_GAME_CORNER",
     "Cape Brink Hidden Item Across Pond/Hidden Item": "HIDDEN_ITEM_TWO_ISLAND_CAPE_BRINK_PP_MAX",
     "Cape Brink Hidden Item Behind House/Hidden Item": "HIDDEN_ITEM_TWO_ISLAND_CAPE_BRINK_RARE_CANDY",
-    "Three Isle Path Rock Hidden Item/Hidden Time": "HIDDEN_ITEM_THREE_ISLAND_DUNSPARCE_TUNNEL_NUGGET",
+    "Three Isle Path Rock Hidden Item/Hidden Item": "HIDDEN_ITEM_THREE_ISLAND_DUNSPARCE_TUNNEL_NUGGET",
     "Prospector/Gift": "NPC_GIFT_GOT_NUGGET_FROM_DUNSPARCE_TUNNEL",
     "Three Island Visit/Unlock Fly Destination": "FLY_UNLOCK_VISITED_THREE_ISLAND",
     "Three Island Pokémon Center/PC Item": "PC_ITEM_POTION",
