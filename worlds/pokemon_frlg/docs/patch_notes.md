@@ -38,7 +38,7 @@
 * New Option `shuffle_buildings`
   * Shuffles the building entrances amongst each other
   * The Celadon Department Store entrnaces are included in this pool
-  * A builiding is considered a multi entrance building if the two entrances are normally connected inside the building. For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as two separate multi entrance buildings
+  * A building is considered a multi entrance building if the two entrances are normally connected inside the building. For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as two separate multi entrance buildings
 * Renamed option `dungeon_entrance_shuffle` -> `shuffle_dungeons`
 * New Option `shuffle_interiors`
   * Shuffles the interior warps of buildings and dungeons amongst each other
