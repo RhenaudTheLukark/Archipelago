@@ -4110,7 +4110,7 @@ POPTRACKER_LOCATIONS: Dict[str, int] = {
     "One Island Pokémon Center/Celio Info 3": "FAME_CHECKER_BILL_6",
     "One Island Pokémon Center PC/Item": "PC_ITEM_POTION",
     "One Island Pokémon Center Bill/Delivery for Lostelle's Dad": "NPC_GIFT_GOT_METEORITE",
-    "One Island Pokémon Center Celio/Celio": "NPC_GIFT_GOT_TRI_PASS",
+    "One Island Pokémon Center Celio/Meet": "NPC_GIFT_GOT_TRI_PASS",
     "One Island Pokémon Center Celio/Gift (Deliver Ruby)": "NPC_GIFT_GOT_RAINBOW_PASS",
     "One Island Pokémon Center Celio/Gift (Deliver Sapphire)": "NPC_GIFT_GOT_SEVEN_PASS",
     "One Island Pokémon Center Celio/Info 1": "FAME_CHECKER_BILL_4",
