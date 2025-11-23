@@ -237,6 +237,9 @@ class PokemonFRLGLogic:
     def trainer_rematch_5(self, state: CollectionState) -> bool:
         return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 8)
 
+    def can_buy_coins(self, state: CollectionState) -> bool:
+        return state.has("Coin Case", self.player) and state.can_reach_region("Celadon Game Corner", self.player)
+
     def can_take_fossil(self, state: CollectionState, n: int) -> bool:
         if state.has("Miguel Takes Fossil", self.player):
             if n <= 0:
@@ -1746,45 +1749,45 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
     add_rule_safe("Celadon Game Corner - Southeast Hidden Item",
                   lambda state: state.has("Coin Case", player))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Item 1",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Item 2",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Item 3",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Item 4",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Item 5",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize TM 1",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize TM 2",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize TM 3",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize TM 4",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize TM 5",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 1",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 2",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 3",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 4",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Game Corner Prize Room - Prize Pokemon 5",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Prize Pokemon 1 Scaling",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Prize Pokemon 2 Scaling",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Prize Pokemon 3 Scaling",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Prize Pokemon 4 Scaling",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Prize Pokemon 5 Scaling",
-                  lambda state: state.has("Coin Case", player))
+                  lambda state: logic.can_buy_coins(state))
     add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Fresh Water)",
                   lambda state: state.has("Fresh Water", player))
     add_rule_safe("Celadon Department Store Roof - Thirsty Girl Gift (Give Soda Pop)",
