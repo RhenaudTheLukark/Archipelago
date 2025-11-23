@@ -1,3 +1,4 @@
+import copy
 from typing import TYPE_CHECKING, Dict, List, Optional
 
 from Options import Option
@@ -13,6 +14,8 @@ def ut_set_options(world: "PokemonFRLGWorld") -> None:
         opt: Optional[Option] = getattr(world.options, key, None)
         if opt is not None:
             setattr(world.options, key, opt.from_any(value))
+    world.tracker_world["map_page_maps"] = copy.deepcopy(MAP_PAGE_MAPS)
+    world.tracker_world["map_page_locations"] = copy.deepcopy(MAP_PAGE_LOCATIONS)
 
 
 def ut_set_maps(world: "PokemonFRLGWorld") -> None:
