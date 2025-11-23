@@ -4430,7 +4430,7 @@ POPTRACKER_LOCATIONS: Dict[str, int] = {
     "Trainer Tower Lobby Shop Clerk/Shop Item 8": "SHOP_TRAINER_TOWER_8",
     "Trainer Tower Lobby Shop Clerk/Shop Item 9": "SHOP_TRAINER_TOWER_9",
     "Navel Rock Exterior/Hidden Item Near Ho-Oh": "HIDDEN_ITEM_NAVEL_ROCK_SUMMIT_SACRED_ASH",
-    "Navel Rock Hidden Item Near Ho-Oh/Hidden Item": "HIDDEN_ITEM_NAVEL_ROCK_SUMMIT_SACRED_ASH",
+    "Navel Rock Summit Hidden Item Near Ho-Oh/Hidden Item": "HIDDEN_ITEM_NAVEL_ROCK_SUMMIT_SACRED_ASH",
     "Poké Mart Employee/Free Sample": "NPC_GIFT_GOT_POTION_ON_ROUTE_1",
     "Route 2 North Item/Item": "ITEM_ROUTE2_ETHER",
     "Route 2 South Item/Item": "ITEM_ROUTE2_PARALYZE_HEAL",
