@@ -387,45 +387,46 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     #                                           3 = Badges, 4 = Gyms
     # /* 0x28 */ u8 ceruleanCaveRequiredCount;
     # /* 0x29 */ u8 cinnabarFossilCount;
+    # /* 0x2A */ u8 rematchRequiresGyms;
     #
-    # /* 0x2A */ u32 startingMoney;
+    # /* 0x2B */ u32 startingMoney;
     #
-    # /* 0x2E */ bool8 itemfinderRequired;
-    # /* 0x2F */ bool8 flashRequired;
-    # /* 0x30 */ bool8 fameCheckerRequired;
-    # /* 0x31 */ bool8 bikeRequiresJumpingShoes;
-    # /* 0x32 */ bool8 acrobaticBike;
+    # /* 0x2F */ bool8 itemfinderRequired;
+    # /* 0x30 */ bool8 flashRequired;
+    # /* 0x31 */ bool8 fameCheckerRequired;
+    # /* 0x32 */ bool8 bikeRequiresJumpingShoes;
+    # /* 0x33 */ bool8 acrobaticBike;
     #
-    # /* 0x33 */ u8 oaksAideRequiredCounts[5]; // Route 2, Route 10, Route 11, Route 16, Route 15
+    # /* 0x34 */ u8 oaksAideRequiredCounts[5]; // Route 2, Route 10, Route 11, Route 16, Route 15
     #
-    # /* 0x38 */ bool8 reccuringHiddenItems;
-    # /* 0x39 */ bool8 isTrainersanity;
-    # /* 0x3A */ bool8 isDexsanity;
-    # /* 0x3B */ bool8 extraKeyItems;
-    # /* 0x3C */ bool8 kantoOnly;
-    # /* 0x3D */ bool8 flyUnlocks;
-    # /* 0x3E */ bool8 isFamesanity;
-    # /* 0x3F */ bool8 gymKeys;
-    # /* 0x40 */ bool8 isShopsanity;
+    # /* 0x39 */ bool8 reccuringHiddenItems;
+    # /* 0x3A */ bool8 isTrainersanity;
+    # /* 0x3B */ bool8 isDexsanity;
+    # /* 0x3C */ bool8 extraKeyItems;
+    # /* 0x3D */ bool8 kantoOnly;
+    # /* 0x3E */ bool8 flyUnlocks;
+    # /* 0x3F */ bool8 isFamesanity;
+    # /* 0x40 */ bool8 gymKeys;
+    # /* 0x41 */ bool8 isShopsanity;
     #
-    # /* 0x41 */ u8 removeBadgeRequirement; // Flash, Cut, Fly, Strength, Surf, Rock Smash, Waterfall
-    # /* 0x42 */ u8 additionalDarkCaves; // Mt. Moon, Diglett's Cave, Victory Road
+    # /* 0x42 */ u8 removeBadgeRequirement; // Flash, Cut, Fly, Strength, Surf, Rock Smash, Waterfall
+    # /* 0x43 */ u8 additionalDarkCaves; // Mt. Moon, Diglett's Cave, Victory Road
     #
-    # /* 0x43 */ bool8 passesSplit;
-    # /* 0x44 */ bool8 cardKeysSplit;
-    # /* 0x45 */ bool8 teasSplit;
+    # /* 0x44 */ bool8 passesSplit;
+    # /* 0x45 */ bool8 cardKeysSplit;
+    # /* 0x46 */ bool8 teasSplit;
     #
-    # /* 0x46 */ u8 startingLocation;
-    # /* 0x47 */ u8 startingRespawn;
-    # /* 0x48 */ u8 free_fly_id;
-    # /* 0x49 */ u8 town_free_fly_id;
-    # /* 0x4A */ u16 resortGorgeousMon;
-    # /* 0x4C */ u16 introSpecies;
-    # /* 0x4E */ u16 pcItemId;
-    # /* 0x50 */ bool8 remoteItems;
-    # /* 0x51 */ bool8 internalEntrancesRandomized;
-    # /* 0x52 */ bool8 randomized;
-    # /* 0x53 */ u8 version[16];
+    # /* 0x47 */ u8 startingLocation;
+    # /* 0x48 */ u8 startingRespawn;
+    # /* 0x49 */ u8 free_fly_id;
+    # /* 0x4A */ u8 town_free_fly_id;
+    # /* 0x4B */ u16 resortGorgeousMon;
+    # /* 0x4D */ u16 introSpecies;
+    # /* 0x4F */ u16 pcItemId;
+    # /* 0x51 */ bool8 remoteItems;
+    # /* 0x52 */ bool8 internalEntrancesRandomized;
+    # /* 0x53 */ bool8 randomized;
+    # /* 0x54 */ u8 version[16];
     # }
     options_address = data.rom_addresses["gArchipelagoOptions"]
 
@@ -592,77 +593,81 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     fossil_count = world.options.fossil_count.value
     patch.write_token(options_address, 0x29, struct.pack("<B", fossil_count))
 
+    # Set rematch requirements
+    rematch_requirements = world.options.rematch_requirements.value
+    patch.write_token(options_address, 0x2A, struct.pack("<B", rematch_requirements))
+
     # Set starting money
-    patch.write_token(options_address, 0x2A, struct.pack("<I", world.options.starting_money.value))
+    patch.write_token(options_address, 0x2B, struct.pack("<I", world.options.starting_money.value))
 
     # Set itemfinder required
     itemfinder_required = 1 if world.options.itemfinder_required.value == ItemfinderRequired.option_required else 0
-    patch.write_token(options_address, 0x2E, struct.pack("<B", itemfinder_required))
+    patch.write_token(options_address, 0x2F, struct.pack("<B", itemfinder_required))
 
     # Set flash required
     flash_required = 1 if world.options.flash_required.value == FlashRequired.option_required else 0
-    patch.write_token(options_address, 0x2F, struct.pack("<B", flash_required))
+    patch.write_token(options_address, 0x30, struct.pack("<B", flash_required))
 
     # Set fame checker required
     fame_checker_required = 1 if world.options.fame_checker_required else 0
-    patch.write_token(options_address, 0x30, struct.pack("<B", fame_checker_required))
+    patch.write_token(options_address, 0x31, struct.pack("<B", fame_checker_required))
 
     # Set bicycle requires jumping shoes
     bicycle_requires_jumping_shoes = 1 if world.options.bicycle_requires_jumping_shoes else 0
-    patch.write_token(options_address, 0x31, struct.pack("<B", bicycle_requires_jumping_shoes))
+    patch.write_token(options_address, 0x32, struct.pack("<B", bicycle_requires_jumping_shoes))
 
     # Set acrobatic bicycle
     acrobatic_bicycle = 1 if world.options.acrobatic_bicycle else 0
-    patch.write_token(options_address, 0x32, struct.pack("<B", acrobatic_bicycle))
+    patch.write_token(options_address, 0x33, struct.pack("<B", acrobatic_bicycle))
 
     # Set Oak's Aides counts
     oaks_aide_route_2 = world.options.oaks_aide_route_2.value
-    patch.write_token(options_address, 0x33, struct.pack("<B", oaks_aide_route_2))
+    patch.write_token(options_address, 0x34, struct.pack("<B", oaks_aide_route_2))
     oaks_aide_route_10 = world.options.oaks_aide_route_10.value
-    patch.write_token(options_address, 0x34, struct.pack("<B", oaks_aide_route_10))
+    patch.write_token(options_address, 0x35, struct.pack("<B", oaks_aide_route_10))
     oaks_aide_route_11 = world.options.oaks_aide_route_11.value
-    patch.write_token(options_address, 0x35, struct.pack("<B", oaks_aide_route_11))
+    patch.write_token(options_address, 0x36, struct.pack("<B", oaks_aide_route_11))
     oaks_aide_route_16 = world.options.oaks_aide_route_16.value
-    patch.write_token(options_address, 0x36, struct.pack("<B", oaks_aide_route_16))
+    patch.write_token(options_address, 0x37, struct.pack("<B", oaks_aide_route_16))
     oaks_aide_route_15 = world.options.oaks_aide_route_15.value
-    patch.write_token(options_address, 0x37, struct.pack("<B", oaks_aide_route_15))
+    patch.write_token(options_address, 0x38, struct.pack("<B", oaks_aide_route_15))
 
     # Set recurring hidden items shuffled
     recurring_hidden_items = 1 if world.options.shuffle_hidden.value == ShuffleHiddenItems.option_all else 0
-    patch.write_token(options_address, 0x38, struct.pack("<B", recurring_hidden_items))
+    patch.write_token(options_address, 0x39, struct.pack("<B", recurring_hidden_items))
 
     # Set trainersanity
     trainersanity = 1 if world.options.trainersanity.value != Trainersanity.special_range_names["none"] else 0
-    patch.write_token(options_address, 0x39, struct.pack("<B", trainersanity))
+    patch.write_token(options_address, 0x3A, struct.pack("<B", trainersanity))
 
     # Set dexsanity
     dexsanity = 1 if world.options.dexsanity.value != Dexsanity.special_range_names["none"] else 0
-    patch.write_token(options_address, 0x3A, struct.pack("<B", dexsanity))
+    patch.write_token(options_address, 0x3B, struct.pack("<B", dexsanity))
 
     # Set extra key items
     extra_key_items = 1 if world.options.extra_key_items else 0
-    patch.write_token(options_address, 0x3B, struct.pack("<B", extra_key_items))
+    patch.write_token(options_address, 0x3C, struct.pack("<B", extra_key_items))
 
     # Set kanto only
     kanto_only = 1 if world.options.kanto_only else 0
-    patch.write_token(options_address, 0x3C, struct.pack("<B", kanto_only))
+    patch.write_token(options_address, 0x3D, struct.pack("<B", kanto_only))
 
     # Set fly unlocks
     fly_unlocks = 1 if (world.options.shuffle_fly_unlocks.value != ShuffleFlyUnlocks.option_off or
                         world.options.randomize_fly_destinations) else 0
-    patch.write_token(options_address, 0x3D, struct.pack("<B", fly_unlocks))
+    patch.write_token(options_address, 0x3E, struct.pack("<B", fly_unlocks))
 
     # Set famesanity
     famesanity = 1 if world.options.famesanity else 0
-    patch.write_token(options_address, 0x3E, struct.pack("<B", famesanity))
+    patch.write_token(options_address, 0x3F, struct.pack("<B", famesanity))
 
     # Set gym keys
     gym_keys = 1 if world.options.gym_keys else 0
-    patch.write_token(options_address, 0x3F, struct.pack("<B", gym_keys))
+    patch.write_token(options_address, 0x40, struct.pack("<B", gym_keys))
 
     # Set shopsanity
     shopsanity = 1 if world.options.shopsanity else 0
-    patch.write_token(options_address, 0x40, struct.pack("<B", shopsanity))
+    patch.write_token(options_address, 0x41, struct.pack("<B", shopsanity))
 
     # Set remove badge requirements
     hms = ["Flash", "Cut", "Fly", "Strength", "Surf", "Rock Smash", "Waterfall"]
@@ -670,7 +675,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
     for i, hm in enumerate(hms):
         if hm in world.options.remove_badge_requirement.value:
             remove_badge_requirements |= (1 << i)
-    patch.write_token(options_address, 0x41, struct.pack("<B", remove_badge_requirements))
+    patch.write_token(options_address, 0x42, struct.pack("<B", remove_badge_requirements))
 
     # Set additional dark caves
     dark_caves = ["Mt. Moon", "Diglett's Cave", "Victory Road"]
@@ -685,41 +690,41 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
                 map_data = world.modified_maps[map_id]
                 header_address = map_data.header_address
                 patch.write_token(header_address, 21, struct.pack("<B", 1))
-    patch.write_token(options_address, 0x42, struct.pack("<B", additional_dark_caves))
+    patch.write_token(options_address, 0x43, struct.pack("<B", additional_dark_caves))
 
     # Set passes split
     passes_split = 1 if world.options.island_passes.value in {IslandPasses.option_split,
                                                               IslandPasses.option_progressive_split} else 0
-    patch.write_token(options_address, 0x43, struct.pack("<B", passes_split))
+    patch.write_token(options_address, 0x44, struct.pack("<B", passes_split))
 
     # Set card keys split
     card_keys_split = 1 if world.options.card_key.value in {CardKey.option_split, CardKey.option_progressive} else 0
-    patch.write_token(options_address, 0x44, struct.pack("<B", card_keys_split))
+    patch.write_token(options_address, 0x45, struct.pack("<B", card_keys_split))
 
     # Set teas split
     teas_split = 1 if world.options.split_teas else 0
-    patch.write_token(options_address, 0x45, struct.pack("<B", teas_split))
+    patch.write_token(options_address, 0x46, struct.pack("<B", teas_split))
 
     # Set starting town
     starting_town = data.constants[world.starting_town]
-    patch.write_token(options_address, 0x46, struct.pack("<B", starting_town))
+    patch.write_token(options_address, 0x47, struct.pack("<B", starting_town))
 
     # Set starting respawn
     starting_respawn = data.constants[world.starting_respawn]
-    patch.write_token(options_address, 0x47, struct.pack("<B", starting_respawn))
+    patch.write_token(options_address, 0x48, struct.pack("<B", starting_respawn))
 
     # Set free fly location
-    patch.write_token(options_address, 0x48, struct.pack("<B", world.free_fly_location_id))
+    patch.write_token(options_address, 0x49, struct.pack("<B", world.free_fly_location_id))
 
     # Set town map fly location
-    patch.write_token(options_address, 0x49, struct.pack("<B", world.town_map_fly_location_id))
+    patch.write_token(options_address, 0x4A, struct.pack("<B", world.town_map_fly_location_id))
 
     # Set resort gorgeous mon
-    patch.write_token(options_address, 0x4A, struct.pack("<H", world.logic.resort_gorgeous_pokemon))
+    patch.write_token(options_address, 0x4B, struct.pack("<H", world.logic.resort_gorgeous_pokemon))
 
     # Set intro species
     species_id = world.random.choice(list(data.species.keys()))
-    patch.write_token(options_address, 0x4C, struct.pack("<H", species_id))
+    patch.write_token(options_address, 0x4D, struct.pack("<H", species_id))
 
     # Set PC item ID
     pc_item_location = world.get_location("Player's PC - PC Item")
@@ -727,23 +732,23 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
         item_id = pc_item_location.item.code
     else:
         item_id = data.constants["ITEM_ARCHIPELAGO_PROGRESSION"]
-    patch.write_token(options_address, 0x4E, struct.pack("<H", item_id))
+    patch.write_token(options_address, 0x4F, struct.pack("<H", item_id))
 
     # Set remote items
     remote_items = 1 if world.options.remote_items else 0
-    patch.write_token(options_address, 0x50, struct.pack("<B", remote_items))
+    patch.write_token(options_address, 0x51, struct.pack("<B", remote_items))
 
     # Set interior ER
     shuffle_interiors = 1 if world.options.shuffle_interiors else 0
-    patch.write_token(options_address, 0x51, struct.pack("<B", shuffle_interiors))
+    patch.write_token(options_address, 0x52, struct.pack("<B", shuffle_interiors))
 
     # Set that the game has been randomized
-    patch.write_token(options_address, 0x52, struct.pack("<B", 1))
+    patch.write_token(options_address, 0x53, struct.pack("<B", 1))
 
     # Set apworld version
     apworld_version = f"AP v{APWORLD_VERSION}"
     for j, b in enumerate(encode_string(apworld_version, 16)):
-        patch.write_token(options_address, 0x53 + j, struct.pack("<B", b))
+        patch.write_token(options_address, 0x54 + j, struct.pack("<B", b))
 
     # Set total darkness
     if "Total Darkness" in world.options.modify_world_state.value:

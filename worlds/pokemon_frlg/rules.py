@@ -86,6 +86,7 @@ class PokemonFRLGLogic:
     guaranteed_hm_access: bool
     bicycle_requires_jumping_shoes: bool
     acrobatic_bicycle: bool
+    rematches_require_gyms: bool
     dexsanity_state_item_names_lookup: Dict[str, Tuple[str, ...]]
     oaks_aides_species_item_names: List[Tuple[str, ...]]
     pokemon_hm_use: Dict[str, List[str]]
@@ -107,6 +108,7 @@ class PokemonFRLGLogic:
         self.guaranteed_hm_access = False
         self.bicycle_requires_jumping_shoes = True
         self.acrobatic_bicycle = False
+        self.rematches_require_gyms = True
         self.dexsanity_state_item_names_lookup = {}
         self.oaks_aides_species_item_names = []
         self.evolution_state_item_names_lookup = {}
@@ -226,16 +228,24 @@ class PokemonFRLGLogic:
         return state.has("Vs. Seeker", self.player)
 
     def trainer_rematch_2(self, state: CollectionState) -> bool:
-        return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 2)
+        if self.rematches_require_gyms:
+            return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 2)
+        return state.has("Vs. Seeker", self.player) and self.has_n_badges(state, 2)
 
     def trainer_rematch_3(self, state: CollectionState) -> bool:
-        return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 4)
+        if self.rematches_require_gyms:
+            return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 4)
+        return state.has("Vs. Seeker", self.player) and self.has_n_badges(state, 4)
 
     def trainer_rematch_4(self, state: CollectionState) -> bool:
-        return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 6)
+        if self.rematches_require_gyms:
+            return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 6)
+        return state.has("Vs. Seeker", self.player) and self.has_n_badges(state, 6)
 
     def trainer_rematch_5(self, state: CollectionState) -> bool:
-        return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 8)
+        if self.rematches_require_gyms:
+            return state.has("Vs. Seeker", self.player) and self.has_n_gyms(state, 8)
+        return state.has("Vs. Seeker", self.player) and self.has_n_badges(state, 8)
 
     def can_buy_coins(self, state: CollectionState) -> bool:
         return state.has("Coin Case", self.player) and state.can_reach_region("Celadon Game Corner", self.player)
@@ -368,6 +378,7 @@ def set_logic_options(world: "PokemonFRLGWorld") -> None:
     logic.oaks_aides_require_evos = "Oak's Aides" in world.options.evolutions_required.value
     logic.bicycle_requires_jumping_shoes = bool(world.options.bicycle_requires_jumping_shoes.value)
     logic.acrobatic_bicycle = bool(world.options.acrobatic_bicycle.value)
+    logic.rematches_require_gyms = bool(world.options.rematch_requirements)
 
     # Until locations have been created, assume all Pokémon species are present in the world.
     dexsanity_state_item_names = {}

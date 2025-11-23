@@ -85,6 +85,8 @@
 * Removed options `minimum_shop_price` and `maximum_shop_price`
 * New option `rematchsanity`
   * Beating each of a trainer's rematches gives you an item. Only the rematches for trainers who have a trainersanity item will give an item for rematchsanity
+* New option `rematch_requirements`
+  * Sets the requirement for being able to battle trainer's rematches to either number of badges obtained or number of gyms beaten
 * New option `shuffle_pokedex`
   * Vanilla: The Pokédex is obtained by delivering the parcel to Professor Oak
   * Shuffle: The Pokédex is shuffled into the item pool

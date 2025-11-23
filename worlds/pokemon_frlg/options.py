@@ -397,12 +397,22 @@ class Rematchsanity(Toggle):
     item will give an item for rematchsanity.
 
     Each trainer rematch will add a random filler item into the pool.
-
-    IMPORTANT NOTE: The conditions for triggering trainer rematches has been changed from the vanilla game. The first
-                    rematch is unlocked by obtaining the Vs. Seeker and then subsequent rematches are unlocked for every
-                    2 gyms beaten.
     """
     display_name = "Rematchsanity"
+
+
+class RematchRequirements(Choice):
+    """
+    Sets the requirement for being able to battle trainer's rematches.
+
+    - Badges: Obtain some number of Badges
+    - Gyms: Beat some number of Gyms
+    """
+    display_name = "Rematch Requirements"
+    default = 1
+    option_badges = 0
+    option_gyms = 1
+
 
 class Dexsanity(NamedRange):
     """
@@ -1592,6 +1602,7 @@ class PokemonFRLGOptions(PerGameCommonOptions):
     consistent_shop_prices: ConsistentShopPrices
     trainersanity: Trainersanity
     rematchsanity: Rematchsanity
+    rematch_requirements: RematchRequirements
     dexsanity: Dexsanity
     famesanity: Famesanity
     shuffle_fly_unlocks: ShuffleFlyUnlocks

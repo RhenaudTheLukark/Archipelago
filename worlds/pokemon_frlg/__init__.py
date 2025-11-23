@@ -644,6 +644,7 @@ class PokemonFRLGWorld(World):
             "prizesanity",
             "shop_slots",
             "rematchsanity",
+            "rematch_requirements",
             "famesanity",
             "shuffle_fly_unlocks",
             "pokemon_request_locations",
