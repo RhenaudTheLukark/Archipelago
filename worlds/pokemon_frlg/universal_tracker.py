@@ -88,18 +88,36 @@ def ut_set_locations(world: "PokemonFRLGWorld") -> None:
                 except KeyError:
                     pass
     if world.options.shuffle_pokemon_centers:
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/pokemon_center_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/pokemon_center_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/pokemon_center_overview.json")
     if world.options.shuffle_gyms:
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/gym_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/gym_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/gym_overview.json")
     if world.options.shuffle_marts:
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/mart_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/mart_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/mart_overview.json")
+    if world.options.shuffle_harbors:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/harbor_entrances.json")
     if world.options.shuffle_buildings != ShuffleBuildingEntrances.option_off:
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/building_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/building_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/building_overview.json")
     if (world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_off
             and world.options.shuffle_dungeons != ShuffleDungeonEntrances.option_seafoam):
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/dungeon_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/dungeon_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/dungeon_overview.json")
     if world.options.shuffle_interiors:
-        world.tracker_world["map_page_locations"].remove("ut_locations/entrances/interior_overview.json")
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/interior_entrances.json")
+    else:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/interior_overview.json")
+    if world.options.shuffle_warp_tiles:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/warp_tile_entrances.json")
+    if world.options.shuffle_dropdowns:
+        world.tracker_world["map_page_locations"].append("ut_locations/entrances/dropdown_entrances.json")
 
 
 def ut_set_wild_pokemon(world: "PokemonFRLGWorld") -> None:
@@ -1176,7 +1194,6 @@ MAP_PAGE_LOCATIONS: List[str] = [
     "ut_locations/cities/saffron_city.json",
     "ut_locations/cities/vermilion_city.json",
     "ut_locations/cities/viridian_city.json",
-    "ut_locations/dungeons/altering_cave.json",
     "ut_locations/dungeons/berry_forest.json",
     "ut_locations/dungeons/cerulean_cave.json",
     "ut_locations/dungeons/digletts_cave.json",
@@ -1196,19 +1213,10 @@ MAP_PAGE_LOCATIONS: List[str] = [
     "ut_locations/dungeons/seafoam_islands.json",
     "ut_locations/dungeons/silph_co.json",
     "ut_locations/dungeons/ss_anne.json",
-    "ut_locations/dungeons/tanoby_chambers.json",
-    "ut_locations/dungeons/tanoby_key.json",
     "ut_locations/dungeons/underground_path_ew.json",
     "ut_locations/dungeons/underground_path_ns.json",
     "ut_locations/dungeons/victory_road.json",
     "ut_locations/dungeons/viridian_forest.json",
-    "ut_locations/entrances/building_overview.json",
-    "ut_locations/entrances/dungeon_overview.json",
-    "ut_locations/entrances/gym_overview.json",
-    "ut_locations/entrances/interior_overview.json",
-    "ut_locations/entrances/mart_overview.json",
-    "ut_locations/entrances/pokemon_center_overview.json",
-    "ut_locations/islands/birth_island.json",
     "ut_locations/islands/bond_bridge.json",
     "ut_locations/islands/canyon_entrance.json",
     "ut_locations/islands/cape_brink.json",
@@ -1230,7 +1238,6 @@ MAP_PAGE_LOCATIONS: List[str] = [
     "ut_locations/islands/tanoby_ruins.json",
     "ut_locations/islands/three_island.json",
     "ut_locations/islands/three_isle_path.json",
-    "ut_locations/islands/three_isle_port.json",
     "ut_locations/islands/trainer_tower.json",
     "ut_locations/islands/treasure_beach.json",
     "ut_locations/islands/two_island.json",
@@ -1245,7 +1252,6 @@ MAP_PAGE_LOCATIONS: List[str] = [
     "ut_locations/routes/route_2.json",
     "ut_locations/routes/route_3.json",
     "ut_locations/routes/route_4.json",
-    "ut_locations/routes/route_5.json",
     "ut_locations/routes/route_6.json",
     "ut_locations/routes/route_7.json",
     "ut_locations/routes/route_8.json",
