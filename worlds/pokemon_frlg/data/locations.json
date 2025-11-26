@@ -298,7 +298,7 @@
     "include": ["Extra Key Items"]
   },
   "NPC_GIFT_GOT_SAFARI_PASS": {
-    "name": "Fuchsia Safari Zone Office - Safari Zone Worker Gift",
+    "name": "Safari Zone Office - Safari Zone Worker Gift",
     "tags": ["NPC Gifts", "Kanto", "Fuchsia City"],
     "category": "NPC_GIFT",
     "include": ["Extra Key Items"]
@@ -1414,7 +1414,7 @@
     "include": []
   },
   "ITEM_SSANNE_KITCHEN_GREAT_BALL": {
-    "name": "S.S. Anne 1F Kitchen - Item",
+    "name": "S.S. Anne Kitchen - Item",
     "tags": ["Overworld Items", "Kanto", "S.S. Anne"],
     "category": "OVERWORLD_ITEM",
     "include": []
@@ -1787,7 +1787,7 @@
     "include": ["Hidden Items"]
   },
   "HIDDEN_ITEM_NAVEL_ROCK_SUMMIT_SACRED_ASH": {
-    "name": "Navel Rock - Hidden Item Near Ho-Oh",
+    "name": "Navel Rock Summit - Hidden Item Near Ho-Oh",
     "tags": ["Hidden Items", "Sevii Islands", "Navel Rock"],
     "category": "HIDDEN_ITEM",
     "include": ["Hidden Items"]
@@ -7456,7 +7456,7 @@
     "include": ["Famesanity"]
   },
   "FAME_CHECKER_BILL_2": {
-    "name": "Cerulean City Pokemon Center 1F - Youngster Info",
+    "name": "Cerulean Pokemon Center 1F - Youngster Info",
     "tags": ["Fame Entries", "Bill Fame Entries", "Kanto", "Cerulean City"],
     "category": "FAME_ENTRY",
     "include": ["Famesanity"]
