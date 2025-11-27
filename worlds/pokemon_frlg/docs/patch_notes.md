@@ -15,6 +15,7 @@
   * You can now only grab one fossil in Mt. Moon (it doesn't matter which you will get the same item)
   * The second fossil check can be gotten in the Pokémon Lab Experiment Room after you have gotten the one in Mt. Moon and revived enough fossils (set by an option)
 * The Vending Machines and Game Corner Prize Room Item/TM exchange have been changed to work like Poké Marts instead of using a multi-choice menu
+* Moved the southern extra boulders on Route 12 further south so that you can no longer fish on Route 12 while coming from Route 13 without surf/strength
 * Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
 * The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
 * The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
@@ -127,7 +128,6 @@
 
 ## Known Issues
 * The `base_stats` option does not affect Deoxys attack/defense forms
-* Entrance squares are always displayed on UT even if they aren't randomized and may overlap with location squares on some maps
 
 # 0.9.6
 ## Bug Fixes
