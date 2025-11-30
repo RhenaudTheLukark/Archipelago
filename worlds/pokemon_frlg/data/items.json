@@ -181,6 +181,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Fossils", "Unique Items"]
   },
+  "ITEM_EXP_SHARE": {
+    "name": "Exp. Share",
+    "classification": "USEFUL",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_FAME_CHECKER": {
     "name": "Fame Checker",
     "classification": "PROGRESSION",
@@ -189,7 +194,7 @@
   "ITEM_FIRE_STONE": {
     "name": "Fire Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items", "Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
   "ITEM_FIVE_PASS": {
     "name": "Five Pass",
@@ -236,10 +241,15 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
+  "ITEM_JUMPING_SHOES": {
+    "name": "Jumping Shoes",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_LEAF_STONE": {
     "name": "Leaf Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items", "Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
   "ITEM_LETTER": {
     "name": "Letter",
@@ -269,7 +279,7 @@
   "ITEM_MOON_STONE": {
     "name": "Moon Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items", "Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
   "ITEM_MYSTIC_TICKET": {
     "name": "Mystic Ticket",
@@ -306,6 +316,11 @@
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
+  "ITEM_POKEDEX": {
+    "name": "Pokedex",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Unique Items"]
+  },
   "ITEM_POWDER_JAR": {
     "name": "Powder Jar",
     "classification": "FILLER",
@@ -320,6 +335,11 @@
     "name": "Progressive Pass",
     "classification": "PROGRESSION",
     "tags": ["Key Items", "Island Passes", "Progressive Items"]
+  },
+  "ITEM_PROG_ROD": {
+    "name": "Progressive Rod",
+    "classification": "PROGRESSION",
+    "tags": ["Key Items", "Rods", "Progressive Items"]
   },
   "ITEM_PURPLE_TEA": {
     "name": "Purple Tea",
@@ -394,7 +414,7 @@
   "ITEM_SUN_STONE": {
     "name": "Sun Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items", "Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
   "ITEM_SUPER_ROD": {
     "name": "Super Rod",
@@ -419,7 +439,7 @@
   "ITEM_THUNDER_STONE": {
     "name": "Thunder Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items","Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
   "ITEM_TM_CASE": {
     "name": "TM Case",
@@ -453,13 +473,13 @@
   },
   "ITEM_VS_SEEKER": {
     "name": "Vs. Seeker",
-    "classification": "USEFUL",
+    "classification": "PROGRESSION",
     "tags": ["Key Items", "Unique Items"]
   },
   "ITEM_WATER_STONE": {
     "name": "Water Stone",
     "classification": "PROGRESSION",
-    "tags": ["Key Items", "Evolution Items", "Unique Items"]
+    "tags": ["Key Items", "Evolution Items"]
   },
 
   "ITEM_FLY_PALLET": {
@@ -701,7 +721,7 @@
   },
   "ITEM_LEMONADE": {
     "name": "Lemonade",
-    "classification": "PROGRESSION",
+    "classification": "FILLER",
     "tags": ["Healing Items", "HP Healing Items"]
   },
   "ITEM_MOOMOO_MILK": {
@@ -1260,11 +1280,6 @@
   },
   "ITEM_MACHO_BRACE": {
     "name": "Macho Brace",
-    "classification": "USEFUL",
-    "tags": ["Held Items"]
-  },
-  "ITEM_EXP_SHARE": {
-    "name": "Exp. Share",
     "classification": "USEFUL",
     "tags": ["Held Items"]
   },

@@ -31,6 +31,7 @@ TRACKER_EVENT_FLAGS = [
     "FLAG_DEFEATED_LEADER_GIOVANNI",
     "FLAG_DELIVERED_OAKS_PARCEL",
     "FLAG_DEFEATED_ROUTE22_EARLY_RIVAL",
+    "FLAG_GOT_FOSSIL_FROM_MT_MOON",  # Miguel takes Fossil from Mt. Moon
     "FLAG_GOT_SS_TICKET",  # Saved Bill in the Route 25 Sea Cottage
     "FLAG_RESCUED_MR_FUJI",
     "FLAG_HIDE_SILPH_GIOVANNI",  # Liberated Silph Co.
@@ -45,8 +46,9 @@ TRACKER_EVENT_FLAGS = [
     "FLAG_SYS_UNLOCKED_TANOBY_RUINS",
     "FLAG_SYS_CAN_LINK_WITH_RS",  # Restored Pokémon Network Machine
     "FLAG_DEFEATED_CHAMP_REMATCH",
-    "FLAG_PURCHASED_LEMONADE",
-    "FLAG_GOT_RUNNING_SHOES"  # Used for vanilla running shoes
+    "FLAG_PURCHASED_FRESH_WATER",
+    "FLAG_PURCHASED_SODA_POP",
+    "FLAG_PURCHASED_LEMONADE"
 ]
 EVENT_FLAG_MAP = {data.constants[flag_name]: flag_name for flag_name in TRACKER_EVENT_FLAGS}
 
@@ -151,11 +153,9 @@ HINT_FLAGS = {
     "FLAG_HINT_INDIGO_SHOP": ["SHOP_INDIGO_PLATEAU_1", "SHOP_INDIGO_PLATEAU_2", "SHOP_INDIGO_PLATEAU_3",
                               "SHOP_INDIGO_PLATEAU_4", "SHOP_INDIGO_PLATEAU_5", "SHOP_INDIGO_PLATEAU_6",
                               "SHOP_INDIGO_PLATEAU_7"],
-    "FLAG_HINT_TWO_ISLAND_INITIAL_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_1", "SHOP_TWO_ISLAND_EXPANDED3_7"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_1_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_2", "SHOP_TWO_ISLAND_EXPANDED3_6"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_2_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_5", "SHOP_TWO_ISLAND_EXPANDED3_8"],
-    "FLAG_HINT_TWO_ISLAND_EXPANDED_3_SHOP": ["SHOP_TWO_ISLAND_EXPANDED3_3", "SHOP_TWO_ISLAND_EXPANDED3_4",
-                                             "SHOP_TWO_ISLAND_EXPANDED3_9"],
+    "FLAG_HINT_TWO_ISLAND_SHOP": ["SHOP_TWO_ISLAND_1", "SHOP_TWO_ISLAND_2", "SHOP_TWO_ISLAND_3", "SHOP_TWO_ISLAND_4",
+                                  "SHOP_TWO_ISLAND_5", "SHOP_TWO_ISLAND_6", "SHOP_TWO_ISLAND_7", "SHOP_TWO_ISLAND_8",
+                                  "SHOP_TWO_ISLAND_9"],
     "FLAG_HINT_THREE_ISLAND_SHOP": ["SHOP_THREE_ISLAND_1", "SHOP_THREE_ISLAND_2", "SHOP_THREE_ISLAND_3",
                                     "SHOP_THREE_ISLAND_4", "SHOP_THREE_ISLAND_5", "SHOP_THREE_ISLAND_6"],
     "FLAG_HINT_FOUR_ISLAND_SHOP": ["SHOP_FOUR_ISLAND_1", "SHOP_FOUR_ISLAND_2", "SHOP_FOUR_ISLAND_3",
@@ -170,6 +170,17 @@ HINT_FLAGS = {
     "FLAG_HINT_TRAINER_TOWER_SHOP": ["SHOP_TRAINER_TOWER_1", "SHOP_TRAINER_TOWER_2", "SHOP_TRAINER_TOWER_3",
                                      "SHOP_TRAINER_TOWER_4", "SHOP_TRAINER_TOWER_5", "SHOP_TRAINER_TOWER_6",
                                      "SHOP_TRAINER_TOWER_7", "SHOP_TRAINER_TOWER_8", "SHOP_TRAINER_TOWER_9"],
+    "FLAG_HINT_CELADON_VENDING_MACHINES": ["SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_1",
+                                           "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_2",
+                                           "SHOP_CELADON_CITY_DEPT_VENDING_MACHINES_3"],
+    "FLAG_HINT_CELADON_PRIZE": ["SHOP_CELADON_CITY_GAME_CORNER_PRIZE_1", "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_2",
+                                "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_3", "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_4",
+                                "SHOP_CELADON_CITY_GAME_CORNER_PRIZE_5"],
+    "FLAG_HINT_CELADON_TM_PRIZE": ["SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_1",
+                                   "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_2",
+                                   "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_3",
+                                   "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_4",
+                                   "SHOP_CELADON_CITY_GAME_CORNER_TM_PRIZE_5"],
     "FLAG_HINT_ROUTE_2_OAKS_AIDE": ["NPC_GIFT_GOT_HM05"],
     "FLAG_HINT_ROUTE_10_OAKS_AIDE": ["NPC_GIFT_GOT_EVERSTONE_FROM_OAKS_AIDE"],
     "FLAG_HINT_ROUTE_11_OAKS_AIDE": ["NPC_GIFT_GOT_ITEMFINDER"],
@@ -295,11 +306,6 @@ class PokemonFRLGClient(BizHawkClient):
                 logger.info("ERROR: You appear to be running an unpatched version of Pokemon FireRed or LeafGreen."
                             "You need to generate a patch file and use it to create a patched ROM.")
                 return False
-            if rom_name != data.rom_names[self.game_version]:
-                logger.info("ERROR: You appear to be running a version of Pokemon FireRed or LeafGreen that wasn't "
-                            "patched using Archipelago. You need to create a patched ROM using the Archipelago "
-                            "Launcher.")
-                return False
             if data.rom_checksum != rom_checksum:
                 ap_version_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(0x178, 16, "ROM")]))[0]
                 ap_version = bytes([byte for byte in ap_version_bytes if byte != 0]).decode("ascii")
@@ -313,7 +319,7 @@ class PokemonFRLGClient(BizHawkClient):
                 return False
 
             options_address = data.rom_addresses["gArchipelagoOptions"][self.game_version]
-            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x4D, 1, "ROM")]))[0]
+            remote_items_bytes = (await bizhawk.read(ctx.bizhawk_ctx, [(options_address + 0x51, 1, "ROM")]))[0]
             remote_items = int.from_bytes(remote_items_bytes, "little")
         except UnicodeDecodeError:
             return False
@@ -360,8 +366,8 @@ class PokemonFRLGClient(BizHawkClient):
 
             # Checks that the player is in the overworld
             guards["IN OVERWORLD"] = (
-                data.ram_addresses["gMain"][self.game_version] + 4,
-                (data.ram_addresses["CB2_Overworld"][self.game_version] + 1).to_bytes(4, "little"),
+                data.ram_addresses["gMain"][self.game_version] + 0x038,
+                int.to_bytes(1),
                 "System Bus"
             )
 
@@ -426,10 +432,10 @@ class PokemonFRLGClient(BizHawkClient):
             # Read shop flags
             shop_bytes = bytes(0)
             shop_read_status = False
-            if ctx.slot_data["shopsanity"]:
+            if ctx.slot_data["shopsanity"] or ctx.slot_data["vending_machines"] or ctx.slot_data["prizesanity"]:
                 read_result = await bizhawk.guarded_read(
                     ctx.bizhawk_ctx,
-                    [(sb2_address + 0xB20, 0x30, "System Bus")],  # Shop Flags
+                    [(sb2_address + 0xB24, 0x30, "System Bus")],  # Shop Flags
                     [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
                 )
 
@@ -437,12 +443,25 @@ class PokemonFRLGClient(BizHawkClient):
                     shop_bytes = read_result[0]
                     shop_read_status = True
 
+            # Read dexsanity flags
+            dexsanity_bytes = bytes(0)
+            dexsanity_read_status = False
+            read_result = await bizhawk.guarded_read(
+                ctx.bizhawk_ctx,
+                [(sb1_address + 0x0848, 0x34, "System Bus")],  # Dexsanity Flags
+                [guards["IN OVERWORLD"], guards["SAVE BLOCK 1"]]
+            )
+
+            if read_result is not None:
+                dexsanity_bytes = read_result[0]
+                dexsanity_read_status = True
+
             # Read pokedex flags
             pokemon_caught_bytes = bytes(0)
             pokemon_caught_read_status = False
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx,
-                [(sb2_address + 0x028, 0x34, "System Bus")],  # Caught Pokémon
+                [(sb2_address + 0x02C, 0x34, "System Bus")],  # Caught Pokémon
                 [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
             )
 
@@ -454,7 +473,7 @@ class PokemonFRLGClient(BizHawkClient):
             pokemon_seen_read_status = False
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx,
-                [(sb2_address + 0x05C, 0x34, "System Bus")],  # Seen Pokémon
+                [(sb2_address + 0x060, 0x34, "System Bus")],  # Seen Pokémon
                 [guards["IN OVERWORLD"], guards["SAVE BLOCK 2"]]
             )
 
@@ -507,6 +526,16 @@ class PokemonFRLGClient(BizHawkClient):
                                     local_checked_locations.add(location_id)
                             fame_checker_index += 1
 
+            # Check dexsanity flags
+            if dexsanity_read_status:
+                for byte_i, byte in enumerate(dexsanity_bytes):
+                    for i in range(8):
+                        if byte & (1 << i) != 0:
+                            dex_number = byte_i * 8 + i + 1
+                            location_id = DEXSANITY_OFFSET + dex_number - 1
+                            if location_id in ctx.server_locations:
+                                local_checked_locations.add(location_id)
+
             # Check set shop flags
             if shop_read_status:
                 for byte_i, byte in enumerate(shop_bytes):
@@ -522,9 +551,6 @@ class PokemonFRLGClient(BizHawkClient):
                     for i in range(8):
                         if byte & (1 << i) != 0:
                             dex_number = byte_i * 8 + i + 1
-                            location_id = DEXSANITY_OFFSET + dex_number - 1
-                            if location_id in ctx.server_locations:
-                                local_checked_locations.add(location_id)
                             local_pokemon["caught"].append(dex_number)
                             local_pokemon_count += 1
 
@@ -727,6 +753,8 @@ class PokemonFRLGClient(BizHawkClient):
             section_id = 0
         if self.current_map[0] != map_id or self.current_map[1] != section_id:
             self.current_map = (map_id, section_id)
+
+            # Send to Poptracker
             await ctx.send_msgs([{
                 "cmd": "Bounce",
                 "slots": [ctx.slot],
@@ -737,6 +765,15 @@ class PokemonFRLGClient(BizHawkClient):
                 }
             }])
 
+            # Send to Universal Tracker
+            await ctx.send_msgs([{
+                "cmd": "Set",
+                "key": f"pokemon_frlg_map_{ctx.team}_{ctx.slot}",
+                "default": [0, 0],
+                "want_reply": False,
+                "operations": [{"operation": "replace", "value": [map_id, section_id]}]
+            }])
+
     async def handle_entrance_updates(self,
                                       ctx: "BizHawkClientContext",
                                       guards: Dict[str, Tuple[int, bytes, str]]) -> None:
@@ -744,7 +781,7 @@ class PokemonFRLGClient(BizHawkClient):
         Reads the last warp that the player took, adds it to the list of entrances found, and sends the updated list to
         the tracker.
         """
-        if "dungeon_entrance_shuffle" not in ctx.slot_data:
+        if "entrances" not in ctx.slot_data:
             return
 
         sb1_address = int.from_bytes(guards["SAVE BLOCK 1"][1], "little")
@@ -772,13 +809,20 @@ class PokemonFRLGClient(BizHawkClient):
                 return
             if exit_warp_id not in data.entrance_name_map[exit_map_id]:
                 return
+
             entrance_name = data.entrance_name_map[entrance_map_id][entrance_warp_id]
             exit_name = data.entrance_name_map[exit_map_id][exit_warp_id]
+
             if (entrance_name not in self.local_entrances and
-                    (entrance_name in ctx.slot_data["dungeon_entrance_shuffle"] or
-                     exit_name in ctx.slot_data["dungeon_entrance_shuffle"])):
-                self.local_entrances[entrance_name] = exit_name
-                self.local_entrances[exit_name] = entrance_name
+                    (entrance_name in ctx.slot_data["entrances"] or
+                     exit_name in ctx.slot_data["entrances"])):
+                if ctx.slot_data["decouple_entrances_warps"]:
+                    self.local_entrances[entrance_name] = exit_name
+                else:
+                    self.local_entrances[entrance_name] = exit_name
+                    self.local_entrances[exit_name] = entrance_name
+
+                # Send to Poptracker
                 await ctx.send_msgs([{
                     "cmd": "Set",
                     "key": f"pokemon_frlg_entrances_{ctx.team}_{ctx.slot}",
@@ -786,6 +830,24 @@ class PokemonFRLGClient(BizHawkClient):
                     "want_reply": False,
                     "operations": [{"operation": "update", "value": self.local_entrances}]
                 }])
+
+                # Send to Universal Tracker
+                await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"pokemon_frlg_{ctx.slot}_{entrance_name}",
+                    "default": False,
+                    "want_reply": False,
+                    "operations": [{"operation": "replace", "value": True}]
+                }])
+                if not ctx.slot_data["decouple_entrances_warps"]:
+                    await ctx.send_msgs([{
+                        "cmd": "Set",
+                        "key": f"pokemon_frlg_{ctx.slot}_{exit_name}",
+                        "default": False,
+                        "want_reply": False,
+                        "operations": [{"operation": "replace", "value": True}]
+                    }])
+
 
     async def handle_death_link(self, ctx: "BizHawkClientContext", guards: Dict[str, Tuple[int, bytes, str]]) -> None:
         """
@@ -804,7 +866,7 @@ class PokemonFRLGClient(BizHawkClient):
                 ctx.bizhawk_ctx, [
                     (data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], 1, "System Bus"),
                     (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused game stat
-                    (sb2_address + 0xF20, 4, "System Bus"),  # Encryption key
+                    (sb2_address + 0xF26, 4, "System Bus"),  # Encryption key
                 ],
                 [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
             )

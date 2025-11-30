@@ -1,9 +1,11 @@
 from typing import TYPE_CHECKING, Dict, List, Set
 from BaseClasses import CollectionState, Location, LocationProgressType, Region, ItemClassification
-from .data import data, LocationCategory, fly_blacklist_map
+from Fill import FillError, fill_restrictive
+from .data import data, LocationCategory, fly_blacklist_map, TRAINER_REMATCH_MAP
 from .groups import location_groups
-from .items import PokemonFRLGItem, get_random_item
-from .options import ShuffleFlyUnlocks, ViridianCityRoadblock
+from .items import PokemonFRLGItem, get_random_item, update_renewable_to_progression
+from .options import (CardKey, Dexsanity, Goal, IslandPasses, ShuffleFlyUnlocks, ShuffleHiddenItems, ShufflePokedex,
+                      ShuffleRunningShoes, Trainersanity)
 
 if TYPE_CHECKING:
     from . import PokemonFRLGWorld
@@ -34,7 +36,7 @@ fly_item_id_map = {
 
 fly_item_map = {
     "Pallet Town": "ITEM_FLY_PALLET",
-    "Viridian City South": "ITEM_FLY_VIRIDIAN",
+    "Viridian City (South)": "ITEM_FLY_VIRIDIAN",
     "Pewter City": "ITEM_FLY_PEWTER",
     "Cerulean City": "ITEM_FLY_CERULEAN",
     "Lavender Town": "ITEM_FLY_LAVENDER",
@@ -46,7 +48,7 @@ fly_item_map = {
     "Saffron City": "ITEM_FLY_SAFFRON",
     "One Island Town": "ITEM_FLY_ONE_ISLAND",
     "Two Island Town": "ITEM_FLY_TWO_ISLAND",
-    "Three Island Town South": "ITEM_FLY_THREE_ISLAND",
+    "Three Island Town (South)": "ITEM_FLY_THREE_ISLAND",
     "Four Island Town": "ITEM_FLY_FOUR_ISLAND",
     "Five Island Town": "ITEM_FLY_FIVE_ISLAND",
     "Six Island Town": "ITEM_FLY_SIX_ISLAND",
@@ -61,8 +63,11 @@ class PokemonFRLGLocation(Location):
     item_address = Dict[str, int | List[int]] | None
     default_item_id: int | None
     category: LocationCategory
-    data_ids: List[str] | None
+    location_id: str | None
+    scaling_ids: List[str] | None
     spoiler_name: str
+    encounter_key: str
+    hint_entrances: List[str]
 
     def __init__(
             self,
@@ -73,14 +78,18 @@ class PokemonFRLGLocation(Location):
             parent: Region | None = None,
             item_address: Dict[str, int | List[int]] | None = None,
             default_item_id: int | None = None,
-            data_ids: List[str] | None = None,
-            spoiler_name: str | None = None) -> None:
+            location_id: str | None = None,
+            scaling_ids: List[str] | None = None,
+            spoiler_name: str | None = None,
+            encounter_key: str | None = None) -> None:
         super().__init__(player, name, address, parent)
         self.default_item_id = default_item_id
         self.item_address = item_address
         self.category = category
-        self.data_ids = data_ids
+        self.location_id = location_id
+        self.scaling_ids = scaling_ids
         self.spoiler_name = spoiler_name if spoiler_name is not None else name
+        self.encounter_key = encounter_key
 
 
 def create_location_name_to_id_map() -> Dict[str, int]:
@@ -96,79 +105,237 @@ def create_location_name_to_id_map() -> Dict[str, int]:
     return name_to_id_mapping
 
 
-def create_locations_from_categories(world: "PokemonFRLGWorld",
-                                     regions: Dict[str, Region],
-                                     categories: Set[LocationCategory]) -> None:
-    def exclude_location(location_id: str):
+def create_locations(world: "PokemonFRLGWorld", regions: Dict[str, Region]) -> None:
+    """
+    Iterates through region data and adds locations to the multiworld if
+    those locations are included in the given categories.
+    """
+    def create_location(location_id: str) -> PokemonFRLGLocation:
+        location_data = data.locations[location_id]
+
+        if location_data.default_item == data.constants["ITEM_NONE"]:
+            default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]
+        else:
+            default_item = location_data.default_item
+        location = PokemonFRLGLocation(
+            world.player,
+            location_data.name,
+            location_data.flag,
+            location_data.category,
+            region,
+            location_data.address,
+            default_item,
+            location_id
+        )
+
+        return location
+
+    def exclude_location(location_id: str) -> bool:
         sevii_required_locations = [
             "NPC_GIFT_GOT_ONE_PASS", "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
             "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
             "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD"
         ]
 
+        post_champion_locations = [
+            "TRAINER_ELITE_FOUR_LORELEI_2_REWARD", "TRAINER_ELITE_FOUR_BRUNO_2_REWARD",
+            "TRAINER_ELITE_FOUR_AGATHA_2_REWARD", "TRAINER_ELITE_FOUR_LANCE_2_REWARD",
+            "TRAINER_CHAMPION_REMATCH_BULBASAUR_REWARD", "FAME_CHECKER_BRUNO_5"
+        ]
+
+        post_champion_gossiper_locations = [
+            "FAME_CHECKER_DAISY_1", "FAME_CHECKER_OAK_6", "FAME_CHECKER_MISTY_6", "FAME_CHECKER_DAISY_2",
+            "FAME_CHECKER_MRFUJI_4", "FAME_CHECKER_DAISY_5", "FAME_CHECKER_LANCE_4", "FAME_CHECKER_KOGA_4",
+            "FAME_CHECKER_BRUNO_3", "FAME_CHECKER_LANCE_3", "FAME_CHECKER_MRFUJI_6", "FAME_CHECKER_AGATHA_2",
+            "FAME_CHECKER_AGATHA_3", "FAME_CHECKER_LANCE_5", "FAME_CHECKER_LANCE_6", "FAME_CHECKER_BRUNO_4",
+            "FAME_CHECKER_LORELEI_4", "FAME_CHECKER_AGATHA_4"
+        ]
+
         if world.options.kanto_only and location_id in sevii_required_locations:
             return True
+        if not world.options.post_goal_locations and world.options.goal == Goal.option_champion:
+            if location_id in post_champion_locations:
+                return True
+            if ("Early Gossipers" not in world.options.modify_world_state.value and
+                    location_id in post_champion_gossiper_locations):
+                return True
         return False
 
-    """
-    Iterates through region data and adds locations to the multiworld if
-    those locations are included in the given categories.
-    """
+    included_types: Set[str] = set()
+    if world.options.shuffle_hidden == ShuffleHiddenItems.option_all:
+        included_types.add("Hidden Items")
+        included_types.add("Recurring Hidden Items")
+    elif world.options.shuffle_hidden == ShuffleHiddenItems.option_nonrecurring:
+        included_types.add("Hidden Items")
+    if world.options.extra_key_items:
+        included_types.add("Extra Key Items")
+    if world.options.trainersanity != Trainersanity.special_range_names["none"]:
+        included_types.add("Trainersanity")
+        if world.options.rematchsanity:
+            included_types.add("Rematchsanity")
+    if world.options.dexsanity != Dexsanity.special_range_names["none"]:
+        included_types.add("Dexsanity")
+    if world.options.famesanity:
+        included_types.add("Famesanity")
+    if world.options.pokemon_request_locations:
+        included_types.add("Pokemon Requests")
+    if world.options.card_key != CardKey.option_vanilla:
+        included_types.add("Split Card Key")
+    if world.options.island_passes in (IslandPasses.option_split, IslandPasses.option_progressive_split):
+        included_types.add("Split Island Passes")
+    if world.options.split_teas:
+        included_types.add("Split Teas")
+    if world.options.gym_keys:
+        included_types.add("Gym Keys")
+
     for region_data in data.regions.values():
         if region_data.name not in regions:
             continue
 
         region = regions[region_data.name]
-        included_locations = [loc for loc in region_data.locations if data.locations[loc].category in categories]
+        included_locations = [loc for loc in region_data.locations
+                              if data.locations[loc].include.issubset(included_types)]
 
         for location_id in included_locations:
             if exclude_location(location_id):
                 continue
+            if world.is_universal_tracker:
+                location = data.locations[location_id]
+                if ((location.category == LocationCategory.TRAINER
+                        or location.category == LocationCategory.TRAINER_REMATCH)
+                        and location.flag not in world.ut_slot_data["trainersanity_locations"]):
+                    continue
+                elif (location.category == LocationCategory.POKEDEX
+                      and location.flag not in world.ut_slot_data["dexsanity_locations"]):
+                    continue
+            region.locations.append(create_location(location_id))
 
-            location_data = data.locations[location_id]
+    # Remove trainersanity locations if there are more than the amount specified in the settings
+    if world.options.trainersanity != Trainersanity.special_range_names["none"] and not world.is_universal_tracker:
+        locations: List[PokemonFRLGLocation] = world.get_locations()
+        trainer_locations = [loc for loc in locations if loc.category == LocationCategory.TRAINER]
+        locs_to_remove = len(trainer_locations) - world.options.trainersanity.value
+        if locs_to_remove > 0:
+            rematchsanity = world.options.rematchsanity
+            priority_trainer_locations = [loc for loc in trainer_locations
+                                          if loc.name in world.options.priority_locations.value]
+            non_priority_trainer_locations = [loc for loc in trainer_locations
+                                              if loc.name not in world.options.priority_locations.value]
+            world.random.shuffle(priority_trainer_locations)
+            world.random.shuffle(non_priority_trainer_locations)
+            trainer_locations = non_priority_trainer_locations + priority_trainer_locations
+            for location in trainer_locations:
+                region = location.parent_region
+                region.locations.remove(location)
+                if rematchsanity and location.location_id in TRAINER_REMATCH_MAP:
+                    for location_id in TRAINER_REMATCH_MAP[location.location_id]:
+                        region.locations.remove(world.get_location(data.locations[location_id].name))
+                locs_to_remove -= 1
+                if locs_to_remove <= 0:
+                    break
 
-            if location_data.default_item == data.constants["ITEM_NONE"]:
-                default_item = world.item_name_to_id[get_random_item(world, ItemClassification.filler)]
-            else:
-                default_item = location_data.default_item
 
-            location = PokemonFRLGLocation(
-                world.player,
-                location_data.name,
-                location_data.flag,
-                location_data.category,
-                region,
-                location_data.address,
-                default_item
-            )
-            region.locations.append(location)
-
-
-def fill_unrandomized_locations(world: "PokemonFRLGWorld") -> None:
-    def create_events_for_unrandomized_items(locations: Set[PokemonFRLGLocation]) -> None:
-        for location in locations:
-            location.place_locked_item(PokemonFRLGItem(world.item_id_to_name[location.default_item_id],
-                                                       ItemClassification.progression,
-                                                       None,
-                                                       world.player))
-            location.progress_type = LocationProgressType.DEFAULT
+def place_unrandomized_items(world: "PokemonFRLGWorld") -> None:
+    def fill_unrandomized_location(location: Location,
+                                            as_event: bool) -> None:
+        item = world.create_item_by_id(location.default_item_id)
+        if as_event:
+            item.code = None
             location.address = None
             location.show_in_spoiler = False
-
-    unrandomized_progression_locations = set()
+        location.place_locked_item(item)
+        location.progress_type = LocationProgressType.DEFAULT
+        world.itempool.remove(item)
 
     if world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_off:
         fly_locations = [loc for loc in world.get_locations() if loc.name in location_groups["Town Visits"]]
-        unrandomized_progression_locations.update(fly_locations)
+        for location in fly_locations:
+            fill_unrandomized_location(location, True)
     elif world.options.shuffle_fly_unlocks == ShuffleFlyUnlocks.option_exclude_indigo:
-        unrandomized_progression_locations.add(world.get_location("Indigo Plateau - Unlock Fly Destination"))
+        fill_unrandomized_location(world.get_location("Indigo Plateau - Unlock Fly Destination"), False)
 
-    if not world.options.shuffle_berry_pouch:
-        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 1"))
-    if not world.options.shuffle_tm_case:
-        unrandomized_progression_locations.add(world.get_location("Title Screen - Starting Item 2"))
+    shop_locations = []
+    if world.options.shopsanity:
+        shop_locations.extend([loc for loc in world.get_locations() if "Held Shop Item" in loc.name])
+        if not world.options.post_goal_locations and world.options.goal == Goal.option_champion:
+            shop_locations.extend([loc for loc in world.get_locations() if
+                                   loc.name in location_groups["Market Stall"] and
+                                   int(loc.name[-1]) in (3, 4, 5, 8, 9)])
+    else:
+        shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Shops"]])
+    if not world.options.vending_machines:
+        shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Vending Machines"]])
+    if not world.options.prizesanity:
+        shop_locations.extend([loc for loc in world.get_locations() if loc.name in location_groups["Prizes"]])
+    for location in shop_locations:
+        fill_unrandomized_location(location, True)
+        update_renewable_to_progression(location.item)
 
-    create_events_for_unrandomized_items(unrandomized_progression_locations)
+    if world.options.shuffle_pokedex == ShufflePokedex.option_vanilla:
+        fill_unrandomized_location(world.get_location("Professor Oak's Lab - Oak Gift 1 (Deliver Parcel)"), False)
+
+    if world.options.shuffle_running_shoes == ShuffleRunningShoes.option_vanilla:
+        fill_unrandomized_location(world.get_location("Pewter City - Gift from Mom"), False)
+
+
+def place_shop_items(world: "PokemonFRLGWorld") -> None:
+    if (not world.options.shopsanity and not world.options.vending_machines) or world.is_universal_tracker:
+        return
+
+    shop_locations = [loc for loc in world.get_locations() if
+                      (loc.name in location_groups["Shops"] or
+                       loc.name in location_groups["Vending Machines"] or
+                       loc.name in location_groups["Prizes"]) and
+                      not loc.is_event]
+    shop_items = [world.create_item_by_id(loc.default_item_id) for loc in shop_locations]
+    non_progression_shop_locations = [loc for loc in shop_locations if
+                                      loc.name not in location_groups["Market Stall"] and
+                                      loc.name not in location_groups["Vending Machines"] and
+                                      loc.name not in location_groups["Prizes"] and
+                                      int(loc.name[-1]) > world.options.shop_slots.value]
+    world.random.shuffle(shop_items)
+
+    if not world.options.kanto_only:
+        two_island_shop_location_ids = ["SHOP_TWO_ISLAND_1", "SHOP_TWO_ISLAND_7", "SHOP_TWO_ISLAND_2",
+                                        "SHOP_TWO_ISLAND_6", "SHOP_TWO_ISLAND_5", "SHOP_TWO_ISLAND_8",
+                                        "SHOP_TWO_ISLAND_3", "SHOP_TWO_ISLAND_4", "SHOP_TWO_ISLAND_9"]
+        for index, location_id in enumerate(two_island_shop_location_ids):
+            if (index >= world.options.shop_slots.value and
+                    not world.get_location(data.locations[location_id].name).is_event):
+                non_progression_shop_locations.append(world.get_location(data.locations[location_id].name))
+
+
+    renewable_items = []
+    if world.options.vending_machines:
+        renewable_items.extend(["Fresh Water", "Soda Pop", "Lemonade"])
+    elif (world.options.shopsanity and
+          not world.options.kanto_only and
+          (world.options.post_goal_locations or world.options.goal != Goal.option_champion)):
+        renewable_items.append("Lemonade")
+    if renewable_items:
+        renewable_locations = [loc for loc in shop_locations if
+                               loc.progress_type != LocationProgressType.EXCLUDED and
+                               loc not in non_progression_shop_locations]
+        if len(renewable_locations) == 0:
+            renewable_locations = [loc for loc in shop_locations if
+                                   loc not in non_progression_shop_locations]
+        if len(renewable_locations) == 0:
+            renewable_locations = [loc for loc in shop_locations]
+        world.random.shuffle(renewable_locations)
+        for item_name in renewable_items:
+            renewable_location = renewable_locations.pop()
+            item = world.create_item(item_name)
+            item.classification = ItemClassification.progression
+            renewable_location.place_locked_item(item)
+            world.itempool.remove(item)
+            shop_items.remove(item)
+
+    for location in non_progression_shop_locations:
+        if location.locked:
+            continue
+        item = shop_items.pop()
+        location.place_locked_item(item)
+        world.itempool.remove(item)
 
 
 def set_free_fly(world: "PokemonFRLGWorld") -> None:
@@ -219,7 +386,11 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_list = [fly for fly in fly_item_map.values() if fly not in forbidden_fly_list]
 
     if world.options.free_fly_location:
-        free_fly_location_id = world.random.choice(free_fly_list)
+        if not world.is_universal_tracker:
+            free_fly_location_id = world.random.choice(free_fly_list)
+        else:
+            fly_map_lookup = {v: k for k, v in fly_item_id_map.items()}
+            free_fly_location_id = fly_map_lookup[world.ut_slot_data["free_fly_location_id"]]
         world.free_fly_location_id = fly_item_id_map[free_fly_location_id]
 
         if free_fly_location_id in town_map_fly_list and len(town_map_fly_list) > 1:
@@ -244,7 +415,11 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         start_region.locations.append(free_fly_location)
 
     if world.options.town_map_fly_location:
-        town_map_fly_location_id = world.random.choice(town_map_fly_list)
+        if not world.is_universal_tracker:
+            town_map_fly_location_id = world.random.choice(town_map_fly_list)
+        else:
+            fly_map_lookup = {v: k for k, v in fly_item_id_map.items()}
+            town_map_fly_location_id = fly_map_lookup[world.ut_slot_data["town_map_fly_location_id"]]
         world.town_map_fly_location_id = fly_item_id_map[town_map_fly_location_id]
 
         start_region = world.multiworld.get_region("Title Screen", world.player)
@@ -265,3 +440,37 @@ def set_free_fly(world: "PokemonFRLGWorld") -> None:
         town_map_fly_location.access_rule = lambda state: state.has("Town Map", world.player)
         town_map_fly_location.show_in_spoiler = False
         start_region.locations.append(town_map_fly_location)
+
+def shuffle_badges(world: "PokemonFRLGWorld") -> None:
+    if world.is_universal_tracker:
+        return
+
+    badge_items = []
+    badge_items.extend(world.get_pre_fill_items())
+    world.pre_fill_items.clear()
+    locations: List[PokemonFRLGLocation] = world.get_locations()
+    for attempt in range(5):
+        badge_locations: List[PokemonFRLGLocation] = [
+            loc for loc in locations if loc.name in location_groups["Gym Prizes"] and loc.item is None
+        ]
+        state = world.get_world_collection_state()
+        # Try to place badges with current Pokemon and HM access
+        # If it can't, try with guaranteed HM access and fix it later
+        if attempt > 1:
+            world.logic.guaranteed_hm_access = True
+        state.sweep_for_advancements()
+        world.random.shuffle(badge_items)
+        world.random.shuffle(badge_locations)
+        fill_restrictive(world.multiworld, state, badge_locations.copy(), badge_items,
+                         single_player_placement=True, lock=True, allow_partial=True, allow_excluded=True)
+        if len(badge_items) > 8 - len(badge_locations):
+            for location in badge_locations:
+                if location.item:
+                    badge_items.append(location.item)
+                    location.item = None
+            continue
+        else:
+            break
+    else:
+        raise FillError(f"Failed to place badges for player {world.player}")
+    world.logic.guaranteed_hm_access = False
