@@ -865,8 +865,7 @@ class PokemonFRLGClient(BizHawkClient):
             read_result = await bizhawk.guarded_read(
                 ctx.bizhawk_ctx, [
                     (data.ram_addresses["gArchipelagoDeathLinkSent"][self.game_version], 1, "System Bus"),
-                    (sb1_address + 0x1450 + (22 * 4), 4, "System Bus"),  # Unused game stat
-                    (sb2_address + 0xF26, 4, "System Bus"),  # Encryption key
+                    (sb2_address + 0xF2A, 4, "System Bus"),  # Encryption key
                 ],
                 [guards["SAVE BLOCK 1"], guards["SAVE BLOCK 2"]]
             )
@@ -875,11 +874,10 @@ class PokemonFRLGClient(BizHawkClient):
                 return
 
             death_link_sent = bool.from_bytes(read_result[0], "little")
-            encryption_key = int.from_bytes(read_result[2], "little")
-            unused = int.from_bytes(read_result[1], "little") ^ encryption_key
+            encryption_key = int.from_bytes(read_result[1], "little")
 
             # Skip all deathlink code if save is not yet loaded (encryption key is zero)
-            if unused == 0 and encryption_key != 0:
+            if encryption_key != 0:
                 if self.previous_death_link != ctx.last_death_link:
                     self.previous_death_link = ctx.last_death_link
                     if self.ignore_next_death_link:
