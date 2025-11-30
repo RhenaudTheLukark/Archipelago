@@ -1358,7 +1358,7 @@
   },
   "REGION_SAFARI_ZONE_WEST/SOUTH": {
     "parent_map": "MAP_SAFARI_ZONE_WEST",
-    "name": "Safari Zone West Area South",
+    "name": "Safari Zone West Area (South)",
     "encounter_region": "Safari Zone West Area",
     "has_land": true,
     "has_water": false,
