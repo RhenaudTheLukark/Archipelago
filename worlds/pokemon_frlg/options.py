@@ -101,7 +101,7 @@ class ShuffleBuildingEntrances(Choice):
     """
     Shuffles the building entrances amongst each other.
 
-    The Celadon Department Store entrnaces are included in this pool.
+    The Celadon Department Store entrances are included in this pool.
 
     A building is considered a multi entrance building if the two entrances are normally connected inside the building.
     For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as
