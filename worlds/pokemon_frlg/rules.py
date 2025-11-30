@@ -1140,6 +1140,8 @@ def set_entrance_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_stop_seafoam_b3f_current(state))
     add_rule_safe("Seafoam Islands B3F (South Water) Water Battle",
                   lambda state: logic.can_stop_seafoam_b3f_current(state))
+    add_rule_safe("Seafoam Islands B3F (South Water) Fishing Battle",
+                  lambda state: logic.can_stop_seafoam_b3f_current(state))
     add_rule_safe("Seafoam Islands B3F (East) Landing Spot (Bottom)",
                   lambda state: logic.can_stop_seafoam_b3f_current(state))
     add_rule_safe("Seafoam Islands B3F (East) Surfing Spot (Bottom)",
