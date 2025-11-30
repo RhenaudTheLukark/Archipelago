@@ -2360,7 +2360,7 @@ def set_location_rules(world: "PokemonFRLGWorld") -> None:
                   lambda state: logic.can_rock_smash(state))
 
     # Navel Rock
-    add_rule_safe("Navel Rock - Hidden Item Near Ho-Oh",
+    add_rule_safe("Navel Rock Summit - Hidden Item Near Ho-Oh",
                   lambda state: state.has("Itemfinder", player))
 
 
