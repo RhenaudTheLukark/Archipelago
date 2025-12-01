@@ -39,7 +39,7 @@
   * Shuffles the harbor entrances amongst each other
 * New Option `shuffle_buildings`
   * Shuffles the building entrances amongst each other
-  * The Celadon Department Store entrnaces are included in this pool
+  * The Celadon Department Store entrances are included in this pool
   * A building is considered a multi entrance building if the two entrances are normally connected inside the building. For instance, the Celadon Condominium is not considered a multi entrance building and the Route 16 Gate counts as two separate multi entrance buildings
 * Renamed option `dungeon_entrance_shuffle` -> `shuffle_dungeons`
 * New Option `shuffle_interiors`
@@ -55,7 +55,7 @@
   * The incorrect dropdowns in Dotted Hole are not shuffled
 * New option `mix_entrance_warp_pools`
   * Shuffle the selected entrances/warps into a mixed pool instead of separate ones. Has no effect on pools whose entrances/warps aren't shuffled. Entrances/warps can only be mixed with other entrance/warps that have the same restrictions
-  * The Avaiable entrances/warps that can be mixed are: Gyms, Marts, Harbors, Buildings, Dungeons, Interiors
+  * The Available entrances/warps that can be mixed are: Gyms, Marts, Harbors, Buildings, Dungeons, Interiors
 * New option `decouple_entrances_warps`
   * Decouple entrances/warps when shuffling them. This means that you are no longer guaranteed to end up back where you came from when you go back through an entrance/warp
   * Simple Building/Dungeon shuffle are not compatible with this option and will be changed to Restricted shuffle
@@ -99,7 +99,7 @@
   * Sets whether locations that are locked behind completing your goal are included
 * New option `fishing_rods`
   * Vanilla: The fishing rods are all separate items in the pool and can be found in any order
-  * There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
+  * Progressive: There are three Progressive Rods in the pool, and you will always obtain them in order from Old Rod to Super Rod
 * New option `bicycle_requires_jumping_shoes`
   * Sets whether the Bicycle requires you to have the Jumping Shoes in order to jump down ledges while on the Bicycle
 * New option `acrobatic_bicycle`
