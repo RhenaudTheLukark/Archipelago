@@ -17,6 +17,7 @@
 * The Vending Machines and Game Corner Prize Room Item/TM exchange have been changed to work like Poké Marts instead of using a multi-choice menu
 * Moved the southern extra boulders on Route 12 further south so that you can no longer fish on Route 12 while coming from Route 13 without surf/strength
 * Moved the Bicycle checks for Cycling Road to actually be on Cycling Road instead of in the Gates before it
+* The southwest warp tile in Silph Co. 5F has been moved one tile to the right
 * The Nurse in Silph Co. will still heal you even after Silph Co. has been liberated
 * The Seafoam Islands entrances have been swapped back to match the vanilla game. A new option has been added to `shuffle_dungeons` that will swap them
 * Updated the Two Island Market Stall so that you can view all the items in the shop immediately
