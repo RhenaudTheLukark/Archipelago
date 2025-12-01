@@ -523,7 +523,7 @@ class PostGoalLocations(Toggle):
     """
     Shuffles locations into the item pool that are only accessible after your goal is completed.
 
-    If Cerulean Cave access is locked by your goal then Cerulean Cave won't be included in Dungeon Entrance Shuffle.
+    If Cerulean Cave access is locked by your goal then Cerulean Cave won't be included in Shuffled Dungeons.
     """
     display_name = "Post Goal Locations"
 
