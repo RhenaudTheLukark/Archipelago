@@ -856,8 +856,7 @@ def _set_pokemon_mansion_exit(world: "PokemonFRLGWorld") -> None:
     mansion_shuffled_entrance = world.get_entrance("Pokemon Mansion 1F Exit (West)")
     mansion_other_entrance = world.get_entrance("Pokemon Mansion 1F Exit (East)")
     cinnabar_region.entrances.remove(mansion_other_entrance)
-    mansion_other_entrance.connected_region = mansion_shuffled_entrance.connected_region
-    mansion_shuffled_entrance.connected_region.entrances.append(mansion_other_entrance)
+    mansion_other_entrance.connect(mansion_shuffled_entrance.connected_region)
     for source, dest in world.er_placement_state.pairings:
         if source == "Pokemon Mansion 1F Exit (West)":
             world.er_placement_state.pairings.append((mansion_other_entrance.name, dest))

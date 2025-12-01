@@ -254,8 +254,7 @@ def ut_set_entrances(world: "PokemonFRLGWorld") -> None:
                 datastorage_key = datastorage_key_prefix + entrance_name
                 world.found_entrances_datastorage_key.append(datastorage_key)
             else:
-                entrance.connected_region = region
-                region.entrances.append(entrance)
+                entrance.connect(region)
 
 
 def ut_reconnect_found_entrances(world: "PokemonFRLGWorld", found_key: str) -> None:
