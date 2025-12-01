@@ -261,8 +261,9 @@ def ut_reconnect_found_entrances(world: "PokemonFRLGWorld", found_key: str) -> N
     entrance_name = found_key.split("_")[-1]
     region_name = world.ut_slot_data["entrances"][entrance_name]
     entrance = world.get_entrance(entrance_name)
-    region = world.get_region(region_name)
-    entrance.connect(region)
+    if entrance.connected_region is None:
+        region = world.get_region(region_name)
+        entrance.connect(region)
 
 
 def map_page_index(data: List[int]) -> int:
