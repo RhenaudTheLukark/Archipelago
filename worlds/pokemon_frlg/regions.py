@@ -547,16 +547,14 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
                 if not use_plando:
                     fly_data = world.random.choice(allowed_fly_destinations)
                 regions[exit.connected_region.name].entrances.remove(exit)
-                exit.connected_region = regions[fly_data.region]
-                regions[fly_data.region].entrances.append(exit)
+                exit.connect(regions[fly_data.region])
                 world.fly_destination_data[fly_destination_entrance_map[exit.name]] = fly_data
                 maps_already_chosen.add(fly_data.map)
         else:
             for exit in regions["Sky"].exits:
                 region = regions[world.ut_slot_data["fly_destinations"][exit.name]]
                 regions[exit.connected_region.name].entrances.remove(exit)
-                exit.connected_region = region
-                region.entrances.append(exit)
+                exit.connect(region)
 
     regions["Title Screen"].connect(regions[starting_town_map[world.starting_town]], "Start Game")
     regions["Title Screen"].connect(regions["Player's PC"], "Use PC")
