@@ -1,6 +1,6 @@
 # 1.0.1
 ## Bug Fixes
-* Fixed a Generator error that occured when genning a multiworld with >255 players
+* Fixed a Generator error that occurred when genning a multiworld with >255 players
 
 # 1.0.0
 ## Game Updates
