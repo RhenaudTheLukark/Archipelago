@@ -2842,7 +2842,7 @@
   },
   "REGION_POKEMON_LEAGUE_LORELEIS_ROOM/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_LORELEIS_ROOM",
-    "name": "Pokemon League Lorelei's Room",
+    "name": "Lorelei's Room",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2857,13 +2857,13 @@
     "events": [],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_LORELEIS_ROOM:0/MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F:1": "Pokemon League Lorelei's Room Exit (South)",
-      "MAP_POKEMON_LEAGUE_LORELEIS_ROOM:1/MAP_POKEMON_LEAGUE_BRUNOS_ROOM:0": "Pokemon League Lorelei's Room Exit (North)"
+      "MAP_POKEMON_LEAGUE_LORELEIS_ROOM:0/MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F:1": "Lorelei's Room Exit (South)",
+      "MAP_POKEMON_LEAGUE_LORELEIS_ROOM:1/MAP_POKEMON_LEAGUE_BRUNOS_ROOM:0": "Lorelei's Room Exit (North)"
     }
   },
   "REGION_POKEMON_LEAGUE_BRUNOS_ROOM/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_BRUNOS_ROOM",
-    "name": "Pokemon League Bruno's Room",
+    "name": "Bruno's Room",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2878,13 +2878,13 @@
     "events": [],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_BRUNOS_ROOM:0/MAP_POKEMON_LEAGUE_LORELEIS_ROOM:1": "Pokemon League Bruno's Room Exit (South)",
-      "MAP_POKEMON_LEAGUE_BRUNOS_ROOM:1/MAP_POKEMON_LEAGUE_AGATHAS_ROOM:0": "Pokemon League Bruno's Room Exit (North)"
+      "MAP_POKEMON_LEAGUE_BRUNOS_ROOM:0/MAP_POKEMON_LEAGUE_LORELEIS_ROOM:1": "Bruno's Room Exit (South)",
+      "MAP_POKEMON_LEAGUE_BRUNOS_ROOM:1/MAP_POKEMON_LEAGUE_AGATHAS_ROOM:0": "Bruno's Room Exit (North)"
     }
   },
   "REGION_POKEMON_LEAGUE_AGATHAS_ROOM/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_AGATHAS_ROOM",
-    "name": "Pokemon League Agatha's Room",
+    "name": "Agatha's Room",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2900,13 +2900,13 @@
     "events": [],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_AGATHAS_ROOM:0/MAP_POKEMON_LEAGUE_BRUNOS_ROOM:1": "Pokemon League Agatha's Room Exit (South)",
-      "MAP_POKEMON_LEAGUE_AGATHAS_ROOM:1/MAP_POKEMON_LEAGUE_LANCES_ROOM:0": "Pokemon League Agatha's Room Exit (North)"
+      "MAP_POKEMON_LEAGUE_AGATHAS_ROOM:0/MAP_POKEMON_LEAGUE_BRUNOS_ROOM:1": "Agatha's Room Exit (South)",
+      "MAP_POKEMON_LEAGUE_AGATHAS_ROOM:1/MAP_POKEMON_LEAGUE_LANCES_ROOM:0": "Agatha's Room Exit (North)"
     }
   },
   "REGION_POKEMON_LEAGUE_LANCES_ROOM/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_LANCES_ROOM",
-    "name": "Pokemon League Lance's Room",
+    "name": "Lance's Room",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2921,13 +2921,13 @@
     "events": [],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_LANCES_ROOM:0/MAP_POKEMON_LEAGUE_AGATHAS_ROOM:1": "Pokemon League Lance's Room Exit (South)",
-      "MAP_POKEMON_LEAGUE_LANCES_ROOM:1/MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:0": "Pokemon League Lance's Room Exit (North)"
+      "MAP_POKEMON_LEAGUE_LANCES_ROOM:0/MAP_POKEMON_LEAGUE_AGATHAS_ROOM:1": "Lance's Room Exit (South)",
+      "MAP_POKEMON_LEAGUE_LANCES_ROOM:1/MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:0": "Lance's Room Exit (North)"
     }
   },
   "REGION_POKEMON_LEAGUE_CHAMPIONS_ROOM/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM",
-    "name": "Pokemon League Champion's Room",
+    "name": "Champion's Room",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2943,13 +2943,13 @@
     ],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:0/MAP_POKEMON_LEAGUE_LANCES_ROOM:1": "Pokemon League Champion's Room Exit (South)",
-      "MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:1/MAP_POKEMON_LEAGUE_HALL_OF_FAME:0": "Pokemon League Champion's Room Exit (North)"
+      "MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:0/MAP_POKEMON_LEAGUE_LANCES_ROOM:1": "Champion's Room Exit (South)",
+      "MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:1/MAP_POKEMON_LEAGUE_HALL_OF_FAME:0": "Champion's Room Exit (North)"
     }
   },
   "REGION_POKEMON_LEAGUE_HALL_OF_FAME/MAIN": {
     "parent_map": "MAP_POKEMON_LEAGUE_HALL_OF_FAME",
-    "name": "Pokemon League Hall of Fame",
+    "name": "Hall of Fame",
     "encounter_region": null,
     "has_land": false,
     "has_water": false,
@@ -2962,7 +2962,7 @@
     "events": [],
     "exits": {},
     "warps": {
-      "MAP_POKEMON_LEAGUE_HALL_OF_FAME:0/MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:1": "Pokemon League Hall of Fame Exit"
+      "MAP_POKEMON_LEAGUE_HALL_OF_FAME:0/MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM:1": "Hall of Fame Exit"
     }
   }
 }

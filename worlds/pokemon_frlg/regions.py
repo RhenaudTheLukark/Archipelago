@@ -248,7 +248,7 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
         if dest_warp.parent_region_id is None:
             return True
         # These two warps need to always be included even if the destination warps parent region isn't
-        if source_warp.name in ("Pokemon League", "Pokemon League Champion's Room Exit (South)"):
+        if source_warp.name in ("Pokemon League", "Champion's Room Exit (South)"):
             return False
         if exclude_region(dest_warp.parent_region_id):
             return True
@@ -347,8 +347,8 @@ def create_regions(world: "PokemonFRLGWorld") -> Dict[str, Region]:
             dest_region_name = data.regions[dest_warp.parent_region_id].name
             if world.options.skip_elite_four:
                 if source_warp.name == "Pokemon League":
-                    dest_region_name = "Pokemon League Champion's Room"
-                elif source_warp.name == "Pokemon League Champion's Room Exit (South)":
+                    dest_region_name = "Champion's Room"
+                elif source_warp.name == "Champion's Room Exit (South)":
                     dest_region_name = "Indigo Plateau Pokemon Center 1F"
             connections.append((source_warp.name, region_name, dest_region_name))
 

@@ -232,8 +232,8 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
         player_name = world.multiworld.get_player_name(item_player)
 
         if player_name not in player_name_ids:
-            # Only space for 500 player names
-            if len(player_name_ids) >= 500:
+            # Only space for 1000 player names
+            if len(player_name_ids) >= 1000:
                 continue
 
             player_name_ids[player_name] = len(player_name_ids)
@@ -257,7 +257,7 @@ def write_tokens(world: "PokemonFRLGWorld") -> None:
         # There should always be enough space for one entry per location
         patch.write_token(name_table_address, (i * 5) + 0, struct.pack("<H", flag))
         patch.write_token(name_table_address, (i * 5) + 2, struct.pack("<H", item_name_offsets[item_name]))
-        patch.write_token(name_table_address, (i * 5) + 4, struct.pack("<B", player_name_ids[player_name]))
+        patch.write_token(name_table_address, (i * 5) + 4, struct.pack("<H", player_name_ids[player_name]))
 
     # Set starting items
     start_inventory = world.options.start_inventory.value.copy()
